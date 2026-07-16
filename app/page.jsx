@@ -1,3 +1,15 @@
+import {
+  ArrowRight,
+  Gem,
+  Hammer,
+  MapPin,
+  MessagesSquare,
+  MonitorPlay,
+  Presentation,
+  Radio,
+  Users,
+  Zap,
+} from "lucide-react";
 import { getUpcomingEvents } from "../lib/meetup";
 
 const DISCORD = "https://discord.gg/kZSJMNveYM";
@@ -29,18 +41,21 @@ const ASCII_MEMOS = `███╗   ███╗ ███████╗ ██
 const format = [
   {
     n: "01",
+    icon: Radio,
     time: "first 20 min",
     title: "AI News Briefing",
     copy: "A tight rundown of what matters for builders right now. Signal only.",
   },
   {
     n: "02",
+    icon: MessagesSquare,
     time: "main session",
     title: "Socratic Rounds",
     copy: "Community-submitted topics, dug into as a group. Questions first, hot takes welcome, receipts required.",
   },
   {
     n: "03",
+    icon: Presentation,
     time: "closing",
     title: "5-Minute Demos",
     copy: "Show what you shipped. No hard selling — just what it does and what you learned building it.",
@@ -50,22 +65,27 @@ const format = [
 const values = [
   {
     title: "Demos over memos",
+    icon: MonitorPlay,
     copy: "Show the build, the workflow, the decisions behind it. No slideware, no pitch decks. If it ships, it speaks.",
   },
   {
     title: "Craft over hype",
+    icon: Hammer,
     copy: "The toolchain, the design decisions, the tradeoffs — the discipline that separates something shipped from something great.",
   },
   {
     title: "Taste",
+    icon: Gem,
     copy: "We have opinions — about design, architecture, and what makes an experience worth shipping. Curated over cranked out.",
   },
   {
     title: "Living on the bleeding edge",
+    icon: Zap,
     copy: "We push each model past what it's supposed to be capable of — beyond the defaults, beyond the docs — and turn it into product experiences nobody's shipped yet.",
   },
   {
     title: "Community-driven",
+    icon: Users,
     copy: "Members set the agenda. Topics and demo requests are submitted, voted on, and shape every session.",
   },
 ];
@@ -147,7 +167,10 @@ export default async function Page() {
                   <span className="format-n">{f.n}</span>
                   <span className="format-time">{f.time}</span>
                 </div>
-                <h3>{f.title}</h3>
+                <h3>
+                  <f.icon className="icon" size={18} strokeWidth={1.75} aria-hidden="true" />
+                  {f.title}
+                </h3>
                 <p>{f.copy}</p>
               </li>
             ))}
@@ -160,7 +183,10 @@ export default async function Page() {
           <div className="values">
             {values.map((v) => (
               <div key={v.title} className="value">
-                <h3>{v.title}</h3>
+                <h3>
+                  <v.icon className="icon" size={18} strokeWidth={1.75} aria-hidden="true" />
+                  {v.title}
+                </h3>
                 <p>{v.copy}</p>
               </div>
             ))}
@@ -180,9 +206,14 @@ export default async function Page() {
                   </div>
                   <div className="event-body">
                     <h3>{e.title}</h3>
-                    <p className="event-venue">{e.place}</p>
+                    <p className="event-venue">
+                      <MapPin size={13} strokeWidth={1.75} aria-hidden="true" />
+                      {e.place}
+                    </p>
                   </div>
-                  <span className="event-arrow" aria-hidden="true">→</span>
+                  <span className="event-arrow" aria-hidden="true">
+                    <ArrowRight size={18} strokeWidth={1.75} />
+                  </span>
                 </a>
               ))}
             </div>

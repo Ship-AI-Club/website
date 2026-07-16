@@ -169,10 +169,12 @@ export default async function Page() {
                   <div className="event-when">
                     <span>{e.date}</span>
                     <span>{e.time}</span>
-                    <span>{e.place}</span>
                   </div>
-                  <h3>{e.title}</h3>
-                  <span className="event-rsvp">RSVP on Meetup →</span>
+                  <div className="event-body">
+                    <h3>{e.title}</h3>
+                    <p className="event-venue">{e.place}</p>
+                  </div>
+                  <span className="event-arrow" aria-hidden="true">→</span>
                 </a>
               ))}
             </div>

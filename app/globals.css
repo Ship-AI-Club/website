@@ -378,47 +378,55 @@ h1, h2, h3 {
 /* events */
 
 .events {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  border-top: 1px solid var(--hairline);
 }
 
 .event {
-  display: block;
-  border: 1px solid var(--hairline);
-  border-radius: 10px;
-  padding: 1.6rem;
-  transition: border-color 150ms ease, transform 150ms ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .event:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
+  display: grid;
+  grid-template-columns: 8.5rem 1fr auto;
+  align-items: baseline;
+  gap: 1rem 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--hairline);
 }
 
 .event-when {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
+  flex-direction: column;
+  gap: 0.2rem;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--dim);
-  margin-bottom: 1rem;
 }
 
 .event h3 {
-  font-size: 1.2rem;
-  margin-bottom: 1.25rem;
+  font-size: 1.15rem;
+  transition: color 150ms ease;
 }
 
-.event-rsvp {
+.event-venue {
+  margin-top: 0.4rem;
+  font-size: 0.88rem;
+  color: var(--faint);
+}
+
+.event-arrow {
   font-family: var(--font-geist-mono), monospace;
-  font-size: 0.78rem;
-  color: var(--accent);
+  color: var(--faint);
+  transition: color 150ms ease, transform 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .event:hover h3 {
+    color: var(--accent);
+  }
+
+  .event:hover .event-arrow {
+    color: var(--accent);
+    transform: translateX(4px);
+  }
 }
 
 .events-empty,
@@ -472,9 +480,18 @@ h1, h2, h3 {
 
 @media (max-width: 860px) {
   .format-list,
-  .values,
-  .events {
+  .values {
     grid-template-columns: 1fr;
+  }
+
+  .event {
+    grid-template-columns: 1fr auto;
+  }
+
+  .event-when {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    gap: 1rem;
   }
 
   .nav nav {

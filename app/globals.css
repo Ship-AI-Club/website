@@ -499,6 +499,43 @@ h3 .icon {
   color: var(--faint);
 }
 
+/* sponsors */
+
+.sponsors {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem 3.5rem;
+}
+
+.sponsor {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  opacity: 0.55;
+  transition: opacity 150ms ease;
+}
+
+.sponsor-logo {
+  height: 2.6rem;
+  width: auto;
+  /* white monochrome so every mark sits on-brand against black */
+  filter: brightness(0) invert(1);
+}
+
+.sponsor-name {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sponsor:hover {
+    opacity: 1;
+  }
+}
+
 /* host */
 
 .host {

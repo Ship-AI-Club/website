@@ -42,6 +42,12 @@ const SOCIALS = [
 ];
 const SUBMIT_TOPIC = "https://github.com/Ship-AI-Club/events/issues/new?title=Topic%3A%20";
 
+const SPONSORS = [
+  { href: "https://www.ceigateway.com/", name: "CEI Gateway", img: "/sponsor-cei.png" },
+  { href: "https://www.workuity.com/", name: "Workuity", img: "/sponsor-workuity.png" },
+  { href: "https://www.desic.xyz/", name: "desic", img: "/sponsor-desic.svg", wordmark: true },
+];
+
 const ASCII_DEMOS = `██████╗  ███████╗ ███╗   ███╗  ██████╗  ███████╗
 ██╔══██╗ ██╔════╝ ████╗ ████║ ██╔═══██╗ ██╔════╝
 ██║  ██║ █████╗   ██╔████╔██║ ██║   ██║ ███████╗
@@ -364,6 +370,29 @@ export default async function Page() {
             Full calendar on <a href={LUMA} target="_blank" rel="noreferrer">Luma</a> and{" "}
             <a href={MEETUP} target="_blank" rel="noreferrer">Meetup</a>.
           </p>
+        </section>
+
+        <section id="sponsors" className="section">
+          <p className="kicker">Sponsors</p>
+          <p className="section-lede">
+            The venues and teams that keep every session free and public.
+          </p>
+          <div className="sponsors">
+            {SPONSORS.map((s) => (
+              <a
+                key={s.name}
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={s.name}
+                title={s.name}
+                className="sponsor"
+              >
+                <img src={s.img} alt={s.name} className="sponsor-logo" />
+                {s.wordmark && <span className="sponsor-name">{s.name}</span>}
+              </a>
+            ))}
+          </div>
         </section>
       </main>
 

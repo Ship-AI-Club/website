@@ -55,6 +55,7 @@ h1, h2, h3 {
 .reveal {
   display: inline-block;
   animation: reveal 0.5s var(--ease-out-quint) var(--d, 0ms) both;
+  will-change: transform, opacity;
 }
 
 @keyframes reveal {
@@ -226,6 +227,7 @@ h1, h2, h3 {
   box-shadow: 0 0 12px rgba(103, 143, 242, 0.7);
   transform-origin: left center;
   animation: strike 0.45s steps(10) 0.75s both;
+  will-change: transform;
 }
 
 @keyframes strike {
@@ -267,12 +269,13 @@ h1, h2, h3 {
   animation: blink 2.8s steps(1) infinite;
 }
 
+/* each pixel holds the signal for exactly 1/8 of the loop — seamless handoff */
 @keyframes blink {
-  0%, 10% {
+  0%, 12.5% {
     background: var(--accent);
     box-shadow: 0 0 8px rgba(103, 143, 242, 0.8);
   }
-  11%, 100% {
+  12.51%, 100% {
     background: rgba(85, 88, 95, 0.45);
     box-shadow: none;
   }
@@ -483,6 +486,35 @@ h1, h2, h3 {
 
   .footer nav {
     margin-left: 0;
+  }
+}
+
+/* ---------- scroll-driven reveals (progressive enhancement) ---------- */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section .kicker,
+    .section h2,
+    .format-list li,
+    .value,
+    .event,
+    .rule-line,
+    .events-more {
+      animation: rise var(--ease-out-quint) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 

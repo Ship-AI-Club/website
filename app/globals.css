@@ -543,10 +543,13 @@ h3 .icon {
 }
 
 .host-links a {
-  color: var(--ink);
-  font-size: 0.9rem;
-  border-bottom: 1px solid var(--accent);
+  display: inline-flex;
+  color: var(--dim);
   transition: color 150ms ease;
+}
+
+.host-links svg {
+  display: block;
 }
 
 @media (hover: hover) and (pointer: fine) {

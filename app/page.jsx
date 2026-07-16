@@ -2,6 +2,7 @@ import {
   ArrowRight,
   CalendarDays,
   Gem,
+  Globe,
   GraduationCap,
   Hammer,
   MapPin,
@@ -316,9 +317,15 @@ export default async function Page() {
                 where you show the work, not talk about it.
               </p>
               <p className="host-links">
-                <a href="https://santos.lol" target="_blank" rel="noreferrer">santos.lol</a>
-                <a href="https://x.com/5antoshernandez" target="_blank" rel="noreferrer">X</a>
-                <a href="https://github.com/5antoshernandez" target="_blank" rel="noreferrer">GitHub</a>
+                <a href="https://santos.lol" target="_blank" rel="noreferrer" aria-label="santos.lol" title="santos.lol">
+                  <Globe size={18} strokeWidth={1.75} aria-hidden="true" />
+                </a>
+                <a href="https://x.com/5antoshernandez" target="_blank" rel="noreferrer" aria-label="X" title="X">
+                  <BrandGlyph icon={siX} />
+                </a>
+                <a href="https://github.com/5antoshernandez" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
+                  <BrandGlyph icon={siGithub} />
+                </a>
               </p>
             </div>
           </div>

@@ -253,8 +253,10 @@ export default async function Page() {
               <p>
                 Santos is a founder and Lead Product Engineer who builds agentic AI systems,
                 works on the models underneath them, and shapes the product experiences on
-                top. Before this he was ZBD's founding product hire, taking the product from
-                $0 to $12M ARR. He started Ship AI to give Phoenix and Tempe builders a room
+                top. Before this he was the founding product hire at ZBD — the money layer
+                for games — taking the product from $0 to $12M ARR and helping secure the
+                EU's first MiCAR license approval plus money transmitter licenses across 26
+                states and D.C. He started Ship AI to give Phoenix and Tempe builders a room
                 where you show the work, not talk about it.
               </p>
               <p className="host-links">

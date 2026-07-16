@@ -98,18 +98,19 @@ export default async function Page() {
             <span className="node" aria-hidden="true" />
             phx · tpe — ai craftspeople
           </p>
-          <h1 aria-label="Demos over memos.">
-            <span className="reveal" style={{ "--d": "80ms" }} aria-hidden="true">
+          <h1 className="sr-only">Demos over memos.</h1>
+          <div className="hero-title" aria-hidden="true">
+            <div className="reveal" style={{ "--d": "80ms" }}>
               <pre className="ascii">{ASCII_DEMOS}</pre>
-            </span>
-            <span className="reveal" style={{ "--d": "160ms" }} aria-hidden="true">
+            </div>
+            <div className="reveal" style={{ "--d": "160ms" }}>
               <pre className="ascii">{ASCII_OVER}</pre>
-            </span>
-            <span className="reveal memos" style={{ "--d": "240ms" }} aria-hidden="true">
+            </div>
+            <div className="reveal memos" style={{ "--d": "240ms" }}>
               <pre className="ascii ascii-memos">{ASCII_MEMOS}</pre>
-              <span className="strike" aria-hidden="true" />
-            </span>
-          </h1>
+              <span className="strike" />
+            </div>
+          </div>
           <p className="lede reveal" style={{ "--d": "280ms" }}>
             A high-signal community for technical founders and builders pushing the bleeding
             edge of AI. Show the build, the workflow, the decisions behind it. No slideware,

@@ -12,6 +12,7 @@ import {
   Zap,
 } from "lucide-react";
 import { getUpcomingEvents } from "../lib/meetup";
+import { JsonLd } from "../components/article";
 
 const DISCORD = "https://discord.gg/kZSJMNveYM";
 const MEETUP = "https://www.meetup.com/shipai/";
@@ -103,11 +104,45 @@ function PixelTrail() {
   );
 }
 
+const ORG_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Ship AI",
+  url: "https://www.shipai.club",
+  logo: "https://www.shipai.club/logo-icon.png",
+  description:
+    "A community of AI craftspeople in Phoenix and Tempe, Arizona. Technical founders and builders who show their work. Demos over memos.",
+  sameAs: [DISCORD, MEETUP, LUMA, GITHUB],
+  areaServed: ["Phoenix, AZ", "Tempe, AZ"],
+};
+
+function eventsSchema(events) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: events.map((e, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Event",
+        name: e.title,
+        startDate: new Date(e.ts).toISOString(),
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        location: { "@type": "Place", name: e.place, address: e.place },
+        organizer: { "@type": "Organization", name: "Ship AI", url: "https://www.shipai.club" },
+        url: e.url,
+      },
+    })),
+  };
+}
+
 export default async function Page() {
   const events = await getUpcomingEvents(4);
 
   return (
     <>
+      <JsonLd data={ORG_SCHEMA} />
+      {events.length > 0 && <JsonLd data={eventsSchema(events)} />}
       <header className="nav">
         <a href="#top" className="brand">
           <img src="/logo-icon.png" alt="" width={26} height={26} />
@@ -245,6 +280,9 @@ export default async function Page() {
         </div>
         <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
+          <a href="/socratic-night">Socratic Night</a>
+          <a href="/ai-meetup-phoenix">Phoenix</a>
+          <a href="/ai-meetup-tempe">Tempe</a>
           <a href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
           <a href={MEETUP} target="_blank" rel="noreferrer">Meetup</a>
           <a href={LUMA} target="_blank" rel="noreferrer">Luma</a>

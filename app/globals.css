@@ -509,6 +509,99 @@ h3 .icon {
   border-bottom: 1px solid var(--accent);
 }
 
+/* ---------- article pages ---------- */
+
+.article {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 8vh, 5rem) clamp(1.25rem, 5vw, 4rem) 4rem;
+}
+
+.article h1 {
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  margin-bottom: 0.75rem;
+}
+
+.article-updated {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 2.5rem;
+}
+
+.article-lede {
+  font-size: 1.1rem;
+  color: var(--dim);
+  margin-bottom: 2rem;
+}
+
+.article h2 {
+  font-size: 1.4rem;
+  margin: 2.5rem 0 0.9rem;
+}
+
+.article p,
+.article li {
+  color: var(--dim);
+}
+
+.article strong {
+  color: var(--ink);
+}
+
+.article a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--accent);
+  transition: color 150ms ease;
+}
+
+.article a.btn {
+  border-bottom: 1px solid var(--ink);
+}
+
+.article a.btn-solid {
+  color: #000;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .article a:not(.btn):hover {
+    color: var(--accent);
+  }
+}
+
+.article ol,
+.article ul {
+  padding-left: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin: 0.5rem 0;
+}
+
+.article .events {
+  margin-top: 1rem;
+}
+
+.article .event h3 {
+  font-size: 1.05rem;
+}
+
+.article .event a,
+.article .events a {
+  border-bottom: none;
+}
+
+.article-faq h3 {
+  font-size: 1.05rem;
+  margin: 1.6rem 0 0.4rem;
+}
+
+.article-cta {
+  margin-top: 3rem;
+}
+
 /* ---------- footer ---------- */
 
 .footer {

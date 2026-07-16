@@ -1,0 +1,21 @@
+# Ship AI
+
+> Ship AI is a community of AI craftspeople in Phoenix and Tempe, Arizona. Technical founders and builders who show their work — the build, the workflow, the decisions behind it. Demos over memos: no slideware, no hard selling. If it ships, it speaks.
+
+Ship AI runs recurring in-person events called Socratic Nights. Every session follows the same three-part format: an AI News Briefing (first 20 minutes, a tight rundown of what matters for builders), Socratic Rounds (community-submitted topics dug into as a group — questions first, hot takes welcome, receipts required), and 5-Minute Demos (members show what they shipped and what they learned building it).
+
+Topics and demo requests are submitted and voted on by members, and shape every session. The community values craft over hype, taste (opinions about design, architecture, and curated experiences), and living on the bleeding edge — pushing each model past what it's supposed to be capable of.
+
+## Key pages
+
+- [Home](https://www.shipai.club/): what Ship AI is, upcoming events pulled live from Meetup
+- [What is a Socratic Night?](https://www.shipai.club/socratic-night): the event format explained
+- [AI meetup in Phoenix](https://www.shipai.club/ai-meetup-phoenix): Phoenix events, venue, and format
+- [AI meetup in Tempe](https://www.shipai.club/ai-meetup-tempe): Tempe events, venue, and format
+
+## Join
+
+- Discord: https://discord.gg/kZSJMNveYM
+- Meetup (RSVP): https://www.meetup.com/shipai/
+- Luma calendar: https://luma.com/shipai
+- GitHub (topic submissions): https://github.com/Ship-AI-Club/events

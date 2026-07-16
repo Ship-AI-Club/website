@@ -62,7 +62,7 @@ const values = [
   },
   {
     title: "Living on the bleeding edge",
-    copy: "We push the boundaries of what's possible — new model capabilities the week they drop, AI product experiences nobody's shipped yet.",
+    copy: "We push each model past what it's supposed to be capable of — beyond the defaults, beyond the docs — and turn it into product experiences nobody's shipped yet.",
   },
   {
     title: "Community-driven",

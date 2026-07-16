@@ -258,9 +258,22 @@ h1, h2, h3 {
 /* pixel signal trail — discrete squares lighting in sequence */
 
 .trail {
-  display: flex;
+  display: inline-flex;
   gap: 10px;
   align-items: center;
+  /* 44px+ hit area without shifting the layout */
+  padding: 1.25rem 1rem;
+  margin: -1.25rem -1rem;
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .trail:hover .px {
+    /* the running blink animation would override these, so stop it */
+    animation: none;
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(103, 143, 242, 0.8);
+  }
 }
 
 .px {

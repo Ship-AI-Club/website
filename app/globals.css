@@ -435,6 +435,69 @@ h3 .icon {
   font-size: 0.95rem;
 }
 
+/* host */
+
+.host {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
+  max-width: 44rem;
+}
+
+.host-photo {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--hairline);
+  flex-shrink: 0;
+}
+
+.host-body h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.host-role {
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.9rem;
+}
+
+.host-body p {
+  color: var(--dim);
+  font-size: 0.98rem;
+}
+
+.host-links {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.host-links a {
+  color: var(--ink);
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--accent);
+  transition: color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .host-links a:hover {
+    color: var(--accent);
+  }
+}
+
+@media (max-width: 640px) {
+  .host {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
 /* events */
 
 .events {

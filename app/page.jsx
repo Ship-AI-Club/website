@@ -61,6 +61,10 @@ const values = [
     copy: "We have opinions — about design, architecture, and what makes an experience worth shipping. Curated over cranked out.",
   },
   {
+    title: "Living on the bleeding edge",
+    copy: "We push the boundaries of what's possible — new model capabilities the week they drop, AI product experiences nobody's shipped yet.",
+  },
+  {
     title: "Community-driven",
     copy: "Members set the agenda. Topics and demo requests are submitted, voted on, and shape every session.",
   },

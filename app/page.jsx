@@ -93,12 +93,13 @@ const values = [
 ];
 
 function PixelTrail() {
+  // easter egg: the signal leads somewhere
   return (
-    <span className="trail" aria-hidden="true">
+    <a href="/standby" className="trail" aria-label="Standby screen">
       {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
         <span key={i} className="px" style={{ animationDelay: `${i * 0.35}s` }} />
       ))}
-    </span>
+    </a>
   );
 }
 

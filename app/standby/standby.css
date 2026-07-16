@@ -1,0 +1,183 @@
+.standby {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  overflow: hidden;
+}
+
+.standby-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  padding: 3rem 1.5rem;
+  cursor: default;
+}
+
+/* ascii mark — rows type in, then the whole mark breathes */
+
+.standby-logo {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: clamp(6px, 1.7vw, 15px);
+  line-height: 1.15;
+  color: var(--ink);
+  white-space: pre;
+  text-shadow: 0 0 30px rgba(103, 143, 242, 0.25);
+  animation: breathe 6s ease-in-out 2.2s infinite;
+}
+
+.standby-logo span {
+  display: block;
+  animation: row-in 0.4s var(--ease-out-quint) var(--r) both;
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes breathe {
+  0%, 100% {
+    text-shadow: 0 0 30px rgba(103, 143, 242, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 46px rgba(103, 143, 242, 0.5);
+  }
+}
+
+/* wordmark */
+
+.standby-wordmark {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: clamp(7px, 1.9vw, 17px);
+  line-height: 1;
+  color: var(--ink);
+  white-space: pre;
+  animation: fade-up 0.6s var(--ease-out-quint) 1.5s both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* scanline sweeping the stage */
+
+.standby-scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(103, 143, 242, 0.07) 48%,
+    rgba(103, 143, 242, 0.16) 50%,
+    rgba(103, 143, 242, 0.07) 52%,
+    transparent 100%
+  );
+  background-size: 100% 220%;
+  animation: scan 7s linear 2.2s infinite;
+  pointer-events: none;
+}
+
+@keyframes scan {
+  from { background-position: 0 220%; }
+  to { background-position: 0 -220%; }
+}
+
+/* rotating taglines — each visible for its quarter of a 16s loop */
+
+.standby-taglines {
+  position: relative;
+  height: 1.4em;
+  width: 100%;
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-size: clamp(0.72rem, 1.6vw, 0.95rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-align: center;
+  animation: fade-up 0.6s var(--ease-out-quint) 2s both;
+}
+
+.standby-taglines span {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: tagline 16s ease-in-out calc(var(--i) * 4s + 2s) infinite;
+}
+
+@keyframes tagline {
+  0%, 22% {
+    opacity: 1;
+    transform: none;
+  }
+  25%, 97% {
+    opacity: 0;
+  }
+  98%, 100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* pixel signal trail */
+
+.standby-trail {
+  display: flex;
+  gap: 12px;
+  animation: fade-up 0.6s var(--ease-out-quint) 2.2s both;
+}
+
+.spx {
+  width: 7px;
+  height: 7px;
+  background: rgba(85, 88, 95, 0.45);
+  animation: spx-blink 3.6s steps(1) infinite;
+}
+
+@keyframes spx-blink {
+  0%, 8.33% {
+    background: var(--accent);
+    box-shadow: 0 0 10px rgba(103, 143, 242, 0.8);
+  }
+  8.34%, 100% {
+    background: rgba(85, 88, 95, 0.45);
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .standby-logo,
+  .standby-logo span,
+  .standby-wordmark,
+  .standby-scan,
+  .standby-taglines,
+  .standby-taglines span,
+  .standby-trail,
+  .spx {
+    animation: none;
+  }
+
+  .standby-taglines span {
+    opacity: 0;
+  }
+
+  .standby-taglines span:first-child {
+    opacity: 1;
+  }
+}

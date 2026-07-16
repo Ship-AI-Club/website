@@ -114,19 +114,20 @@
   animation: fade-up 0.6s var(--ease-out-quint) 2s both;
 }
 
+/* 6 taglines × 4s each = 24s loop; each holds its sixth, then fades */
 .standby-taglines span {
   position: absolute;
   inset: 0;
   opacity: 0;
-  animation: tagline 16s ease-in-out calc(var(--i) * 4s + 2s) infinite;
+  animation: tagline 24s ease-in-out calc(var(--i) * 4s + 2s) infinite;
 }
 
 @keyframes tagline {
-  0%, 22% {
+  0%, 13.5% {
     opacity: 1;
     transform: none;
   }
-  25%, 97% {
+  16.7%, 97% {
     opacity: 0;
   }
   98%, 100% {

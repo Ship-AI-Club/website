@@ -366,6 +366,34 @@ h3 .icon {
   text-align: center;
 }
 
+.submit-topic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.3rem;
+  margin-top: 1.25rem;
+  font-size: 0.95rem;
+  color: var(--dim);
+  text-align: center;
+}
+
+.submit-topic svg {
+  color: var(--accent);
+}
+
+.submit-topic a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--accent);
+  transition: color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .submit-topic a:hover {
+    color: var(--accent);
+  }
+}
+
 /* values */
 
 .values {

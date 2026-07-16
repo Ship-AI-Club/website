@@ -3,6 +3,7 @@ import {
   Gem,
   Hammer,
   MapPin,
+  MessageSquarePlus,
   MessagesSquare,
   MonitorPlay,
   Presentation,
@@ -16,6 +17,7 @@ const DISCORD = "https://discord.gg/kZSJMNveYM";
 const MEETUP = "https://www.meetup.com/shipai/";
 const LUMA = "https://luma.com/shipai";
 const GITHUB = "https://github.com/Ship-AI-Club";
+const SUBMIT_TOPIC = "https://github.com/Ship-AI-Club/events/issues/new?title=Topic%3A%20";
 
 const ASCII_DEMOS = `██████╗  ███████╗ ███╗   ███╗  ██████╗  ███████╗
 ██╔══██╗ ██╔════╝ ████╗ ████║ ██╔═══██╗ ██╔════╝
@@ -176,6 +178,12 @@ export default async function Page() {
             ))}
           </ol>
           <p className="rule-line">questions first · hot takes welcome · receipts required</p>
+          <p className="submit-topic">
+            <MessageSquarePlus size={16} strokeWidth={1.75} aria-hidden="true" />
+            Got a topic or a hot take?{" "}
+            <a href={SUBMIT_TOPIC} target="_blank" rel="noreferrer">Submit it on GitHub</a>
+            {" "}— the community votes it into a session.
+          </p>
         </section>
 
         <section className="section">

@@ -251,9 +251,9 @@ export default async function Page() {
               <h2>Santos Hernandez</h2>
               <p className="host-role">Founder &amp; host</p>
               <p>
-                Santos is a founder and Lead Product Engineer building agentic AI systems and
-                developing models, and was previously the founding product hire at ZBD, where
-                the product grew from $0 to $12M ARR. He started Ship AI to give Phoenix's
+                Santos is a founder and Lead Product Engineer building agentic AI systems,
+                developing models, and crafting AI product experiences. He was previously the
+                founding product hire at ZBD, where the product grew from $0 to $12M ARR. He started Ship AI to give Phoenix's
                 builders a room where the demo is the argument.
               </p>
               <p className="host-links">

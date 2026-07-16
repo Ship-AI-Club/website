@@ -1,6 +1,8 @@
 import {
   ArrowRight,
+  CalendarDays,
   Gem,
+  GraduationCap,
   Hammer,
   MapPin,
   MessageSquarePlus,
@@ -11,6 +13,7 @@ import {
   Users,
   Zap,
 } from "lucide-react";
+import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { getUpcomingEvents } from "../lib/meetup";
 import { JsonLd } from "../components/article";
 
@@ -18,6 +21,24 @@ const DISCORD = "https://discord.gg/kZSJMNveYM";
 const MEETUP = "https://www.meetup.com/shipai/";
 const LUMA = "https://luma.com/shipai";
 const GITHUB = "https://github.com/Ship-AI-Club";
+const X_URL = "https://x.com/shipaiclub";
+
+// simple-icons brand glyphs, rendered monochrome (currentColor) to stay on-brand
+function BrandGlyph({ icon, size = 18 }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true">
+      <path d={icon.path} />
+    </svg>
+  );
+}
+
+const SOCIALS = [
+  { href: DISCORD, label: "Discord", glyph: <BrandGlyph icon={siDiscord} /> },
+  { href: MEETUP, label: "Meetup", glyph: <BrandGlyph icon={siMeetup} /> },
+  { href: LUMA, label: "Luma", glyph: <CalendarDays size={18} strokeWidth={1.75} aria-hidden="true" /> },
+  { href: X_URL, label: "X", glyph: <BrandGlyph icon={siX} /> },
+  { href: GITHUB, label: "GitHub", glyph: <BrandGlyph icon={siGithub} /> },
+];
 const SUBMIT_TOPIC = "https://github.com/Ship-AI-Club/events/issues/new?title=Topic%3A%20";
 
 const ASCII_DEMOS = `██████╗  ███████╗ ███╗   ███╗  ██████╗  ███████╗
@@ -47,49 +68,54 @@ const format = [
     icon: Radio,
     time: "first 20 min",
     title: "AI News Briefing",
-    copy: "A tight rundown of what matters for builders right now. Signal only.",
+    copy: "What changed this week and why it matters for what you're building. Signal only.",
   },
   {
     n: "02",
     icon: MessagesSquare,
     time: "main session",
     title: "Socratic Rounds",
-    copy: "Community-submitted topics, dug into as a group. Questions first, hot takes welcome, receipts required.",
+    copy: "The topics you voted for, argued out as a room. Questions first, hot takes welcome, receipts required.",
   },
   {
     n: "03",
     icon: Presentation,
     time: "closing",
     title: "5-Minute Demos",
-    copy: "Show what you shipped. No hard selling — just what it does and what you learned building it.",
+    copy: "Five minutes, your build, live. What it does, how it's made, what broke along the way.",
   },
 ];
 
 const values = [
   {
+    title: "Free and open",
+    icon: GraduationCap,
+    copy: "Every session is free and public. You pay by teaching what you know back to the room. No tickets, no tiers, no gatekeeping.",
+  },
+  {
     title: "Demos over memos",
     icon: MonitorPlay,
-    copy: "Show the build, the workflow, the decisions behind it. No slideware, no pitch decks. If it ships, it speaks.",
+    copy: "Show the build, the workflow, the decision you'd make differently next time. Founders too — demo the product, skip the hard sell. If it ships, it speaks.",
   },
   {
     title: "Craft over hype",
     icon: Hammer,
-    copy: "The toolchain, the design decisions, the tradeoffs — the discipline that separates something shipped from something great.",
+    copy: "The toolchain, the tradeoffs, the parts that hurt — the discipline that separates something shipped from something great.",
   },
   {
     title: "Taste",
     icon: Gem,
-    copy: "We have opinions — about design, architecture, and what makes an experience worth shipping. Curated over cranked out.",
+    copy: "We hold opinions about design, architecture, and what's worth shipping at all. Curated over cranked out.",
   },
   {
     title: "Living on the bleeding edge",
     icon: Zap,
-    copy: "We push each model past what it's supposed to be capable of — beyond the defaults, beyond the docs — and turn it into product experiences nobody's shipped yet.",
+    copy: "We push models past the defaults and past the docs, then turn what we find into product experiences nobody's shipped yet.",
   },
   {
     title: "Community-driven",
     icon: Users,
-    copy: "Members set the agenda. Topics and demo requests are submitted, voted on, and shape every session.",
+    copy: "Members set the agenda. Every topic is submitted and voted on before it hits the floor — the room decides what's worth debating.",
   },
 ];
 
@@ -111,7 +137,7 @@ const ORG_SCHEMA = {
   url: "https://www.shipai.club",
   logo: "https://www.shipai.club/logo-icon.png",
   description:
-    "A community of AI craftspeople in Phoenix and Tempe, Arizona. Technical founders and builders who show their work. Demos over memos.",
+    "Free, public AI education in Phoenix and Tempe, Arizona. A community-run space for open sessions, workshops, and knowledge-sharing where builders show their work. Demos over memos.",
   sameAs: [DISCORD, MEETUP, LUMA, GITHUB],
   areaServed: ["Phoenix, AZ", "Tempe, AZ"],
 };
@@ -178,9 +204,10 @@ export default async function Page() {
             </div>
           </div>
           <p className="lede reveal" style={{ "--d": "280ms" }}>
-            A high-signal community for technical founders and builders pushing the bleeding
-            edge of AI. Show the build, the workflow, the decisions behind it. No slideware,
-            no hard selling. If it ships, it speaks.
+            Free, public AI education in Phoenix &amp; Tempe — open sessions, workshops, and
+            knowledge-sharing for builders who've shipped and want to go deeper. We learn by
+            showing the work: the build, the workflow, the decisions behind it. No slideware,
+            no hard sell. If it ships, it speaks.
           </p>
           <div className="cta-row reveal" style={{ "--d": "380ms" }}>
             <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">
@@ -224,6 +251,11 @@ export default async function Page() {
 
         <section className="section">
           <p className="kicker">What we're about</p>
+          <p className="section-lede">
+            Ship AI is a free, community-run AI education project. The premise is simple: the
+            best AI education isn't behind a paywall or on a stage — it's builders showing each
+            other the work, in the open, for free.
+          </p>
           <div className="values">
             {values.map((v) => (
               <div key={v.title} className="value">
@@ -234,6 +266,30 @@ export default async function Page() {
                 <p>{v.copy}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section id="who" className="section">
+          <p className="kicker">Who it's for</p>
+          <h2>Come as you are, if you build.</h2>
+          <div className="audience">
+            <div className="aud-col aud-for">
+              <p className="aud-head">This is for you if</p>
+              <ul>
+                <li>You've shipped with AI — or at least tinkered your way to a working app.</li>
+                <li>You're a founder, engineer, designer, or researcher who's past the tutorials.</li>
+                <li>You'd rather watch a real demo — even one that breaks — than a canned sales pitch.</li>
+                <li>You want a room that argues about tradeoffs, not definitions.</li>
+              </ul>
+            </div>
+            <div className="aud-col aud-not">
+              <p className="aud-head">Maybe not yet if</p>
+              <ul>
+                <li>You're brand new to AI and haven't built anything yet — get the fundamentals down, then come.</li>
+                <li>You're here to hard-sell or fill a lead list.</li>
+                <li>"AI-powered" is the whole pitch and there's no build behind it.</li>
+              </ul>
+            </div>
           </div>
         </section>
 
@@ -314,11 +370,14 @@ export default async function Page() {
           <a href="/socratic-night">Socratic Night</a>
           <a href="/ai-meetup-phoenix">Phoenix</a>
           <a href="/ai-meetup-tempe">Tempe</a>
-          <a href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
-          <a href={MEETUP} target="_blank" rel="noreferrer">Meetup</a>
-          <a href={LUMA} target="_blank" rel="noreferrer">Luma</a>
-          <a href={GITHUB} target="_blank" rel="noreferrer">GitHub</a>
         </nav>
+        <div className="socials">
+          {SOCIALS.map((s) => (
+            <a key={s.label} href={s.href} target="_blank" rel="noreferrer" aria-label={s.label} title={s.label}>
+              {s.glyph}
+            </a>
+          ))}
+        </div>
         <p className="fine">© 2026 Ship AI</p>
       </footer>
     </>

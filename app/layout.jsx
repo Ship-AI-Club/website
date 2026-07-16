@@ -8,11 +8,11 @@ export const metadata = {
   metadataBase: new URL("https://www.shipai.club"),
   title: "Ship AI — Demos over memos",
   description:
-    "A high-signal community of AI craftspeople in Phoenix & Tempe. Show the build, the workflow, the decisions behind it. If it ships, it speaks.",
+    "Free, public AI education in Phoenix & Tempe for builders who've shipped. News briefing, community-voted debates, 5-minute demos. Demos over memos.",
   openGraph: {
     title: "Ship AI — Demos over memos",
     description:
-      "A high-signal community of AI craftspeople in Phoenix & Tempe. Socratic Nights: questions first, hot takes welcome, receipts required.",
+      "Free, public AI education in Phoenix & Tempe for builders who've shipped. Questions first, hot takes welcome, receipts required.",
     url: "https://www.shipai.club",
     siteName: "Ship AI",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],

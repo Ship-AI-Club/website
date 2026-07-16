@@ -54,7 +54,11 @@ const values = [
   },
   {
     title: "Craft over hype",
-    copy: "The toolchain, the design decisions, the tradeoffs — the taste that separates something shipped from something great.",
+    copy: "The toolchain, the design decisions, the tradeoffs — the discipline that separates something shipped from something great.",
+  },
+  {
+    title: "Taste",
+    copy: "We have opinions — about design, architecture, and what makes an experience worth shipping. Curated over cranked out.",
   },
   {
     title: "Community-driven",

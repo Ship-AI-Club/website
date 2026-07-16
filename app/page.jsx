@@ -126,7 +126,7 @@ export default async function Page() {
       <main id="top">
         <section className="hero">
           <p className="eyebrow reveal" style={{ "--d": "0ms" }}>
-            <span className="node" aria-hidden="true" />
+            <a href="/standby" className="node" aria-label="Standby screen" />
             phx · tpe — ai craftspeople
           </p>
           <h1 className="sr-only">Demos over memos.</h1>

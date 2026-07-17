@@ -43,8 +43,8 @@ const SOCIALS = [
 const SUBMIT_TOPIC = "https://github.com/Ship-AI-Club/events/issues/new?title=Topic%3A%20";
 
 const SPONSORS = [
-  { href: "https://www.ceigateway.com/", name: "CEI Gateway", img: "/sponsor-cei.png" },
   { href: "https://www.workuity.com/", name: "Workuity", img: "/sponsor-workuity.png" },
+  { href: "https://www.ceigateway.com/", name: "CEI Gateway", img: "/sponsor-cei.png" },
   { href: "https://www.desic.xyz/", name: "desic", img: "/sponsor-desic.svg", wordmark: true },
 ];
 

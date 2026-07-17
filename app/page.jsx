@@ -229,6 +229,24 @@ export default async function Page() {
           </div>
         </section>
 
+        <section className="sponsor-strip reveal" style={{ "--d": "600ms" }} aria-label="Sponsors">
+          <span className="strip-label">sponsors</span>
+          {SPONSORS.map((s) => (
+            <a
+              key={s.name}
+              href={s.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={s.name}
+              title={s.name}
+              className="sponsor"
+            >
+              <img src={s.img} alt={s.name} className="sponsor-logo" />
+              {s.wordmark && <span className="sponsor-name">{s.name}</span>}
+            </a>
+          ))}
+        </section>
+
         <section id="format" className="section">
           <p className="kicker">The Socratic Night</p>
           <h2>Every session runs the same spine.</h2>
@@ -372,28 +390,6 @@ export default async function Page() {
           </p>
         </section>
 
-        <section id="sponsors" className="section">
-          <p className="kicker">Sponsors</p>
-          <p className="section-lede">
-            The venues and teams that keep every session free and public.
-          </p>
-          <div className="sponsors">
-            {SPONSORS.map((s) => (
-              <a
-                key={s.name}
-                href={s.href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={s.name}
-                title={s.name}
-                className="sponsor"
-              >
-                <img src={s.img} alt={s.name} className="sponsor-logo" />
-                {s.wordmark && <span className="sponsor-name">{s.name}</span>}
-              </a>
-            ))}
-          </div>
-        </section>
       </main>
 
       <footer className="footer">

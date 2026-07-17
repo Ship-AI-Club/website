@@ -230,8 +230,9 @@ export default async function Page() {
         </section>
 
         <section className="sponsor-strip reveal" style={{ "--d": "600ms" }} aria-label="Sponsors">
-          <span className="strip-label">sponsors</span>
-          {SPONSORS.map((s) => (
+          <p className="strip-label">proudly sponsored by</p>
+          <div className="sponsor-row">
+            {SPONSORS.map((s) => (
             <a
               key={s.name}
               href={s.href}
@@ -244,7 +245,8 @@ export default async function Page() {
               <img src={s.img} alt={s.name} className="sponsor-logo" />
               {s.wordmark && <span className="sponsor-name">{s.name}</span>}
             </a>
-          ))}
+            ))}
+          </div>
         </section>
 
         <section id="format" className="section">

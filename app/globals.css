@@ -504,21 +504,24 @@ h3 .icon {
 .sponsor-strip {
   max-width: 68rem;
   margin: 0 auto;
-  padding: 1.75rem clamp(1.25rem, 5vw, 4rem);
-  display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
-  gap: clamp(1.1rem, 4vw, 3rem);
+  padding: 2.25rem clamp(1.25rem, 5vw, 4rem) 2.5rem;
   border-top: 1px solid var(--hairline);
 }
 
 .strip-label {
   font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--faint);
-  flex-shrink: 0;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.sponsor-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: clamp(1.25rem, 5vw, 4rem);
 }
 
 .sponsor {
@@ -530,7 +533,7 @@ h3 .icon {
 }
 
 .sponsor-logo {
-  height: clamp(1.35rem, 3.2vw, 2.1rem);
+  height: clamp(1.7rem, 5vw, 3.2rem);
   width: auto;
   max-width: none; /* the global img reset collapses intrinsic width inside inline-flex */
   /* white monochrome so every mark sits on-brand against black */
@@ -539,7 +542,7 @@ h3 .icon {
 
 .sponsor-name {
   font-family: var(--font-geist-mono), monospace;
-  font-size: clamp(0.85rem, 2.2vw, 1.05rem);
+  font-size: clamp(1.05rem, 2.8vw, 1.5rem);
   letter-spacing: 0.02em;
   color: var(--ink);
 }
@@ -550,11 +553,6 @@ h3 .icon {
   }
 }
 
-@media (max-width: 640px) {
-  .strip-label {
-    display: none;
-  }
-}
 
 /* host */
 

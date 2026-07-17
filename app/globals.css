@@ -502,6 +502,7 @@ h3 .icon {
 /* sponsors — single-row strip under the hero */
 
 .sponsor-strip {
+  display: block; /* .reveal's inline-block would shrink-wrap and defeat the auto margins */
   max-width: 68rem;
   margin: 0 auto;
   padding: 2.25rem clamp(1.25rem, 5vw, 4rem) 2.5rem;

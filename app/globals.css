@@ -554,6 +554,24 @@ h3 .icon {
   }
 }
 
+.strip-cta {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--faint);
+}
+
+.strip-cta a {
+  color: var(--dim);
+  border-bottom: 1px solid var(--accent);
+  transition: color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .strip-cta a:hover {
+    color: var(--accent);
+  }
+}
+
 
 /* host */
 

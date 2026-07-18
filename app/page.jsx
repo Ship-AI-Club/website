@@ -247,6 +247,10 @@ export default async function Page() {
             </a>
             ))}
           </div>
+          <p className="strip-cta">
+            Seeking corporate sponsors — help keep every session free and public.{" "}
+            <a href="mailto:santos.d.hernandez@gmail.com?subject=Sponsoring%20Ship%20AI">Get in touch</a>
+          </p>
         </section>
 
         <section id="format" className="section">

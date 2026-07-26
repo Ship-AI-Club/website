@@ -333,7 +333,7 @@ const FAQS = [
   },
   {
     q: "How do I sponsor, judge or mentor?",
-    a: "Email santos.d.hernandez@gmail.com or say so in the Discord. Sponsorship closes October 2 so prize amounts can go on this page before registration opens up.",
+    a: "Say so in the Discord and Santos will pick it up, or use the sponsor links on this page. Sponsorship closes October 2 so prize amounts can go on this page before registration opens up.",
   },
 ];
 

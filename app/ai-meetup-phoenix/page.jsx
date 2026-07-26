@@ -2,9 +2,9 @@ import { Article, Faq, JsonLd, faqSchema, articleSchema, EventList } from "../..
 import { getUpcomingEvents } from "../../lib/meetup";
 
 const UPDATED = "July 2026";
-const TITLE = "AI Meetup in Phoenix: Ship AI Socratic Nights";
+const TITLE = "AI Meetup in Phoenix: Ship AI";
 const DESCRIPTION =
-  "Ship AI runs a recurring AI meetup in Phoenix, Arizona — Socratic Nights on Camelback Road with an AI news briefing, member-voted discussion topics, and 5-minute demos. RSVP free on Meetup.";
+  "Ship AI runs a recurring AI meetup in Phoenix, Arizona — workshops and builder presentations on Camelback Road, with an AI news briefing and 5-minute demos every session. RSVP free on Meetup.";
 
 export const metadata = {
   title: `${TITLE} — Ship AI`,
@@ -16,7 +16,7 @@ export const metadata = {
 const FAQS = [
   {
     q: "Where does the Ship AI Phoenix meetup happen?",
-    a: "Socratic Nights meet at 2390 E Camelback Rd #130 in Phoenix, Arizona (the Camelback Corridor / Biltmore area). Always check the specific event listing on Meetup or Luma — venues are confirmed per event.",
+    a: "Ship AI meets at 2390 E Camelback Rd #130 in Phoenix, Arizona (the Camelback Corridor / Biltmore area), with some sessions at CEI Gateway on N Gateway Dr. Always check the specific event listing on Meetup or Luma — venues are confirmed per event.",
   },
   {
     q: "Who attends the Phoenix Ship AI meetup?",
@@ -44,7 +44,7 @@ export default async function Page() {
         <p className="article-lede">
           <strong>Ship AI</strong> runs a recurring AI meetup in Phoenix, Arizona for
           technical founders and builders. The format is the{" "}
-          <a href="/socratic-night">Socratic Night</a>: an AI news briefing, group
+          <a href="/hackathon/workshops">workshop or builder presentation</a>: an AI news briefing, the main session, then
           discussion of member-voted topics, and 5-minute demos of things members actually
           shipped. Demos over memos — no slideware, no hard selling.
         </p>
@@ -60,7 +60,7 @@ export default async function Page() {
 
         <h2>Where and when</h2>
         <p>
-          Socratic Nights in Phoenix meet at <strong>2390 E Camelback Rd #130</strong> in
+          Ship AI sessions in Phoenix meet at <strong>2390 E Camelback Rd #130</strong> in
           the Camelback Corridor. Exact dates and times are on the{" "}
           <a href="https://www.meetup.com/shipai/" target="_blank" rel="noreferrer">Meetup group</a>{" "}
           and <a href="https://luma.com/shipai" target="_blank" rel="noreferrer">Luma calendar</a>{" "}

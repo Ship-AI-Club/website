@@ -1,0 +1,189 @@
+import { AlertTriangle, ArrowRight, CheckCircle2 } from "lucide-react";
+import { siGithub } from "simple-icons";
+import { JsonLd } from "../../../components/article";
+
+const DISCORD = "https://discord.gg/kZSJMNveYM";
+const DEADLINE = "12:00 PM MST, Sunday October 18, 2026";
+const SUBMIT_ISSUE =
+  "https://github.com/Ship-AI-Club/events/issues/new?template=hackathon-submission.md&labels=hackathon&title=Submission%3A%20";
+const SUBMISSIONS_LIST =
+  "https://github.com/Ship-AI-Club/events/issues?q=is%3Aissue+label%3Ahackathon";
+
+const TITLE = "Submit your project — Zero to Launch";
+const DESCRIPTION =
+  "Submission requirements and deadline for Zero to Launch, the Ship AI hackathon. One public GitHub issue per team, due 12:00 PM MST Sunday October 18, 2026.";
+
+export const metadata = {
+  title: `${TITLE} — Ship AI`,
+  description: DESCRIPTION,
+  alternates: { canonical: "https://www.shipai.club/hackathon/submit" },
+  openGraph: { title: TITLE, description: DESCRIPTION },
+  robots: { index: true, follow: true },
+};
+
+const FIELDS = [
+  {
+    name: "Project name",
+    copy: "What it's called.",
+  },
+  {
+    name: "Team",
+    copy: "Names plus GitHub or X handles. One to four people, one team per person.",
+  },
+  {
+    name: "Track and category",
+    copy: "B2C or B2B, and which of the four categories you're entering. One category per team — if you win one you're out of the running for the others.",
+  },
+  {
+    name: "Live URL",
+    required: true,
+    copy: "Publicly reachable, working, and not behind a login. This is the one field with no substitute: an entry without a live URL cannot place.",
+  },
+  {
+    name: "What it does",
+    copy: "Two or three sentences. What it is and who it's for.",
+  },
+  {
+    name: "What you launched this weekend",
+    copy: "The launch itself — where, to whom, when. Link the post, the listing, the email, the thread. Whatever the launch actually was.",
+  },
+  {
+    name: "Receipts",
+    required: true,
+    copy: "Numbers with evidence you can put on screen Sunday: visitors, signups, revenue, replies, conversion. Screenshots are fine. Small and true beats big and vague — and zero is a real answer if you can say what you learned from it.",
+  },
+  {
+    name: "Growth engine",
+    copy: "The one channel you'd run again next month. How it works, what it produced this weekend, and why it repeats without a hero effort.",
+  },
+  {
+    name: "Repo",
+    copy: "Optional. Open source is welcome but not required — you keep 100% of your IP.",
+  },
+];
+
+export default function Page() {
+  return (
+    <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: TITLE,
+          description: DESCRIPTION,
+          url: "https://www.shipai.club/hackathon/submit",
+          isPartOf: { "@type": "WebPage", url: "https://www.shipai.club/hackathon" },
+        }}
+      />
+
+      <header className="nav">
+        <a href="/" className="brand">
+          <img src="/logo-icon.png" alt="" width={26} height={26} />
+          <span>Ship AI</span>
+        </a>
+        <nav>
+          <a href="/hackathon">Hackathon</a>
+          <a href="/hackathon#rules">Rules</a>
+          <a href="/hackathon#prizes">Prizes</a>
+        </nav>
+        <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
+          Join the Discord
+        </a>
+      </header>
+
+      <main className="hk-submit-page">
+        <p className="kicker">Zero to Launch</p>
+        <h1>Submit your project</h1>
+
+        <p className="hk-deadline">
+          <AlertTriangle size={16} strokeWidth={1.75} aria-hidden="true" />
+          Deadline: <strong>{DEADLINE}</strong>. No late submissions.
+        </p>
+
+        <p className="article-lede">
+          One submission per team, filed as a public issue on the Ship AI events repo. It
+          takes about ten minutes if you have your numbers ready, so read this Friday rather
+          than at 11:50 on Sunday.
+        </p>
+
+        <div className="cta-row hk-submit-cta">
+          <a className="btn btn-solid" href={SUBMIT_ISSUE} target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true">
+              <path d={siGithub.path} />
+            </svg>
+            Open a submission
+          </a>
+          <a className="btn btn-ghost" href={SUBMISSIONS_LIST} target="_blank" rel="noreferrer">
+            See all submissions
+          </a>
+        </div>
+        <p className="hk-note">
+          The button opens a prefilled GitHub issue. You&apos;ll need a GitHub account — free,
+          and about a minute to make. Stuck? Post in{" "}
+          <a href={DISCORD} target="_blank" rel="noreferrer">the Discord</a> before the
+          deadline, not after.
+        </p>
+
+        <h2 className="hk-subhead">What the form asks for</h2>
+        <ol className="hk-fields">
+          {FIELDS.map((f) => (
+            <li key={f.name}>
+              <p className="hk-field-name">
+                {f.name}
+                {f.required && <span className="hk-field-req">required</span>}
+              </p>
+              <p>{f.copy}</p>
+            </li>
+          ))}
+        </ol>
+
+        <h2 className="hk-subhead">Before you hit submit</h2>
+        <ul className="hk-check">
+          <li>
+            <CheckCircle2 size={16} strokeWidth={1.75} aria-hidden="true" />
+            Open your live URL in a private window. If it doesn&apos;t load for a stranger, it
+            doesn&apos;t count.
+          </li>
+          <li>
+            <CheckCircle2 size={16} strokeWidth={1.75} aria-hidden="true" />
+            Have your analytics or dashboard open in a tab for the pitch. Judges will ask.
+          </li>
+          <li>
+            <CheckCircle2 size={16} strokeWidth={1.75} aria-hidden="true" />
+            Pick one category. Entering everything reads as not knowing what you built.
+          </li>
+          <li>
+            <CheckCircle2 size={16} strokeWidth={1.75} aria-hidden="true" />
+            Five minutes plus three of questions, live product on screen. Time it once.
+          </li>
+        </ul>
+
+        <p className="rule-line">receipts required</p>
+
+        <div className="cta-row hk-submit-cta">
+          <a className="btn btn-solid" href={SUBMIT_ISSUE} target="_blank" rel="noreferrer">
+            Open a submission
+          </a>
+          <a className="btn btn-ghost" href="/hackathon">
+            Back to the hackathon
+            <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
+          </a>
+        </div>
+      </main>
+
+      <footer className="footer">
+        <div className="brand">
+          <img src="/logo-icon.png" alt="" width={22} height={22} />
+          <span>Ship AI</span>
+        </div>
+        <p>Phoenix &amp; Tempe, Arizona</p>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/hackathon">Hackathon</a>
+          <a href="/hackathon/workshops">Workshops</a>
+        </nav>
+        <p className="fine">© 2026 Ship AI</p>
+      </footer>
+    </>
+  );
+}

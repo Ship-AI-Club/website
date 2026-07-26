@@ -1,22 +1,32 @@
 import {
   ArrowRight,
+  BadgeCheck,
+  Scale,
   CalendarDays,
   Gem,
   Globe,
   GraduationCap,
   Hammer,
   MapPin,
-  MessageSquarePlus,
-  MessagesSquare,
   MonitorPlay,
-  Presentation,
-  Radio,
+  Rocket,
+  Ticket,
   Users,
   Zap,
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { getUpcomingEvents } from "../lib/meetup";
 import { JsonLd } from "../components/article";
+import {
+  EVENT,
+  ASCII_ZERO,
+  ASCII_TO,
+  ASCII_LAUNCH,
+  WORKSHOPS,
+  ACTS,
+  venueOf,
+  GTM_DECK,
+} from "../lib/hackathon";
 
 const DISCORD = "https://discord.gg/kZSJMNveYM";
 const MEETUP = "https://www.meetup.com/shipai/";
@@ -40,7 +50,6 @@ const SOCIALS = [
   { href: X_URL, label: "X", glyph: <BrandGlyph icon={siX} /> },
   { href: GITHUB, label: "GitHub", glyph: <BrandGlyph icon={siGithub} /> },
 ];
-const SUBMIT_TOPIC = "https://github.com/Ship-AI-Club/events/issues/new?title=Topic%3A%20";
 
 const SPONSORS = [
   { href: "https://www.workuity.com/", name: "Workuity", img: "/sponsor-workuity.png" },
@@ -69,30 +78,6 @@ const ASCII_MEMOS = `███╗   ███╗ ███████╗ ██
 ██║ ╚═╝ ██║ ███████╗ ██║ ╚═╝ ██║ ╚██████╔╝ ███████║
 ╚═╝     ╚═╝ ╚══════╝ ╚═╝     ╚═╝  ╚═════╝  ╚══════╝`;
 
-const format = [
-  {
-    n: "01",
-    icon: Radio,
-    time: "first 20 min",
-    title: "AI News Briefing",
-    copy: "What changed this week and why it matters for what you're building. Signal only.",
-  },
-  {
-    n: "02",
-    icon: MessagesSquare,
-    time: "main session",
-    title: "Socratic Rounds",
-    copy: "The topics you voted for, argued out as a room. Questions first, hot takes welcome, receipts required.",
-  },
-  {
-    n: "03",
-    icon: Presentation,
-    time: "closing",
-    title: "5-Minute Demos",
-    copy: "Five minutes, your build, live. What it does, how it's made, what broke along the way.",
-  },
-];
-
 const values = [
   {
     title: "Free and open",
@@ -120,9 +105,19 @@ const values = [
     copy: "We push models past the defaults and past the docs, then turn what we find into product experiences nobody's shipped yet.",
   },
   {
+    title: "Honest starting points",
+    icon: Scale,
+    copy: "Say where you actually are, not where you'd like to sound. Half-built, no users, revenue flat, six months in with nothing shipped — all fine, and all workable. We can't help you from a position you're pretending to be in, and nothing solid gets built on an inflated baseline.",
+  },
+  {
+    title: "Proof of work",
+    icon: BadgeCheck,
+    copy: "Show the work and prove it. Screenshots, commits, the dashboard, the number that didn't go up. We'd rather see a small real result than hear a big vague one — claims are cheap and everyone has them.",
+  },
+  {
     title: "Community-driven",
     icon: Users,
-    copy: "Members set the agenda. Every topic is submitted and voted on before it hits the floor — the room decides what's worth debating.",
+    copy: "Members set the agenda. Sessions are proposed and voted on before they hit the calendar — the room decides what it wants to learn and who teaches it.",
   },
 ];
 
@@ -170,7 +165,7 @@ function eventsSchema(events) {
 }
 
 export default async function Page() {
-  const events = await getUpcomingEvents(4);
+  const events = await getUpcomingEvents(1);
 
   return (
     <>
@@ -182,8 +177,8 @@ export default async function Page() {
           <span>Ship AI</span>
         </a>
         <nav>
-          <a href="#format">Format</a>
-          <a href="#events">Events</a>
+          <a href="/hackathon/workshops">Workshops</a>
+          <a href="/hackathon">Hackathon</a>
           <a href={GITHUB} target="_blank" rel="noreferrer">GitHub</a>
         </nav>
         <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
@@ -195,36 +190,50 @@ export default async function Page() {
         <section className="hero">
           <p className="eyebrow reveal" style={{ "--d": "0ms" }}>
             <a href="/standby" className="node" aria-label="Standby screen" />
-            phx · tpe — ai craftspeople
+            ship ai · phx — demos over memos
           </p>
-          <h1 className="sr-only">Demos over memos.</h1>
+          <h1 className="sr-only">Zero to Launch — the Ship AI hackathon.</h1>
           <div className="hero-title" aria-hidden="true">
             <div className="reveal" style={{ "--d": "80ms" }}>
-              <pre className="ascii">{ASCII_DEMOS}</pre>
+              <pre className="ascii">{ASCII_ZERO}</pre>
             </div>
             <div className="reveal" style={{ "--d": "160ms" }}>
-              <pre className="ascii">{ASCII_OVER}</pre>
+              <pre className="ascii">{ASCII_TO}</pre>
             </div>
-            <div className="reveal memos" style={{ "--d": "240ms" }}>
-              <pre className="ascii ascii-memos">{ASCII_MEMOS}</pre>
-              <span className="strike" />
+            <div className="reveal" style={{ "--d": "240ms" }}>
+              <pre className="ascii ascii-accent">{ASCII_LAUNCH}</pre>
             </div>
           </div>
           <p className="lede reveal" style={{ "--d": "280ms" }}>
-            Free, public AI education in Phoenix &amp; Tempe — open sessions, workshops, and
-            knowledge-sharing for builders who've shipped and want to go deeper. We learn by
-            showing the work: the build, the workflow, the decisions behind it. No slideware,
-            no hard sell. If it ships, it speaks.
+            You&apos;ve been building for months and launched nothing. Six free sessions on
+            how to go to market, then a hackathon in October where you don&apos;t build — you
+            launch. Bring the product you&apos;ve been sitting on, or start when the build
+            window opens {EVENT.buildOpensShort}. Judged on what shipped, not what you demoed.
           </p>
           <div className="cta-row reveal" style={{ "--d": "380ms" }}>
-            <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">
+            <a className="btn btn-solid" href="/hackathon">
+              The hackathon
+              <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
+            </a>
+            <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
               Join the Discord
             </a>
-            <a className="btn btn-ghost" href={MEETUP} target="_blank" rel="noreferrer">
-              RSVP on Meetup
-            </a>
           </div>
-          <div className="hero-foot reveal" style={{ "--d": "500ms" }}>
+          <div className="hk-hero-facts reveal" style={{ "--d": "460ms" }}>
+            <span>
+              <CalendarDays size={13} strokeWidth={1.75} aria-hidden="true" />
+              Sessions {EVENT.seriesRange}
+            </span>
+            <span>
+              <Rocket size={13} strokeWidth={1.75} aria-hidden="true" />
+              Hackathon {EVENT.datesShort}
+            </span>
+            <span>
+              <Ticket size={13} strokeWidth={1.75} aria-hidden="true" />
+              Free · teams of 1–4
+            </span>
+          </div>
+          <div className="hero-foot reveal" style={{ "--d": "560ms" }}>
             <PixelTrail />
           </div>
         </section>
@@ -253,30 +262,87 @@ export default async function Page() {
           </p>
         </section>
 
-        <section id="format" className="section">
-          <p className="kicker">The Socratic Night</p>
-          <h2>Every session runs the same spine.</h2>
-          <ol className="format-list">
-            {format.map((f) => (
-              <li key={f.n}>
-                <div className="format-head">
-                  <span className="format-n">{f.n}</span>
-                  <span className="format-time">{f.time}</span>
-                </div>
-                <h3>
-                  <f.icon className="icon" size={18} strokeWidth={1.75} aria-hidden="true" />
-                  {f.title}
-                </h3>
-                <p>{f.copy}</p>
+        <section className="hk-promo reveal" style={{ "--d": "660ms" }} aria-labelledby="hk-promo-title">
+          <div className="hk-promo-inner">
+            <div>
+              <p className="hk-promo-tag">
+                <Rocket size={14} strokeWidth={1.75} aria-hidden="true" />
+                Running now — our current program
+              </p>
+              <h2 id="hk-promo-title">Zero to Launch.</h2>
+              <p className="hk-promo-copy">
+                Ship AI runs a program at a time. This one is for builders who ship
+                constantly and launch nothing. Six free sessions build the go-to-market,
+                then a hackathon in October where you don&apos;t build — you launch. Half-built
+                is fine on the Friday. Live is the point by Sunday.
+              </p>
+              <p className="hk-promo-meta">
+                <span>
+                  <CalendarDays size={13} strokeWidth={1.75} aria-hidden="true" />
+                  {EVENT.seriesRange}
+                </span>
+                <span>
+                  <MapPin size={13} strokeWidth={1.75} aria-hidden="true" />
+                  Workuity Biltmore &amp; CEI Gateway
+                </span>
+                <span>
+                  <Ticket size={13} strokeWidth={1.75} aria-hidden="true" />
+                  Free · teams of 1–4
+                </span>
+              </p>
+            </div>
+            <div className="hk-promo-cta">
+              <a className="btn btn-solid" href="/hackathon">
+                The hackathon
+                <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
+              </a>
+              <a className="btn btn-ghost" href="/hackathon#sponsor">
+                Sponsor it
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="program" className="section">
+          <p className="kicker">The curriculum</p>
+          <h2>Six sessions, then you launch.</h2>
+          <p className="section-lede">
+            The whole go-to-market framework, taught in order, straight off{" "}
+            <a href={GTM_DECK} target="_blank" rel="noreferrer">the deck</a>. Every session
+            is free and open whether you compete in October or not — and each one stands
+            alone, so dropping into one is a perfectly normal way to show up.
+          </p>
+          <div className="hk-acts">
+            {ACTS.map((a) => (
+              <div key={a.name} className="hk-act">
+                <span className="hk-act-name">{a.name}</span>
+                <span className="hk-act-range">{a.range}</span>
+                <p>{a.copy}</p>
+              </div>
+            ))}
+          </div>
+          <ol className="hk-series">
+            {WORKSHOPS.map((w) => (
+              <li key={w.slug}>
+                <a href={`/hackathon/workshops/${w.slug}`}>
+                  <span className="hk-series-n">{w.n}</span>
+                  <span className="hk-series-date">{w.date}</span>
+                  <span className="hk-series-title">
+                    {w.eventTitle}
+                    {w.audience && <span className="hk-ws-aud">{w.audience}</span>}
+                  </span>
+                  <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
+                </a>
               </li>
             ))}
           </ol>
-          <p className="rule-line">questions first · hot takes welcome · receipts required</p>
-          <p className="submit-topic">
-            <MessageSquarePlus size={16} strokeWidth={1.75} aria-hidden="true" />
-            Got a topic or a hot take?{" "}
-            <a href={SUBMIT_TOPIC} target="_blank" rel="noreferrer">Submit it on GitHub</a>
-            {" "}— the community votes it into a session.
+          <p className="hk-note">
+            Sessions alternate between{" "}
+            <a href={venueOf(WORKSHOPS[0]).url} target="_blank" rel="noreferrer">Workuity Biltmore</a>{" "}
+            on the first Wednesday of the month and{" "}
+            <a href={venueOf(WORKSHOPS[1]).url} target="_blank" rel="noreferrer">CEI Gateway</a>{" "}
+            two Wednesdays later.{" "}
+            <a href="/hackathon/workshops">See the full curriculum</a>.
           </p>
         </section>
 
@@ -316,7 +382,7 @@ export default async function Page() {
             <div className="aud-col aud-not">
               <p className="aud-head">Maybe not yet if</p>
               <ul>
-                <li>You're brand new to AI and haven't built anything yet — get the fundamentals down, then come.</li>
+                <li>You want to watch rather than build. Half-finished counts, and nothing yet counts too — the build window opens Aug 3.</li>
                 <li>You're here to hard-sell or fill a lead list.</li>
                 <li>"AI-powered" is the whole pitch and there's no build behind it.</li>
               </ul>
@@ -362,7 +428,7 @@ export default async function Page() {
         </section>
 
         <section id="events" className="section">
-          <p className="kicker">Upcoming</p>
+          <p className="kicker">Up next</p>
           <h2>Come see something get shipped.</h2>
           {events.length > 0 ? (
             <div className="events">
@@ -391,8 +457,10 @@ export default async function Page() {
             </p>
           )}
           <p className="events-more">
-            Full calendar on <a href={LUMA} target="_blank" rel="noreferrer">Luma</a> and{" "}
-            <a href={MEETUP} target="_blank" rel="noreferrer">Meetup</a>.
+            The rest of the calendar lives on{" "}
+            <a href={LUMA} target="_blank" rel="noreferrer">Luma</a> and{" "}
+            <a href={MEETUP} target="_blank" rel="noreferrer">Meetup</a> — or see the{" "}
+            <a href="/hackathon/workshops">full curriculum</a>.
           </p>
         </section>
 
@@ -405,7 +473,7 @@ export default async function Page() {
         </div>
         <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
-          <a href="/socratic-night">Socratic Night</a>
+          <a href="/hackathon/workshops">Workshops</a>
           <a href="/ai-meetup-phoenix">Phoenix</a>
           <a href="/ai-meetup-tempe">Tempe</a>
         </nav>

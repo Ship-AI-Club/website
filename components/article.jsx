@@ -72,7 +72,7 @@ export function Article({ kicker, title, updated, children }) {
         </div>
         <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
-          <a href="/socratic-night">Socratic Night</a>
+          <a href="/hackathon/workshops">Workshops</a>
           <a href="/ai-meetup-phoenix">Phoenix</a>
           <a href="/ai-meetup-tempe">Tempe</a>
           <a href="/">Home</a>

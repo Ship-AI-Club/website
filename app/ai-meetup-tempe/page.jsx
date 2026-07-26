@@ -4,7 +4,7 @@ import { getUpcomingEvents } from "../../lib/meetup";
 const UPDATED = "July 2026";
 const TITLE = "AI Meetup in Tempe: Ship AI Builder Sessions";
 const DESCRIPTION =
-  "Ship AI runs AI builder events in Tempe, Arizona — hands-on Saturday sessions and Socratic Nights for technical founders and engineers shipping with LLMs, agents, and modern AI tooling. RSVP on Meetup.";
+  "Ship AI runs AI builder events in Tempe, Arizona — hands-on sessions and workshops for technical founders and engineers shipping with LLMs, agents, and modern AI tooling. RSVP on Meetup.";
 
 export const metadata = {
   title: `${TITLE} — Ship AI`,
@@ -20,7 +20,7 @@ const FAQS = [
   },
   {
     q: "How are Tempe sessions different from the Phoenix ones?",
-    a: "Tempe has hosted Ship AI's longer-form Saturday sessions — hands-on, workshop-style deep dives — while Phoenix hosts the evening Socratic Nights. Both follow the community's demos-over-memos ethos.",
+    a: "Tempe has hosted Ship AI's longer-form Saturday sessions — hands-on, workshop-style deep dives — while Phoenix hosts the evening workshops and builder presentations. Both follow the community's demos-over-memos ethos.",
   },
   {
     q: "Do I need to bring anything to a Tempe session?",
@@ -43,7 +43,7 @@ export default async function Page() {
       <Article kicker="Tempe, Arizona" title={TITLE} updated={UPDATED}>
         <p className="article-lede">
           <strong>Ship AI</strong> runs AI builder events in Tempe, Arizona — part of the
-          same community that hosts <a href="/socratic-night">Socratic Nights</a> in{" "}
+          same community that hosts <a href="/hackathon/workshops">workshops and presentations</a> in{" "}
           <a href="/ai-meetup-phoenix">Phoenix</a>. Tempe sessions lean hands-on: Saturday
           deep dives where builders work through agentic workflows, modern AI toolchains,
           and what it takes to get an AI product from prototype to production.
@@ -79,7 +79,7 @@ export default async function Page() {
           Phoenix and Tempe events share one member base, one Discord, and one agenda
           process — topics and demo requests are submitted on GitHub and voted on by the
           community. If you're near Arizona State University or the East Valley, Tempe is
-          your closest session; the <a href="/ai-meetup-phoenix">Phoenix Socratic Nights</a>{" "}
+          your closest session; the <a href="/ai-meetup-phoenix">Phoenix sessions</a>{" "}
           on Camelback Road are fifteen minutes away.
         </p>
 

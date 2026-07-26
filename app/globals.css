@@ -944,3 +944,1349 @@ h3 .icon {
     scroll-behavior: auto;
   }
 }
+
+/* ==================================================================
+   Hackathon — /hackathon and /hackathon/submit
+================================================================== */
+
+.ascii-accent {
+  color: var(--accent);
+}
+
+.hk-hero {
+  padding-bottom: 3rem;
+}
+
+/* fact strip under the hero */
+
+.hk-facts {
+  display: grid; /* overrides .reveal's inline-block */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--hairline);
+  max-width: 68rem;
+  margin: 0 auto;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.hk-fact {
+  background: var(--bg);
+  padding: 1.5rem clamp(1rem, 3vw, 1.75rem);
+}
+
+.hk-fact-label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 0.5rem;
+}
+
+.hk-fact-value {
+  font-size: 0.98rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.hk-thesis {
+  margin-top: 2.75rem;
+}
+
+/* shared sub-heading inside a section */
+
+.hk-subhead {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 1.25rem;
+  margin: 3.5rem 0 1.5rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.hk-note {
+  margin-top: 1.75rem;
+  font-size: 0.9rem;
+  color: var(--faint);
+  line-height: 1.6;
+}
+
+.hk-note a {
+  color: var(--accent);
+  border-bottom: 1px solid rgba(103, 143, 242, 0.4);
+}
+
+/* schedule */
+
+.hk-days {
+  display: grid;
+  gap: 3rem;
+}
+
+.hk-day-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 0.9rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.hk-day-name {
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hk-day-date {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--faint);
+}
+
+.hk-day-head h3 {
+  font-size: 1.35rem;
+  width: 100%;
+}
+
+.hk-agenda {
+  list-style: none;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.hk-slot {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 1.25rem;
+  align-items: baseline;
+}
+
+.hk-slot-time {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.85rem;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.hk-slot-name {
+  font-size: 1rem;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.hk-slot-copy {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--dim);
+  max-width: 44rem;
+}
+
+.hk-slot-link {
+  margin-top: 0.6rem;
+}
+
+.hk-slot-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.82rem;
+  color: var(--accent);
+}
+
+.hk-slot-hard .hk-slot-time,
+.hk-slot-hard .hk-slot-name {
+  color: var(--accent);
+}
+
+/* tracks */
+
+.hk-tracks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem 3.5rem;
+}
+
+.hk-track-tag {
+  display: inline-block;
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 0.25rem 0.55rem;
+  margin-bottom: 1rem;
+}
+
+.hk-track h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.hk-track-lede {
+  color: var(--dim);
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+
+.hk-track ul {
+  list-style: none;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.hk-track li {
+  position: relative;
+  padding-left: 1.4rem;
+  color: var(--dim);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.hk-track li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  font-family: var(--font-geist-mono), monospace;
+  color: var(--accent);
+}
+
+/* prize categories */
+
+.hk-cats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+}
+
+.hk-cat {
+  background: var(--bg);
+  padding: 1.75rem;
+}
+
+.hk-cat .icon {
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.hk-cat h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+}
+
+.hk-cat p {
+  color: var(--dim);
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+
+/* judging criteria */
+
+.hk-criteria {
+  list-style: none;
+  display: grid;
+  gap: 1.75rem;
+  max-width: 46rem;
+}
+
+.hk-crit-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.hk-crit-pct {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.9rem;
+  color: var(--accent);
+  min-width: 2.75rem;
+}
+
+.hk-crit-name {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.hk-crit-bar {
+  display: block;
+  height: 2px;
+  background: var(--hairline);
+  margin: 0.6rem 0 0.65rem;
+  position: relative;
+}
+
+.hk-crit-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--pct);
+  background: var(--accent);
+}
+
+.hk-criteria p {
+  color: var(--dim);
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+
+/* rules */
+
+.hk-rules {
+  list-style: none;
+  display: grid;
+  gap: 1.1rem;
+  max-width: 50rem;
+  counter-reset: none;
+}
+
+.hk-rules li {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: 0.75rem;
+  color: var(--dim);
+  font-size: 0.97rem;
+  line-height: 1.6;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.hk-rules li:last-child {
+  border-bottom: 0;
+}
+
+.hk-rule-n {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+/* submit band on /hackathon */
+
+.hk-submit-band {
+  text-align: center;
+}
+
+.hk-submit-band svg {
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+}
+
+.hk-submit-band h2 {
+  max-width: none;
+  margin-bottom: 1.25rem;
+}
+
+.hk-submit-band p {
+  color: var(--dim);
+  max-width: 40rem;
+  margin: 0 auto 2rem;
+  line-height: 1.65;
+}
+
+.hk-submit-band .cta-row {
+  justify-content: center;
+}
+
+/* sponsor tiers */
+
+.hk-tiers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+}
+
+.hk-tier {
+  background: var(--bg);
+  padding: 1.75rem;
+}
+
+.hk-tier-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.hk-tier-head h3 {
+  font-size: 1.15rem;
+}
+
+.hk-tier-price {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+
+.hk-tier-slots {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 0.75rem;
+}
+
+.hk-tier p {
+  color: var(--dim);
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
+
+.hk-inkind {
+  list-style: none;
+  display: grid;
+  gap: 0.85rem;
+  max-width: 50rem;
+}
+
+.hk-inkind li {
+  position: relative;
+  padding-left: 1.4rem;
+  color: var(--dim);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.hk-inkind li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  font-family: var(--font-geist-mono), monospace;
+  color: var(--accent);
+}
+
+/* judges & mentors */
+
+.hk-roles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem 3.5rem;
+}
+
+.hk-role h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.hk-role .icon {
+  color: var(--accent);
+}
+
+.hk-role-when {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.78rem;
+  color: var(--faint);
+  margin-bottom: 1rem;
+}
+
+.hk-role p {
+  color: var(--dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.hk-role-cta {
+  margin-top: 1.1rem;
+}
+
+.hk-role-cta a {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.85rem;
+  color: var(--accent);
+  border-bottom: 1px solid rgba(103, 143, 242, 0.4);
+}
+
+/* faq */
+
+.hk-faq {
+  display: grid;
+  gap: 2rem;
+  max-width: 50rem;
+}
+
+.hk-faq-item h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.6rem;
+}
+
+.hk-faq-item p {
+  color: var(--dim);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+/* closer */
+
+.hk-close {
+  text-align: center;
+}
+
+.hk-close h2 {
+  max-width: none;
+  margin-bottom: 2rem;
+}
+
+.hk-close .cta-row {
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+/* ---------- /hackathon/submit ---------- */
+
+.hk-submit-page {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 4rem clamp(1.25rem, 5vw, 4rem) 5rem;
+}
+
+.hk-submit-page h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 1.75rem;
+}
+
+.hk-deadline {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.88rem;
+  color: var(--dim);
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--hairline);
+  border-left: 2px solid var(--accent);
+  margin-bottom: 2rem;
+}
+
+.hk-deadline svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.hk-deadline strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.hk-submit-page .article-lede {
+  color: var(--dim);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.hk-submit-cta {
+  margin-bottom: 0.5rem;
+}
+
+.hk-submit-cta .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.hk-submit-page .hk-subhead {
+  font-size: 1.3rem;
+}
+
+.hk-fields {
+  list-style: none;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.hk-fields li {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.hk-fields li:last-child {
+  border-bottom: 0;
+}
+
+.hk-field-name {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.45rem;
+}
+
+.hk-field-req {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 0.15rem 0.4rem;
+}
+
+.hk-fields p {
+  color: var(--dim);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.hk-check {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+}
+
+.hk-check li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  align-items: start;
+  color: var(--dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.hk-check svg {
+  color: var(--accent);
+  margin-top: 0.2rem;
+}
+
+/* ---------- homepage promo module ---------- */
+
+.hk-promo {
+  display: block; /* .reveal's inline-block would shrink-wrap and defeat the auto margins */
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 3rem clamp(1.25rem, 5vw, 4rem);
+  border-top: 1px solid var(--hairline);
+}
+
+.hk-promo-inner {
+  border: 1px solid var(--hairline);
+  border-left: 2px solid var(--accent);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem 3rem;
+  align-items: center;
+}
+
+.hk-promo-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.9rem;
+}
+
+.hk-promo h2 {
+  font-size: clamp(1.4rem, 3.2vw, 2rem);
+  margin-bottom: 0.9rem;
+  letter-spacing: -0.03em;
+}
+
+.hk-promo-copy {
+  color: var(--dim);
+  font-size: 0.97rem;
+  line-height: 1.65;
+  max-width: 40rem;
+}
+
+.hk-promo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-top: 1.25rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--faint);
+}
+
+.hk-promo-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hk-promo-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.hk-promo-cta .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+
+/* ---------- hackathon responsive ---------- */
+
+@media (max-width: 860px) {
+  .hk-facts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hk-tracks,
+  .hk-cats,
+  .hk-tiers,
+  .hk-roles {
+    grid-template-columns: 1fr;
+  }
+
+  .hk-slot {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .hk-promo-inner {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+
+@media (max-width: 520px) {
+  .hk-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hk-day,
+    .hk-track,
+    .hk-cat,
+    .hk-tier,
+    .hk-role,
+    .hk-faq-item,
+    .hk-promo-inner {
+      animation: rise var(--ease-out-quint) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+/* ==================================================================
+   Zero to Launch — workshop series
+================================================================== */
+
+/* crowd favorite spans the category grid */
+
+.hk-cat-wide {
+  grid-column: 1 / -1;
+}
+
+.hk-cat h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.hk-cat-tag {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(103, 143, 242, 0.4);
+  padding: 0.1rem 0.4rem;
+  font-weight: 400;
+}
+
+/* the three acts */
+
+.hk-acts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+  margin-bottom: 2.5rem;
+}
+
+.hk-act {
+  background: var(--bg);
+  padding: 1.5rem;
+}
+
+.hk-act-name {
+  display: block;
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+
+.hk-act-range {
+  display: block;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  color: var(--faint);
+  margin-bottom: 0.8rem;
+}
+
+.hk-act p {
+  color: var(--dim);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* compact series list on /hackathon */
+
+.hk-series {
+  list-style: none;
+  border-top: 1px solid var(--hairline);
+}
+
+.hk-series li {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.hk-series a {
+  display: grid;
+  grid-template-columns: 2.5rem 6.5rem 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.9rem 0.25rem;
+  transition: background 0.2s var(--ease-out-quint), padding-left 0.2s var(--ease-out-quint);
+}
+
+.hk-series a:hover {
+  background: rgba(248, 248, 250, 0.03);
+  padding-left: 0.75rem;
+}
+
+.hk-series-n {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.hk-series-date {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.hk-series-title {
+  font-size: 0.97rem;
+  color: var(--ink);
+}
+
+.hk-series svg {
+  color: var(--faint);
+}
+
+.hk-series a:hover svg {
+  color: var(--accent);
+}
+
+/* ---------- workshops index ---------- */
+
+.hk-wsi {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 4rem clamp(1.25rem, 5vw, 4rem) 5rem;
+}
+
+.hk-wsi h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 1.75rem;
+}
+
+.hk-wsi .article-lede,
+.hk-ws .article-lede {
+  color: var(--dim);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.hk-wsi p,
+.hk-ws p {
+  color: var(--dim);
+  font-size: 0.97rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.hk-wsi a:not(.btn),
+.hk-ws a:not(.btn):not(.hk-ws-prev):not(.hk-ws-next) {
+  color: var(--accent);
+  border-bottom: 1px solid rgba(103, 143, 242, 0.4);
+}
+
+.hk-facts-bare {
+  border-left: 1px solid var(--hairline);
+  border-right: 1px solid var(--hairline);
+  margin-bottom: 2rem;
+}
+
+.hk-ws-list {
+  list-style: none;
+  display: grid;
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+}
+
+.hk-ws-list li {
+  background: var(--bg);
+}
+
+.hk-ws-list a {
+  display: block;
+  padding: 1.6rem;
+  border-bottom: 0 !important;
+  color: inherit !important;
+  transition: background 0.2s var(--ease-out-quint);
+}
+
+.hk-ws-list a:hover {
+  background: rgba(248, 248, 250, 0.03);
+}
+
+.hk-ws-head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.7rem;
+}
+
+.hk-ws-n {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.hk-ws-date {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--faint);
+}
+
+.hk-ws-act {
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 0.12rem 0.4rem;
+}
+
+.hk-ws-list h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.6rem;
+}
+
+.hk-ws-copy {
+  color: var(--dim);
+  font-size: 0.93rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem !important;
+}
+
+.hk-ws-take {
+  font-size: 0.9rem !important;
+  color: var(--faint) !important;
+  margin-bottom: 0.85rem !important;
+}
+
+.hk-ws-take strong {
+  color: var(--dim);
+  font-weight: 500;
+}
+
+.hk-ws-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+/* ---------- single workshop ---------- */
+
+.hk-ws {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 3rem clamp(1.25rem, 5vw, 4rem) 5rem;
+}
+
+.hk-ws-crumb {
+  margin-bottom: 2rem !important;
+}
+
+.hk-ws-crumb a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--faint) !important;
+  border-bottom: 0 !important;
+}
+
+.hk-ws-crumb a:hover {
+  color: var(--accent) !important;
+}
+
+.hk-ws-hero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: 1.75rem;
+}
+
+.hk-ws-bignum {
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  line-height: 0.85;
+  color: var(--accent);
+  opacity: 0.55;
+}
+
+.hk-ws-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--faint);
+  margin-bottom: 0.75rem !important;
+}
+
+.hk-ws h1 {
+  font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+}
+
+.hk-ws-rsvp {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.hk-ws-rsvp .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.hk-agenda-list {
+  list-style: none;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.hk-agenda-list li {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: 0.85rem;
+}
+
+.hk-agenda-n {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--accent);
+  padding-top: 0.15rem;
+}
+
+.hk-agenda-t {
+  color: var(--ink) !important;
+  font-weight: 500;
+  margin-bottom: 0.25rem !important;
+}
+
+.hk-agenda-list p {
+  font-size: 0.94rem;
+  margin-bottom: 0 !important;
+}
+
+.hk-ws-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+  margin: 2.5rem 0;
+}
+
+.hk-ws-card {
+  background: var(--bg);
+  padding: 1.4rem;
+}
+
+.hk-ws-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  font-family: var(--font-geist-mono), monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.7rem;
+  font-weight: 400;
+}
+
+.hk-ws-card p {
+  font-size: 0.94rem;
+  margin-bottom: 0 !important;
+}
+
+.hk-commit {
+  border: 1px solid var(--hairline);
+  border-left: 2px solid var(--accent);
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1rem !important;
+}
+
+.hk-commit code,
+.hk-skills code {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+.hk-skills {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.hk-skills li {
+  border: 1px solid var(--hairline);
+  padding: 0.35rem 0.7rem;
+}
+
+.hk-skills code {
+  color: var(--accent);
+}
+
+/* discord band, shared */
+
+.hk-discord {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.25rem;
+  align-items: center;
+  border: 1px solid var(--hairline);
+  border-left: 2px solid var(--accent);
+  padding: 1.5rem;
+  margin: 3rem 0;
+}
+
+.hk-discord > svg {
+  color: var(--accent);
+}
+
+.hk-discord h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.hk-discord p {
+  color: var(--dim);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin-bottom: 0 !important;
+}
+
+.hk-discord .btn {
+  white-space: nowrap;
+}
+
+/* prev / next */
+
+.hk-ws-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+}
+
+.hk-ws-nav a {
+  background: var(--bg);
+  padding: 1.25rem 1.4rem;
+  display: block;
+  transition: background 0.2s var(--ease-out-quint);
+}
+
+.hk-ws-nav a:hover {
+  background: rgba(248, 248, 250, 0.03);
+}
+
+.hk-ws-nav span {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  color: var(--faint);
+  margin-bottom: 0.4rem;
+}
+
+.hk-ws-nav strong {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.hk-ws-next {
+  text-align: right;
+}
+
+.hk-ws-next span {
+  justify-content: flex-end;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 860px) {
+  .hk-acts,
+  .hk-ws-grid,
+  .hk-ws-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .hk-series a {
+    grid-template-columns: 2.25rem 1fr auto;
+    row-gap: 0.2rem;
+  }
+
+  .hk-series-date {
+    grid-column: 2;
+  }
+
+  .hk-series-title {
+    grid-column: 2;
+  }
+
+  .hk-discord {
+    grid-template-columns: auto 1fr;
+  }
+
+  .hk-discord .btn {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .hk-ws-next {
+    text-align: left;
+  }
+
+  .hk-ws-next span {
+    justify-content: flex-start;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hk-act,
+    .hk-ws-list li,
+    .hk-agenda-list li {
+      animation: rise var(--ease-out-quint) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+.hk-ws-sub {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.82rem;
+  color: var(--faint);
+  margin-top: 0.5rem;
+  margin-bottom: 0 !important;
+}
+
+.hk-ws-list .hk-ws-sub {
+  margin-top: 0.3rem;
+  margin-bottom: 0.7rem !important;
+}
+
+.hk-ws-venue {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--faint);
+  border: 1px solid var(--hairline);
+  padding: 0.12rem 0.45rem;
+}
+
+/* audience chip — mirrors .hk-ws-act's metrics so the pair reads as a set:
+   solid = which act, outlined = who it's for */
+.hk-ws-aud {
+  display: inline-block;
+  flex: none;
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  background: rgba(103, 143, 242, 0.12);
+  border: 1px solid rgba(103, 143, 242, 0.35);
+  padding: 0.12rem 0.4rem;
+}
+
+/* the homepage series row put the chip flush against the title text */
+.hk-series-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.hk-hero-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  margin-top: 1.75rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--faint);
+}
+
+.hk-hero-facts span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}

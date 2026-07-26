@@ -6,13 +6,13 @@ import "./globals.css";
 
 export const metadata = {
   metadataBase: new URL("https://www.shipai.club"),
-  title: "Ship AI — Demos over memos",
+  title: "Ship AI — Zero to Launch",
   description:
-    "Free, public AI education in Phoenix & Tempe for builders who've shipped. News briefing, community-voted debates, 5-minute demos. Demos over memos.",
+    "Six free go-to-market sessions in Phoenix, Aug 5 – Oct 14 2026, then a hackathon Oct 16–18 where you launch. Free, in person, judged on what shipped. Demos over memos.",
   openGraph: {
-    title: "Ship AI — Demos over memos",
+    title: "Ship AI — Zero to Launch",
     description:
-      "Free, public AI education in Phoenix & Tempe for builders who've shipped. Questions first, hot takes welcome, receipts required.",
+      "Six free go-to-market sessions, then a hackathon where you don't build — you launch. Phoenix, Aug–Oct 2026. Receipts required.",
     url: "https://www.shipai.club",
     siteName: "Ship AI",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],

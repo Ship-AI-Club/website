@@ -1,12 +1,17 @@
 import {
   ArrowRight,
+  Award,
   BadgeCheck,
+  Briefcase,
   CalendarDays,
+  Coins,
+  Eye,
   Gauge,
   Globe2,
   GraduationCap,
   Handshake,
   LineChart,
+  ListOrdered,
   MapPin,
   Megaphone,
   Mic,
@@ -222,6 +227,39 @@ const CATEGORIES = [
   },
 ];
 
+const BENEFITS = [
+  {
+    icon: Award,
+    title: "A certification, for everyone who enters",
+    copy: "Submit a project and you get one — not just the winners. It names what you launched and where you placed, and it's issued as a public, linkable record you can put on LinkedIn or send to a hiring manager. Turning up and shipping is the bar.",
+  },
+  {
+    icon: ListOrdered,
+    title: "A permanent listing on this site",
+    copy: "Every entrant gets a row: team, project, live URL, category and placement. It stays up after the weekend, so the launch keeps working for you long after the room empties.",
+  },
+  {
+    icon: Coins,
+    title: "The prize pool",
+    copy: "Cash plus in-kind — API credits, hosting, tools — split across the five categories. It grows with sponsorship and the amounts land on this page as sponsors confirm. Entry stays free either way.",
+  },
+  {
+    icon: Trophy,
+    title: "A trophy, for the shelf",
+    copy: "Every category winner takes home a physical award, engraved with the category and the year. Cash gets spent and credits get burned — this is the part that's still on your desk in five years, the first time somebody asks what it is.",
+  },
+  {
+    icon: Briefcase,
+    title: "An internship, as a prize",
+    copy: "One of the awards is a seat rather than a cheque: a paid internship with a sponsor company, for the builder who earns it. If you're early in your career, this is the fastest route from a weekend project to a job that pays you to build.",
+  },
+  {
+    icon: Eye,
+    title: "Visibility to investors",
+    copy: "Sunday's pitches are open to the venture capitalists, angels and operators we bring into the room, and the judging panel is drawn from the same pool. Five minutes, live product, real numbers, in front of people who write cheques for exactly that. No pitch competition, no deck round — just the launch you actually executed, in front of the people best placed to fund the next one.",
+  },
+];
+
 const CRITERIA = [
   { pct: 40, name: "Did you ship it?", copy: "Publicly launched during the weekend, live URL. This gates everything — an unlaunched product cannot place." },
   { pct: 30, name: "Receipts", copy: "Evidence over narrative. Small and true beats big and vague." },
@@ -302,6 +340,18 @@ const FAQS = [
   {
     q: "How much does it cost?",
     a: "Nothing. Every Ship AI event is free and public. Sponsors cover the prize pool and the food.",
+  },
+  {
+    q: "What do I get if I don't win?",
+    a: "A certification and a permanent listing on this site, same as everyone else who submits. The certification names your project and your placement and lives at a public URL you can link from LinkedIn or a job application. The listing keeps your live URL on the site after the weekend. Beyond that: your product is launched, which is the part that was actually missing, and Sunday's pitch happens in front of the judges, investors and operators in the room whether you place or not.",
+  },
+  {
+    q: "How does the internship prize work?",
+    a: "One award is a paid internship seat with a sponsor company rather than a cash prize. It's aimed at builders early in their career — the fastest route from a weekend project to being paid to build. The sponsor makes the final call on the offer, and the details go on this page once sponsorship closes October 2.",
+  },
+  {
+    q: "Will there be investors in the room?",
+    a: "That's the plan. Sunday's pitches are open to the venture capitalists, angels and operators we bring in, and the judging panel is drawn from the same pool. It isn't a pitch competition and nobody is raising on stage — you show the launch you executed and the numbers it produced, which is a far better signal than a deck anyway.",
   },
   {
     q: "Do I need a team?",
@@ -401,6 +451,7 @@ export default function Page() {
           <a href="/hackathon/workshops">Workshops</a>
           <a href="#schedule">Weekend</a>
           <a href="#prizes">Prizes</a>
+          <a href="#benefits">Benefits</a>
           <a href="#rules">Rules</a>
           <a href="#sponsor">Sponsor</a>
         </nav>
@@ -626,6 +677,25 @@ export default function Page() {
               </li>
             ))}
           </ul>
+        </section>
+
+        <section className="section" id="benefits">
+          <p className="kicker">What you get for entering</p>
+          <h2>Six things on the table.</h2>
+          <p className="section-lede">
+            Most hackathons pay out to the top three and everyone else goes home with a
+            wristband. Here the floor is worth showing up for on its own — the awards sit on
+            top of it.
+          </p>
+          <div className="hk-cats">
+            {BENEFITS.map((b) => (
+              <div key={b.title} className={b.wide ? "hk-cat hk-cat-wide" : "hk-cat"}>
+                <b.icon className="icon" size={18} strokeWidth={1.75} aria-hidden="true" />
+                <h3>{b.title}</h3>
+                <p>{b.copy}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section className="section" id="rules">

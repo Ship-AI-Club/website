@@ -42,6 +42,7 @@ import {
   WORKSHOPS,
   ACTS,
 } from "../../lib/hackathon";
+import { CATEGORIES } from "../../lib/results";
 
 function BrandGlyph({ icon, size = 18 }) {
   return (
@@ -214,19 +215,6 @@ const TRACKS = [
   },
 ];
 
-const CATEGORIES = [
-  { name: "Best B2C Launch", copy: "Real users, real traction, from a launch executed during the weekend." },
-  { name: "Best B2B Launch", copy: "Real pipeline or paying customers. Design partners and pilots count." },
-  { name: "Best Marketing Site", copy: "Craft and conversion. Positioning, clarity, performance, content." },
-  { name: "Best Growth Engine", copy: "The most repeatable channel, with the numbers to prove it repeats." },
-  {
-    name: "Crowd Favorite",
-    wide: true,
-    voted: true,
-    copy: "Voted by the room at Sunday's pitches, not scored by the judges — the build everyone wanted to try, argued about, or wished they'd thought of first. It's the one award you can take home alongside a judged category.",
-  },
-];
-
 const BENEFITS = [
   {
     icon: Award,
@@ -246,17 +234,17 @@ const BENEFITS = [
   {
     icon: Trophy,
     title: "A trophy, for the shelf",
-    copy: "Every category winner takes home a physical award, engraved with the category and the year. Cash gets spent and credits get burned — this is the part that's still on your desk in five years, the first time somebody asks what it is.",
+    copy: "Every category winner takes home a physical award, engraved with the category and the year. Cash gets spent and credits get burned — this is the part still on your desk in five years, when somebody asks what it is.",
   },
   {
     icon: Briefcase,
     title: "An internship, as a prize",
-    copy: "One of the awards is a seat rather than a cheque: a paid internship with a sponsor company, for the builder who earns it. If you're early in your career, this is the fastest route from a weekend project to a job that pays you to build.",
+    copy: "One of the awards is a seat rather than a payout: a paid internship with a sponsor company, for the builder who earns it. If you're early in your career, this is the fastest route from a weekend project to a job that pays you to build.",
   },
   {
     icon: Eye,
     title: "Visibility to investors",
-    copy: "Sunday's pitches are open to the venture capitalists, angels and operators we bring into the room, and the judging panel is drawn from the same pool. Five minutes, live product, real numbers, in front of people who write cheques for exactly that. No pitch competition, no deck round — just the launch you actually executed, in front of the people best placed to fund the next one.",
+    copy: "Sunday's pitches are open to the venture capitalists, angels and operators we bring into the room, and the judging panel is drawn from the same pool. Five minutes, live product, real numbers, in front of the people best placed to fund what happens next. No deck round — just the launch you executed.",
   },
 ];
 
@@ -689,13 +677,18 @@ export default function Page() {
           </p>
           <div className="hk-cats">
             {BENEFITS.map((b) => (
-              <div key={b.title} className={b.wide ? "hk-cat hk-cat-wide" : "hk-cat"}>
+              <div key={b.title} className="hk-cat">
                 <b.icon className="icon" size={18} strokeWidth={1.75} aria-hidden="true" />
                 <h3>{b.title}</h3>
                 <p>{b.copy}</p>
               </div>
             ))}
           </div>
+          <p className="hk-note">
+            The listing and the certifications live on{" "}
+            <a href="/hackathon/results">the results page</a>, published the Sunday of the
+            weekend, straight after the awards.
+          </p>
         </section>
 
         <section className="section" id="rules">
@@ -838,6 +831,7 @@ export default function Page() {
         <nav>
           <a href="/">Home</a>
           <a href="/hackathon/submit">Submit</a>
+          <a href="/hackathon/results">Results</a>
           <a href="/hackathon/workshops">Workshops</a>
         </nav>
         <div className="socials">

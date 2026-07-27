@@ -11,6 +11,7 @@ export default function sitemap() {
     { url: `${BASE}/hackathon`, lastModified, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/hackathon/workshops`, lastModified, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/hackathon/skills`, lastModified, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE}/hackathon/sponsor`, lastModified, changeFrequency: "weekly", priority: 0.8 },
     ...WORKSHOPS.flatMap((w) => [
       {
         url: `${BASE}/hackathon/workshops/${w.slug}`,

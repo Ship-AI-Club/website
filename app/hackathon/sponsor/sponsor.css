@@ -1,0 +1,480 @@
+/* ------------------------------------------------------------------
+   Sponsorship page.
+
+   Imported by /hackathon/sponsor rather than @import-ed into
+   globals.css, so the styles ship in that route's bundle only.
+   Tokens and the shared primitives (.section, .kicker, .btn,
+   .section-lede, .hk-subhead, .hk-note) come from globals.css —
+   everything below is only what those don't cover.
+------------------------------------------------------------------ */
+
+.sp-page {
+  /* The global --faint (#55585f) is 2.95:1 on black, under the AA
+     floor. This page puts small type on prices and tier labels that a
+     sponsor reads closely before spending money, so it uses a tone
+     that clears AA (5.4:1). Scoped, not a global token change. */
+  --faint-aa: #7d818b;
+}
+
+/* ---- hero ---- */
+
+.sp-hero h1 {
+  font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.1rem;
+}
+
+.sp-mech {
+  border-left: 2px solid var(--accent);
+  padding: 0.15rem 0 0.15rem 1.1rem;
+  margin: 1.6rem 0 2rem;
+  color: var(--dim);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 46rem;
+}
+
+.sp-mech strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ---- tiers ---- */
+
+.sp-tiers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+  margin-bottom: 1.5rem;
+}
+
+.sp-tier {
+  background: var(--bg);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+/* The title tier is the one we sell once — it gets the accent rule so
+   it reads as the top of the ladder without a second colour. */
+.sp-tier-platinum {
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.sp-tier-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.sp-tier-head h3 {
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.sp-tier-sub {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--accent);
+}
+
+.sp-tier-price {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.05rem;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.sp-tier-slots {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--faint-aa);
+}
+
+.sp-tier-buys {
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.sp-tier-perks {
+  color: var(--dim);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* ---- menu ---- */
+
+.sp-group {
+  margin-top: 2.75rem;
+}
+
+.sp-group-note {
+  color: var(--dim);
+  font-size: 0.93rem;
+  line-height: 1.6;
+  margin-bottom: 1.1rem;
+  max-width: 46rem;
+}
+
+.sp-items {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+}
+
+.sp-item {
+  background: var(--bg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.sp-item-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.sp-item-head h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.sp-item-head h4 svg {
+  color: var(--accent);
+}
+
+.sp-item-price {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.78rem;
+  color: var(--faint-aa);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sp-item-copy {
+  color: var(--dim);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* The named credit is the point of the whole page, so it gets the
+   accent and sits visually apart from the description above it. */
+.sp-item-credit {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  color: var(--accent);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+.sp-item-credit svg {
+  flex: none;
+  margin-top: 0.28rem;
+}
+
+.sp-credit-standalone {
+  border-top: 1px solid var(--hairline);
+  margin-top: 1.5rem;
+  padding-top: 1.1rem;
+}
+
+/* ---- credits ---- */
+
+.sp-math {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  border: 1px solid var(--hairline);
+  border-left: 2px solid var(--accent);
+  padding: 1.25rem 1.4rem;
+  margin: 1.75rem 0 1.1rem;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.sp-math svg {
+  flex: none;
+  color: var(--accent);
+  margin-top: 0.15rem;
+}
+
+.sp-ladder {
+  list-style: none;
+  border: 1px solid var(--hairline);
+  margin: 1.5rem 0;
+}
+
+.sp-ladder li {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.85rem 1.25rem;
+  flex-wrap: wrap;
+}
+
+.sp-ladder li + li {
+  border-top: 1px solid var(--hairline);
+}
+
+.sp-ladder-amt {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.9rem;
+  color: var(--ink);
+  min-width: 6rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.sp-ladder-tier {
+  font-size: 0.95rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.sp-ladder-note {
+  color: var(--faint-aa);
+  font-size: 0.85rem;
+}
+
+.sp-provider {
+  color: var(--dim);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  max-width: 46rem;
+  margin-bottom: 1rem;
+}
+
+.sp-platforms {
+  list-style: none;
+  border: 1px solid var(--hairline);
+}
+
+.sp-platforms li {
+  display: flex;
+  gap: 1rem;
+  padding: 0.8rem 1.25rem;
+  flex-wrap: wrap;
+}
+
+.sp-platforms li + li {
+  border-top: 1px solid var(--hairline);
+}
+
+.sp-plat-group {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--faint-aa);
+  min-width: 10rem;
+  padding-top: 0.15rem;
+}
+
+.sp-plat-names {
+  color: var(--ink);
+  font-size: 0.93rem;
+}
+
+/* ---- hours ---- */
+
+.sp-hours-tier {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--accent);
+  border: 1px solid var(--hairline);
+  padding: 0.15rem 0.4rem;
+}
+
+/* ---- process ---- */
+
+.sp-process {
+  list-style: none;
+  counter-reset: step;
+  border: 1px solid var(--hairline);
+}
+
+.sp-process li {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.35rem 1.5rem;
+}
+
+.sp-process li + li {
+  border-top: 1px solid var(--hairline);
+}
+
+.sp-step-n {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--accent);
+  flex: none;
+  padding-top: 0.15rem;
+}
+
+.sp-process h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.sp-process p {
+  color: var(--dim);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ---- promises ---- */
+
+.sp-promises {
+  list-style: none;
+  display: grid;
+  gap: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+.sp-promises li {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  color: var(--dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.sp-promises svg {
+  flex: none;
+  color: var(--accent);
+  margin-top: 0.28rem;
+}
+
+.sp-callout {
+  border: 1px solid var(--hairline);
+  border-left: 2px solid var(--accent);
+  padding: 1.4rem 1.5rem;
+  margin-bottom: 2.25rem;
+}
+
+.sp-callout h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.65rem;
+}
+
+.sp-callout h3 svg {
+  color: var(--accent);
+}
+
+.sp-callout p {
+  color: var(--dim);
+  font-size: 0.93rem;
+  line-height: 1.65;
+}
+
+/* ---- closing band ---- */
+
+.sp-band {
+  border: 1px solid var(--hairline);
+  padding: 2.5rem clamp(1.25rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.sp-band svg {
+  color: var(--accent);
+  margin-bottom: 0.85rem;
+}
+
+.sp-band p {
+  color: var(--dim);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  max-width: 44rem;
+  margin: 0.9rem auto 1.5rem;
+}
+
+.sp-band .cta-row {
+  justify-content: center;
+}
+
+/* ---- year-round ---- */
+
+.sp-year {
+  list-style: none;
+  border: 1px solid var(--hairline);
+}
+
+.sp-year li {
+  padding: 1.15rem 1.4rem;
+}
+
+.sp-year li + li {
+  border-top: 1px solid var(--hairline);
+}
+
+.sp-year .sp-item-copy {
+  margin-top: 0.35rem;
+}
+
+/* ---- narrow ---- */
+
+@media (max-width: 860px) {
+  .sp-tiers,
+  .sp-items {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .sp-item-head,
+  .sp-tier-head {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .sp-item-price {
+    text-align: left;
+  }
+
+  .sp-plat-group {
+    min-width: 0;
+  }
+
+  .sp-process li {
+    gap: 0.9rem;
+    padding: 1.15rem 1.1rem;
+  }
+}

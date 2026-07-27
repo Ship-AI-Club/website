@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { JsonLd } from "../../components/article";
+import { TIERS } from "../../lib/sponsors";
 
 import {
   EVENT,
@@ -267,41 +268,6 @@ const RULES = [
   "One judged category per team. Win one and you're out of the running for the others — Crowd Favorite is the exception, since the room votes it.",
   "Demos over memos. Five minutes, live product. Slides are supporting material, not the pitch.",
   "In person. No remote track this round.",
-];
-
-const TIERS = [
-  {
-    name: "Title",
-    price: "$5,000",
-    slots: "1 available",
-    perks: "Named in the event lockup. Keynote mention Friday. Judging seat. Logo across the site, every event page and every announcement. Table presence all weekend, and a speaking slot if you want one.",
-  },
-  {
-    name: "Category",
-    price: "$2,500",
-    slots: "4 available",
-    perks: "Your name on one prize category, and you present that award Sunday. Judging seat. Logo on the site and event pages. Table presence.",
-  },
-  {
-    name: "Mentor",
-    price: "$1,000",
-    slots: "",
-    perks: "Two mentor seats in Saturday's 1:1 rotations — direct working time with every team that wants it. Logo on the site.",
-  },
-  {
-    name: "Community",
-    price: "$500",
-    slots: "",
-    perks: "Logo on the site and event pages, and a shoutout Friday and Sunday.",
-  },
-];
-
-const IN_KIND = [
-  "API credits and AI platform usage — the highest-leverage thing you can give here. Credits go straight into builders' hands and get spent that weekend, on real launches, in public.",
-  "Tools, hosting, infrastructure — anything a team needs to get a site live.",
-  "Food and beverage — Friday dinner through Sunday's pitches.",
-  "Venue — space for 50 with power and wifi, Friday evening to Sunday afternoon.",
-  "Swag for participant bags.",
 ];
 
 const FAQS = [
@@ -733,23 +699,29 @@ export default function Page() {
               <div key={t.name} className="hk-tier">
                 <div className="hk-tier-head">
                   <h3>{t.name}</h3>
-                  <span className="hk-tier-price">{t.price}</span>
+                  <span className="hk-tier-price">{t.priceLabel}</span>
                 </div>
                 {t.slots && <p className="hk-tier-slots">{t.slots}</p>}
-                <p>{t.perks}</p>
+                <p>{t.buys}</p>
               </div>
             ))}
           </div>
 
           <h3 className="hk-subhead">
             <Handshake size={18} strokeWidth={1.75} aria-hidden="true" />
-            In-kind is just as welcome
+            Cash isn&apos;t the only way in
           </h3>
-          <ul className="hk-inkind">
-            {IN_KIND.map((k) => (
-              <li key={k}>{k}</li>
-            ))}
-          </ul>
+          <p className="hk-note">
+            Platform credits and donated hours count toward the same ladder — the total you
+            underwrite sets your tier. The full menu is itemized with the prices on it: what
+            dinner costs, what the trophies cost, what the X account costs, and the named
+            credit each one carries.
+          </p>
+          <div className="cta-row">
+            <a className="btn btn-solid" href="/hackathon/sponsor">
+              See the full sponsorship menu
+            </a>
+          </div>
           <p className="hk-note">
             Sponsorship closes {EVENT.sponsorDeadline} so prize amounts can go on this page
             before we push registration.{" "}

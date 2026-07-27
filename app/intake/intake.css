@@ -1,0 +1,480 @@
+/* ------------------------------------------------------------------
+   /intake — sponsor, mentor and judge intake form, and /intake/inbox.
+   Same black / white / #678ff2 and pixel-Geist system as the rest of
+   the site; the form controls are the only new primitives here.
+------------------------------------------------------------------ */
+
+.ik-page {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 4rem clamp(1.25rem, 5vw, 4rem) 5rem;
+}
+
+.ik-page h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 1.75rem;
+}
+
+.ik-nav-note {
+  margin-left: auto;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+}
+
+/* ---------- form scaffolding ---------- */
+
+.ik-form {
+  display: grid;
+  gap: 2.75rem;
+  margin-top: 3rem;
+}
+
+.ik-field {
+  display: grid;
+}
+
+.ik-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.35rem;
+  padding: 0;
+}
+
+.ik-req {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 0.15rem 0.4rem;
+}
+
+.ik-hint {
+  color: var(--dim);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin-bottom: 0.9rem;
+  max-width: 42rem;
+}
+
+.ik-form input[type="text"],
+.ik-form input[type="email"],
+.ik-form textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 0.98rem;
+  color: var(--ink);
+  background: rgba(248, 248, 250, 0.03);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.ik-form textarea {
+  resize: vertical;
+  min-height: 8rem;
+  line-height: 1.6;
+}
+
+.ik-form input:focus,
+.ik-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(103, 143, 242, 0.06);
+}
+
+.ik-form input:disabled,
+.ik-form textarea:disabled {
+  opacity: 0.55;
+}
+
+/* ---------- role selector ---------- */
+
+.ik-roles {
+  border: 0;
+}
+
+.ik-role-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.ik-role {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 0.6rem 1.15rem;
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.ik-role.is-on {
+  color: #000;
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.ik-role:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ik-role:not(.is-on):hover {
+    color: var(--ink);
+    border-color: rgba(248, 248, 250, 0.35);
+  }
+}
+
+/* ---------- drop zones ---------- */
+
+.ik-drop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  text-align: center;
+  padding: 1.6rem 1.1rem;
+  color: var(--dim);
+  font-size: 0.92rem;
+  border: 1px dashed rgba(248, 248, 250, 0.22);
+  border-radius: 10px;
+  background: rgba(248, 248, 250, 0.02);
+  transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
+}
+
+.ik-drop.is-over {
+  border-color: var(--accent);
+  border-style: solid;
+  background: rgba(103, 143, 242, 0.08);
+  color: var(--ink);
+}
+
+.ik-drop button {
+  font: inherit;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  border-bottom: 1px solid var(--accent);
+}
+
+.ik-drop button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* ---------- picked files ---------- */
+
+.ik-files {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+
+.ik-file {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: rgba(248, 248, 250, 0.02);
+}
+
+.ik-file-thumb {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 6px;
+  overflow: hidden;
+  color: var(--faint);
+  background: rgba(248, 248, 250, 0.06);
+}
+
+.ik-file-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ik-file-meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.ik-file-name {
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ik-file-size {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  color: var(--faint);
+}
+
+.ik-bar {
+  height: 2px;
+  margin-top: 0.5rem;
+  background: rgba(248, 248, 250, 0.12);
+  overflow: hidden;
+}
+
+.ik-bar span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 200ms linear;
+}
+
+.ik-file-x {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  color: var(--faint);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ik-file-x:hover {
+    color: var(--ink);
+    border-color: var(--hairline);
+  }
+}
+
+/* ---------- honeypot ---------- */
+
+.ik-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ---------- submit ---------- */
+
+.ik-submit {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.ik-submit .btn {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.ik-submit .btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.ik-status {
+  flex: 1;
+  min-width: 14rem;
+  font-size: 0.85rem;
+  color: var(--faint);
+  line-height: 1.5;
+}
+
+.ik-error {
+  color: #ff8080;
+  font-size: 0.92rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(255, 128, 128, 0.35);
+  border-radius: 8px;
+  background: rgba(255, 128, 128, 0.06);
+}
+
+/* ---------- done ---------- */
+
+.ik-done {
+  margin-top: 3rem;
+  padding: 2.5rem 0 0;
+  border-top: 1px solid var(--hairline);
+  color: var(--accent);
+}
+
+.ik-done h2 {
+  font-size: 1.6rem;
+  margin: 1rem 0 0.9rem;
+  color: var(--ink);
+}
+
+.ik-done p {
+  color: var(--dim);
+  max-width: 38rem;
+  margin-bottom: 2rem;
+}
+
+.ik-done .cta-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* .btn is only ever an <a> elsewhere on the site, so it never had to undo
+   the UA button background — a real <button> needs that here. */
+.ik-done .btn {
+  cursor: pointer;
+  font-family: inherit;
+  background: none;
+}
+
+/* ---------- inbox ---------- */
+
+.ik-inbox {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 4rem clamp(1.25rem, 5vw, 4rem) 5rem;
+}
+
+.ik-inbox h1 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  margin-bottom: 1.5rem;
+}
+
+.ik-inbox-count {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.85rem;
+  color: var(--faint);
+  margin-bottom: 2.5rem;
+}
+
+.ik-sub {
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.ik-sub-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+}
+
+.ik-sub-head h2 {
+  font-size: 1.15rem;
+}
+
+.ik-tag {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 0.15rem 0.45rem;
+}
+
+.ik-sub-when {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  color: var(--faint);
+  margin-left: auto;
+}
+
+.ik-sub-line {
+  color: var(--dim);
+  font-size: 0.94rem;
+}
+
+.ik-sub-note {
+  white-space: pre-wrap;
+  color: var(--dim);
+  font-size: 0.94rem;
+  margin-top: 0.9rem;
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--hairline);
+}
+
+.ik-sub-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.1rem;
+}
+
+.ik-asset {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  color: var(--dim);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.ik-asset img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+  border-radius: 4px;
+  background: rgba(248, 248, 250, 0.06);
+}
+
+.ik-asset-kind {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ik-asset:hover {
+    color: var(--ink);
+    border-color: rgba(248, 248, 250, 0.35);
+  }
+}
+
+.ik-empty {
+  color: var(--faint);
+  padding: 3rem 0;
+  border-top: 1px solid var(--hairline);
+}
+
+@media (max-width: 640px) {
+  .ik-form {
+    gap: 2.25rem;
+  }
+
+  .ik-sub-when {
+    margin-left: 0;
+    width: 100%;
+  }
+}

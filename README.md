@@ -11,6 +11,28 @@ npm install
 npm run dev
 ```
 
+## Zero to Launch session kits
+
+Each of the six workshops publishes a deck, a follow-along guide and its skill files:
+
+| What | Source | Route |
+| --- | --- | --- |
+| Slides | `lib/decks.js` | `/hackathon/workshops/<slug>/deck` |
+| Guide | `lib/guides.js` | `/hackathon/workshops/<slug>/guide` |
+| Skills | `content/skills/<name>/SKILL.md` | `/hackathon/skills` |
+
+`scripts/build-kits.mjs` runs as `prebuild` (and `predev`) and generates the downloads —
+per-session and full-set zips into `public/skills/`, guide markdown into `public/guides/`,
+and `lib/skills.generated.json`, which the pages render from. All three are gitignored;
+they are rebuilt from source on every build, so a download can never drift from the
+skill file the site describes.
+
+The skills are vendored here from the planning repo. To pull in changes:
+
+```bash
+npm run sync-skills
+```
+
 ## Sponsor / mentor / judge intake
 
 `/intake` is a hidden page — noindex, absent from the sitemap, linked from nowhere. Send

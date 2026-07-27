@@ -1,6 +1,20 @@
-import { ArrowRight, Briefcase, CalendarDays, GitBranch, MapPin, Sparkles, Ticket } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  Briefcase,
+  CalendarDays,
+  Download,
+  GitBranch,
+  MapPin,
+  Presentation,
+  Sparkles,
+  Ticket,
+} from "lucide-react";
 import { siDiscord, siGithub, siMeetup } from "simple-icons";
 import { JsonLd } from "../../../components/article";
+import { DECKS } from "../../../lib/decks";
+import { GUIDES } from "../../../lib/guides";
+import registry from "../../../lib/skills.generated.json";
 import {
   EVENT,
   WORKSHOPS,
@@ -162,13 +176,26 @@ export default function Page() {
           The materials are open source
         </h2>
         <p>
-          Everything we present is published. Generate your own copy of{" "}
-          <a href={TEMPLATE_REPO} target="_blank" rel="noreferrer">the Zero to Launch template</a>{" "}
-          — a folder per session, plus 25 skill files that do the heavy lifting on the
-          go-to-market work. Take it and run the whole process yourself, on your own schedule,
-          during the program or long after it. No attendance, no sign-up, no gate on competing
-          in October.
+          Everything we present is published — the slides, a follow-along guide per session,
+          and {registry.skills.length} skill files that do the heavy lifting on the go-to-market
+          work. Download them here, or generate your own copy of{" "}
+          <a href={TEMPLATE_REPO} target="_blank" rel="noreferrer">the Zero to Launch template</a>.
+          Take it and run the whole process yourself, on your own schedule, during the program or
+          long after it. No attendance, no sign-up, no gate on competing in October.
         </p>
+        <div className="cta-row hk-materials-cta">
+          <a className="btn btn-solid" href="/hackathon/skills">
+            <Download size={15} strokeWidth={1.75} aria-hidden="true" />
+            All {registry.skills.length} skills
+          </a>
+          <a
+            className="btn btn-ghost"
+            href={`/skills/${registry.manifest.all.file}`}
+            download
+          >
+            Download the zip
+          </a>
+        </div>
         <p className="hk-note">
           We keep it deliberately light for most of the program — skill files and whatever
           stack you already use. The Next.js boilerplate only arrives at session 05, once you
@@ -198,6 +225,26 @@ export default function Page() {
                   <ArrowRight size={14} strokeWidth={1.75} aria-hidden="true" />
                 </span>
               </a>
+              <p className="hk-ws-kit">
+                {DECKS[w.slug] && (
+                  <a href={`/hackathon/workshops/${w.slug}/deck`}>
+                    <Presentation size={13} strokeWidth={1.75} aria-hidden="true" />
+                    Slides
+                  </a>
+                )}
+                {GUIDES[w.slug] && (
+                  <a href={`/hackathon/workshops/${w.slug}/guide`}>
+                    <BookOpen size={13} strokeWidth={1.75} aria-hidden="true" />
+                    Guide
+                  </a>
+                )}
+                {registry.manifest.sessions[w.slug] && (
+                  <a href={`/skills/${registry.manifest.sessions[w.slug].file}`} download>
+                    <Download size={13} strokeWidth={1.75} aria-hidden="true" />
+                    {registry.manifest.sessions[w.slug].count} skills
+                  </a>
+                )}
+              </p>
             </li>
           ))}
         </ol>
@@ -241,6 +288,7 @@ export default function Page() {
         <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
           <a href="/">Home</a>
+          <a href="/hackathon/skills">Skills</a>
           <a href="/hackathon">Hackathon</a>
           <a href="/hackathon/submit">Submit</a>
         </nav>

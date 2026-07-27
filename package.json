@@ -1,10 +1,14 @@
 {
   "name": "shipai-site",
   "private": true,
+  "type": "module",
   "scripts": {
+    "predev": "node scripts/build-kits.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/build-kits.mjs",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "sync-skills": "node scripts/sync-skills.mjs"
   },
   "dependencies": {
     "@vercel/blob": "^2.6.1",
@@ -15,5 +19,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "simple-icons": "^16.26.0"
+  },
+  "devDependencies": {
+    "qrcode": "^1.5.4"
   }
 }

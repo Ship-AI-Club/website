@@ -1,3 +1,5 @@
+@import "./deck.css";
+
 :root {
   --bg: #000000;
   --ink: #f8f8fa;
@@ -2289,4 +2291,505 @@ h3 .icon {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+}
+
+/* ==================================================================
+   SESSION KITS — slides, guides and skill downloads
+   ================================================================== */
+
+/* ---------- the kit block on a workshop page ---------- */
+
+.kit-row {
+  display: grid;
+  /* 190px keeps all three cards on one row inside the 640px article column */
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.kit-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid var(--hairline);
+  padding: 1.15rem;
+  transition: border-color 150ms ease, background 150ms ease, transform 100ms ease;
+}
+
+.kit-card:hover {
+  border-color: rgba(103, 143, 242, 0.45);
+  background: rgba(103, 143, 242, 0.05);
+}
+
+.kit-card:active {
+  transform: scale(0.99);
+}
+
+.kit-card svg {
+  color: var(--accent);
+}
+
+.kit-card-t {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.kit-card-c {
+  font-size: 0.86rem;
+  color: var(--dim);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.kit-card-c code {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--ink);
+}
+
+.kit-card-go {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+/* embedded deck preview */
+
+.kit-deck {
+  border: 1px solid var(--hairline);
+  margin: 2rem 0;
+}
+
+.kit-deck-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.kit-deck-head a {
+  color: var(--accent);
+  text-transform: none;
+  letter-spacing: 0.03em;
+}
+
+.kit-deck-frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: #000;
+}
+
+.kit-deck-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.kit-install-label,
+.kit-subhead {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin: 2rem 0 0.7rem;
+  font-weight: 400;
+}
+
+.kit-subhead svg {
+  color: var(--accent);
+}
+
+.kit-skills {
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.kit-skills li {
+  border-left: 1px solid var(--hairline);
+  padding: 0.15rem 0 0.15rem 0.9rem;
+}
+
+.kit-skill-name {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.kit-skill-name code {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.88rem;
+  color: var(--accent);
+}
+
+.kit-skill-name a {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+  border-bottom: 1px solid transparent;
+}
+
+.kit-skill-name a:hover {
+  color: var(--dim);
+  border-bottom-color: var(--hairline);
+}
+
+.kit-skill-desc {
+  font-size: 0.87rem;
+  color: var(--dim);
+  line-height: 1.5;
+}
+
+/* ---------- follow-along guide ---------- */
+
+.gd-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.gd-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gd-setup {
+  list-style: none;
+  counter-reset: gd-setup;
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0 1rem;
+}
+
+.gd-setup li {
+  counter-increment: gd-setup;
+  position: relative;
+  padding-left: 2.2rem;
+  color: var(--dim);
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
+
+.gd-setup li::before {
+  content: counter(gd-setup, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  color: var(--faint);
+}
+
+.gd-setup-t {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.gd-cmd,
+.sk-install {
+  border: 1px solid var(--hairline);
+  border-left: 2px solid var(--accent);
+  background: rgba(248, 248, 250, 0.02);
+  padding: 0.85rem 1rem;
+  margin: 0.7rem 0;
+  overflow-x: auto;
+}
+
+.gd-cmd code,
+.sk-install code {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--ink);
+  white-space: pre;
+}
+
+.gd-steps {
+  list-style: none;
+  display: grid;
+  gap: 1.5rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.gd-steps li {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  gap: 0.5rem;
+}
+
+.gd-steps li > div {
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+.gd-step-n {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.78rem;
+  color: var(--faint);
+  padding-top: 0.2rem;
+}
+
+.gd-step-t {
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.35rem;
+}
+
+.gd-step-run {
+  margin-bottom: 0.5rem;
+}
+
+.gd-step-run code {
+  display: inline-block;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.82rem;
+  color: var(--accent);
+  border: 1px solid rgba(103, 143, 242, 0.3);
+  background: rgba(103, 143, 242, 0.08);
+  padding: 0.15rem 0.5rem;
+}
+
+.gd-good {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.87rem;
+  color: var(--faint);
+}
+
+.gd-good svg {
+  flex: none;
+  margin-top: 0.28rem;
+  color: var(--accent);
+}
+
+.gd-good strong {
+  color: var(--dim);
+  font-weight: 500;
+}
+
+.hk-ws-meta svg {
+  vertical-align: -1px;
+}
+
+/* ---------- the skills library page ---------- */
+
+.sk {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 2rem) 6rem;
+}
+
+.sk-h1 {
+  font-size: clamp(2.1rem, 6vw, 3.4rem);
+  margin-bottom: 1.5rem;
+}
+
+.sk-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 2rem 0 1rem;
+}
+
+.sk-top .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sk p {
+  color: var(--dim);
+  line-height: 1.7;
+}
+
+.sk p code,
+.sk li code {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+.sk-session {
+  border: 1px solid var(--hairline);
+  padding: 1.4rem;
+  margin: 1rem 0;
+}
+
+.sk-session-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.sk-session-n {
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-size: 1.6rem;
+  color: var(--faint);
+}
+
+.sk-session-head h3 {
+  font-size: 1.15rem;
+}
+
+.sk-session-head h3 a:hover {
+  color: var(--accent);
+}
+
+.sk-session-meta {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.76rem;
+  color: var(--faint);
+  margin-top: 0.3rem;
+}
+
+.sk-session-dl .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  padding: 0.45rem 0.9rem;
+  white-space: nowrap;
+}
+
+.sk-list {
+  list-style: none;
+  display: grid;
+  gap: 0.9rem;
+  margin: 1.1rem 0;
+}
+
+.sk-name {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.sk-name code {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
+.sk-raw {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+}
+
+.sk-raw:hover {
+  color: var(--dim);
+}
+
+.sk-desc {
+  font-size: 0.88rem;
+  color: var(--dim);
+  line-height: 1.55;
+  margin-top: 0.15rem;
+}
+
+.sk-session-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.sk-session-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.76rem;
+  color: var(--accent);
+}
+
+.sk-session-links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sk .hk-subhead {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+@media (max-width: 620px) {
+  .sk-session-head {
+    grid-template-columns: auto 1fr;
+  }
+
+  .sk-session-dl {
+    grid-column: 1 / -1;
+  }
+}
+
+/* per-session kit links under each card on the workshops index */
+
+.hk-ws-kit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  padding: 0.85rem 1.6rem 1.3rem;
+  border-top: 1px solid var(--hairline);
+}
+
+/* these sit inside .hk-ws-list, whose `a` rule is a padded block — reset it */
+.hk-ws-kit a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.74rem;
+  color: var(--faint) !important;
+  transition: color 140ms ease;
+}
+
+.hk-ws-kit a:hover {
+  background: none;
+  color: var(--accent) !important;
+}
+
+.hk-materials-cta {
+  margin: 1.25rem 0 1rem;
+}
+
+.hk-materials-cta .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }

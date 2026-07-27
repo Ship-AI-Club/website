@@ -3,16 +3,22 @@ import {
   ArrowLeft,
   ArrowRight,
   Backpack,
+  BookOpen,
   Briefcase,
   CalendarDays,
   GitCommitHorizontal,
   ListChecks,
   MapPin,
+  Package,
+  Presentation,
   Sparkles,
   Wrench,
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup } from "simple-icons";
 import { JsonLd } from "../../../../components/article";
+import { deckFor } from "../../../../lib/decks";
+import { guideFor } from "../../../../lib/guides";
+import registry from "../../../../lib/skills.generated.json";
 import {
   EVENT,
   WORKSHOPS,
@@ -31,6 +37,10 @@ import {
 export function generateStaticParams() {
   return WORKSHOPS.map((w) => ({ slug: w.slug }));
 }
+
+/* the skill registry is generated from the vendored SKILL.md files at
+   build time, so descriptions on the page can't drift from the download */
+const skillsByName = new Map(registry.skills.map((s) => [s.name, s]));
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -59,6 +69,9 @@ export default async function Page({ params }) {
   const { prev, next } = workshopNeighbours(slug);
   const rsvp = rsvpLinks(w);
   const venue = venueOf(w);
+  const slides = deckFor(slug);
+  const guide = guideFor(slug);
+  const kit = registry.manifest.sessions[slug];
 
   const schema = {
     "@context": "https://schema.org",
@@ -101,8 +114,8 @@ export default async function Page({ params }) {
         </a>
         <nav>
           <a href="/hackathon/workshops">All workshops</a>
+          <a href="/hackathon/skills">Skills</a>
           <a href="/hackathon">Hackathon</a>
-          <a href="/hackathon#rules">Rules</a>
         </nav>
         <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
           Join the Discord
@@ -220,24 +233,102 @@ export default async function Page({ params }) {
           you can pick the work up whenever.
         </p>
 
+        <h2 className="hk-subhead" id="kit">
+          <Package size={18} strokeWidth={1.75} aria-hidden="true" />
+          The session kit
+        </h2>
+        <p>
+          Slides, a follow-along guide and the skill files, all free and all downloadable
+          whether you make it to the room or not. Nothing expires and nothing needs an
+          account.
+        </p>
+
+        <div className="kit-row">
+          {slides && (
+            <a className="kit-card" href={`/hackathon/workshops/${w.slug}/deck`}>
+              <Presentation size={17} strokeWidth={1.75} aria-hidden="true" />
+              <span className="kit-card-t">Slides</span>
+              <span className="kit-card-c">
+                {slides.length} slides. Arrow keys, fullscreen, print to PDF.
+              </span>
+              <span className="kit-card-go">Open the deck →</span>
+            </a>
+          )}
+          {guide && (
+            <a className="kit-card" href={`/hackathon/workshops/${w.slug}/guide`}>
+              <BookOpen size={17} strokeWidth={1.75} aria-hidden="true" />
+              <span className="kit-card-t">Follow-along guide</span>
+              <span className="kit-card-c">
+                {guide.steps.length} steps, {guide.minutes}. What to run, and what done looks
+                like.
+              </span>
+              <span className="kit-card-go">Read the guide →</span>
+            </a>
+          )}
+          {kit && (
+            <a className="kit-card" href={`/skills/${kit.file}`} download>
+              <Package size={17} strokeWidth={1.75} aria-hidden="true" />
+              <span className="kit-card-t">Skill files</span>
+              <span className="kit-card-c">
+                {kit.count} skills as a zip. Unzips into <code>.claude/skills/</code>.
+              </span>
+              <span className="kit-card-go">Download ({kit.count}) ↓</span>
+            </a>
+          )}
+        </div>
+
+        {slides && (
+          <div className="kit-deck">
+            <div className="kit-deck-head">
+              <span>Preview</span>
+              <a href={`/hackathon/workshops/${w.slug}/deck`}>Open full size →</a>
+            </div>
+            <div className="kit-deck-frame">
+              <iframe
+                src={`/hackathon/workshops/${w.slug}/deck`}
+                title={`${w.eventTitle} slides`}
+                loading="lazy"
+              />
+            </div>
+          </div>
+        )}
+
+        {kit && (
+          <>
+            <p className="kit-install-label">Install this session&apos;s skills</p>
+            <pre className="sk-install">
+              <code>
+                {`curl -fsSLO https://www.shipai.club/skills/${kit.file}\nunzip -o ${kit.file} -d .`}
+              </code>
+            </pre>
+          </>
+        )}
+
         {w.skills?.length > 0 && (
           <>
-            <h2 className="hk-subhead">
-              <Wrench size={18} strokeWidth={1.75} aria-hidden="true" />
-              Skill files for this session
-            </h2>
-            <p>
-              These ship in the open-source template repo and do the mechanical half of the
-              work, so the session can be spent on judgement instead of formatting. Free to
-              take and run whether you make it to the room or not.
-            </p>
-            <ul className="hk-skills">
-              {w.skills.map((s) => (
-                <li key={s}>
-                  <code>/{s}</code>
-                </li>
-              ))}
+            <h3 className="kit-subhead">
+              <Wrench size={16} strokeWidth={1.75} aria-hidden="true" />
+              What&apos;s in the bundle
+            </h3>
+            <ul className="kit-skills">
+              {w.skills.map((s) => {
+                const skill = skillsByName.get(s);
+                return (
+                  <li key={s}>
+                    <p className="kit-skill-name">
+                      <code>/{s}</code>
+                      <a href={`/skills/${s}/SKILL.md`}>SKILL.md</a>
+                    </p>
+                    {skill && <p className="kit-skill-desc">{skill.description}</p>}
+                  </li>
+                );
+              })}
             </ul>
+            <p className="hk-note">
+              They do the mechanical half of the work, so the session can be spent on judgement
+              instead of formatting. Every skill from all six sessions is on the{" "}
+              <a href="/hackathon/skills">skills page</a>.
+            </p>
             {w.boilerplate && (
               <p className="hk-note">
                 This is one of the two sessions where the Next.js boilerplate lands. Up to
@@ -312,6 +403,7 @@ export default async function Page({ params }) {
         <nav>
           <a href="/">Home</a>
           <a href="/hackathon/workshops">Workshops</a>
+          <a href="/hackathon/skills">Skills</a>
           <a href="/hackathon">Hackathon</a>
           <a href={TEMPLATE_REPO} target="_blank" rel="noreferrer">
             <svg viewBox="0 0 24 24" width={14} height={14} fill="currentColor" aria-hidden="true">

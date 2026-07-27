@@ -258,7 +258,7 @@ export default async function Page() {
           </div>
           <p className="strip-cta">
             Seeking corporate sponsors — help keep every session free and public.{" "}
-            <a href="mailto:santos.d.hernandez@gmail.com?subject=Sponsoring%20Ship%20AI">Get in touch</a>
+            <a href="/hackathon/sponsor">See what&apos;s fundable</a>
           </p>
         </section>
 

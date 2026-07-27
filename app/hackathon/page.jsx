@@ -742,8 +742,8 @@ export default function Page() {
               <p>
                 Founders and operators who have launched something and can tell a real number
                 from a vanity one. You&apos;ll score against published criteria, ask hard
-                questions in the Q&amp;A, and hand out an award. Sponsors at Category tier and
-                above get a seat.
+                questions in the Q&amp;A, and hand out an award. Gold and Platinum sponsors get
+                a seat, and judging earns Bronze placement on its own.
               </p>
               <p className="hk-role-cta">
                 <a href={JUDGE_MAIL}>Volunteer to judge</a>

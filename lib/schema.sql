@@ -120,6 +120,11 @@ create table if not exists role_requests (
   status       text not null default 'pending',
   message      text not null default '',
   expertise    text not null default '',
+  /* Volunteers only: which jobs they're offering to cover. Values are
+     ids from VOLUNTEER_JOBS in lib/accounts.js. A list rather than a
+     role each, so adding "runs the bell" next season is one line
+     there and no migration here. */
+  jobs         text[] not null default '{}',
   sponsor_tier text,
   admin_note   text not null default '',
   created_at   timestamptz not null default now(),
@@ -251,7 +256,11 @@ create table if not exists mentor_assignments (
    isn't set explicitly — see lib/sponsors.js. */
 create table if not exists sponsorships (
   id          uuid primary key default gen_random_uuid(),
-  user_id     uuid not null references users(id) on delete cascade,
+  /* Nullable: a venue partner or an org that agreed over coffee is a
+     real sponsor with a logo to place and no reason to have made an
+     account. Linking one is how a sponsor sees their own record on
+     their dashboard, not a precondition for existing. */
+  user_id     uuid references users(id) on delete set null,
   org         text not null default '',
   tier        text,
   amount      integer not null default 0,
@@ -259,6 +268,15 @@ create table if not exists sponsorships (
   status      text not null default 'pledged',
   credit_name text not null default '',
   note        text not null default '',
+  /* The public half — what goes on the sponsor wall. */
+  logo_url    text not null default '',
+  logo_path   text not null default '',
+  website     text not null default '',
+  is_public   boolean not null default true,
+  /* The mark is an icon rather than a lockup, so pair it with the
+     name — same convention the homepage strip uses for desic. */
+  wordmark    boolean not null default false,
+  sort        integer not null default 0,
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now()
 );
@@ -412,6 +430,20 @@ alter table users add column if not exists avatar_path    text not null default 
 alter table users add column if not exists avatar_url     text not null default '';
 alter table users add column if not exists public_profile boolean not null default true;
 create unique index if not exists users_handle_uniq on users (handle) where handle is not null;
+
+alter table role_requests add column if not exists jobs text[] not null default '{}';
+
+alter table sponsorships add column if not exists logo_url  text not null default '';
+alter table sponsorships add column if not exists logo_path text not null default '';
+alter table sponsorships add column if not exists website   text not null default '';
+alter table sponsorships add column if not exists is_public boolean not null default true;
+alter table sponsorships add column if not exists sort      integer not null default 0;
+alter table sponsorships add column if not exists wordmark  boolean not null default false;
+
+/* Confirmed sponsors predate accounts — Workuity has been hosting
+   since before any of this existed. Requiring a user row to record
+   one would mean inventing an account for an organisation. */
+alter table sponsorships alter column user_id drop not null;
 
 alter table teams add column if not exists tagline   text not null default '';
 alter table teams add column if not exists logo_path text not null default '';

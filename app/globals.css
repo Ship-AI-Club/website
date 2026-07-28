@@ -3125,3 +3125,102 @@ h3 .icon {
     min-width: 0;
   }
 }
+
+/* ------------------------------------------------------------------
+   Sponsor wall
+
+   Logo height is keyed to tier. The sponsorship page publishes a
+   ladder and its prices; a wall that renders every mark identically
+   would contradict it, and the person who bought the top rung is the
+   one who'd notice first.
+------------------------------------------------------------------ */
+
+.hk-sponsors {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.hk-sponsor-tier {
+  display: grid;
+  gap: 1.1rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.hk-sponsor-tier-name {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.hk-sponsor-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.75rem, 5vw, 3.5rem);
+  list-style: none;
+}
+
+.hk-sponsor a,
+.hk-sponsor > span {
+  display: block;
+  opacity: 0.82;
+  transition: opacity 150ms ease;
+}
+
+.hk-sponsor img {
+  display: block;
+  width: auto;
+  /* the global `img { max-width: 100% }` reset resolves circularly
+     inside a flex row and collapses the intrinsic width to 0 — the
+     same reason .sponsor-logo overrides it */
+  max-width: none;
+  /* the ladder, in pixels */
+  height: var(--mark, 2.2rem);
+  object-fit: contain;
+  /* White monochrome, as on the homepage strip. Half these marks are
+     dark artwork on transparency and are simply invisible on black
+     otherwise, and a wall of clashing brand colours would be the one
+     loud thing on the page. */
+  filter: brightness(0) invert(1);
+}
+
+/* icon + name, for marks that carry no name of their own */
+.hk-sponsor-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.hk-sponsor-lockup .hk-sponsor-wordmark {
+  /* the icon sets the scale; the name sits at a readable fraction of
+     it rather than matching a 4rem mark letter for letter */
+  font-size: calc(var(--mark, 2.2rem) * 0.62);
+}
+
+.hk-sponsor-wordmark {
+  font-size: var(--mark, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.hk-sponsor-tier.is-platinum { --mark: clamp(2.9rem, 7vw, 4.2rem); }
+.hk-sponsor-tier.is-gold     { --mark: clamp(2.3rem, 5.5vw, 3.2rem); }
+.hk-sponsor-tier.is-silver   { --mark: clamp(1.9rem, 4.5vw, 2.5rem); }
+.hk-sponsor-tier.is-bronze   { --mark: clamp(1.5rem, 3.5vw, 1.9rem); }
+
+/* The title sponsor gets the one piece of colour on the wall. */
+.hk-sponsor-tier.is-platinum .hk-sponsor-tier-name {
+  color: var(--accent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* brighten on hover, not dim — these are the people who paid */
+  .hk-sponsor a:hover {
+    opacity: 1;
+  }
+}

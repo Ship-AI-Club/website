@@ -3,7 +3,12 @@
 import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 
-import { REQUESTABLE_ROLES, SPONSOR_CHOICES, roleLabel } from "../../../lib/accounts";
+import {
+  REQUESTABLE_ROLES,
+  SPONSOR_CHOICES,
+  VOLUNTEER_JOBS,
+  roleLabel,
+} from "../../../lib/accounts";
 import { requestRoleAction, withdrawRequestAction } from "../actions";
 
 /* ------------------------------------------------------------------
@@ -40,6 +45,11 @@ const PROMPTS = {
       hint: "How you want to be introduced from stage, and what you'd be judging from — operator, investor, engineer.",
       placeholder: "Ten years in growth at two marketplaces. Angel investor since 2021.",
     },
+  },
+  volunteer: {
+    lede: "A few hours makes the weekend work. Tell us which days you can be there and roughly when — we'll build the rota around what people actually offer.",
+    placeholder: "Around all day Saturday, and Friday from about 6…",
+    expertise: null,
   },
 };
 
@@ -85,9 +95,33 @@ export function RequestForm({ available, sponsorTier }) {
       )}
       {available.length === 1 && <input type="hidden" name="role" value={role} />}
 
+      {role === "volunteer" && (
+        <fieldset className="ac-choices">
+          <legend className="ac-label">
+            What can you cover? <span className="ac-req">required</span>
+          </legend>
+          <p className="ac-hint">
+            Pick as many as you like. Each one says roughly what it asks of you, so nobody
+            agrees to a job and then discovers it was the whole weekend.
+          </p>
+          {VOLUNTEER_JOBS.map((j) => (
+            <label key={j.id} className="ac-choice">
+              <input type="checkbox" name="jobs" value={j.id} />
+              <span className="ac-choice-body">
+                <strong>
+                  {j.label} <span className="ac-opt">{j.hours}</span>
+                </strong>
+                <span>{j.blurb}</span>
+              </span>
+            </label>
+          ))}
+        </fieldset>
+      )}
+
       <div className="ac-field">
         <label className="ac-label" htmlFor="message">
-          What do you have in mind? <span className="ac-req">required</span>
+          {role === "volunteer" ? "When are you around?" : "What do you have in mind?"}{" "}
+          <span className="ac-req">required</span>
         </label>
         <p className="ac-hint">{prompt.lede}</p>
         <textarea

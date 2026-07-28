@@ -14,6 +14,7 @@ import {
   REQUESTABLE_ROLES,
   SPONSOR_CHOICE_IDS,
   TRACK_IDS,
+  VOLUNTEER_JOB_IDS,
   pickIds,
   roleLabel,
   safeUrl,
@@ -448,10 +449,17 @@ export async function requestRoleAction(prev, formData) {
   const tierRaw = text(formData.get("sponsor_tier"), 40);
   const tier = role === "sponsor" && SPONSOR_CHOICE_IDS.includes(tierRaw) ? tierRaw : null;
 
+  const jobs =
+    role === "volunteer" ? pickIds(formData.getAll("jobs"), VOLUNTEER_JOB_IDS) : [];
+  if (role === "volunteer" && !jobs.length) {
+    return { error: "Pick at least one thing you can cover." };
+  }
+
   await sql`
-    insert into role_requests (user_id, role, message, expertise, sponsor_tier)
+    insert into role_requests (user_id, role, message, expertise, jobs, sponsor_tier)
     values (${user.id}, ${role}, ${message},
-            ${text(formData.get("expertise"), LIMITS.expertise)}, ${tier})`;
+            ${text(formData.get("expertise"), LIMITS.expertise)},
+            ${jobs}::text[], ${tier})`;
 
   await audit(user.id, "request-role", user.id, { role });
 

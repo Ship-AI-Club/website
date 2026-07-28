@@ -26,6 +26,7 @@ import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { JsonLd } from "../../components/article";
 import HackathonCountdown from "../../components/hackathon-countdown";
 import HackathonRoster from "../../components/hackathon-roster";
+import HackathonSponsors from "../../components/hackathon-sponsors";
 import { TIERS } from "../../lib/sponsors";
 
 import {
@@ -714,6 +715,11 @@ export default function Page() {
             </a>
           </div>
         </section>
+
+        {/* Above the pitch to become one: who already did is the most
+            persuasive thing on the page, and it renders as nothing
+            until somebody has. */}
+        <HackathonSponsors />
 
         <section className="section" id="sponsor">
           <p className="kicker">Sponsorship</p>

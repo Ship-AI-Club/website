@@ -3,7 +3,7 @@
 import { UserRound } from "lucide-react";
 
 import { requireAdmin } from "../../../lib/auth";
-import { roleLabel } from "../../../lib/accounts";
+import { roleLabel, volunteerJobLabel } from "../../../lib/accounts";
 import { tierById } from "../../../lib/sponsors";
 import { decidedRequests, pendingRequests } from "../../../lib/store";
 import RequestForm from "../request-form";
@@ -102,6 +102,12 @@ export default async function Page() {
                     <dt>Expertise</dt>
                     <dd>{display(request.expertise, "No expertise provided.")}</dd>
                   </div>
+                  {request.jobs?.length > 0 && (
+                    <div>
+                      <dt>Can cover</dt>
+                      <dd>{request.jobs.map(volunteerJobLabel).join(" · ")}</dd>
+                    </div>
+                  )}
                 </dl>
 
                 <RequestForm requestId={request.id} />

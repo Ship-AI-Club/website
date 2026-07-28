@@ -2951,13 +2951,25 @@ h3 .icon {
 ------------------------------------------------------------------ */
 
 .hk-countdown {
-  max-width: 78rem;
-  margin: 0 auto;
-  padding: 0 clamp(1.25rem, 5vw, 4rem);
+  /* `display: grid` is load-bearing, not a layout preference: the
+     reveal helper sets inline-block, which shrink-wraps the element
+     and leaves margin:auto with nothing to centre. .hk-facts solves
+     it the same way, and the one time this was forgotten it shipped
+     as the left-aligned sponsor strip. */
   display: grid;
   justify-items: center;
   gap: 0.9rem;
   text-align: center;
+  /* 68rem and this padding are the page's column, shared with
+     .hero, .section and .hk-facts. */
+  max-width: 68rem;
+  margin: 0 auto;
+  /* Nothing on top: .hk-hero's own 3rem bottom padding already sits
+     there. The same 3rem below is what stops the clock butting into
+     the facts strip, which has no vertical padding of its own — and
+     matching the hero exactly is what keeps the gaps either side
+     equal rather than nearly equal. */
+  padding: 0 clamp(1.25rem, 5vw, 4rem) 3rem;
 }
 
 .hk-countdown-label {
@@ -3022,9 +3034,12 @@ h3 .icon {
   text-underline-offset: 3px;
 }
 
+/* Drops the 15vw floor so four cells still fit a 375px screen. No
+   `flex: 1` here — the row is sized to max-content by the parent
+   grid's justify-items, so there is no free space to distribute and
+   it would do nothing. */
 @media (max-width: 420px) {
   .hk-countdown-cell {
     min-width: 0;
-    flex: 1;
   }
 }

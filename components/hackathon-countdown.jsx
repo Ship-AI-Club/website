@@ -39,7 +39,11 @@ function split(target, now) {
   };
 }
 
-export default function HackathonCountdown() {
+/* `reveal` goes on the section itself, never on a wrapper around it:
+   the helper is display:inline-block, so a wrapper shrink-wraps the
+   whole clock and leaves margin:auto nothing to centre. .hk-facts
+   takes the same precaution for the same reason. */
+export default function HackathonCountdown({ delay = "440ms" }) {
   const [now, setNow] = useState(null);
 
   useEffect(() => {
@@ -79,7 +83,11 @@ export default function HackathonCountdown() {
 
   if (finished) {
     return (
-      <section className="hk-countdown is-done" aria-label="Hackathon countdown">
+      <section
+        className="hk-countdown reveal"
+        style={{ "--d": delay }}
+        aria-label="Hackathon countdown"
+      >
         <p className="hk-countdown-label">{EVENT.datesShort} · that&apos;s a wrap</p>
         <p className="hk-countdown-done">
           Zero to Launch {new Date(EVENT.startISO).getFullYear()} is over.{" "}
@@ -90,12 +98,17 @@ export default function HackathonCountdown() {
   }
 
   return (
-    <section className="hk-countdown" aria-label="Hackathon countdown">
+    <section
+      className="hk-countdown reveal"
+      style={{ "--d": delay }}
+      aria-label="Hackathon countdown"
+    >
       <p className="hk-countdown-label">{label}</p>
 
-      {/* One live region for the whole clock rather than four, and
-          polite rather than assertive — a screen reader announcing a
-          new second every second is unusable. */}
+      {/* role="timer" names it, aria-live="off" keeps it quiet: a
+          screen reader announcing a new value every second is
+          unusable, and the same information is in the copy around
+          it. */}
       <div className="hk-countdown-cells" role="timer" aria-live="off">
         {CELLS.map(([key, label]) => (
           <div key={key} className="hk-countdown-cell">

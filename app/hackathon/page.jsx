@@ -458,9 +458,7 @@ export default function Page() {
           </div>
         </section>
 
-        <div className="reveal" style={{ "--d": "440ms" }}>
-          <HackathonCountdown />
-        </div>
+        <HackathonCountdown delay="440ms" />
 
         <section className="hk-facts reveal" style={{ "--d": "480ms" }} aria-label="Event details">
           {FACTS.map((f) => (

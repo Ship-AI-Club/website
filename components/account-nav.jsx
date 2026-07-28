@@ -12,8 +12,19 @@ import Link from "next/link";
 export default function AccountNav({ sections }) {
   const pathname = usePathname();
 
-  const active = (href) =>
-    href === "/dashboard" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
+  /* Longest match wins. A plain prefix test lights up "/admin" on
+     every page under it, so on /admin/ops both "Overview" and "Run of
+     show" would read as current — and the one that's wrong is the one
+     you'd click. Comparing against every href in the nav means the
+     most specific one is the only one marked. */
+  const hrefs = sections.flatMap((s) => s.items.map((i) => i.href));
+
+  const matches = (href) => pathname === href || pathname.startsWith(`${href}/`);
+
+  const active = (href) => {
+    if (!matches(href)) return false;
+    return !hrefs.some((other) => other !== href && other.length > href.length && matches(other));
+  };
 
   return (
     <nav className="ac-menu" aria-label="Account">

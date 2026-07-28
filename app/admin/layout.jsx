@@ -22,8 +22,20 @@ export default async function AdminLayout({ children }) {
      where read_at is null and archived_at is null`;
 
   const sections = [
+    /* Ops first, and on its own. Everything below it is records you
+       maintain over months; this group is what's open on a laptop at
+       the venue while the weekend is actually happening. */
     {
-      title: null,
+      title: "On the day",
+      items: [
+        { href: "/admin/ops", label: "Run of show" },
+        { href: "/admin/ops/checkin", label: "Check-in" },
+        { href: "/admin/ops/broadcast", label: "Broadcast" },
+        { href: "/admin/ops/catering", label: "Catering" },
+      ],
+    },
+    {
+      title: "Records",
       items: [
         { href: "/admin", label: "Overview" },
         { href: "/admin/requests", label: "Requests", count: requests.length },

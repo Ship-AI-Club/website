@@ -364,6 +364,26 @@ create table if not exists audit_log (
 );
 create index if not exists audit_log_created_idx on audit_log (created_at desc);
 
+create table if not exists event_checkins (
+  user_id       uuid references users(id) on delete cascade,
+  day           text not null,
+  checked_in_at timestamptz not null default now(),
+  by            uuid references users(id) on delete set null,
+  primary key (user_id, day)
+);
+create index if not exists event_checkins_day_idx on event_checkins (day, checked_in_at desc);
+
+create table if not exists broadcasts (
+  id         uuid primary key default gen_random_uuid(),
+  segment    text not null,
+  subject    text not null,
+  body       text not null,
+  recipients int not null default 0,
+  sent_by    uuid references users(id) on delete set null,
+  sent_at    timestamptz not null default now()
+);
+create index if not exists broadcasts_sent_idx on broadcasts (sent_at desc);
+
 /* ------------------------------------------------------------------
    Catching up an existing database.
 
@@ -400,3 +420,15 @@ alter table teams add column if not exists logo_url  text not null default '';
    as a precedent. */
 alter table users drop column if exists pronouns;
 
+alter table event_checkins add column if not exists user_id       uuid references users(id) on delete cascade;
+alter table event_checkins add column if not exists day           text not null;
+alter table event_checkins add column if not exists checked_in_at timestamptz not null default now();
+alter table event_checkins add column if not exists by            uuid references users(id) on delete set null;
+
+alter table broadcasts add column if not exists id         uuid default gen_random_uuid();
+alter table broadcasts add column if not exists segment    text not null;
+alter table broadcasts add column if not exists subject    text not null;
+alter table broadcasts add column if not exists body       text not null;
+alter table broadcasts add column if not exists recipients int not null default 0;
+alter table broadcasts add column if not exists sent_by    uuid references users(id) on delete set null;
+alter table broadcasts add column if not exists sent_at    timestamptz not null default now();

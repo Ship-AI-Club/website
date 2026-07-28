@@ -1,6 +1,6 @@
 ---
 name: community-plan
-description: Design community as an instrumented funnel stage, not a Discord you open and hope. Use at session 02, Zero to $3,000.
+description: Design community as an instrumented funnel stage. Use when "start a Discord" is the plan and nobody has said what it's for.
 ---
 
 Treat community as a channel with stages and a number.
@@ -11,4 +11,4 @@ Treat community as a channel with stages and a number.
 4. **The weekly loop** — what you personally do every week to keep it alive, in hours. If it's more than you'll sustain in month four, redesign it now.
 5. **The number** that tells you it's working.
 
-Write to `02-b2c/README.md`. Be honest that this channel is slow before it compounds — a community plan judged on month-one numbers gets abandoned in month two.
+Write to `02-b2c/community-plan.md` or `03-b2b/community-plan.md`, matching the fork called in `01-roadmap/gtm-map.md`. Be honest that this channel is slow before it compounds — a community plan judged on month-one numbers gets abandoned in month two.

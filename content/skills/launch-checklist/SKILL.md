@@ -1,6 +1,6 @@
 ---
 name: launch-checklist
-description: Run the full pre-launch checklist and catch what breaks a launch. Use at the hackathon weekend and on launch day.
+description: Verify everything that breaks a launch — site, metadata, analytics, links — by testing it. Use on launch day and hackathon weekend.
 ---
 
 Pre-flight. Verify each item rather than asking whether it's done.
@@ -26,3 +26,5 @@ Pre-flight. Verify each item rather than asking whether it's done.
 - What you do if it goes quiet in the first hour. Having an answer prevents the panic-rewrite.
 
 Report a plain pass/fail list. Do not mark anything green you haven't actually verified.
+
+Write the result to `06-growth/launch-checklist.md` and report the summary inline. A checklist that only exists in a chat log is not something a teammate can open on Saturday.

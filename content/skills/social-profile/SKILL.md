@@ -1,11 +1,11 @@
 ---
 name: social-profile
-description: Set up one social profile properly from the positioning brief — bio, banner, pinned post, links. Use at the Ship the Surface session, one platform at a time.
+description: Rewrite one social profile from the positioning brief — handle, bio, banner, pinned post, links. Use once per platform.
 ---
 
 Set up a single profile, well. Run this once per platform rather than blasting the same text everywhere — each one reads differently and the differences matter.
 
-**Inputs.** The positioning brief (`04-positioning/README.md`) and the audit (`05-site/social-audit.md`). If the positioning is not settled, stop and settle it — a fast pass over eight profiles with fuzzy positioning just spreads the fuzziness.
+**Inputs.** The positioning brief (`04-positioning/brief.md`) and the audit (`05-site/social-audit.md`). If the positioning is not settled, stop and run `/positioning-brief` — a fast pass over eight profiles with fuzzy positioning just spreads the fuzziness.
 
 **Per profile, produce:**
 

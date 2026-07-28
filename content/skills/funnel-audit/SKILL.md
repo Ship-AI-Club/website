@@ -1,6 +1,6 @@
 ---
 name: funnel-audit
-description: Audit an existing funnel for the stage that's actually leaking. Use when traffic exists but conversion doesn't.
+description: Find which funnel stage loses the most people in absolute terms. Use when traffic exists but conversion doesn't.
 ---
 
 Find the leak, don't optimise everything.
@@ -10,3 +10,5 @@ Find the leak, don't optimise everything.
 3. Identify the single worst stage by absolute lost volume, not by percentage. A 40% drop at the top costs more than a 90% drop at the bottom.
 4. Propose one change for that stage. One. Ranked lists of twelve improvements are how nothing gets done.
 5. Name the number that will tell them within a week whether it worked.
+
+Write to `01-roadmap/funnel-audit.md`.

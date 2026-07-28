@@ -1,6 +1,6 @@
 ---
 name: programmatic-pages
-description: Design a templated page set (template + data) that's genuinely useful rather than a doorway page. Use at session 05, Ship the Surface.
+description: Design a templated page set that is genuinely useful rather than a doorway. Use when one page shape times real data covers many queries.
 ---
 
 Build programmatic pages that earn their existence.
@@ -10,3 +10,5 @@ Build programmatic pages that earn their existence.
 3. **Template design:** shared frame, genuinely per-page content above the fold, and internal links between related entries.
 4. **Ship a sample of five before generating five hundred**, and check they read well individually.
 5. Wire them into the sitemap and add appropriate schema.
+
+Write the plan to `05-site/programmatic-pages.md`, the data to `05-site/data/`, the template to `05-site/templates/`, and the samples to `05-site/samples/`.

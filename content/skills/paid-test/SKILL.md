@@ -1,14 +1,16 @@
 ---
 name: paid-test
-description: Structure a first paid acquisition test without burning the budget. Use at sessions 02 and 06.
+description: Decide whether paid is worth trying yet and size the smallest honest test. Use before opening an ad account.
 ---
 
-Run paid deliberately, only after organic signal exists.
+Decide whether paid is worth trying yet. This is the gate; `/paid-basics` is the execution. If the gate fails, there is nothing to execute.
 
-1. **Precondition check:** do they know their CAC ceiling, and is there any evidence people want this? If either is missing, say plainly that paid will accelerate a broken funnel, not fix it.
-2. **Creative:** at least three angles, not three colours of the same angle. The angle is the variable that matters.
-3. **Targeting:** narrow first. Broad targeting on a small budget teaches you nothing.
-4. **Budget and duration:** enough impressions to be readable, capped at what they can lose entirely.
-5. **The daily loop:** what to check, what threshold triggers a cut, what triggers a raise.
+1. **Is the funnel instrumented?** If you cannot attribute a signup to a click, paid buys you nothing but a bill. Stop and run `/analytics-wire`.
+2. **Is there organic demand?** Somebody has to want this before you pay to show it to more people. Paid accelerates a working funnel and accelerates a broken one just as fast.
+3. **What is the ceiling?** The most you can pay for a customer. Run `/unit-economics` if it exists; if you are early and it does not, compute a provisional ceiling here — ARPU x gross margin x assumed lifetime / 3 — label it provisional, and say it must be rechecked once churn is real.
+4. **Can you afford a readable test?** State two numbers: what it costs to buy enough clicks to learn something, and what you can lose entirely without it mattering. **If those two numbers do not overlap, say so and stop.** A test too small to read is money spent on nothing.
+5. **Set the kill number before spending.** Cost per signup, by a date. Decided in advance it is a threshold; decided afterwards it is an excuse.
 
-Never recommend scaling spend on a channel that hasn't cleared the CAC ceiling.
+If all five clear, hand off to `/paid-basics` for structure, creative and the daily loop.
+
+Write to `02-b2c/paid-test.md` or `03-b2b/paid-test.md`, matching the fork called in `01-roadmap/gtm-map.md`.

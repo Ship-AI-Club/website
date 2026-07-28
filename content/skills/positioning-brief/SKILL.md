@@ -1,6 +1,6 @@
 ---
 name: positioning-brief
-description: Work out your value proposition, unique selling points and positioning, then compress to a one-liner. Use at session 04, Unfair Advantage, or whenever the value prop is fuzzy.
+description: Work out who it's for, what it replaces, and the one thing only you can claim. Use whenever the value prop is fuzzy.
 ---
 
 Produce a one-page positioning brief. Interview the user rather than guessing, but read the product first so the questions are specific.
@@ -20,4 +20,8 @@ Produce a one-page positioning brief. Interview the user rather than guessing, b
 - **Swap test** — substitute a competitor's name. If it still reads true, it's a category description, not positioning. Rewrite.
 - **Stranger test** — would someone with no context repeat it back correctly? If it needs a preamble, it's too long.
 
-Write to `04-positioning/README.md`. Flag any answer that's still vague rather than smoothing it over in the prose — a brief that hides a weak answer is worse than no brief.
+Write to `04-positioning/brief.md`. Flag any answer that's still vague rather than smoothing it over in the prose — a brief that hides a weak answer is worse than no brief.
+
+If you cannot get answers — running unattended, or the user says just draft it — infer from the repo and mark every inferred answer **[UNVERIFIED]** in the brief. Never let an inferred answer read as a confirmed one.
+
+If the swap test fails on everything except the `Unlike` clause, that is a finding rather than a copy problem: there is no differentiation yet. Say so plainly and name what would create one. A fabricated edge poisons every artifact downstream.

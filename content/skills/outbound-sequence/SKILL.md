@@ -1,6 +1,6 @@
 ---
 name: outbound-sequence
-description: Write B2B outbound that gets replies, plus the follow-up cadence. Use at session 03, Outbound Agents.
+description: Write cold outbound email that gets replies, plus the follow-up cadence and the graceful no. Use once the account list exists.
 ---
 
 Write outbound that a busy person would answer.
@@ -12,3 +12,5 @@ Write outbound that a busy person would answer.
 - **Write the disqualifying reply too** — the graceful exit when they're not a fit. It's what makes a "no" reusable later.
 
 Do not write anything that would embarrass the user if it were screenshotted and posted. Flag it if the draft is drifting that way.
+
+Read the account list at `03-b2b/icp.md` first; if it does not exist, stop and run `/icp-builder`. Write to `03-b2b/outbound.md`.

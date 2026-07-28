@@ -1,6 +1,6 @@
 ---
 name: pricing-model
-description: Pick and document a pricing model, and check it against how customers actually get value. Use at session 06, Agentic Growth.
+description: Pick or change a pricing model and check it against how customers actually get value. Use when price and value have drifted apart.
 ---
 
 Choose a pricing model deliberately.
@@ -9,6 +9,6 @@ Choose a pricing model deliberately.
 2. **Shortlist two models** that match, and name what each demands from the product (metering, seats, billing complexity, support load).
 3. **Pick one, and write down what it punishes.** Every model has a failure mode: freemium punishes support, per-seat punishes team adoption, usage-based punishes predictability. Name yours.
 4. **Set the number.** A starting price with a rationale beats a perfect price with none.
-5. Write to `06-growth/README.md` and hand off to `/unit-economics`.
+5. Write to `06-growth/pricing.md`, then hand the new ARPU to `/unit-economics` so the ceiling gets recomputed.
 
 If they've been putting off pricing because the product "isn't ready", say plainly that pricing set at the last minute is pricing set by anxiety.

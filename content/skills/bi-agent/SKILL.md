@@ -1,11 +1,13 @@
 ---
 name: bi-agent
-description: Build an agent that reads your analytics on a schedule and reports what moved in plain English. Use at session 02 (B2C) or session 03 (B2B).
+description: Build an agent that reads your analytics on a schedule and reports what moved in plain English. Use once events are verified.
 ---
 
 Build the reporting agent. Analytics usually fails at attention, not collection — the data exists and nobody looks. Fix the half that is actually broken.
 
-**Preconditions.** Events must be firing and verified. If `/analytics-wire` has not been run, run it first — an agent reporting on broken instrumentation is worse than no agent, because it looks authoritative.
+**Preconditions.** Open the verification table `/analytics-wire` wrote. If any event is not marked verified, stop and say which ones — an agent reporting on broken instrumentation is worse than no agent, because it looks authoritative. Checking that the skill *ran* is not the same as checking that it *passed*.
+
+Below about twenty events in a window, report absolute counts only and say why — percentage changes on small numbers are noise dressed as signal.
 
 **What to build**
 
@@ -19,4 +21,4 @@ Build the reporting agent. Analytics usually fails at attention, not collection 
 
 **Be honest about small numbers.** With three signups a week, percentage changes are noise. Have the agent say so rather than reporting "+200% growth" off one extra user — that habit is exactly what makes a founder's numbers untrustworthy on stage.
 
-Write the agent into `02-b2c/` or `03-b2b/` with a sample report committed.
+Write the agent into `02-b2c/bi-agent/` or `03-b2b/bi-agent/`, matching the fork called in `01-roadmap/gtm-map.md`, with a sample report at `sample-report.md` beside it.

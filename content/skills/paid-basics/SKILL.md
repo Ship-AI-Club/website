@@ -1,6 +1,6 @@
 ---
 name: paid-basics
-description: Plan a first performance-marketing push — account structure, creative angles, targeting and the daily decision loop. Use at the Agentic Growth workshop.
+description: Plan a performance-marketing push — structure, angles, targeting, daily loop — against a CAC ceiling. Use once paid has cleared the gate.
 ---
 
 Set up paid so the first dollar teaches you something.
@@ -14,4 +14,4 @@ Set up paid so the first dollar teaches you something.
 5. **The daily loop.** What to check each day, the threshold that triggers a cut, the one that triggers a raise, and the point at which you stop. Write the stop condition before spending, not after.
 6. **Check every plan against the CAC ceiling.** If projected acquisition cost exceeds it, say so and stop — do not soften it. A channel that can't clear the ceiling isn't a channel, however good the creative is.
 
-Write to `06-growth/README.md`.
+Write to `06-growth/paid-basics.md`.

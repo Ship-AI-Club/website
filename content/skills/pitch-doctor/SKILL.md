@@ -1,9 +1,9 @@
 ---
 name: pitch-doctor
-description: Build or tighten a 60-second elevator pitch in five beats, with separate versions per audience. Use at session 04, Unfair Advantage.
+description: Build a 60-second spoken pitch in five beats, one version per audience. Use when the positioning is settled but unsayable.
 ---
 
-Build the spoken pitch on top of the positioning brief. Read `04-positioning/README.md` first; if it doesn't exist, run `/positioning-brief` first and say so.
+Build the spoken pitch on top of the positioning brief. Read `04-positioning/brief.md` first; if it doesn't exist, run `/positioning-brief` first and say so.
 
 **Five beats, sixty seconds:**
 1. **Hook** — the problem as a recognisable situation, not a market-size statistic.
@@ -15,3 +15,7 @@ Build the spoken pitch on top of the positioning brief. Read `04-positioning/REA
 **Then cut it.** Read the draft aloud in your head at speaking pace — roughly 150 words per minute, so sixty seconds is about 150 words. Report the word count. If it's over, cut setup, not proof.
 
 **Common failures to name if you see them:** ninety seconds of setup with no ask; explaining how it works instead of who it's for; three asks; an opening statistic nobody remembers.
+
+Report the spoken word count — the words actually said out loud, excluding beat labels. 150 words is the ceiling for sixty seconds.
+
+Write to `04-positioning/pitch.md`. The short version becomes the bio and pinned post in `/social-profile`.

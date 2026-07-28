@@ -3,7 +3,12 @@ import IntakeForm from "./intake-form";
 
 /* Hidden page — not linked from the site, not in the sitemap, noindex.
    The URL gets sent directly to a sponsor, mentor or judge once they've
-   said yes, so it opens straight into the form with no pitch attached. */
+   said yes, so it opens straight into the form with no pitch attached.
+
+   Contact routes through Discord, never a personal address — same rule
+   as the rest of the site, and this page is public enough to be scraped. */
+
+const DISCORD = "https://discord.gg/kZSJMNveYM";
 
 export const metadata = {
   title: "Intake — Ship AI",
@@ -39,8 +44,8 @@ export default function Page() {
         <p className="hk-note">
           Files go into private storage — nothing here is public until it&apos;s on the site.
           Questions:{" "}
-          <a href="mailto:santos.d.hernandez@gmail.com?subject=Ship%20AI%20intake">
-            santos.d.hernandez@gmail.com
+          <a href={DISCORD} target="_blank" rel="noreferrer">
+            ask in the Discord
           </a>
           .
         </p>

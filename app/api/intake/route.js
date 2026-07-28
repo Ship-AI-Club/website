@@ -133,7 +133,7 @@ export async function POST(request) {
   } catch (error) {
     console.error("intake: could not store record", error);
     return Response.json(
-      { error: "We couldn't save that. Try again, or email santos.d.hernandez@gmail.com." },
+      { error: "We couldn't save that. Try again, or tell us in the Discord." },
       { status: 500 },
     );
   }

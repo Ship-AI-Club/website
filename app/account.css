@@ -405,6 +405,42 @@ button.btn:disabled {
   opacity: 0.55;
 }
 
+/* ---------- autofill ----------
+
+   Safari and Chrome repaint an autofilled field with their own
+   background and text colour, and neither `background` nor `color`
+   beats them. On a black page that means a pale yellow box with black
+   text — and, for the one-time code, black text on black, which
+   reads as an empty field somebody already typed into.
+
+   -webkit-text-fill-color is the only property that wins on the text.
+   The background can only be replaced by an inset shadow big enough
+   to cover the box, which is why the radius is restated: a shadow
+   ignores the border-radius of a rule it isn't part of. */
+
+.ac-form input:-webkit-autofill,
+.ac-form input:-webkit-autofill:hover,
+.ac-form input:-webkit-autofill:active,
+.ac-form textarea:-webkit-autofill,
+.ac-form select:-webkit-autofill {
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--ink);
+  -webkit-box-shadow: 0 0 0 100px #0b0b0d inset;
+  box-shadow: 0 0 0 100px #0b0b0d inset;
+  border-radius: 8px;
+  border-color: var(--hairline);
+  /* Safari animates the yellow in; a long delay never lets it start. */
+  transition: background-color 100000s ease-in-out 0s;
+}
+
+.ac-form input:-webkit-autofill:focus,
+.ac-form textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--ink);
+  -webkit-box-shadow: 0 0 0 100px #0d1120 inset;
+  box-shadow: 0 0 0 100px #0d1120 inset;
+  border-color: var(--accent);
+}
+
 .ac-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
@@ -429,18 +465,38 @@ button.btn:disabled {
   cursor: pointer;
 }
 
-/* the one-time code — big, monospaced, unmistakably a code */
+/* The one-time code — big, monospaced, unmistakably a code.
+
+   Letter-spacing is applied after every character including the last,
+   so centred text sits half a letter-space left of true centre. The
+   asymmetric padding puts it back: extra padding on the left of one
+   full letter-space moves the centred content half of that to the
+   right, which is exactly the offset being cancelled. */
 .ac-code {
   font-family: var(--font-geist-mono), monospace !important;
-  font-size: 1.6rem !important;
-  letter-spacing: 0.42em;
+  font-size: 1.5rem !important;
+  letter-spacing: 0.38em;
   text-align: center;
-  padding: 0.9rem 0.5rem 0.9rem 0.92rem !important;
+  color: var(--ink) !important;
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--accent);
+  padding: 0.85rem 0.9rem 0.85rem calc(0.9rem + 0.38em) !important;
 }
 
 .ac-code::placeholder {
-  letter-spacing: 0.42em;
+  letter-spacing: 0.38em;
   color: var(--faint);
+  -webkit-text-fill-color: var(--faint);
+}
+
+/* Autofilled from the Messages suggestion — the case that produced a
+   code nobody could read. Restated here because the shared autofill
+   rule doesn't carry the code field's own text colour. */
+.ac-form input.ac-code:-webkit-autofill,
+.ac-form input.ac-code:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--ink);
+  font-size: 1.5rem !important;
+  letter-spacing: 0.38em;
 }
 
 /* ---------- choices: pills, checkboxes, radios ---------- */

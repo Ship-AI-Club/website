@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { JsonLd } from "../../components/article";
+import HackathonCountdown from "../../components/hackathon-countdown";
 import HackathonRoster from "../../components/hackathon-roster";
 import { TIERS } from "../../lib/sponsors";
 
@@ -456,6 +457,10 @@ export default function Page() {
             </a>
           </div>
         </section>
+
+        <div className="reveal" style={{ "--d": "440ms" }}>
+          <HackathonCountdown />
+        </div>
 
         <section className="hk-facts reveal" style={{ "--d": "480ms" }} aria-label="Event details">
           {FACTS.map((f) => (

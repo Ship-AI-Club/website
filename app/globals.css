@@ -2940,3 +2940,91 @@ h3 .icon {
     grid-template-columns: 1fr;
   }
 }
+
+/* ------------------------------------------------------------------
+   Hackathon countdown
+
+   Sits between the hero and the facts strip, where "when is it?" is
+   the next question the page gets asked. Monospaced and tabular so
+   the digits don't jitter as they tick — a proportional font reflows
+   the whole row every time a 1 becomes a 2.
+------------------------------------------------------------------ */
+
+.hk-countdown {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+  display: grid;
+  justify-items: center;
+  gap: 0.9rem;
+  text-align: center;
+}
+
+.hk-countdown-label {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hk-countdown-cells {
+  display: flex;
+  gap: clamp(0.4rem, 1.6vw, 0.9rem);
+  flex-wrap: nowrap;
+}
+
+.hk-countdown-cell {
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+  min-width: clamp(4rem, 15vw, 6.5rem);
+  padding: clamp(0.7rem, 2vw, 1.1rem) clamp(0.5rem, 2vw, 1rem);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: rgba(248, 248, 250, 0.02);
+}
+
+.hk-countdown-cell b {
+  font-family: var(--font-geist-mono), monospace;
+  /* tabular figures: without this the row shifts on every tick */
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(1.9rem, 6vw, 3.1rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.hk-countdown-cell span {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* the seconds cell is the only one that moves most of the time */
+.hk-countdown-cell:last-child b {
+  color: var(--accent);
+}
+
+.hk-countdown-foot,
+.hk-countdown-done {
+  color: var(--dim);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 34rem;
+}
+
+.hk-countdown-done a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 420px) {
+  .hk-countdown-cell {
+    min-width: 0;
+    flex: 1;
+  }
+}

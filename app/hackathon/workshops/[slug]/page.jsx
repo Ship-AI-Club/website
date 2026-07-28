@@ -117,9 +117,14 @@ export default async function Page({ params }) {
           <a href="/hackathon/skills">Skills</a>
           <a href="/hackathon">Hackathon</a>
         </nav>
-        <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
-          Join the Discord
-        </a>
+        <div className="nav-ctas">
+          <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
+            Discord
+          </a>
+          <a className="btn btn-solid" href="/dashboard">
+            Register
+          </a>
+        </div>
       </header>
 
       <main className="hk-ws">

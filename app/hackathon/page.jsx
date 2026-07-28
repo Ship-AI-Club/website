@@ -41,9 +41,6 @@ import {
   GITHUB,
   X_URL,
   GTM_DECK,
-  SPONSOR_MAIL,
-  JUDGE_MAIL,
-  MENTOR_MAIL,
   WORKSHOPS,
   ACTS,
 } from "../../lib/hackathon";
@@ -768,7 +765,7 @@ export default function Page() {
           <p className="hk-note">
             Sponsorship closes {EVENT.sponsorDeadline} so prize amounts can go on this page
             before we push registration.{" "}
-            <a href={SPONSOR_MAIL}>Get in touch</a>.
+            <a href="/dashboard/requests">Start a sponsorship request</a>.
           </p>
         </section>
 

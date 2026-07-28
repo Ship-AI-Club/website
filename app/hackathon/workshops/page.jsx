@@ -82,9 +82,14 @@ export default function Page() {
           <a href="/hackathon#prizes">Prizes</a>
           <a href="/hackathon#rules">Rules</a>
         </nav>
-        <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
-          Join the Discord
-        </a>
+        <div className="nav-ctas">
+          <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
+            Discord
+          </a>
+          <a className="btn btn-solid" href="/dashboard">
+            Register
+          </a>
+        </div>
       </header>
 
       <main className="hk-wsi">

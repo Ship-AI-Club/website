@@ -6,6 +6,7 @@ import {
   CalendarDays,
   Coins,
   Eye,
+  Camera,
   Gauge,
   Globe2,
   GraduationCap,
@@ -47,6 +48,7 @@ import {
   ACTS,
 } from "../../lib/hackathon";
 import { CATEGORIES } from "../../lib/results";
+import { VOLUNTEER_JOBS } from "../../lib/accounts";
 
 function BrandGlyph({ icon, size = 18 }) {
   return (
@@ -772,7 +774,7 @@ export default function Page() {
 
         <section className="section" id="roles">
           <p className="kicker">We&apos;re also looking for</p>
-          <h2>Judges and mentors.</h2>
+          <h2>Judges, mentors and volunteers.</h2>
           <div className="hk-roles">
             <div className="hk-role">
               <h3>
@@ -783,13 +785,18 @@ export default function Page() {
               <p>
                 Founders and operators who have launched something and can tell a real number
                 from a vanity one. You&apos;ll score against published criteria, ask hard
-                questions in the Q&amp;A, and hand out an award. Gold and Platinum sponsors get
-                a seat, and judging earns Bronze placement on its own.
+                questions in the Q&amp;A, and hand out an award.
+              </p>
+              <p>
+                The panel is small and picked by hand, so this is an application rather than a
+                sign-up. A seat also comes with Gold and Platinum sponsorship — see{" "}
+                <a href="/hackathon/sponsor">the menu</a>.
               </p>
               <p className="hk-role-cta">
-                <a href={JUDGE_MAIL}>Volunteer to judge</a>
+                <a href="/dashboard/requests">Apply to judge</a>
               </p>
             </div>
+
             <div className="hk-role">
               <h3>
                 <Users className="icon" size={18} strokeWidth={1.75} aria-hidden="true" />
@@ -802,7 +809,34 @@ export default function Page() {
                 hours is enough — show up for the block you can make.
               </p>
               <p className="hk-role-cta">
-                <a href={MENTOR_MAIL}>Volunteer to mentor</a>
+                <a href="/dashboard/requests">Offer to mentor</a>
+              </p>
+            </div>
+
+            {/* Driven by VOLUNTEER_JOBS so this card and the request
+                form can't drift — adding a job next season updates
+                both. */}
+            <div className="hk-role">
+              <h3>
+                <Camera className="icon" size={18} strokeWidth={1.75} aria-hidden="true" />
+                Volunteers
+              </h3>
+              <p className="hk-role-when">
+                {VOLUNTEER_JOBS.length} jobs · a few hours each
+              </p>
+              <p>
+                The weekend doesn&apos;t run without these, and none of them need you to know
+                anything about the products in the room.
+              </p>
+              <ul className="hk-role-jobs">
+                {VOLUNTEER_JOBS.map((j) => (
+                  <li key={j.id}>
+                    <strong>{j.label}</strong> — {j.hours.toLowerCase()}. {j.blurb}
+                  </li>
+                ))}
+              </ul>
+              <p className="hk-role-cta">
+                <a href="/dashboard/requests">Offer to volunteer</a>
               </p>
             </div>
           </div>

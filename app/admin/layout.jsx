@@ -40,6 +40,7 @@ export default async function AdminLayout({ children }) {
         { href: "/admin", label: "Overview" },
         { href: "/admin/requests", label: "Requests", count: requests.length },
         { href: "/admin/users", label: "Users" },
+        { href: "/admin/invites", label: "Invites" },
         { href: "/admin/assignments", label: "Assignments" },
         { href: "/admin/submissions", label: "Submissions" },
         { href: "/admin/scores", label: "Leaderboard" },

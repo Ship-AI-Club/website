@@ -11,6 +11,7 @@ import {
 } from "../../lib/auth";
 import { isEmail, normalizeEmail, text } from "../../lib/accounts";
 import { safeNext } from "../../lib/nav";
+import { redeemPendingInvite } from "../../lib/invites";
 
 /* ------------------------------------------------------------------
    Sign in.
@@ -62,6 +63,11 @@ export async function signInAction(prev, formData) {
 
   const result = await verifyLoginCode(email, code);
   if (result.error) return { step: "code", email, next, error: result.error };
+
+  /* If they arrived through an invite link, this is where the roles
+     land — after there's an account to attach them to, and inside an
+     action rather than a render, because granting a role is a write. */
+  await redeemPendingInvite(result.user);
 
   redirect(result.user.onboarded_at ? next : `/onboarding?next=${encodeURIComponent(next)}`);
 }

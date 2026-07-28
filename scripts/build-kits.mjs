@@ -137,7 +137,7 @@ function guideMarkdown(w) {
     SETUP.note,
     "",
     ...SETUP.steps.flatMap((s) => [
-      `**${s.t}.** ${s.c}`,
+      `**${s.t}${/[.?!]$/.test(s.t) ? "" : "."}** ${s.c}`,
       ...(s.run
         ? ["", "    " + s.run.replace("{BUNDLE}", `zero-to-launch-${w.n}-${w.slug}.zip`)]
         : []),

@@ -94,6 +94,21 @@ h1, h2, h3 {
   font-weight: 600;
   font-size: 1rem;
   letter-spacing: -0.01em;
+  /* two words, one line — a crowded nav was breaking "Ship AI" across
+     two rows and dragging the header's height with it */
+  white-space: nowrap;
+}
+
+/* A primary and a secondary sitting together in the header. */
+.nav-ctas {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: none;
+}
+
+.nav-ctas .btn {
+  white-space: nowrap;
 }
 
 .nav nav {
@@ -884,7 +899,8 @@ h3 .icon {
     display: none;
   }
 
-  .nav .nav-cta {
+  .nav .nav-cta,
+  .nav .nav-ctas {
     margin-left: auto;
   }
 

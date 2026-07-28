@@ -366,6 +366,40 @@ create table if not exists inbound_emails (
 create index if not exists inbound_emails_received_idx on inbound_emails (received_at desc);
 create index if not exists inbound_emails_unread_idx on inbound_emails (read_at) where read_at is null;
 
+/* ---------- invites ---------- */
+
+/* An admin hands someone a link instead of asking them to file a
+   request that the admin then approves. The roles are decided up
+   front, which is what makes a package — "you're mentoring and
+   sponsoring" — one link rather than two round trips.
+
+   `roles` is a list for exactly that reason. `email`, when set, locks
+   the code to one address so a forwarded link grants nothing. */
+create table if not exists invites (
+  id         uuid primary key default gen_random_uuid(),
+  code       text not null unique,
+  roles      text[] not null default '{}',
+  email      text not null default '',
+  label      text not null default '',
+  note       text not null default '',
+  max_uses   integer not null default 1,
+  uses       integer not null default 0,
+  expires_at timestamptz,
+  created_by uuid references users(id) on delete set null,
+  created_at timestamptz not null default now(),
+  revoked_at timestamptz
+);
+create index if not exists invites_code_idx on invites (code);
+
+/* Who used which, so a shared code can be reconciled afterwards and
+   the same person can't consume two uses of it. */
+create table if not exists invite_redemptions (
+  invite_id   uuid not null references invites(id) on delete cascade,
+  user_id     uuid not null references users(id) on delete cascade,
+  redeemed_at timestamptz not null default now(),
+  primary key (invite_id, user_id)
+);
+
 /* ---------- ops ---------- */
 
 /* Runtime switches an admin can flip without a deploy: whether

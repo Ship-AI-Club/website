@@ -410,24 +410,29 @@ export default function Page() {
           <img src="/logo-icon.png" alt="" width={26} height={26} />
           <span>Ship AI</span>
         </a>
+        {/* Four anchors, not seven. This nav had become a table of
+            contents for a very long page, which pushed the brand onto
+            two lines and left the actual CTA competing with six
+            section links. Benefits and Rules are a scroll away and
+            linked from the copy that matters. */}
         <nav>
           <a href="/hackathon/workshops">Workshops</a>
           <a href="#schedule">Weekend</a>
           <a href="#prizes">Prizes</a>
-          <a href="#benefits">Benefits</a>
-          <a href="#rules">Rules</a>
           <a href="#sponsor">Sponsor</a>
-          <a href={DISCORD} target="_blank" rel="noreferrer">
+        </nav>
+        {/* A pair, so the hierarchy is legible: registering is what
+            this page is for, and the Discord is the thing you do
+            instead if you're not ready to. As a nav link among the
+            anchors it read as another section. */}
+        <div className="nav-ctas">
+          <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
             Discord
           </a>
-        </nav>
-        {/* Registering is what this page is for now that it can be
-            done here. The Discord stays one tap away as a nav link —
-            it's still where the program happens, just no longer the
-            thing we're asking a first-time visitor to do. */}
-        <a className="btn btn-solid nav-cta" href="/dashboard">
-          Register
-        </a>
+          <a className="btn btn-solid" href="/dashboard">
+            Register
+          </a>
+        </div>
       </header>
 
       <main id="top">

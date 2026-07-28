@@ -38,7 +38,11 @@ const PROMPTS = {
     },
   },
   judge: {
-    lede: "Sunday's pitches. Five minutes each, live product on screen, scored against the four published criteria. You'll also present an award.",
+    /* Judging is selected, not staffed. Saying so here is kinder than
+       a decline that arrives with no context — and the paid route is
+       real, published and worth naming rather than leaving people to
+       discover it on the sponsorship page. */
+    lede: "Sunday's pitches: five minutes each, live product on screen, scored against the four published criteria. The panel is small and picked by hand, so this is an application rather than a sign-up. A judging seat also comes with Gold and Platinum sponsorship — if that's the route you'd rather take, say so below or start a sponsorship request instead.",
     placeholder: "I've judged at two accelerators and I invest at pre-seed…",
     expertise: {
       label: "Your background",

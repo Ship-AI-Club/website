@@ -1,0 +1,970 @@
+/* ------------------------------------------------------------------
+   Accounts — /login, /onboarding, /dashboard, /judge, /admin.
+
+   Same black / white / #678ff2 and pixel-Geist system as the rest of
+   the site. The form primitives are deliberately close cousins of the
+   ones in intake.css: same input treatment, same accent-on-focus, same
+   mono uppercase micro-labels. This file adds what an application
+   surface needs that a marketing page doesn't — a shell with a side
+   nav, tables, status chips, and the scorecard controls.
+------------------------------------------------------------------ */
+
+/* ---------- .btn on a <button> ----------
+
+   Every .btn on the marketing pages is an anchor, so globals.css never
+   had to set a background or a font on it. The account area posts to
+   server actions, which means real <button> elements — and a button
+   brings a light UA background and the system font with it, which
+   turns .btn-ghost into a filled box with the wrong typeface in it. */
+
+button.btn {
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: none;
+}
+
+button.btn-solid {
+  background: var(--ink);
+}
+
+button.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- narrow pages: login, onboarding, verify ---------- */
+
+.ac-page {
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 12vh, 7rem) clamp(1.25rem, 5vw, 4rem) 5rem;
+}
+
+.ac-page.is-wide {
+  max-width: 46rem;
+}
+
+.ac-page h1 {
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  margin-bottom: 0.9rem;
+}
+
+.ac-lede {
+  color: var(--dim);
+  font-size: 1rem;
+  line-height: 1.65;
+  margin-bottom: 2.25rem;
+  max-width: 34rem;
+}
+
+.ac-page.is-wide .ac-lede {
+  max-width: 42rem;
+}
+
+/* ---------- the signed-in shell ---------- */
+
+.ac-shell {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: 3rem clamp(1.25rem, 5vw, 4rem) 6rem;
+  align-items: start;
+}
+
+.ac-side {
+  position: sticky;
+  top: 5rem;
+  display: grid;
+  gap: 1.75rem;
+}
+
+.ac-whoami {
+  display: grid;
+  gap: 0.2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.ac-whoami strong {
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.ac-whoami span {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.74rem;
+  color: var(--faint);
+  overflow-wrap: anywhere;
+}
+
+.ac-menu {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.ac-menu-group {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin: 1.25rem 0 0.5rem;
+}
+
+.ac-menu a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--dim);
+  padding: 0.5rem 0.7rem;
+  border-radius: 7px;
+  border-left: 2px solid transparent;
+  transition: color 150ms ease, background 150ms ease, border-color 150ms ease;
+}
+
+.ac-menu a.is-on {
+  color: var(--ink);
+  background: rgba(248, 248, 250, 0.05);
+  border-left-color: var(--accent);
+}
+
+.ac-menu a .ac-count {
+  margin-left: auto;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  color: var(--bg);
+  background: var(--accent);
+  border-radius: 20px;
+  padding: 0.05rem 0.42rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ac-menu a:hover {
+    color: var(--ink);
+  }
+}
+
+.ac-main {
+  min-width: 0;
+  display: grid;
+  gap: 2.5rem;
+  align-content: start;
+}
+
+.ac-head h1 {
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  margin-bottom: 0.6rem;
+}
+
+.ac-head p {
+  color: var(--dim);
+  max-width: 44rem;
+  line-height: 1.65;
+}
+
+.ac-kicker {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.7rem;
+}
+
+@media (max-width: 900px) {
+  .ac-shell {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 2rem;
+  }
+
+  .ac-side {
+    position: static;
+  }
+
+  .ac-menu {
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    overflow-x: auto;
+    gap: 0.25rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .ac-menu-group {
+    display: none;
+  }
+
+  .ac-menu a {
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    white-space: nowrap;
+  }
+
+  .ac-menu a.is-on {
+    background: none;
+    border-bottom-color: var(--accent);
+  }
+}
+
+/* ---------- cards ---------- */
+
+.ac-card {
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: clamp(1.25rem, 3vw, 1.9rem);
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.ac-card > h2,
+.ac-card > h3 {
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.ac-card p {
+  color: var(--dim);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.ac-card.is-accent {
+  border-color: rgba(103, 143, 242, 0.4);
+  background: rgba(103, 143, 242, 0.05);
+}
+
+.ac-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1rem;
+}
+
+.ac-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.ac-card-head h2,
+.ac-card-head h3 {
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.ac-card-head .ac-pill {
+  margin-left: auto;
+}
+
+/* ---------- status chips ---------- */
+
+.ac-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+  padding: 0.2rem 0.6rem;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.ac-pill.is-ok {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.ac-pill.is-live {
+  color: var(--ink);
+  border-color: rgba(248, 248, 250, 0.4);
+}
+
+.ac-pill.is-warn {
+  color: #f0c674;
+  border-color: rgba(240, 198, 116, 0.4);
+}
+
+.ac-pill.is-off {
+  color: var(--faint);
+}
+
+/* ---------- forms ---------- */
+
+.ac-form {
+  display: grid;
+  gap: 2rem;
+}
+
+.ac-form.is-tight {
+  gap: 1.25rem;
+}
+
+.ac-field {
+  display: grid;
+}
+
+.ac-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.3rem;
+}
+
+.ac-req {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 0.12rem 0.38rem;
+  border-radius: 3px;
+}
+
+.ac-opt {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.ac-hint {
+  color: var(--dim);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  max-width: 44rem;
+}
+
+.ac-form input[type="text"],
+.ac-form input[type="email"],
+.ac-form input[type="url"],
+.ac-form input[type="number"],
+.ac-form select,
+.ac-form textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 0.98rem;
+  color: var(--ink);
+  background: rgba(248, 248, 250, 0.03);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 0.72rem 0.9rem;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.ac-form select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--dim) 50%),
+    linear-gradient(135deg, var(--dim) 50%, transparent 50%);
+  background-position: calc(100% - 18px) center, calc(100% - 13px) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 2.5rem;
+}
+
+.ac-form select option {
+  background: #0b0b0d;
+  color: var(--ink);
+}
+
+.ac-form textarea {
+  resize: vertical;
+  min-height: 7rem;
+  line-height: 1.6;
+}
+
+.ac-form input:focus,
+.ac-form select:focus,
+.ac-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(103, 143, 242, 0.06);
+}
+
+.ac-form input:disabled,
+.ac-form select:disabled,
+.ac-form textarea:disabled {
+  opacity: 0.55;
+}
+
+.ac-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1.25rem;
+}
+
+.ac-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ac-actions .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ac-form button,
+.ac-inline-form button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* the one-time code — big, monospaced, unmistakably a code */
+.ac-code {
+  font-family: var(--font-geist-mono), monospace !important;
+  font-size: 1.6rem !important;
+  letter-spacing: 0.42em;
+  text-align: center;
+  padding: 0.9rem 0.5rem 0.9rem 0.92rem !important;
+}
+
+.ac-code::placeholder {
+  letter-spacing: 0.42em;
+  color: var(--faint);
+}
+
+/* ---------- choices: pills, checkboxes, radios ---------- */
+
+.ac-choices {
+  display: grid;
+  gap: 0.6rem;
+  border: 0;
+}
+
+.ac-choices.is-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ac-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.ac-choice input {
+  margin-top: 0.28rem;
+  accent-color: var(--accent);
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+}
+
+.ac-choice-body {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.ac-choice strong {
+  font-size: 0.96rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.ac-choice span {
+  color: var(--dim);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.ac-choice.is-on {
+  border-color: var(--accent);
+  background: rgba(103, 143, 242, 0.07);
+}
+
+.ac-choice:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ac-choice:not(.is-on):hover {
+    border-color: rgba(248, 248, 250, 0.32);
+  }
+}
+
+/* compact pill variant — goals, tracks, categories */
+.ac-tick {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--dim);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.ac-tick input {
+  accent-color: var(--accent);
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.ac-tick.is-on {
+  color: var(--ink);
+  border-color: var(--accent);
+  background: rgba(103, 143, 242, 0.08);
+}
+
+.ac-tick:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- feedback ---------- */
+
+.ac-error,
+.ac-ok,
+.ac-note {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid;
+}
+
+.ac-error {
+  color: #ff9d9d;
+  border-color: rgba(255, 157, 157, 0.35);
+  background: rgba(255, 157, 157, 0.07);
+}
+
+.ac-ok {
+  color: var(--accent);
+  border-color: rgba(103, 143, 242, 0.4);
+  background: rgba(103, 143, 242, 0.07);
+}
+
+.ac-note {
+  color: var(--dim);
+  border-color: var(--hairline);
+  background: rgba(248, 248, 250, 0.02);
+}
+
+.ac-empty {
+  border: 1px dashed var(--hairline);
+  border-radius: 12px;
+  padding: 2.25rem 1.5rem;
+  text-align: center;
+  color: var(--dim);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.ac-empty strong {
+  display: block;
+  color: var(--ink);
+  font-weight: 500;
+  margin-bottom: 0.35rem;
+}
+
+/* ---------- tables ---------- */
+
+.ac-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+}
+
+.ac-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 40rem;
+}
+
+.ac-table th {
+  text-align: left;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  font-weight: 400;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--hairline);
+  white-space: nowrap;
+}
+
+.ac-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(248, 248, 250, 0.06);
+  vertical-align: top;
+  color: var(--dim);
+}
+
+.ac-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.ac-table td strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.ac-table .ac-num {
+  font-family: var(--font-geist-mono), monospace;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ac-table a {
+  color: var(--accent);
+}
+
+.ac-sub {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--faint);
+  margin-top: 0.15rem;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- stats ---------- */
+
+/* Separate bordered cells rather than one grid drawing its lines with
+   a 1px gap over a hairline background: the count of stats is fixed
+   and the column count isn't, so the gap trick leaves the unfilled
+   cells of the last row showing as pale blocks. Same reason .hk-cats
+   on the results page has to span its last card. */
+.ac-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: 0.7rem;
+}
+
+.ac-stat {
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.ac-stat b {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.7rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.ac-stat span {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* ---------- the scorecard ---------- */
+
+.ac-axis {
+  display: grid;
+  gap: 0.55rem;
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.ac-axis:last-of-type {
+  border-bottom: 0;
+}
+
+.ac-axis-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.ac-axis-pct {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.78rem;
+  color: var(--accent);
+  min-width: 2.6rem;
+}
+
+.ac-axis-name {
+  font-size: 1.02rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.ac-axis-value {
+  margin-left: auto;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.1rem;
+}
+
+.ac-axis-value em {
+  font-style: normal;
+  color: var(--faint);
+  font-size: 0.8rem;
+}
+
+.ac-axis p {
+  color: var(--dim);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.ac-axis-guide {
+  color: var(--faint);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+/* 0–10 radio strip: eleven boxes, keyboard-navigable as a radio group */
+.ac-scale {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  border: 0;
+  padding: 0.15rem 0;
+}
+
+.ac-scale label {
+  flex: 1 1 2rem;
+  min-width: 2rem;
+  text-align: center;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.88rem;
+  color: var(--dim);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.ac-scale input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ac-scale label.is-on {
+  color: #000;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.ac-scale label:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ac-scale label:not(.is-on):hover {
+    color: var(--ink);
+    border-color: rgba(248, 248, 250, 0.35);
+  }
+}
+
+.ac-total {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  border: 1px solid rgba(103, 143, 242, 0.4);
+  background: rgba(103, 143, 242, 0.06);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+}
+
+.ac-total b {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.ac-total span {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* horizontal bar for the leaderboard's per-axis means */
+.ac-bar {
+  display: block;
+  height: 3px;
+  background: rgba(248, 248, 250, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 0.3rem;
+}
+
+.ac-bar i {
+  display: block;
+  height: 100%;
+  width: var(--pct, 0%);
+  background: var(--accent);
+}
+
+/* ---------- read-only field lists ---------- */
+
+.ac-dl {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.ac-dl div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.ac-dl dt {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.ac-dl dd {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ac-dl dd a {
+  color: var(--accent);
+}
+
+/* ---------- misc ---------- */
+
+.ac-inline-form {
+  display: inline;
+}
+
+.ac-btn-link {
+  background: none;
+  border: 0;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ac-btn-danger {
+  color: #ff9d9d;
+}
+
+.ac-btn-sm {
+  font-size: 0.82rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.ac-mono {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+.ac-copy-field {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ac-copy-field code {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.92rem;
+  letter-spacing: 0.1em;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 0.55rem 0.9rem;
+  color: var(--ink);
+  background: rgba(248, 248, 250, 0.03);
+}
+
+.ac-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.ac-list li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(248, 248, 250, 0.06);
+  padding-bottom: 0.75rem;
+  font-size: 0.93rem;
+  color: var(--dim);
+}
+
+.ac-list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.ac-list strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.ac-list .ac-list-end {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.ac-divider {
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  margin: 0;
+}
+
+.ac-fine {
+  color: var(--faint);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.ac-fine a {
+  color: var(--dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

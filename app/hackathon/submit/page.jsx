@@ -1,17 +1,19 @@
 import { AlertTriangle, ArrowRight, CheckCircle2 } from "lucide-react";
-import { siGithub } from "simple-icons";
 import { JsonLd } from "../../../components/article";
 
 const DISCORD = "https://discord.gg/kZSJMNveYM";
 const DEADLINE = "12:00 PM MST, Sunday October 18, 2026";
-const SUBMIT_ISSUE =
-  "https://github.com/Ship-AI-Club/events/issues/new?template=hackathon-submission.md&labels=hackathon&title=Submission%3A%20";
-const SUBMISSIONS_LIST =
-  "https://github.com/Ship-AI-Club/events/issues?q=is%3Aissue+label%3Ahackathon";
+
+/* Submissions used to be public GitHub issues. They're filed from a
+   Ship AI account now — the same nine fields, but attached to a team,
+   editable until the deadline, and readable by the judges assigned to
+   it. This page stays public and indexed because the requirements are
+   worth reading in September; the form itself is behind sign-in. */
+const SUBMIT_URL = "/dashboard/submission";
 
 const TITLE = "Submit your project — Zero to Launch";
 const DESCRIPTION =
-  "Submission requirements and deadline for Zero to Launch, the Ship AI hackathon. One public GitHub issue per team, due 12:00 PM MST Sunday October 18, 2026.";
+  "Submission requirements and deadline for Zero to Launch, the Ship AI hackathon. One submission per team, due 12:00 PM MST Sunday October 18, 2026.";
 
 export const metadata = {
   title: `${TITLE} — Ship AI`,
@@ -28,7 +30,7 @@ const FIELDS = [
   },
   {
     name: "Team",
-    copy: "Names plus GitHub or X handles. One to four people, one team per person.",
+    copy: "One to four people, one team per person. Made once from your account — whoever starts it gets an invite code to send round, and every member can edit the entry.",
   },
   {
     name: "Track and category",
@@ -101,25 +103,22 @@ export default function Page() {
         </p>
 
         <p className="article-lede">
-          One submission per team, filed as a public issue on the Ship AI events repo. It
-          takes about ten minutes if you have your numbers ready, so read this Friday rather
-          than at 11:50 on Sunday.
+          One submission per team, filed from your Ship AI account. It takes about ten minutes
+          if you have your numbers ready, so read this Friday rather than at 11:50 on Sunday.
         </p>
 
         <div className="cta-row hk-submit-cta">
-          <a className="btn btn-solid" href={SUBMIT_ISSUE} target="_blank" rel="noreferrer">
-            <svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true">
-              <path d={siGithub.path} />
-            </svg>
-            Open a submission
+          <a className="btn btn-solid" href={SUBMIT_URL}>
+            Open your submission
           </a>
-          <a className="btn btn-ghost" href={SUBMISSIONS_LIST} target="_blank" rel="noreferrer">
-            See all submissions
+          <a className="btn btn-ghost" href="/hackathon/results">
+            Past results
           </a>
         </div>
         <p className="hk-note">
-          The button opens a prefilled GitHub issue. You&apos;ll need a GitHub account — free,
-          and about a minute to make. Stuck? Post in{" "}
+          You&apos;ll need an account — an email address and a six-digit code, no password to
+          make. Start the entry as a draft whenever you like and keep editing it right up to
+          the deadline; any member of your team can. Stuck? Post in{" "}
           <a href={DISCORD} target="_blank" rel="noreferrer">the Discord</a> before the
           deadline, not after.
         </p>
@@ -161,8 +160,8 @@ export default function Page() {
         <p className="rule-line">receipts required</p>
 
         <div className="cta-row hk-submit-cta">
-          <a className="btn btn-solid" href={SUBMIT_ISSUE} target="_blank" rel="noreferrer">
-            Open a submission
+          <a className="btn btn-solid" href={SUBMIT_URL}>
+            Open your submission
           </a>
           <a className="btn btn-ghost" href="/hackathon">
             Back to the hackathon

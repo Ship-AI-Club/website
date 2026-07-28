@@ -4,14 +4,26 @@ import { DISCORD, EVENT, MEETUP } from "../../../lib/hackathon";
 import {
   CATEGORIES,
   EDITION,
-  RESULTS_PUBLISHED,
   certPath,
+  fromCertificate,
   isWinner,
   placementOf,
+  previewEntrants,
   sortedEntrants,
   winners,
 } from "../../../lib/results";
+import { publishedCertificates } from "../../../lib/store";
+import { getSetting } from "../../../lib/settings";
 import "../awards.css";
+
+/* Results are published by flipping a switch in /admin on the Sunday,
+   not by a deploy — see lib/settings.js. Until then this page renders
+   the pending state, which is what it has said since July.
+
+   Revalidated rather than dynamic: the moment after the awards is the
+   busiest this page will ever be, and a minute of staleness costs
+   nothing next to a database read per visitor. */
+export const revalidate = 60;
 
 const TITLE = `Results — ${EDITION.name}`;
 const DESCRIPTION = `Every team that shipped at ${EDITION.event}, ${EDITION.held} at ${EDITION.venue}, ${EDITION.city}. Category winners, live projects and the certification for each entrant.`;
@@ -45,10 +57,21 @@ const WILL_LIST = [
   },
 ];
 
-export default function Page() {
-  const published = RESULTS_PUBLISHED;
-  const entrants = sortedEntrants();
-  const won = winners();
+export default async function Page() {
+  const preview = previewEntrants();
+  const rows = await publishedCertificates();
+  const all = [...rows.map(fromCertificate), ...preview];
+
+  /* Both conditions have to hold for real results: certificates exist,
+     and an admin has said they're public. Issuing them is a
+     Sunday-evening job that can start before the ceremony finishes,
+     so the switch is what makes them visible, not their existence.
+     SHIPAI_PREVIEW bypasses it — see previewEntrants(). */
+  const published =
+    preview.length > 0 || (all.length > 0 && (await getSetting("results_published")));
+
+  const entrants = published ? sortedEntrants(all) : [];
+  const won = published ? winners(entrants) : [];
 
   /* .hk-cats draws its 1px grid from a background, so an odd number of
      narrow cards leaves the empty cell showing as a pale block. The

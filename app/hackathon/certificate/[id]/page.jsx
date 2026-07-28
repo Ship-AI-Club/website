@@ -3,32 +3,41 @@ import { ArrowLeft, ArrowUpRight, BadgeCheck, Trophy } from "lucide-react";
 import { JsonLd } from "../../../../components/article";
 import { DISCORD, EVENT } from "../../../../lib/hackathon";
 import {
-  ALL_ENTRANTS,
   EDITION,
   ISSUER,
   LINKEDIN_ADD_URL,
   certFields,
   certUrl,
   credentialName,
-  entrantById,
+  fromCertificate,
   isWinner,
   placementOf,
+  previewEntrants,
 } from "../../../../lib/results";
+import { certificateById } from "../../../../lib/store";
 import CertActions from "./cert-actions";
 import "../../awards.css";
 
-/* Certificates only exist for teams that actually submitted, so an
-   unknown id is a 404 rather than a rendered-on-demand page — a
-   certificate URL that resolves for anyone would be worth nothing. */
-export const dynamicParams = false;
+/* Certificates are issued from /admin after the awards, so this page
+   is rendered on demand rather than built ahead: the credential has to
+   exist the moment it's issued, not at the next deploy. An id with no
+   row behind it is a 404 — a certificate URL that resolved for anyone
+   would be worth nothing.
 
-export function generateStaticParams() {
-  return ALL_ENTRANTS.map((e) => ({ id: e.id }));
+   Cached for a minute so a credential doing the rounds on LinkedIn
+   isn't a database read per visitor. */
+export const revalidate = 60;
+
+async function entrantFor(id) {
+  const row = await certificateById(id);
+  if (row) return fromCertificate(row);
+  /* SHIPAI_PREVIEW=1 renders the template without a database. */
+  return previewEntrants().find((e) => e.id === id) ?? null;
 }
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const e = entrantById(id);
+  const e = await entrantFor(id);
   if (!e) return {};
   const title = `${e.team} — ${credentialName(e)}`;
   const description = `${e.team} launched ${e.project} at ${EDITION.event}, ${EDITION.held} at ${EDITION.venue}, ${EDITION.city}. ${placementOf(e)}. Issued by ${ISSUER} on ${EDITION.issued}.`;
@@ -53,7 +62,7 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { id } = await params;
-  const e = entrantById(id);
+  const e = await entrantFor(id);
   if (!e) return notFound();
 
   const won = isWinner(e);
@@ -171,16 +180,6 @@ export default async function Page({ params }) {
 
           <p className="cert-verify">
             Verify at shipai.club/hackathon/certificate/{e.id}.
-            {e.submission && (
-              <>
-                {" "}
-                Submission:{" "}
-                <a href={e.submission} target="_blank" rel="noreferrer">
-                  {e.submission}
-                </a>
-                .
-              </>
-            )}
           </p>
         </div>
 

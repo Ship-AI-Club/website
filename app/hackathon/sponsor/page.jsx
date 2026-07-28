@@ -75,7 +75,7 @@ export default function Page() {
           <a href="#credits">Credits</a>
           <a href="#hours">Hours</a>
         </nav>
-        <a className="btn btn-solid nav-cta" href={SPONSOR_CONTACT} target="_blank" rel="noreferrer">
+        <a className="btn btn-solid nav-cta" href="/dashboard/requests">
           Talk to us
         </a>
       </header>
@@ -290,8 +290,11 @@ export default function Page() {
             we&apos;ll be straight with you about where it lands.
           </p>
           <div className="cta-row">
-            <a className="btn btn-solid" href={SPONSOR_CONTACT} target="_blank" rel="noreferrer">
-              Talk to us in Discord
+            <a className="btn btn-solid" href="/dashboard/requests">
+              Start a sponsorship request
+            </a>
+            <a className="btn btn-ghost" href={SPONSOR_CONTACT} target="_blank" rel="noreferrer">
+              Or ask in Discord first
             </a>
           </div>
         </section>

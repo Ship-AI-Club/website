@@ -180,6 +180,7 @@ export default async function Page() {
           <a href="/hackathon/workshops">Workshops</a>
           <a href="/hackathon">Hackathon</a>
           <a href={GITHUB} target="_blank" rel="noreferrer">GitHub</a>
+          <a href="/dashboard">Account</a>
         </nav>
         <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
           Join the Discord

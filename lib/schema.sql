@@ -1,0 +1,365 @@
+/* ------------------------------------------------------------------
+   Ship AI accounts — schema.
+
+   Applied by `npm run migrate` (scripts/migrate.mjs) against
+   DATABASE_URL. Every statement is idempotent, so the script is safe
+   to re-run after every change: add columns and tables here, never a
+   numbered migration folder. Nothing in here drops anything.
+
+   Conventions:
+     · uuid primary keys, gen_random_uuid() (pgcrypto is built in on
+       Postgres 13+, which Neon is)
+     · text columns are NOT NULL DEFAULT '' rather than nullable, so
+       reads never have to null-check a string
+     · timestamps are timestamptz; nullable ones are the state flags
+       (submitted_at, revoked_at, decided_at)
+     · secrets are stored as sha-256 hashes, never in the clear
+------------------------------------------------------------------ */
+
+/* ---------- people ---------- */
+
+create table if not exists users (
+  id           uuid primary key default gen_random_uuid(),
+  /* always lowercased by the app before it gets here — the unique
+     index is what makes "log in with your email" a stable identity */
+  email        text not null unique,
+  name         text not null default '',
+  pronouns     text not null default '',
+  title        text not null default '',
+  company      text not null default '',
+  discord      text not null default '',
+  github       text not null default '',
+  x_handle     text not null default '',
+  website      text not null default '',
+  bio          text not null default '',
+  /* onboarding: what they're here for, and what they want out of it.
+     Values are ids from lib/accounts.js, validated app-side. */
+  interests    text[] not null default '{}',
+  goals        text[] not null default '{}',
+  goal_note    text not null default '',
+  /* sponsors only: the tier they said they were interested in */
+  sponsor_tier text,
+  is_admin     boolean not null default false,
+  onboarded_at timestamptz,
+  created_at   timestamptz not null default now(),
+  last_seen_at timestamptz
+);
+
+/* Granted roles. Distinct from `interests` (what you said you wanted)
+   and from `role_requests` (what you asked for) — this is what you
+   actually are, and only an admin writes it. */
+create table if not exists user_roles (
+  user_id    uuid not null references users(id) on delete cascade,
+  role       text not null,
+  granted_at timestamptz not null default now(),
+  granted_by uuid references users(id) on delete set null,
+  primary key (user_id, role)
+);
+
+/* ---------- auth ---------- */
+
+/* One row per "email me a code". Holds both the 6-digit code and the
+   magic-link token so either path consumes the same row — clicking the
+   link after typing the code can't log you in twice. */
+create table if not exists login_codes (
+  id          uuid primary key default gen_random_uuid(),
+  email       text not null,
+  code_hash   text not null,
+  token_hash  text not null,
+  expires_at  timestamptz not null,
+  consumed_at timestamptz,
+  attempts    smallint not null default 0,
+  ip          text not null default '',
+  created_at  timestamptz not null default now()
+);
+create index if not exists login_codes_email_idx on login_codes (email, created_at desc);
+create index if not exists login_codes_token_idx on login_codes (token_hash);
+create index if not exists login_codes_ip_idx on login_codes (ip, created_at desc);
+
+create table if not exists sessions (
+  id           uuid primary key default gen_random_uuid(),
+  user_id      uuid not null references users(id) on delete cascade,
+  token_hash   text not null unique,
+  user_agent   text not null default '',
+  created_at   timestamptz not null default now(),
+  expires_at   timestamptz not null,
+  last_seen_at timestamptz not null default now(),
+  revoked_at   timestamptz
+);
+create index if not exists sessions_user_idx on sessions (user_id, created_at desc);
+
+/* ---------- role requests (the gated contact form) ---------- */
+
+/* Someone who wants to sponsor, mentor or judge files one of these
+   instead of emailing. Santos decides, and approving it grants the
+   matching row in user_roles. */
+create table if not exists role_requests (
+  id           uuid primary key default gen_random_uuid(),
+  user_id      uuid not null references users(id) on delete cascade,
+  role         text not null,
+  status       text not null default 'pending',
+  message      text not null default '',
+  expertise    text not null default '',
+  sponsor_tier text,
+  admin_note   text not null default '',
+  created_at   timestamptz not null default now(),
+  decided_at   timestamptz,
+  decided_by   uuid references users(id) on delete set null
+);
+/* "submit a request if they haven't already" — at most one open
+   request per person per role. Declined ones don't block a re-ask. */
+create unique index if not exists role_requests_open_uniq
+  on role_requests (user_id, role) where status = 'pending';
+create index if not exists role_requests_status_idx on role_requests (status, created_at desc);
+
+/* ---------- hackathon ---------- */
+
+create table if not exists registrations (
+  user_id       uuid primary key references users(id) on delete cascade,
+  track         text not null default 'undecided',
+  product       text not null default '',
+  dietary       text not null default '',
+  note          text not null default '',
+  registered_at timestamptz not null default now(),
+  withdrawn_at  timestamptz
+);
+
+create table if not exists teams (
+  id          uuid primary key default gen_random_uuid(),
+  name        text not null,
+  slug        text not null unique,
+  invite_code text not null unique,
+  created_by  uuid references users(id) on delete set null,
+  created_at  timestamptz not null default now()
+);
+
+create table if not exists team_members (
+  team_id   uuid not null references teams(id) on delete cascade,
+  user_id   uuid not null references users(id) on delete cascade,
+  is_owner  boolean not null default false,
+  joined_at timestamptz not null default now(),
+  primary key (team_id, user_id)
+);
+/* Rule 01: teams of 1–4, one team per person. The cap is enforced
+   app-side (it's a count, not a constraint); the identity is enforced
+   here, because two teams claiming the same builder breaks scoring. */
+create unique index if not exists team_members_one_per_person on team_members (user_id);
+
+create table if not exists submissions (
+  id           uuid primary key default gen_random_uuid(),
+  team_id      uuid not null unique references teams(id) on delete cascade,
+  project      text not null default '',
+  track        text not null default '',
+  category     text not null default '',
+  live_url     text not null default '',
+  summary      text not null default '',
+  launch       text not null default '',
+  receipts     text not null default '',
+  growth       text not null default '',
+  repo_url     text not null default '',
+  status       text not null default 'draft',
+  /* Filled in on Sunday, by an admin, after the judges are done.
+     `award` is a category name from lib/results.js CATEGORIES;
+     `crowd` is the room-voted one, which stacks with a judged win. */
+  award        text,
+  crowd        boolean not null default false,
+  submitted_at timestamptz,
+  created_at   timestamptz not null default now(),
+  updated_at   timestamptz not null default now()
+);
+create index if not exists submissions_status_idx on submissions (status, submitted_at desc);
+
+/* ---------- judging ---------- */
+
+create table if not exists judge_assignments (
+  submission_id uuid not null references submissions(id) on delete cascade,
+  judge_id      uuid not null references users(id) on delete cascade,
+  assigned_at   timestamptz not null default now(),
+  assigned_by   uuid references users(id) on delete set null,
+  primary key (submission_id, judge_id)
+);
+
+/* One scorecard per judge per submission. Columns match the four
+   published criteria in lib/accounts.js — 40/30/20/10 — and the
+   weighting lives in code, not here, so the rubric stays readable in
+   one place. Each axis is 0–10; a null axis means "not scored yet". */
+create table if not exists scores (
+  submission_id uuid not null references submissions(id) on delete cascade,
+  judge_id      uuid not null references users(id) on delete cascade,
+  shipped       smallint,
+  receipts      smallint,
+  growth        smallint,
+  craft         smallint,
+  notes         text not null default '',
+  submitted_at  timestamptz,
+  updated_at    timestamptz not null default now(),
+  primary key (submission_id, judge_id),
+  constraint scores_range check (
+    (shipped  is null or shipped  between 0 and 10) and
+    (receipts is null or receipts between 0 and 10) and
+    (growth   is null or growth   between 0 and 10) and
+    (craft    is null or craft    between 0 and 10)
+  )
+);
+
+/* Crowd Favorite is voted by the room, not scored. One vote each,
+   changeable until voting closes. */
+create table if not exists votes (
+  user_id       uuid primary key references users(id) on delete cascade,
+  submission_id uuid not null references submissions(id) on delete cascade,
+  cast_at       timestamptz not null default now()
+);
+
+/* ---------- mentors and sponsors ---------- */
+
+create table if not exists mentor_assignments (
+  team_id     uuid not null references teams(id) on delete cascade,
+  mentor_id   uuid not null references users(id) on delete cascade,
+  slot        text not null default '',
+  note        text not null default '',
+  assigned_at timestamptz not null default now(),
+  assigned_by uuid references users(id) on delete set null,
+  primary key (team_id, mentor_id)
+);
+
+/* A confirmed sponsorship, recorded by an admin against the account
+   that asked. `tier` is derived from `amount` via tierFor() when it
+   isn't set explicitly — see lib/sponsors.js. */
+create table if not exists sponsorships (
+  id          uuid primary key default gen_random_uuid(),
+  user_id     uuid not null references users(id) on delete cascade,
+  org         text not null default '',
+  tier        text,
+  amount      integer not null default 0,
+  items       text not null default '',
+  status      text not null default 'pledged',
+  credit_name text not null default '',
+  note        text not null default '',
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now()
+);
+create index if not exists sponsorships_user_idx on sponsorships (user_id);
+
+/* ---------- certificates ---------- */
+
+/* `id` is the public slug and the credential id at once — it's what
+   goes on LinkedIn and in /hackathon/certificate/<id>, so it is
+   permanent and never reused. Text, not uuid, because a human picks
+   it and it has to read well in a URL. */
+create table if not exists certificates (
+  id            text primary key,
+  kind          text not null,
+  submission_id uuid references submissions(id) on delete set null,
+  team          text not null default '',
+  project       text not null default '',
+  members       text[] not null default '{}',
+  award         text,
+  crowd         boolean not null default false,
+  url           text not null default '',
+  blurb         text not null default '',
+  issued_at     timestamptz not null default now(),
+  revoked_at    timestamptz
+);
+
+/* A team's certificate belongs to every member of that team: one
+   public URL, four dashboards it shows up in. */
+create table if not exists certificate_holders (
+  certificate_id text not null references certificates(id) on delete cascade,
+  user_id        uuid not null references users(id) on delete cascade,
+  primary key (certificate_id, user_id)
+);
+create index if not exists certificate_holders_user_idx on certificate_holders (user_id);
+
+/* ---------- email ---------- */
+
+/* What Resend tells us happened to the mail we sent. One row per
+   webhook delivery, keyed on the Svix message id so a retry — and
+   Resend retries — can't double-count a bounce.
+
+   `payload` keeps the whole event because the shape varies by type
+   and the useful field for a given type is often one we didn't think
+   to extract. The columns above it are just the ones worth indexing. */
+create table if not exists email_events (
+  id          bigserial primary key,
+  event_id    text not null unique,
+  type        text not null,
+  email_id    text not null default '',
+  from_addr   text not null default '',
+  to_addrs    text[] not null default '{}',
+  subject     text not null default '',
+  payload     jsonb not null default '{}',
+  occurred_at timestamptz not null default now(),
+  created_at  timestamptz not null default now()
+);
+create index if not exists email_events_email_idx on email_events (email_id, occurred_at desc);
+create index if not exists email_events_type_idx on email_events (type, occurred_at desc);
+create index if not exists email_events_created_idx on email_events (created_at desc);
+
+/* Mail sent *to* shipai.club. Receiving is catch-all, so santos@ and
+   hi@ both land here and `to_addrs` is what distinguishes them.
+
+   The webhook carries metadata only — no body, no headers — so the
+   body is fetched from Resend afterwards and cached here. `has_body`
+   records whether that fetch succeeded, because a missing body is a
+   thing to retry rather than an empty message. */
+create table if not exists inbound_emails (
+  id           text primary key,
+  message_id   text not null default '',
+  from_addr    text not null default '',
+  to_addrs     text[] not null default '{}',
+  cc_addrs     text[] not null default '{}',
+  received_for text not null default '',
+  subject      text not null default '',
+  body_text    text not null default '',
+  body_html    text not null default '',
+  attachments  jsonb not null default '[]',
+  has_body     boolean not null default false,
+  spam         boolean not null default false,
+  read_at      timestamptz,
+  replied_at   timestamptz,
+  archived_at  timestamptz,
+  received_at  timestamptz not null default now(),
+  created_at   timestamptz not null default now()
+);
+create index if not exists inbound_emails_received_idx on inbound_emails (received_at desc);
+create index if not exists inbound_emails_unread_idx on inbound_emails (read_at) where read_at is null;
+
+/* ---------- ops ---------- */
+
+/* Runtime switches an admin can flip without a deploy: whether
+   results are public, whether crowd voting is open, whether
+   submissions are still accepted. Read through lib/settings.js. */
+create table if not exists settings (
+  key        text primary key,
+  value      jsonb not null,
+  updated_at timestamptz not null default now()
+);
+
+/* Every admin action that changes someone else's standing — a granted
+   role, an assigned judge, an issued certificate. Append-only. */
+create table if not exists audit_log (
+  id         bigserial primary key,
+  actor_id   uuid references users(id) on delete set null,
+  action     text not null,
+  target     text not null default '',
+  meta       jsonb not null default '{}',
+  created_at timestamptz not null default now()
+);
+create index if not exists audit_log_created_idx on audit_log (created_at desc);
+
+/* ------------------------------------------------------------------
+   Catching up an existing database.
+
+   `create table if not exists` does nothing to a table that already
+   exists, so a column added to a definition above will never reach a
+   database that was created before it. Any column added after the
+   first deploy therefore goes in two places: the table definition, so
+   a fresh database is right, and here, so an existing one catches up.
+
+   Both are idempotent. Nothing below ever drops or retypes a column —
+   if a change can't be expressed as an additive alter, it wants a
+   hand-written migration and a moment's thought, not this file.
+------------------------------------------------------------------ */
+
+-- (nothing yet — the schema above is the initial release)
+

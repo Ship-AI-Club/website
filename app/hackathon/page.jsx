@@ -408,6 +408,7 @@ export default function Page() {
           <a href="#benefits">Benefits</a>
           <a href="#rules">Rules</a>
           <a href="#sponsor">Sponsor</a>
+          <a href="/dashboard">Register</a>
         </nav>
         <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
           Join the Discord
@@ -674,13 +675,17 @@ export default function Page() {
           <Megaphone size={22} strokeWidth={1.75} aria-hidden="true" />
           <h2>Submissions close {EVENT.deadline}.</h2>
           <p>
-            One submission per team, as a public GitHub issue. Project, live URL, what you
-            launched, and the numbers. The full requirements are on the submission page —
-            read them Friday, not Sunday morning.
+            One submission per team, filed from your Ship AI account. Project, live URL, what
+            you launched, and the numbers. Start it as a draft whenever you like and keep
+            editing until the deadline — the full requirements are on the submission page, and
+            they&apos;re worth reading Friday rather than Sunday morning.
           </p>
           <div className="cta-row">
-            <a className="btn btn-solid" href="/hackathon/submit">
-              Submit your project
+            <a className="btn btn-solid" href="/dashboard">
+              Register for the hackathon
+            </a>
+            <a className="btn btn-ghost" href="/hackathon/submit">
+              What the form asks for
             </a>
           </div>
         </section>

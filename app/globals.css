@@ -1422,19 +1422,101 @@ h3 .icon {
 
 .hk-faq {
   display: grid;
-  gap: 2rem;
+  gap: 0;
   max-width: 50rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.hk-faq-item {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.hk-faq-item summary {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem 0;
+  cursor: pointer;
+  list-style: none;
+  transition: color 150ms ease;
+}
+
+/* the default disclosure triangle, in both engines */
+.hk-faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.hk-faq-item summary::marker {
+  content: "";
+}
+
+.hk-faq-item summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 .hk-faq-item h3 {
   font-size: 1.05rem;
-  margin-bottom: 0.6rem;
+  /* the whole row is the hit target, so the heading carries none of
+     the padding and doesn't shrink the clickable area */
+  margin: 0;
+  flex: 1;
+}
+
+/* A chevron drawn from two borders rather than an icon import: it
+   inherits currentColor, needs no runtime, and rotating a square is
+   the one shape that reads identically at every size. */
+.hk-faq-item summary .hk-faq-chevron {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.2rem;
+  border-right: 1.5px solid var(--faint);
+  border-bottom: 1.5px solid var(--faint);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 220ms var(--ease-out-quint), border-color 150ms ease;
+}
+
+.hk-faq-item[open] summary .hk-faq-chevron {
+  transform: rotate(225deg) translate(-2px, -2px);
+  border-color: var(--accent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hk-faq-item summary:hover h3 {
+    color: var(--accent);
+  }
+  .hk-faq-item summary:hover .hk-faq-chevron {
+    border-color: var(--accent);
+  }
 }
 
 .hk-faq-item p {
   color: var(--dim);
   font-size: 0.95rem;
   line-height: 1.65;
+  padding: 0 2.5rem 1.4rem 0;
+  margin: 0;
+}
+
+/* Native <details> can't transition its own height, so the answer
+   fades and lifts into place instead of the panel sliding. Skipped
+   entirely for anyone who asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .hk-faq-item[open] p {
+    animation: faq-open 260ms var(--ease-out-quint) both;
+  }
+}
+
+@keyframes faq-open {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* closer */

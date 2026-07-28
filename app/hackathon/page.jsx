@@ -416,10 +416,16 @@ export default function Page() {
           <a href="#benefits">Benefits</a>
           <a href="#rules">Rules</a>
           <a href="#sponsor">Sponsor</a>
-          <a href="/dashboard">Register</a>
+          <a href={DISCORD} target="_blank" rel="noreferrer">
+            Discord
+          </a>
         </nav>
-        <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
-          Join the Discord
+        {/* Registering is what this page is for now that it can be
+            done here. The Discord stays one tap away as a nav link —
+            it's still where the program happens, just no longer the
+            thing we're asking a first-time visitor to do. */}
+        <a className="btn btn-solid nav-cta" href="/dashboard">
+          Register
         </a>
       </header>
 
@@ -449,7 +455,10 @@ export default function Page() {
             what you demoed.
           </p>
           <div className="cta-row reveal" style={{ "--d": "380ms" }}>
-            <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">
+            <a className="btn btn-solid" href="/dashboard">
+              Register for the hackathon
+            </a>
+            <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
               Join the Discord
             </a>
             <a className="btn btn-ghost" href={MEETUP} target="_blank" rel="noreferrer">
@@ -791,12 +800,24 @@ export default function Page() {
         <section className="section" id="faq">
           <p className="kicker">Questions</p>
           <h2>Frequently asked.</h2>
+          {/* <details> rather than a state hook: it opens with no
+              JavaScript, is keyboard-operable and screen-reader
+              announced for free, and survives the page being read
+              before hydration. The first one is open so the pattern
+              is obvious without anybody having to click to find out
+              there's anything behind it.
+
+              The answers stay in the DOM either way, so the FAQPage
+              schema above and in-page search still see them. */}
           <div className="hk-faq">
-            {FAQS.map((f) => (
-              <div key={f.q} className="hk-faq-item">
-                <h3>{f.q}</h3>
+            {FAQS.map((f, i) => (
+              <details key={f.q} className="hk-faq-item" open={i === 0}>
+                <summary>
+                  <h3>{f.q}</h3>
+                  <span className="hk-faq-chevron" aria-hidden="true" />
+                </summary>
                 <p>{f.a}</p>
-              </div>
+              </details>
             ))}
           </div>
         </section>
@@ -804,11 +825,11 @@ export default function Page() {
         <section className="section hk-close">
           <h2>Bring the thing you never launched.</h2>
           <div className="cta-row">
-            <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">
-              Join the Discord
+            <a className="btn btn-solid" href="/dashboard">
+              Register for the hackathon
             </a>
-            <a className="btn btn-ghost" href={MEETUP} target="_blank" rel="noreferrer">
-              RSVP on Meetup
+            <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
+              Join the Discord
             </a>
           </div>
           <p className="rule-line">just ship it</p>

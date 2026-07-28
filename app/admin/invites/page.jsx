@@ -3,7 +3,7 @@ import { Link2 } from "lucide-react";
 import { requireAdmin } from "../../../lib/auth";
 import { sql } from "../../../lib/db";
 import { roleLabel } from "../../../lib/accounts";
-import { INVITABLE_ROLES } from "../../../lib/invites";
+import { INVITABLE_ROLES, invitableOnly } from "../../../lib/invites";
 import { SITE } from "../../../lib/email";
 import { CreateInviteForm, RevokeInviteForm } from "./invite-forms";
 
@@ -110,7 +110,9 @@ export default async function Page() {
                         {invite.label && <span className="ac-sub">{invite.label}</span>}
                       </td>
                       <td>
-                        {(invite.roles || []).map((r) => (
+                        {/* filtered, so the list can never promise
+                            something redemption would strip */}
+                        {invitableOnly(invite.roles || []).map((r) => (
                           <span key={r} className="ac-pill" style={{ marginRight: ".3rem" }}>
                             {roleLabel(r)}
                           </span>

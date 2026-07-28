@@ -33,6 +33,15 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
+/* "judge, mentor and sponsor" rather than "judge and mentor and
+   sponsor" — three roles is rarer than two but not rare, and the
+   naive join reads like a child listing presents. */
+function listOf(items) {
+  if (items.length <= 1) return items.join("");
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+}
+
 function nextWorkshop(now = new Date()) {
   return WORKSHOPS.find((w) => new Date(`${w.iso}T18:00:00-07:00`) >= now) ?? null;
 }
@@ -64,7 +73,7 @@ export default async function Page({ searchParams }) {
      next meetup is. Someone who holds a crew role *and* registered
      sees both; the test is what they've actually done, not who they
      are. */
-  const crew = ["judge", "mentor", "sponsor"].filter((r) => hasRole(user, r));
+  const crew = ["judge", "mentor", "sponsor", "volunteer"].filter((r) => hasRole(user, r));
   const competing = Boolean(registration);
   const showsCompeting = competing || crew.length === 0;
 
@@ -110,6 +119,25 @@ export default async function Page({ searchParams }) {
         </p>
       </div>
 
+      {params?.invite && (
+        String(params.invite).startsWith("granted:") ? (
+          <p className="ac-ok">
+            Invite accepted — you&apos;re now{" "}
+            {String(params.invite)
+              .slice("granted:".length)
+              .split(",")
+              .map((r) => roleLabel(r).toLowerCase())
+              .join(" and ")}
+            .
+          </p>
+        ) : (
+          <p className="ac-note">
+            That invite wasn&apos;t for this account — it may be spent, or addressed to a
+            different email. Ask whoever sent it.
+          </p>
+        )
+      )}
+
       {params?.denied && (
         <p className="ac-error" role="alert">
           You don&apos;t have {roleLabel(String(params.denied)).toLowerCase()} access. If that
@@ -124,8 +152,8 @@ export default async function Page({ searchParams }) {
           <div className="ac-card-head">
             <Handshake size={18} strokeWidth={1.75} aria-hidden="true" />
             <h2>
-              You&apos;re {crew.length === 1 ? "a" : ""}{" "}
-              {crew.map((r) => roleLabel(r).toLowerCase()).join(" and ")}
+              You&apos;re {crew.length === 1 ? "a " : ""}
+              {listOf(crew.map((r) => roleLabel(r).toLowerCase()))}
             </h2>
           </div>
           <p>
@@ -303,7 +331,7 @@ export default async function Page({ searchParams }) {
           <div className="ac-card-head">
             <Handshake size={18} strokeWidth={1.75} aria-hidden="true" />
             <h2>
-              Finish your {unfiled.map((r) => roleLabel(r).toLowerCase()).join(" and ")}{" "}
+              Finish your {listOf(unfiled.map((r) => roleLabel(r).toLowerCase()))}{" "}
               {unfiled.length === 1 ? "request" : "requests"}
             </h2>
           </div>

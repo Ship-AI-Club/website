@@ -46,18 +46,34 @@ export async function GET(request, { params }) {
     return NextResponse.redirect(url);
   }
 
+  /* Redeeming is a write, and this is a GET, so it only happens for a
+     real top-level navigation. Without this an <img src="/invite/…">
+     on any page would burn a use of a shared code and force a role
+     onto whoever loaded it. Every current browser sends this header on
+     a document navigation; anything that doesn't gets the cookie and
+     redeems on its next sign-in instead. */
+  const isNavigation = request.headers.get("sec-fetch-dest") === "document";
+
   await rememberInvite(invite.code);
 
   const user = await currentUser();
-  if (user) {
+  if (user && isNavigation) {
     const granted = await redeemPendingInvite(user);
     const url = new URL(user.onboarded_at ? "/dashboard" : "/onboarding", request.url);
-    if (granted.length) url.searchParams.set("welcomed", granted.join(","));
+    /* Say what happened. Landing on an unchanged dashboard after
+       clicking an invite reads as a broken link — and so does being
+       silently refused one that wasn't meant for you. */
+    url.searchParams.set(
+      "invite",
+      granted.length ? `granted:${granted.join(",")}` : "declined",
+    );
     return NextResponse.redirect(url);
   }
 
   const url = new URL("/login", request.url);
   url.searchParams.set("next", "/dashboard");
-  url.searchParams.set("invited", invite.label || "1");
+  /* A flag, not the label. The label is the admin's private note and
+     has no business in a URL, browser history or a Referer header. */
+  url.searchParams.set("invited", "1");
   return NextResponse.redirect(url);
 }

@@ -35,7 +35,7 @@ export default async function Page() {
         <div className="ac-stats">
           <div className="ac-stat">
             <b>{summary.registered}</b>
-            <span>registered</span>
+            <span>expected</span>
           </div>
           {DAYS.map((day) => (
             <div className="ac-stat" key={day}>
@@ -45,7 +45,7 @@ export default async function Page() {
           ))}
         </div>
         <p className="ac-fine">
-          Expected is the active registration count. On-site is the check-in count for that meal&apos;s day.
+          Expected is everyone due in the room — entrants plus judges, mentors, sponsors and volunteers. On-site is who has actually checked in that day.
         </p>
       </section>
 

@@ -43,6 +43,12 @@ export default async function Page({ searchParams }) {
           </p>
         )}
 
+        {params?.invited && (
+          <p className="ac-ok" style={{ marginBottom: "1.5rem" }}>
+            You&apos;ve been invited. Sign in and your access is set up automatically.
+          </p>
+        )}
+
         {hasDb() ? (
           <LoginForm next={next} />
         ) : (

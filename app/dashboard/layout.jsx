@@ -42,7 +42,7 @@ export default async function DashboardLayout({ children }) {
      are two links that lead nowhere useful for them. Someone who
      holds a crew role and registered anyway sees both — the test is
      what they've done, not who they are. */
-  const crew = hasRole(user, "judge") || hasRole(user, "mentor") || hasRole(user, "sponsor");
+  const crew = ["judge", "mentor", "sponsor", "volunteer"].some((r) => hasRole(user, r));
   const showsCompeting = counts.registered > 0 || !crew;
 
   const sections = [

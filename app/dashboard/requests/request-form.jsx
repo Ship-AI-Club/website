@@ -69,6 +69,19 @@ function Submit({ label }) {
 export function RequestForm({ available, sponsorTier }) {
   const [state, action] = useActionState(requestRoleAction, {});
   const [role, setRole] = useState(available[0] ?? REQUESTABLE_ROLES[0]);
+  /* Held in state for the same reason the role is: the form reset
+     after a rejected submit clears the DOM, and losing what somebody
+     typed because they forgot to tick a box is its own small insult. */
+  const [message, setMessage] = useState("");
+  const [jobs, setJobs] = useState(() => new Set());
+
+  const toggleJob = (id, on) =>
+    setJobs((prev) => {
+      const copy = new Set(prev);
+      if (on) copy.add(id);
+      else copy.delete(id);
+      return copy;
+    });
   const prompt = PROMPTS[role] ?? PROMPTS.mentor;
 
   return (
@@ -85,9 +98,12 @@ export function RequestForm({ available, sponsorTier }) {
           <legend className="ac-label">What are you offering?</legend>
           {available.map((r) => (
             <label key={r} className={`ac-tick${role === r ? " is-on" : ""}`}>
+              {/* `pick-role`, not `role` — these radios are the
+                  interface, never the submitted value. See the hidden
+                  input below. */}
               <input
                 type="radio"
-                name="role"
+                name="pick-role"
                 value={r}
                 checked={role === r}
                 onChange={() => setRole(r)}
@@ -97,7 +113,18 @@ export function RequestForm({ available, sponsorTier }) {
           ))}
         </fieldset>
       )}
-      {available.length === 1 && <input type="hidden" name="role" value={role} />}
+
+      {/* The submitted role comes from state, always.
+
+          When the radios carried it directly, a rejected submit filed
+          the wrong role entirely: React resets the form after an
+          action, which snaps the DOM back to whichever radio the
+          server rendered as checked, while React state stays on the
+          one you picked. Everything on screen still said "volunteer"
+          — the highlight, the jobs list, the button — and a judge
+          request was filed. Same failure as the scorecard; a hidden
+          input driven by state is immune to the reset. */}
+      <input type="hidden" name="role" value={role} />
 
       {role === "volunteer" && (
         <fieldset className="ac-choices">
@@ -109,8 +136,14 @@ export function RequestForm({ available, sponsorTier }) {
             agrees to a job and then discovers it was the whole weekend.
           </p>
           {VOLUNTEER_JOBS.map((j) => (
-            <label key={j.id} className="ac-choice">
-              <input type="checkbox" name="jobs" value={j.id} />
+            <label key={j.id} className={`ac-choice${jobs.has(j.id) ? " is-on" : ""}`}>
+              <input
+                type="checkbox"
+                name="pick-jobs"
+                value={j.id}
+                checked={jobs.has(j.id)}
+                onChange={(e) => toggleJob(j.id, e.target.checked)}
+              />
               <span className="ac-choice-body">
                 <strong>
                   {j.label} <span className="ac-opt">{j.hours}</span>
@@ -118,6 +151,9 @@ export function RequestForm({ available, sponsorTier }) {
                 <span>{j.blurb}</span>
               </span>
             </label>
+          ))}
+          {[...jobs].map((id) => (
+            <input key={id} type="hidden" name="jobs" value={id} />
           ))}
         </fieldset>
       )}
@@ -133,6 +169,8 @@ export function RequestForm({ available, sponsorTier }) {
           name="message"
           rows={5}
           required
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
           placeholder={prompt.placeholder}
         />
       </div>

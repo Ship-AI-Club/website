@@ -35,7 +35,12 @@ export default async function Page() {
       <div className="ac-head">
         <p className="ac-kicker">Admin / judging</p>
         <h1>Scores</h1>
-        <p>Leaderboard order is returned by the scoring rules. The cards below are the evidence behind each average.</p>
+        <p>
+          Ordered by weighted average, ties broken by crowd votes. Spread is the gap between
+          the highest and lowest judge — anything wide is flagged, because a mean can hide two
+          judges who disagreed completely. Cards shows returned against assigned, since an
+          average of one card isn&apos;t comparable to an average of three.
+        </p>
       </div>
 
       <section className="ac-card">
@@ -54,6 +59,7 @@ export default async function Page() {
                   <th>Team</th>
                   <th className="ac-num">Average</th>
                   {RUBRIC.map((axis) => <th key={axis.key} className="ac-num">{axis.name}</th>)}
+                  <th className="ac-num">Spread</th>
                   <th className="ac-num">Votes</th>
                   <th className="ac-num">Cards</th>
                 </tr>
@@ -81,8 +87,37 @@ export default async function Page() {
                         </td>
                       );
                     })}
+                    {/* How far apart the judges were. A wide spread
+                        means the mean above it is hiding an argument,
+                        and that is worth seeing before an award is
+                        decided off it. */}
+                    <td className="ac-num">
+                      {entry.spread === null ? (
+                        "—"
+                      ) : (
+                        <span className={entry.spread >= 3 ? "ac-spread is-wide" : undefined}>
+                          {entry.spread.toFixed(1)}
+                          {entry.returned > 1 && (
+                            <span className="ac-sub">
+                              {entry.low.toFixed(1)}–{entry.high.toFixed(1)}
+                            </span>
+                          )}
+                        </span>
+                      )}
+                    </td>
                     <td className="ac-num">{entry.votes ?? 0}</td>
-                    <td className="ac-num">{entry.cards.length}</td>
+                    {/* Returned vs asked. Comparing a mean of one card
+                        against a mean of three is comparing different
+                        things. */}
+                    <td className="ac-num">
+                      <span
+                        className={
+                          entry.returned < entry.assigned ? "ac-spread is-wide" : undefined
+                        }
+                      >
+                        {entry.returned} / {entry.assigned}
+                      </span>
+                    </td>
                   </tr>
                 ))}
               </tbody>

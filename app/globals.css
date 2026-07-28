@@ -3257,3 +3257,9 @@ h3 .icon {
   color: var(--ink);
   font-weight: 500;
 }
+
+/* a leaderboard number that needs a second look — a wide judge
+   spread, or fewer cards returned than were asked for */
+.ac-spread.is-wide {
+  color: #f0c674;
+}

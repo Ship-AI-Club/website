@@ -24,14 +24,28 @@ create table if not exists users (
      index is what makes "log in with your email" a stable identity */
   email        text not null unique,
   name         text not null default '',
-  pronouns     text not null default '',
+  /* The short public identifier — what a roster entry and a team
+     member line show, and what a profile URL would use. Unique, so
+     it's claimed once; nullable, because it's assigned during
+     onboarding rather than at account creation. */
+  handle       text unique,
   title        text not null default '',
   company      text not null default '',
+  phone        text not null default '',
   discord      text not null default '',
   github       text not null default '',
   x_handle     text not null default '',
+  linkedin     text not null default '',
   website      text not null default '',
   bio          text not null default '',
+  /* Blob pathname and its URL. The path is what the upload route
+     scopes and what a delete would target; the URL is what renders. */
+  avatar_path  text not null default '',
+  avatar_url   text not null default '',
+  /* "Show me on the public attendee list." Opt-in, defaulting on:
+     most people come to an event to be seen, and the toggle sits in
+     onboarding where it's read rather than buried in settings. */
+  public_profile boolean not null default true,
   /* onboarding: what they're here for, and what they want out of it.
      Values are ids from lib/accounts.js, validated app-side. */
   interests    text[] not null default '{}',
@@ -129,6 +143,9 @@ create table if not exists teams (
   name        text not null,
   slug        text not null unique,
   invite_code text not null unique,
+  tagline     text not null default '',
+  logo_path   text not null default '',
+  logo_url    text not null default '',
   created_by  uuid references users(id) on delete set null,
   created_at  timestamptz not null default now()
 );
@@ -361,5 +378,25 @@ create index if not exists audit_log_created_idx on audit_log (created_at desc);
    hand-written migration and a moment's thought, not this file.
 ------------------------------------------------------------------ */
 
--- (nothing yet — the schema above is the initial release)
+alter table users add column if not exists handle         text;
+alter table users add column if not exists phone          text not null default '';
+alter table users add column if not exists linkedin       text not null default '';
+alter table users add column if not exists avatar_path    text not null default '';
+alter table users add column if not exists avatar_url     text not null default '';
+alter table users add column if not exists public_profile boolean not null default true;
+create unique index if not exists users_handle_uniq on users (handle) where handle is not null;
+
+alter table teams add column if not exists tagline   text not null default '';
+alter table teams add column if not exists logo_path text not null default '';
+alter table teams add column if not exists logo_url  text not null default '';
+
+/* The one drop this file will do. `pronouns` was asked for at
+   onboarding and removed before the program opened; the column has a
+   single row's worth of data and no reader left. Dropping it now is
+   the difference between a schema that describes the database and one
+   that carries a field nobody can explain in six months. It is
+   deliberately the exception to the rule above, and any future
+   removal deserves the same amount of thought rather than this line
+   as a precedent. */
+alter table users drop column if exists pronouns;
 

@@ -7,7 +7,7 @@ import {
   createTeamAction,
   joinTeamAction,
   removeMemberAction,
-  renameTeamAction,
+  updateTeamAction,
 } from "../actions";
 
 /* The four things you can do to a team. Each one is its own action
@@ -90,8 +90,8 @@ export function JoinTeamForm() {
   );
 }
 
-export function RenameTeamForm({ name }) {
-  const [state, action] = useActionState(renameTeamAction, {});
+export function TeamDetailsForm({ name, tagline }) {
+  const [state, action] = useActionState(updateTeamAction, {});
   return (
     <form action={action} className="ac-form is-tight">
       <Feedback state={state} />
@@ -101,8 +101,22 @@ export function RenameTeamForm({ name }) {
         </label>
         <input id="rename" name="name" type="text" defaultValue={name} maxLength={80} required />
       </div>
+      <div className="ac-field">
+        <label className="ac-label" htmlFor="tagline">
+          Tagline <span className="ac-opt">optional</span>
+        </label>
+        <p className="ac-hint">One line, on the results page next to your project.</p>
+        <input
+          id="tagline"
+          name="tagline"
+          type="text"
+          defaultValue={tagline}
+          maxLength={160}
+          placeholder="Rewards infrastructure for game communities."
+        />
+      </div>
       <div className="ac-actions">
-        <Submit label="Rename" busy="Saving…" ghost />
+        <Submit label="Save" busy="Saving…" ghost />
       </div>
     </form>
   );

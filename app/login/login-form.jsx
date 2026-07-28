@@ -91,10 +91,27 @@ export default function LoginForm({ next }) {
                 style={{ marginLeft: ".4rem", verticalAlign: "-2px" }}
               />
             </Submit>
-            <button type="submit" name="intent" value="send" className="ac-btn-link">
+            {/* formNoValidate matters here. The code box is `required`,
+                so without it the browser blocks these two submits
+                while the box is empty — silently, with no message —
+                and someone who mistyped their code has no way to ask
+                for another without first typing junk into the field. */}
+            <button
+              type="submit"
+              name="intent"
+              value="send"
+              className="ac-btn-link"
+              formNoValidate
+            >
               Send another
             </button>
-            <button type="submit" name="intent" value="restart" className="ac-btn-link">
+            <button
+              type="submit"
+              name="intent"
+              value="restart"
+              className="ac-btn-link"
+              formNoValidate
+            >
               Use a different email
             </button>
           </div>

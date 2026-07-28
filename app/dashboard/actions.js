@@ -82,14 +82,16 @@ export async function updateProfileAction(prev, formData) {
   await sql`
     update users set
       name         = ${name},
-      pronouns     = ${text(formData.get("pronouns"), LIMITS.pronouns)},
       title        = ${text(formData.get("title"), LIMITS.title)},
       company      = ${text(formData.get("company"), LIMITS.company)},
+      phone        = ${text(formData.get("phone"), LIMITS.phone)},
       discord      = ${text(formData.get("discord"), LIMITS.handle)},
       github       = ${text(formData.get("github"), LIMITS.handle)},
       x_handle     = ${text(formData.get("x_handle"), LIMITS.handle)},
+      linkedin     = ${text(formData.get("linkedin"), LIMITS.handle)},
       website      = ${safeUrl(formData.get("website"))},
       bio          = ${text(formData.get("bio"), LIMITS.bio)},
+      public_profile = ${formData.get("public_profile") === "on"},
       interests    = ${interests}::text[],
       goals        = ${goals}::text[],
       goal_note    = ${text(formData.get("goal_note"), LIMITS.goalNote)},
@@ -217,21 +219,23 @@ export async function joinTeamAction(prev, formData) {
   return { ok: `You're on ${team.name}.` };
 }
 
-export async function renameTeamAction(prev, formData) {
+export async function updateTeamAction(prev, formData) {
   const user = await requireUser("/dashboard/team");
   const name = text(formData.get("name"), LIMITS.team);
   if (!name) return { error: "The team needs a name." };
 
-  /* Scoped to a team this user owns — the id never comes from the form. */
+  /* Scoped to a team this user owns — the id never comes from the
+     form, so passing someone else's simply matches no rows. */
   const rows = await sql`
-    update teams set name = ${name}
+    update teams set name = ${name}, tagline = ${text(formData.get("tagline"), 160)}
      where id = (select team_id from team_members
                   where user_id = ${user.id} and is_owner = true)
     returning id`;
-  if (!rows.length) return { error: "Only the person who made the team can rename it." };
+  if (!rows.length) return { error: "Only the person who made the team can change this." };
 
   refresh();
-  return { ok: "Renamed." };
+  revalidatePath("/dashboard/team");
+  return { ok: "Saved." };
 }
 
 export async function leaveTeamAction() {

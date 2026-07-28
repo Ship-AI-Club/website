@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { JsonLd } from "../../components/article";
+import HackathonRoster from "../../components/hackathon-roster";
 import { TIERS } from "../../lib/sponsors";
 
 import {
@@ -390,6 +391,12 @@ export const metadata = {
   },
 };
 
+/* The roster reads the database, so the page can't be frozen at build
+   time any more — but it's still the busiest marketing page on the
+   site and shouldn't become a query per visitor. Five minutes is well
+   inside how fast a signup list needs to feel live. */
+export const revalidate = 300;
+
 export default function Page() {
   return (
     <>
@@ -511,6 +518,12 @@ export default function Page() {
             ))}
           </div>
         </section>
+
+        {/* Who has actually signed up. Renders nothing until the first
+            person registers, so the page reads the same as it always
+            has until there's something real to show — an empty roster
+            is worse than no roster. */}
+        <HackathonRoster />
 
         <section className="section" id="program">
           <p className="kicker">The program</p>

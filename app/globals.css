@@ -2793,3 +2793,150 @@ h3 .icon {
   align-items: center;
   gap: 0.5rem;
 }
+
+/* ---------- public hackathon roster ----------
+
+   This stays close to the prize grid: the counts establish the room's
+   scale, then the opt-in profiles make the people in it legible. */
+
+.hk-roster-section {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 4.5rem clamp(1.25rem, 5vw, 4rem);
+  border-top: 1px solid var(--hairline);
+}
+
+.hk-roster-head {
+  margin-bottom: 2rem;
+}
+
+.hk-roster-kicker,
+.hk-stat-label {
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hk-roster-kicker {
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+}
+
+.hk-roster-heading {
+  max-width: 34rem;
+  margin-bottom: 0;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+}
+
+.hk-stat-band {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 1px;
+  margin-bottom: 2.5rem;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+}
+
+.hk-stat-item {
+  min-width: 0;
+  padding: 1.25rem 1rem;
+  background: var(--bg);
+}
+
+.hk-stat-value {
+  margin-bottom: 0.45rem;
+  color: var(--ink);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: clamp(1.25rem, 3vw, 1.8rem);
+  line-height: 1;
+}
+
+.hk-stat-label {
+  color: var(--faint);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+}
+
+.hk-roster-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+}
+
+.hk-roster-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-width: 0;
+  padding: 1.1rem 1.25rem;
+  background: var(--bg);
+}
+
+.hk-roster-avatar {
+  display: grid;
+  flex: 0 0 3rem;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  color: var(--accent);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1rem;
+}
+
+.hk-roster-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hk-roster-body {
+  min-width: 0;
+}
+
+.hk-roster-name {
+  margin-bottom: 0.2rem;
+  color: var(--ink);
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.hk-roster-meta,
+.hk-roster-empty,
+.hk-roster-more {
+  color: var(--dim);
+  font-size: 0.87rem;
+  line-height: 1.5;
+}
+
+.hk-roster-meta {
+  overflow-wrap: anywhere;
+}
+
+.hk-roster-empty {
+  padding: 1.25rem 0;
+}
+
+.hk-roster-more {
+  margin-top: 1.25rem;
+  color: var(--faint);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 860px) {
+  .hk-roster-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .hk-roster-grid {
+    grid-template-columns: 1fr;
+  }
+}

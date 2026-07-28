@@ -4,11 +4,12 @@ import { requireOnboarded } from "../../../lib/auth";
 import { MAX_TEAM_SIZE } from "../../../lib/accounts";
 import { mentorsForTeam, submissionForTeam, teamFor } from "../../../lib/store";
 import { leaveTeamAction, regenerateInviteAction } from "../actions";
+import ImageUpload from "../../../components/image-upload";
 import {
   CreateTeamForm,
   JoinTeamForm,
   RemoveMemberForm,
-  RenameTeamForm,
+  TeamDetailsForm,
 } from "./team-forms";
 
 export const metadata = {
@@ -151,11 +152,27 @@ export default async function Page() {
 
         {isOwner && (
           <section className="ac-card">
-            <h3>Rename</h3>
-            <RenameTeamForm name={team.name} />
+            <h3>Team details</h3>
+            <TeamDetailsForm name={team.name} tagline={team.tagline} />
           </section>
         )}
       </div>
+
+      <section className="ac-card">
+        <h3>Team logo</h3>
+        <p>
+          Shown next to your entry on the results page and on your certificate&apos;s listing.
+          Any member can set it.
+        </p>
+        <ImageUpload
+          kind="team-logo"
+          ownerId={team.id}
+          currentUrl={team.logo_url}
+          name={team.name}
+          label="Logo"
+          hint="A square mark reads best — it sits at 64px on the results page."
+        />
+      </section>
 
       <section className="ac-card">
         <h3>Leave this team</h3>

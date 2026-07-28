@@ -9,6 +9,7 @@ import {
   INTERESTS,
   SPONSOR_CHOICES,
 } from "../../../lib/accounts";
+import ImageUpload from "../../../components/image-upload";
 import { updateProfileAction } from "../actions";
 
 /* Everything from onboarding, plus the handles that go next to your
@@ -48,20 +49,48 @@ export default function ProfileForm({ user }) {
       )}
       {state.ok && <p className="ac-ok">{state.ok}</p>}
 
+      <ImageUpload
+        kind="avatar"
+        ownerId={user.id}
+        currentUrl={user.avatar_url}
+        name={user.name}
+      />
+
       <div className="ac-row">
         <div className="ac-field">
           <label className="ac-label" htmlFor="name">
-            Name <span className="ac-req">required</span>
+            Display name <span className="ac-req">required</span>
           </label>
           <input id="name" name="name" type="text" defaultValue={user.name} required />
         </div>
         <div className="ac-field">
-          <label className="ac-label" htmlFor="pronouns">
-            Pronouns
+          <label className="ac-label" htmlFor="phone">
+            Phone
           </label>
-          <input id="pronouns" name="pronouns" type="text" defaultValue={user.pronouns} />
+          <p className="ac-hint">Day-of logistics only. Never published.</p>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            defaultValue={user.phone}
+          />
         </div>
       </div>
+
+      <label className={`ac-choice${user.public_profile !== false ? " is-on" : ""}`}>
+        <input
+          type="checkbox"
+          name="public_profile"
+          defaultChecked={user.public_profile !== false}
+        />
+        <span className="ac-choice-body">
+          <strong>Show me on the public attendee list</strong>
+          <span>
+            Name, photo and title on the hackathon page. Your email and phone never appear.
+          </span>
+        </span>
+      </label>
 
       <div className="ac-row">
         <div className="ac-field">
@@ -106,6 +135,12 @@ export default function ProfileForm({ user }) {
             X
           </label>
           <input id="x_handle" name="x_handle" type="text" defaultValue={user.x_handle} />
+        </div>
+        <div className="ac-field">
+          <label className="ac-label" htmlFor="linkedin">
+            LinkedIn
+          </label>
+          <input id="linkedin" name="linkedin" type="text" defaultValue={user.linkedin} />
         </div>
       </div>
 

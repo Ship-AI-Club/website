@@ -108,7 +108,15 @@ export default async function Page() {
       {available.length > 0 ? (
         <section className="ac-card">
           <h2>{requests.length > 0 ? "Send another" : "Send a request"}</h2>
-          <RequestForm available={available} sponsorTier={user.sponsor_tier} />
+          {/* Keyed on what's actually been filed. The form holds its
+              own error state, so without this a "that request is
+              already in" banner survived the withdrawal that made it
+              untrue — the fix for the complaint didn't clear it. */}
+          <RequestForm
+            key={requests.map((r) => `${r.role}:${r.status}`).join("|")}
+            available={available}
+            sponsorTier={user.sponsor_tier}
+          />
         </section>
       ) : (
         <div className="ac-empty">

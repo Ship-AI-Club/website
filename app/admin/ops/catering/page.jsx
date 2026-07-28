@@ -14,7 +14,7 @@ const DAY_LABELS = { friday: "Friday", saturday: "Saturday", sunday: "Sunday" };
 const DAYS = ["friday", "saturday", "sunday"];
 
 export default async function Page() {
-  const admin = await requireAdmin();
+  const admin = await requireAdmin("/admin/ops/catering");
   const summary = await cateringSummary();
 
   return (

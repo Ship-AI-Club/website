@@ -29,7 +29,7 @@ function when(value) {
 }
 
 export default async function Page() {
-  const admin = await requireAdmin();
+  const admin = await requireAdmin("/admin/ops/broadcast");
   const day = eventDay();
   const [recipientCounts, history] = await Promise.all([
     broadcastRecipientCounts(day),

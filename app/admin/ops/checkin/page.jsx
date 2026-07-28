@@ -20,7 +20,7 @@ function requestedDay(searchParams) {
 }
 
 export default async function Page({ searchParams }) {
-  const admin = await requireAdmin();
+  const admin = await requireAdmin("/admin/ops/checkin");
   const params = (await searchParams) || {};
   const day = requestedDay(params);
   const roster = await checkinRoster(day);

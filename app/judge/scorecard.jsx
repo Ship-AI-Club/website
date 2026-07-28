@@ -45,25 +45,49 @@ function Buttons({ filed }) {
   );
 }
 
+/* ------------------------------------------------------------------
+   The radios are the interface; the hidden input is the value.
+
+   They used to be the same element, and that quietly lost scores.
+   React 19 resets a form after a form action, which clears `checked`
+   in the DOM — but a controlled radio whose `checked={value === n}`
+   expression hasn't changed gives React no reason to re-apply it. So
+   after "Save draft" the strip still showed 9/10 while the field
+   submitted nothing, and filing the card reported an axis the judge
+   could see was scored as missing.
+
+   Separating them removes the failure entirely: the radios group
+   under their own name (so arrow keys still walk the strip) and never
+   submit, and the value the server receives comes from React state,
+   which a form reset can't touch.
+------------------------------------------------------------------ */
 function Scale({ name, value, onChange }) {
   return (
-    <fieldset className="ac-scale">
-      <legend className="ac-hint" style={{ marginBottom: ".2rem" }}>
-        0 is nothing, 10 is the best you&apos;d expect to see.
-      </legend>
-      {Array.from({ length: SCORE_MAX + 1 }, (_, n) => (
-        <label key={n} className={value === n ? "is-on" : undefined}>
-          <input
-            type="radio"
-            name={name}
-            value={n}
-            checked={value === n}
-            onChange={() => onChange(n)}
-          />
-          {n}
-        </label>
-      ))}
-    </fieldset>
+    <>
+      <input type="hidden" name={name} value={value === null ? "" : value} />
+      {/* Keyed on the value so the strip remounts in step with it.
+          The form reset leaves the DOM `checked` flags stale — which
+          no longer affects what's submitted, but does decide where
+          arrow keys resume, and a strip that reads 8 while the
+          keyboard thinks it's on 6 is its own small trap. */}
+      <fieldset className="ac-scale" key={`${name}-${value}`}>
+        <legend className="ac-hint" style={{ marginBottom: ".2rem" }}>
+          0 is nothing, 10 is the best you&apos;d expect to see.
+        </legend>
+        {Array.from({ length: SCORE_MAX + 1 }, (_, n) => (
+          <label key={n} className={value === n ? "is-on" : undefined}>
+            <input
+              type="radio"
+              name={`pick-${name}`}
+              value={n}
+              checked={value === n}
+              onChange={() => onChange(n)}
+            />
+            {n}
+          </label>
+        ))}
+      </fieldset>
+    </>
   );
 }
 
@@ -72,6 +96,12 @@ export default function Scorecard({ submissionId, card, filed }) {
   const [values, setValues] = useState(() =>
     Object.fromEntries(RUBRIC.map((c) => [c.key, card?.[c.key] ?? null])),
   );
+
+  /* Controlled for the same reason the axes are: an uncontrolled
+     textarea is reset by the form action, and a changed defaultValue
+     doesn't apply to an input that's already mounted — so a judge's
+     notes would blank on "Save draft" while the server held them. */
+  const [notes, setNotes] = useState(card?.notes ?? "");
 
   const set = (key) => (n) => setValues((prev) => ({ ...prev, [key]: n }));
   const total = weightedScore(values);
@@ -121,7 +151,8 @@ export default function Scorecard({ submissionId, card, filed }) {
           id="notes"
           name="notes"
           rows={5}
-          defaultValue={state.notes ?? card?.notes ?? ""}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
         />
       </div>
 

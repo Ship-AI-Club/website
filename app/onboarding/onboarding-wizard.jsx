@@ -97,10 +97,22 @@ function Progress({ step }) {
 }
 
 export default function OnboardingWizard({ user, next }) {
-  const [state, action] = useActionState(saveStepAction, {
-    step: user.onboarded_at ? "profile" : "identity",
-    next,
-  });
+  /* Resume where they stopped, not at the beginning. Each step writes
+     as it completes, so the row itself records how far they got: a
+     handle means identity is done, interests mean the profile screen
+     is behind them. Someone who closed the tab on step three should
+     not have to click through two screens they already answered.
+
+     A finished account arriving here is editing, so it opens on
+     profile rather than being asked its name again. */
+  const resume = () => {
+    if (user.onboarded_at) return "profile";
+    if (user.interests?.length) return "details";
+    if (user.handle) return "profile";
+    return "identity";
+  };
+
+  const [state, action] = useActionState(saveStepAction, { step: resume(), next });
 
   const step = state.step ?? "identity";
   const [name, setName] = useState(state.name ?? user.name ?? "");

@@ -73,7 +73,7 @@ function AttentionList({ title, rows, empty, children }) {
 }
 
 export default async function Page() {
-  const admin = await requireAdmin();
+  const admin = await requireAdmin("/admin/ops");
   const day = eventDay();
   const [counters, attention, settings] = await Promise.all([
     opsCounters(day),

@@ -37,6 +37,18 @@ import { safeNext } from "../../lib/nav";
    the progress dots. */
 const STEPS = ["identity", "profile", "interests", "details", "done"];
 
+/**
+ * Move to another step, dropping whatever the last one complained
+ * about. Spreading `prev` wholesale carried the error forward, so a
+ * rejected handle stayed on screen through the next two screens after
+ * it had been fixed — the banner outliving the problem is worse than
+ * never showing one.
+ */
+function go(prev, step, extra = {}) {
+  const { error, ...rest } = prev ?? {};
+  return { ...rest, step, ...extra };
+}
+
 /** Free the handle for someone else if the taker abandons it. */
 async function claimHandle(userId, wanted) {
   const shape = handleAvailableShape(wanted);
@@ -56,9 +68,9 @@ export async function saveStepAction(prev, formData) {
   const back = String(formData.get("intent")) === "back";
 
   const at = STEPS.indexOf(step);
-  if (at < 0) return { ...prev, step: "identity", next };
+  if (at < 0) return go(prev, "identity", { next });
 
-  if (back) return { ...prev, step: STEPS[Math.max(0, at - 1)], next };
+  if (back) return go(prev, STEPS[Math.max(0, at - 1)], { next });
 
   /* ---------- 1. who you are ---------- */
 
@@ -82,7 +94,7 @@ export async function saveStepAction(prev, formData) {
       return { ...prev, step, next, name, error: "That handle just went. Try another." };
     }
 
-    return { ...prev, step: "profile", next, name, handle: claimed.handle };
+    return go(prev, "profile", { next, name, handle: claimed.handle });
   }
 
   /* ---------- 2. your profile (all optional) ---------- */
@@ -102,7 +114,7 @@ export async function saveStepAction(prev, formData) {
         public_profile = ${formData.get("public_profile") === "on"}
       where id = ${user.id}`;
 
-    return { ...prev, step: "interests", next };
+    return go(prev, "interests", { next });
   }
 
   /* ---------- 3. what brings you here ---------- */
@@ -114,7 +126,7 @@ export async function saveStepAction(prev, formData) {
     }
 
     await sql`update users set interests = ${interests}::text[] where id = ${user.id}`;
-    return { ...prev, step: "details", next, interests };
+    return go(prev, "details", { next, interests });
   }
 
   /* ---------- 4. the follow-ups those answers earned ---------- */
@@ -132,7 +144,7 @@ export async function saveStepAction(prev, formData) {
         onboarded_at = coalesce(onboarded_at, now())
       where id = ${user.id}`;
 
-    return { ...prev, step: "done", next };
+    return go(prev, "done", { next });
   }
 
   /* ---------- 5. done ---------- */

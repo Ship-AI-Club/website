@@ -339,8 +339,8 @@ const FAQS = [
     a: "Laptop, charger, whatever you've already built, and a domain you're willing to point at it. Everything else we'll have.",
   },
   {
-    q: "How do I sponsor, judge or mentor?",
-    a: "Say so in the Discord and Santos will pick it up, or use the sponsor links on this page. Sponsorship closes October 2 so prize amounts can go on this page before registration opens up.",
+    q: "How do I sponsor, judge, mentor or volunteer?",
+    a: `Make an account and send the request from your dashboard — one short form each, and it lands with Santos directly rather than in a Discord thread he might miss. Mentoring is Saturday's 1:1 rotations. Volunteering is photography or the check-in booth, a few hours. Judging is an application rather than a sign-up: the panel is small and picked by hand, and a seat also comes with Gold and Platinum sponsorship. Sponsorship closes ${EVENT.sponsorDeadline} so prize amounts can go on this page before registration opens up.`,
   },
 ];
 

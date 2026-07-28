@@ -111,7 +111,7 @@ export default function CheckinForm({ day, roster }) {
         <label className="ac-label" htmlFor="checkin-search">
           Find an attendee
         </label>
-        <p className="ac-hint">Filters active registrations by name, handle, or email while you type.</p>
+        <p className="ac-hint">Filters by name, handle or email while you type.</p>
         <input
           id="checkin-search"
           type="text"
@@ -124,13 +124,13 @@ export default function CheckinForm({ day, roster }) {
 
       {roster.length === 0 ? (
         <div className="ac-empty">
-          <strong>No active registrations.</strong>
+          <strong>Nobody expected yet.</strong>
           Active registrations fill this day&apos;s check-in roster.
         </div>
       ) : visibleRoster.length === 0 ? (
         <div className="ac-empty">
           <strong>No attendees match this search.</strong>
-          Clear the search to see the active registration roster.
+          Clear the search to see everyone expected.
         </div>
       ) : (
         <ul className="ac-list">

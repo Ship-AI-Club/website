@@ -23,7 +23,7 @@ export default async function Page() {
         <p className="ac-kicker">Administration · Operations</p>
         <h1>Catering</h1>
         <p>
-          {admin.name || admin.email}. Meal counts from active registrations and daily check-ins.
+          {admin.name || admin.email}. Meal counts for everyone expected — entrants and crew — plus daily check-ins.
         </p>
       </div>
 
@@ -83,20 +83,22 @@ export default async function Page() {
           <h2>Dietary summary</h2>
           <span className="ac-pill">{summary.dietary.length}</span>
         </div>
-        <p>Grouped dietary notes from active registrations. This list is plain text for copying into an order.</p>
+        <p>Grouped dietary notes for everyone being fed, crew included. Plain text, for reading down a phone to a caterer.</p>
         {summary.dietary.length > 0 ? (
           <ul className="ac-list">
             {summary.dietary.map((item) => (
               <li key={item.dietary}>
                 <strong>{item.dietary}</strong>
-                <span className="ac-list-end">{item.count} registered</span>
+                <span className="ac-list-end">
+                  {item.count} {item.count === 1 ? "person" : "people"}
+                </span>
               </li>
             ))}
           </ul>
         ) : (
           <div className="ac-empty">
             <strong>No dietary notes.</strong>
-            Dietary entries appear when active registrations include them.
+            Dietary notes appear here as people fill them in.
           </div>
         )}
       </section>

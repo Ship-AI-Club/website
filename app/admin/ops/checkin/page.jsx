@@ -32,7 +32,7 @@ export default async function Page({ searchParams }) {
         <p className="ac-kicker">Administration · Operations</p>
         <h1>Check-in</h1>
         <p>
-          {admin.name || admin.email}. {DAY_LABELS[day]} active registration roster.
+          {admin.name || admin.email}. Everyone expected on {DAY_LABELS[day].toLowerCase()} — entrants, judges, mentors and sponsors.
         </p>
       </div>
 
@@ -53,7 +53,7 @@ export default async function Page({ searchParams }) {
         <div className="ac-card-head">
           <ClipboardCheck size={18} strokeWidth={1.75} aria-hidden="true" />
           <h2>{DAY_LABELS[day]} check-in</h2>
-          <span className="ac-pill">{roster.length} registered</span>
+          <span className="ac-pill">{roster.length} expected</span>
         </div>
         <div className="ac-total">
           <b>{checkedIn} of {roster.length}</b>

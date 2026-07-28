@@ -19,7 +19,7 @@ function Submit({ label }) {
   );
 }
 
-export default function RegisterForm({ registration }) {
+export default function RegisterForm({ registration, user }) {
   const [state, action] = useActionState(registerAction, {});
   const editing = Boolean(registration);
 
@@ -72,7 +72,7 @@ export default function RegisterForm({ registration }) {
             id="dietary"
             name="dietary"
             type="text"
-            defaultValue={registration?.dietary || ""}
+            defaultValue={user?.dietary || ""}
             placeholder="Vegetarian, no nuts"
           />
         </div>
@@ -81,7 +81,7 @@ export default function RegisterForm({ registration }) {
             Anything we should know? <span className="ac-opt">optional</span>
           </label>
           <p className="ac-hint">Accessibility, arrival time, anything at all.</p>
-          <input id="note" name="note" type="text" defaultValue={registration?.note || ""} />
+          <input id="note" name="note" type="text" defaultValue={user?.access_note || ""} />
         </div>
       </div>
 

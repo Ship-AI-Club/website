@@ -28,7 +28,9 @@ async function badgeCounts(user) {
         where status = 'pending'
           and (${admin}::boolean or user_id = ${user.id}))                  as requests,
       (select count(*)::int from certificate_holders
-        where user_id = ${user.id})                                         as certificates`;
+        where user_id = ${user.id})                                         as certificates,
+      (select count(*)::int from registrations
+        where user_id = ${user.id} and withdrawn_at is null)                as registered`;
   return row;
 }
 
@@ -36,13 +38,24 @@ export default async function DashboardLayout({ children }) {
   const user = await requireUser("/dashboard");
   const counts = await badgeCounts(user);
 
+  /* Crew are in the room but not entering, so a team and a submission
+     are two links that lead nowhere useful for them. Someone who
+     holds a crew role and registered anyway sees both — the test is
+     what they've done, not who they are. */
+  const crew = hasRole(user, "judge") || hasRole(user, "mentor") || hasRole(user, "sponsor");
+  const showsCompeting = counts.registered > 0 || !crew;
+
   const sections = [
     {
       title: null,
       items: [
         { href: "/dashboard", label: "Overview" },
-        { href: "/dashboard/team", label: "Your team" },
-        { href: "/dashboard/submission", label: "Submission" },
+        ...(showsCompeting
+          ? [
+              { href: "/dashboard/team", label: "Your team" },
+              { href: "/dashboard/submission", label: "Submission" },
+            ]
+          : []),
         {
           href: "/dashboard/certificates",
           label: "Certificates",

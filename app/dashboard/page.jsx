@@ -22,7 +22,9 @@ import {
   teamFor,
   voteFor,
 } from "../../lib/store";
+import { getUpcomingEvents } from "../../lib/meetup";
 import { withdrawRegistrationAction } from "./actions";
+import AttendanceForm from "./attendance-form";
 import RegisterForm from "./register-form";
 import VoteForm from "./vote-form";
 
@@ -55,6 +57,18 @@ export default async function Page({ searchParams }) {
     ]);
 
   const submission = team ? await submissionForTeam(team.id) : null;
+
+  /* Crew — judges, mentors, sponsors — are in the room but not
+     entering, so the whole competing half of this page is noise to
+     them. They still eat, still vote, and still want to know when the
+     next meetup is. Someone who holds a crew role *and* registered
+     sees both; the test is what they've actually done, not who they
+     are. */
+  const crew = ["judge", "mentor", "sponsor"].filter((r) => hasRole(user, r));
+  const competing = Boolean(registration);
+  const showsCompeting = competing || crew.length === 0;
+
+  const events = crew.length > 0 || !competing ? await getUpcomingEvents(2) : [];
 
   /* Onboarding captured intent; this turns the ones that still need a
      human into a nudge. Sponsor/mentor/judge each need a request
@@ -103,9 +117,54 @@ export default async function Page({ searchParams }) {
         </p>
       )}
 
+      {/* ---------- crew: your role, and what we need from you ---------- */}
+
+      {crew.length > 0 && (
+        <section className="ac-card is-accent">
+          <div className="ac-card-head">
+            <Handshake size={18} strokeWidth={1.75} aria-hidden="true" />
+            <h2>
+              You&apos;re {crew.length === 1 ? "a" : ""}{" "}
+              {crew.map((r) => roleLabel(r).toLowerCase()).join(" and ")}
+            </h2>
+          </div>
+          <p>
+            {EVENT.name}, {EVENT.dates} at {EVENT.venue}. You don&apos;t need to register or
+            form a team — this is everything we need from you.
+          </p>
+
+          <AttendanceForm user={user} />
+
+          <div className="ac-actions">
+            {hasRole(user, "judge") && (
+              <a className="btn btn-ghost ac-btn-sm" href="/judge">
+                Your scorecards
+              </a>
+            )}
+            {hasRole(user, "mentor") && (
+              <a className="btn btn-ghost ac-btn-sm" href="/dashboard/mentoring">
+                Teams you mentor
+              </a>
+            )}
+            <a className="btn btn-ghost ac-btn-sm" href="/hackathon#rules">
+              How it&apos;s scored
+            </a>
+          </div>
+
+          {!competing && (
+            <p className="ac-fine">
+              Wanted to enter as well? Nothing stops you —{" "}
+              <a href="/dashboard?compete=1#compete">register as a participant</a>. You
+              can&apos;t judge your own team, and the panel is assigned around that.
+            </p>
+          )}
+        </section>
+      )}
+
       {/* ---------- registration ---------- */}
 
-      <section className="ac-card">
+      {(showsCompeting || params?.compete) && (
+      <section className="ac-card" id="compete">
         <div className="ac-card-head">
           <Rocket size={18} strokeWidth={1.75} aria-hidden="true" />
           <h2>The hackathon</h2>
@@ -154,13 +213,15 @@ export default async function Page({ searchParams }) {
               and you don&apos;t need a finished product — bring something you&apos;ve already
               built, or start when the build window opens {EVENT.buildOpens}.
             </p>
-            <RegisterForm registration={null} />
+            <RegisterForm registration={null} user={user} />
           </>
         )}
       </section>
+      )}
 
       {/* ---------- team and submission, side by side ---------- */}
 
+      {showsCompeting && (
       <div className="ac-cards">
         <section className="ac-card">
           <div className="ac-card-head">
@@ -233,6 +294,7 @@ export default async function Page({ searchParams }) {
           )}
         </section>
       </div>
+      )}
 
       {/* ---------- unfinished role requests ---------- */}
 
@@ -350,6 +412,34 @@ export default async function Page({ searchParams }) {
       )}
 
       {/* ---------- what's next ---------- */}
+
+      {events.length > 0 && (
+        <section className="ac-card">
+          <div className="ac-card-head">
+            <CalendarDays size={18} strokeWidth={1.75} aria-hidden="true" />
+            <h2>Next meetup</h2>
+          </div>
+          <p>
+            Ship AI runs free, public events in Phoenix and Tempe year round — the program
+            is one season of them. Pulled live from the Meetup calendar.
+          </p>
+          <ul className="ac-list">
+            {events.map((e) => (
+              <li key={e.url}>
+                <strong>{e.title}</strong>
+                <span>
+                  {e.date} · {e.time} · {e.place}
+                </span>
+                <span className="ac-list-end">
+                  <a className="ac-btn-link" href={e.url} target="_blank" rel="noreferrer">
+                    RSVP
+                  </a>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {upcoming && (
         <section className="ac-card">

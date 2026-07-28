@@ -115,18 +115,23 @@ export async function registerAction(prev, formData) {
   const track = TRACK_IDS.includes(trackRaw) ? trackRaw : "undecided";
 
   await sql`
-    insert into registrations (user_id, track, product, dietary, note)
-    values (${user.id}, ${track},
-            ${text(formData.get("product"), LIMITS.summary)},
-            ${text(formData.get("dietary"), LIMITS.dietary)},
-            ${text(formData.get("note"), LIMITS.note)})
+    insert into registrations (user_id, track, product)
+    values (${user.id}, ${track}, ${text(formData.get("product"), LIMITS.summary)})
     on conflict (user_id) do update set
       track = excluded.track,
       product = excluded.product,
-      dietary = excluded.dietary,
-      note = excluded.note,
       withdrawn_at = null,
       registered_at = coalesce(registrations.registered_at, now())`;
+
+  /* Dietary and access notes belong to the person, not to this form —
+     the same two questions are asked of judges and sponsors, who
+     never touch it. Written here too so registering in one pass still
+     captures them. */
+  await sql`
+    update users set
+      dietary     = ${text(formData.get("dietary"), LIMITS.dietary)},
+      access_note = ${text(formData.get("note"), LIMITS.note)}
+    where id = ${user.id}`;
 
   /* Anyone can compete — rule 03 — so this role is granted on the
      spot rather than requested. It's what gates the submission form
@@ -138,6 +143,25 @@ export async function registerAction(prev, formData) {
   await audit(user.id, "register", user.id, { track });
   refresh();
   return { ok: "You're registered. Next: form a team, or go solo." };
+}
+
+/**
+ * The two practical questions asked of everyone who'll be in the
+ * room, competing or not. Judges, mentors and sponsors get this on
+ * its own rather than the whole registration form — they aren't
+ * entering, and asking them which track they're on would be noise.
+ */
+export async function saveAttendanceAction(prev, formData) {
+  const user = await requireOnboarded("/dashboard");
+
+  await sql`
+    update users set
+      dietary     = ${text(formData.get("dietary"), LIMITS.dietary)},
+      access_note = ${text(formData.get("note"), LIMITS.note)}
+    where id = ${user.id}`;
+
+  refresh();
+  return { ok: "Saved. That's everything we need." };
 }
 
 export async function withdrawRegistrationAction() {

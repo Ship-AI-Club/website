@@ -42,6 +42,12 @@ create table if not exists users (
      scopes and what a delete would target; the URL is what renders. */
   avatar_path  text not null default '',
   avatar_url   text not null default '',
+  /* Practical facts about a person being in the room. These sit on
+     the account rather than on `registrations` because registration
+     means "competing", and a judge, mentor or sponsor eats the same
+     lunch and uses the same door. */
+  dietary      text not null default '',
+  access_note  text not null default '',
   /* "Show me on the public attendee list." Opt-in, defaulting on:
      most people come to an event to be seen, and the toggle sits in
      onboarding where it's read rather than buried in settings. */
@@ -128,12 +134,13 @@ create index if not exists role_requests_status_idx on role_requests (status, cr
 
 /* ---------- hackathon ---------- */
 
+/* Registering means competing. Dietary needs and the "anything we
+   should know" note used to live here and now live on `users`, since
+   crew attend too and were never going to have a row in this table. */
 create table if not exists registrations (
   user_id       uuid primary key references users(id) on delete cascade,
   track         text not null default 'undecided',
   product       text not null default '',
-  dietary       text not null default '',
-  note          text not null default '',
   registered_at timestamptz not null default now(),
   withdrawn_at  timestamptz
 );
@@ -419,6 +426,16 @@ alter table teams add column if not exists logo_url  text not null default '';
    removal deserves the same amount of thought rather than this line
    as a precedent. */
 alter table users drop column if exists pronouns;
+
+alter table users add column if not exists dietary     text not null default '';
+alter table users add column if not exists access_note text not null default '';
+
+/* Same reasoning as the pronouns drop, and safe for the same reason:
+   these moved to `users` before anybody had filled them in, so there
+   is nothing to carry across. Had there been rows, this would want a
+   copy step and a separate deploy rather than a drop. */
+alter table registrations drop column if exists dietary;
+alter table registrations drop column if exists note;
 
 alter table event_checkins add column if not exists user_id       uuid references users(id) on delete cascade;
 alter table event_checkins add column if not exists day           text not null;

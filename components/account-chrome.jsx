@@ -18,6 +18,7 @@ export function AccountHeader({ user, links = [] }) {
         <span>Ship AI</span>
       </a>
       <nav>
+        <a href="/programs">Programs</a>
         <a href="/hackathon">Hackathon</a>
         {links.map((l) => (
           <a key={l.href} href={l.href}>
@@ -50,6 +51,7 @@ export function AccountFooter() {
       <p>Phoenix &amp; Tempe, Arizona</p>
       <nav>
         <a href="/">Home</a>
+        <a href="/programs">Programs</a>
         <a href="/hackathon">Hackathon</a>
         <a href="/dashboard">Dashboard</a>
         <a href={DISCORD} target="_blank" rel="noreferrer">

@@ -409,13 +409,15 @@ export default function Page() {
           <img src="/logo-icon.png" alt="" width={26} height={26} />
           <span>Ship AI</span>
         </a>
-        {/* Four anchors, not seven. This nav had become a table of
+        {/* Five anchors, not seven. This nav had become a table of
             contents for a very long page, which pushed the brand onto
             two lines and left the actual CTA competing with six
             section links. Benefits and Rules are a scroll away and
-            linked from the copy that matters. */}
+            linked from the copy that matters. Programs earns its slot:
+            the hackathon is one program's ending, not the whole club. */}
         <nav>
-          <a href="/hackathon/workshops">Workshops</a>
+          <a href="/programs">Programs</a>
+          <a href="/programs/zero-to-launch">Sessions</a>
           <a href="#schedule">Weekend</a>
           <a href="#prizes">Prizes</a>
           <a href="#sponsor">Sponsor</a>
@@ -565,7 +567,7 @@ export default function Page() {
           <ol className="hk-series">
             {WORKSHOPS.map((w) => (
               <li key={w.n}>
-                <a href={`/hackathon/workshops/${w.slug}`}>
+                <a href={`/programs/zero-to-launch/${w.slug}`}>
                   <span className="hk-series-n">{w.n}</span>
                   <span className="hk-series-date">{w.date}</span>
                   <span className="hk-series-title">{w.eventTitle}</span>
@@ -577,7 +579,7 @@ export default function Page() {
           <p className="hk-note">
             Each session has its own page with the full agenda, what to bring if you want to
             follow along, and what to go do afterward.{" "}
-            <a href="/hackathon/workshops">See the whole curriculum</a>.
+            <a href="/programs/zero-to-launch">See the whole curriculum</a>.
           </p>
         </section>
 
@@ -888,7 +890,8 @@ export default function Page() {
           <a href="/">Home</a>
           <a href="/hackathon/submit">Submit</a>
           <a href="/hackathon/results">Results</a>
-          <a href="/hackathon/workshops">Workshops</a>
+          <a href="/programs">Programs</a>
+          <a href="/programs/zero-to-launch">Sessions</a>
         </nav>
         <div className="socials">
           {SOCIALS.map((s) => (

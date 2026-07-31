@@ -12,7 +12,17 @@ const nextConfig = {
       // existing inbound links and accumulated ranking land somewhere real.
       {
         source: "/socratic-night",
-        destination: "/hackathon/workshops",
+        destination: "/programs/zero-to-launch",
+        permanent: true,
+      },
+      {
+        source: "/hackathon/workshops/:path*",
+        destination: "/programs/zero-to-launch/:path*",
+        permanent: true,
+      },
+      {
+        source: "/hackathon/skills",
+        destination: "/programs/zero-to-launch/skills",
         permanent: true,
       },
     ];

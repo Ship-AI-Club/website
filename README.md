@@ -17,9 +17,9 @@ Each of the six workshops publishes a deck, a follow-along guide and its skill f
 
 | What | Source | Route |
 | --- | --- | --- |
-| Slides | `lib/decks.js` | `/hackathon/workshops/<slug>/deck` |
-| Guide | `lib/guides.js` | `/hackathon/workshops/<slug>/guide` |
-| Skills | `content/skills/<name>/SKILL.md` | `/hackathon/skills` |
+| Slides | `lib/decks.js` | `/programs/<program>/<slug>/deck` |
+| Guide | `lib/guides.js` | `/programs/<program>/<slug>/guide` |
+| Skills | `content/skills/<name>/SKILL.md` | `/programs/<program>/skills` |
 
 `scripts/build-kits.mjs` runs as `prebuild` (and `predev`) and generates the downloads —
 per-session and full-set zips into `public/skills/`, guide markdown into `public/guides/`,

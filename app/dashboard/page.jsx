@@ -483,11 +483,11 @@ export default async function Page({ searchParams }) {
           <div className="ac-actions">
             <a
               className="btn btn-ghost ac-btn-sm"
-              href={`/hackathon/workshops/${upcoming.slug}`}
+              href={`/programs/zero-to-launch/${upcoming.slug}`}
             >
               Session details
             </a>
-            <a className="btn btn-ghost ac-btn-sm" href="/hackathon/workshops">
+            <a className="btn btn-ghost ac-btn-sm" href="/programs/zero-to-launch">
               All six sessions
             </a>
           </div>

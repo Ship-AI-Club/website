@@ -107,6 +107,7 @@ export default async function Page() {
           <span>Ship AI</span>
         </a>
         <nav>
+          <a href="/programs">Programs</a>
           <a href="/hackathon">Hackathon</a>
           <a href="/hackathon#benefits">Benefits</a>
           <a href="/hackathon#prizes">Prizes</a>
@@ -288,7 +289,8 @@ export default async function Page() {
         <nav>
           <a href="/">Home</a>
           <a href="/hackathon">Hackathon</a>
-          <a href="/hackathon/workshops">Workshops</a>
+          <a href="/programs">Programs</a>
+          <a href="/programs/zero-to-launch">Sessions</a>
         </nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

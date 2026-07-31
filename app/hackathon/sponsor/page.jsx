@@ -69,6 +69,7 @@ export default function Page() {
           <span>Ship AI</span>
         </a>
         <nav>
+          <a href="/programs">Programs</a>
           <a href="/hackathon">Hackathon</a>
           <a href="#tiers">Tiers</a>
           <a href="#menu">The menu</a>
@@ -329,7 +330,8 @@ export default function Page() {
         <nav>
           <a href="/">Home</a>
           <a href="/hackathon">Hackathon</a>
-          <a href="/hackathon/workshops">Workshops</a>
+          <a href="/programs">Programs</a>
+          <a href="/programs/zero-to-launch">Sessions</a>
           <a href="/hackathon/results">Results</a>
         </nav>
         <div className="socials">

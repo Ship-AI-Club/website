@@ -44,8 +44,8 @@ export default async function Page() {
         <p className="article-lede">
           <strong>Ship AI</strong> runs a recurring AI meetup in Phoenix, Arizona for
           technical founders and builders. The format is the{" "}
-          <a href="/hackathon/workshops">workshop or builder presentation</a>: an AI news briefing, the main session, then
-          discussion of member-voted topics, and 5-minute demos of things members actually
+          <a href="/programs">workshop or builder presentation</a>: a 20-minute AI news briefing, the main
+          session built live on screen, then 5-minute demos of things members actually
           shipped. Demos over memos — no slideware, no hard selling.
         </p>
 
@@ -53,9 +53,9 @@ export default async function Page() {
         <p>
           Phoenix sessions are evening events built around discussion and working software.
           Every session opens with a 20-minute briefing on what matters for AI builders
-          right now, moves into Socratic Rounds on topics the community submitted and voted
-          on (questions first, hot takes welcome, receipts required), and closes with
-          5-minute demos from members.
+          right now, moves into the workshop — the host presents and builds on screen while
+          you follow along on a laptop or just watch — and closes with 5-minute demos from
+          members. Questions welcome throughout, receipts required.
         </p>
 
         <h2>Where and when</h2>

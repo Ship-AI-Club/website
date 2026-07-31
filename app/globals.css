@@ -988,6 +988,10 @@ h3 .icon {
   border-bottom: 1px solid var(--hairline);
 }
 
+.hk-facts-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .hk-fact {
   background: var(--bg);
   padding: 1.5rem clamp(1rem, 3vw, 1.75rem);
@@ -1679,6 +1683,10 @@ h3 .icon {
   border-top: 1px solid var(--hairline);
 }
 
+.hk-promo-inner + .hk-promo-inner {
+  margin-top: 1.25rem;
+}
+
 .hk-promo-inner {
   border: 1px solid var(--hairline);
   border-left: 2px solid var(--accent);
@@ -1701,7 +1709,13 @@ h3 .icon {
   margin-bottom: 0.9rem;
 }
 
-.hk-promo h2 {
+.hk-promo-tag.is-tbd {
+  color: var(--faint);
+}
+
+/* Scoped to the card: the homepage programs section now carries a real
+   .section h2 heading of its own, which must stay full size. */
+.hk-promo-inner h2 {
   font-size: clamp(1.4rem, 3.2vw, 2rem);
   margin-bottom: 0.9rem;
   letter-spacing: -0.03em;
@@ -2003,6 +2017,14 @@ h3 .icon {
   color: var(--bg);
   background: var(--accent);
   padding: 0.12rem 0.4rem;
+}
+
+/* Same chip, no accent — a program with no dates yet shouldn't shout as
+   loudly as the one running tonight. Mirrors .hk-promo-tag.is-tbd. */
+.hk-ws-act.is-tbd {
+  color: var(--faint);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--hairline);
 }
 
 .hk-ws-list h3 {

@@ -20,8 +20,9 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import QRCode from "qrcode";
 import { zip } from "./zip.mjs";
-import { WORKSHOPS, TEMPLATE_REPO, DISCORD } from "../lib/hackathon.js";
-import { GUIDES, SETUP } from "../lib/guides.js";
+import { TEMPLATE_REPO, DISCORD } from "../lib/hackathon.js";
+import { GUIDES_BY_PROGRAM, setupFor } from "../lib/guides.js";
+import { PROGRAMS } from "../lib/programs.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const skillsSrc = join(root, "content/skills");
@@ -64,12 +65,20 @@ const names = readdirSync(skillsSrc, { withFileTypes: true })
 
 const skills = new Map(names.map((n) => [n, parseSkill(n)]));
 
-/* Which sessions use each skill — several are shared across two. */
-for (const w of WORKSHOPS) {
-  for (const s of w.skills || []) {
-    const skill = skills.get(s);
-    if (!skill) throw new Error(`Session ${w.n} lists "${s}", which has no skill file`);
-    (skill.sessions ||= []).push({ n: w.n, slug: w.slug, title: w.eventTitle });
+/* Validate route-safe program data, then record which sessions use each
+   skill. Slugs only need to be unique inside their own program. */
+for (const p of PROGRAMS) {
+  if (p.slug === "skills") throw new Error('Program slug "skills" is reserved');
+  const slugs = new Set();
+  for (const w of p.sessions) {
+    if (w.slug === "skills") throw new Error(`Program ${p.slug} uses reserved session slug "skills"`);
+    if (slugs.has(w.slug)) throw new Error(`Program ${p.slug} has duplicate session slug "${w.slug}"`);
+    slugs.add(w.slug);
+    for (const s of w.skills || []) {
+      const skill = skills.get(s);
+      if (!skill) throw new Error(`${p.name} session ${w.n} lists "${s}", which has no skill file`);
+      (skill.sessions ||= []).push({ n: w.n, slug: w.slug, title: w.eventTitle });
+    }
   }
 }
 
@@ -80,8 +89,8 @@ if (orphans.length) {
 
 /* ---------- install README, shipped inside every bundle ---------- */
 
-function readme(label, list) {
-  return `# Zero to Launch — ${label}
+function readme(program, label, list) {
+  return `# ${program.name} — ${label}
 
 ${list.length} skill${list.length === 1 ? "" : "s"} for Claude Code, the Codex extension, or
 anything else that reads a skills directory.
@@ -93,8 +102,8 @@ touches nothing else.
 
     unzip -o <this-file>.zip -d .
 
-Then start your agent from that directory and run the skill by name, e.g.
-\`/${list[0].name}\`.
+Then start your agent from that directory and run a skill by name${list[0] ? `, e.g.
+\`/${list[0].name}\`` : ""}.
 
 ## What's in here
 
@@ -102,8 +111,7 @@ ${list.map((s) => `- **/${s.name}** — ${s.description}`).join("\n")}
 
 ## Everything else
 
-Guides, slides and the rest of the program: ${SITE}/hackathon/workshops
-Template repo: ${TEMPLATE_REPO}
+Guides, slides and the rest of the program: ${SITE}/programs/${program.slug}
 Discord: ${DISCORD}
 
 Free to take and run, during the program or years from now.
@@ -112,34 +120,35 @@ Free to take and run, during the program or years from now.
 `;
 }
 
-function bundle(label, list) {
+function bundle(program, label, list) {
   return zip([
-    { name: "README.md", data: readme(label, list) },
+    { name: "README.md", data: readme(program, label, list) },
     ...list.map((s) => ({ name: `.claude/skills/${s.name}/SKILL.md`, data: s.raw })),
   ]);
 }
 
 /* ---------- guide markdown ---------- */
 
-function guideMarkdown(w) {
-  const g = GUIDES[w.slug];
+function guideMarkdown(program, w) {
+  const g = GUIDES_BY_PROGRAM[program.slug]?.[w.slug];
   if (!g) return null;
-  const url = `${SITE}/hackathon/workshops/${w.slug}`;
+  const url = `${SITE}/programs/${program.slug}/${w.slug}`;
+  const setup = setupFor(program);
   const lines = [
     `# ${w.eventTitle} — follow-along guide`,
     "",
-    `Zero to Launch, session ${w.n} · ${w.date}, 2026 · ${g.minutes}`,
+    `${program.name}, session ${w.n} · ${w.iso ? `${w.date}, ${w.iso.slice(0, 4)}` : "Dates TBD"} · ${g.minutes}`,
     "",
     g.lede,
     "",
-    `## ${SETUP.title}`,
+    `## ${setup.title}`,
     "",
-    SETUP.note,
+    setup.note,
     "",
-    ...SETUP.steps.flatMap((s) => [
+    ...setup.steps.flatMap((s) => [
       `**${s.t}${/[.?!]$/.test(s.t) ? "" : "."}** ${s.c}`,
       ...(s.run
-        ? ["", "    " + s.run.replace("{BUNDLE}", `zero-to-launch-${w.n}-${w.slug}.zip`)]
+        ? ["", "    " + s.run.replace("{BUNDLE}", `${program.kitPrefix}-${w.n}-${w.slug}.zip`)]
         : []),
       "",
     ]),
@@ -188,22 +197,32 @@ for (const s of skills.values()) {
 }
 
 const all = [...skills.values()];
-writeFileSync(join(skillsOut, "zero-to-launch.zip"), bundle("the full set", all));
+const manifest = { programs: {} };
+let sessionBundleCount = 0;
 
-const manifest = { all: { file: "zero-to-launch.zip", count: all.length }, sessions: {} };
+for (const p of PROGRAMS) {
+  const programSkills = [...new Set(p.sessions.flatMap((w) => w.skills || []))].map((n) => skills.get(n));
+  if (!programSkills.length) continue;
+  const allFile = `${p.kitPrefix}.zip`;
+  writeFileSync(join(skillsOut, allFile), bundle(p, "the full set", programSkills));
 
-for (const w of WORKSHOPS) {
-  const list = (w.skills || []).map((n) => skills.get(n));
-  if (!list.length) continue;
-  const file = `zero-to-launch-${w.n}-${w.slug}.zip`;
-  writeFileSync(join(skillsOut, file), bundle(`session ${w.n}, ${w.eventTitle}`, list));
-  manifest.sessions[w.slug] = { file, count: list.length };
+  const programManifest = { all: { file: allFile, count: programSkills.length }, sessions: {} };
+  manifest.programs[p.slug] = programManifest;
 
-  const md = guideMarkdown(w);
-  if (md) {
-    const gf = `zero-to-launch-${w.n}-${w.slug}.md`;
-    writeFileSync(join(guidesOut, gf), md);
-    manifest.sessions[w.slug].guide = gf;
+  for (const w of p.sessions) {
+    const list = (w.skills || []).map((n) => skills.get(n));
+    if (!list.length) continue;
+    const file = `${p.kitPrefix}-${w.n}-${w.slug}.zip`;
+    writeFileSync(join(skillsOut, file), bundle(p, `session ${w.n}, ${w.eventTitle}`, list));
+    programManifest.sessions[w.slug] = { file, count: list.length };
+    sessionBundleCount += 1;
+
+    const md = guideMarkdown(p, w);
+    if (md) {
+      const gf = `${p.kitPrefix}-${w.n}-${w.slug}.md`;
+      writeFileSync(join(guidesOut, gf), md);
+      programManifest.sessions[w.slug].guide = gf;
+    }
   }
 }
 
@@ -239,11 +258,16 @@ async function qr(text) {
 
 const qrTargets = {
   discord: DISCORD,
-  skills: `${SITE}/hackathon/skills`,
-  workshops: `${SITE}/hackathon/workshops`,
+  skills: `${SITE}/programs/zero-to-launch/skills`,
+  workshops: `${SITE}/programs/zero-to-launch`,
   repo: TEMPLATE_REPO,
   ...Object.fromEntries(
-    WORKSHOPS.map((w) => [`session-${w.slug}`, `${SITE}/hackathon/workshops/${w.slug}`])
+    PROGRAMS.flatMap((p) =>
+      p.sessions.map((w) => [
+        p.slug === "zero-to-launch" ? `session-${w.slug}` : `${p.slug}-${w.slug}`,
+        `${SITE}/programs/${p.slug}/${w.slug}`,
+      ])
+    )
   ),
 };
 
@@ -255,6 +279,6 @@ for (const [key, url] of Object.entries(qrTargets)) {
 writeFileSync(join(root, "lib/qr.generated.json"), JSON.stringify(codes, null, 2) + "\n");
 
 console.log(
-  `Kits built — ${all.length} skills, ${Object.keys(manifest.sessions).length} session bundles, ` +
+  `Kits built — ${all.length} skills, ${sessionBundleCount} session bundles, ` +
     `${readdirSync(guidesOut).length} guides, ${Object.keys(codes).length} QR codes.`
 );

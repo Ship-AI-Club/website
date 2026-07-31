@@ -44,7 +44,7 @@ export function Article({ kicker, title, updated, children }) {
           <span>Ship AI</span>
         </a>
         <nav>
-          <a href="/#format">Format</a>
+          <a href="/programs">Programs</a>
           <a href="/#events">Events</a>
         </nav>
         <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
@@ -72,7 +72,7 @@ export function Article({ kicker, title, updated, children }) {
         </div>
         <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
-          <a href="/hackathon/workshops">Workshops</a>
+          <a href="/programs">Programs</a>
           <a href="/ai-meetup-phoenix">Phoenix</a>
           <a href="/ai-meetup-tempe">Tempe</a>
           <a href="/">Home</a>

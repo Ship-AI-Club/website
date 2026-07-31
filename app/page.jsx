@@ -17,16 +17,22 @@ import {
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { getUpcomingEvents } from "../lib/meetup";
 import { JsonLd } from "../components/article";
-import {
-  EVENT,
-  ASCII_ZERO,
-  ASCII_TO,
-  ASCII_LAUNCH,
-  WORKSHOPS,
-  ACTS,
-  venueOf,
-  GTM_DECK,
-} from "../lib/hackathon";
+import { EVENT, venueOf } from "../lib/hackathon";
+import { PROGRAMS } from "../lib/programs";
+
+export const metadata = {
+  title: "Ship AI — free AI programs in Phoenix",
+  description:
+    "Free AI programs, workshops and demo nights for builders in Phoenix and Tempe. Sessions get built live on screen, then 5-minute demos. No tickets, no tiers.",
+  alternates: { canonical: "https://www.shipai.club" },
+  openGraph: {
+    title: "Ship AI — free AI programs in Phoenix",
+    description:
+      "Free AI programs and workshops for builders in Phoenix and Tempe. Built live on screen, then 5-minute demos. Demos over memos.",
+    url: "https://www.shipai.club",
+    siteName: "Ship AI",
+  },
+};
 
 const DISCORD = "https://discord.gg/kZSJMNveYM";
 const MEETUP = "https://www.meetup.com/shipai/";
@@ -49,6 +55,17 @@ const SOCIALS = [
   { href: LUMA, label: "Luma", glyph: <CalendarDays size={18} strokeWidth={1.75} aria-hidden="true" /> },
   { href: X_URL, label: "X", glyph: <BrandGlyph icon={siX} /> },
   { href: GITHUB, label: "GitHub", glyph: <BrandGlyph icon={siGithub} /> },
+];
+
+/* Hero facts are org-level and derived from the registry, so adding a
+   program or a session updates the line instead of dating it. */
+const SESSION_COUNT = PROGRAMS.reduce((n, p) => n + p.sessions.length, 0);
+const PROGRAM_VENUES = [
+  ...new Set(
+    PROGRAMS.flatMap((p) =>
+      p.sessions.map((s) => venueOf({ ...s, venue: s.venue || p.defaultVenue }).name)
+    )
+  ),
 ];
 
 const SPONSORS = [
@@ -117,7 +134,7 @@ const values = [
   {
     title: "Community-driven",
     icon: Users,
-    copy: "Members set the agenda. Sessions are proposed and voted on before they hit the calendar — the room decides what it wants to learn and who teaches it.",
+    copy: "The room shows its work. Every session ends in 5-minute demos, and what people are stuck on between them is what the next one gets built around.",
   },
 ];
 
@@ -177,7 +194,7 @@ export default async function Page() {
           <span>Ship AI</span>
         </a>
         <nav>
-          <a href="/hackathon/workshops">Workshops</a>
+          <a href="/programs">Programs</a>
           <a href="/hackathon">Hackathon</a>
           <a href={GITHUB} target="_blank" rel="noreferrer">GitHub</a>
           <a href="/dashboard">Account</a>
@@ -191,29 +208,32 @@ export default async function Page() {
         <section className="hero">
           <p className="eyebrow reveal" style={{ "--d": "0ms" }}>
             <a href="/standby" className="node" aria-label="Standby screen" />
-            ship ai · phx — demos over memos
+            phx · free ai programs
           </p>
-          <h1 className="sr-only">Zero to Launch — the Ship AI hackathon.</h1>
+          <h1 className="sr-only">Ship AI — free AI programs in Phoenix.</h1>
           <div className="hero-title" aria-hidden="true">
             <div className="reveal" style={{ "--d": "80ms" }}>
-              <pre className="ascii">{ASCII_ZERO}</pre>
+              <pre className="ascii">{ASCII_DEMOS}</pre>
             </div>
             <div className="reveal" style={{ "--d": "160ms" }}>
-              <pre className="ascii">{ASCII_TO}</pre>
+              <pre className="ascii">{ASCII_OVER}</pre>
             </div>
-            <div className="reveal" style={{ "--d": "240ms" }}>
-              <pre className="ascii ascii-accent">{ASCII_LAUNCH}</pre>
+            <div className="memos reveal" style={{ "--d": "240ms" }}>
+              <pre className="ascii ascii-memos">{ASCII_MEMOS}</pre>
+              <span className="strike" aria-hidden="true" />
             </div>
           </div>
           <p className="lede reveal" style={{ "--d": "280ms" }}>
-            You&apos;ve been building for months and launched nothing. Six free sessions on
-            how to go to market, then a hackathon in October where you don&apos;t build — you
-            launch. Bring the product you&apos;ve been sitting on, or start when the build
-            window opens {EVENT.buildOpensShort}. Judged on what shipped, not what you demoed.
+            Ship AI runs free, multi-session programs for AI builders in Phoenix. Every
+            session gets built live on screen, every file we make is published, and you
+            demo what you shipped. Day One takes you from a blank chat box to something
+            running. Zero to Launch takes the thing you built and finds it customers.
           </p>
+          {/* Two buttons, not three. The programs are the front door; the
+              hackathon is how one of them ends and has its own strip below. */}
           <div className="cta-row reveal" style={{ "--d": "380ms" }}>
-            <a className="btn btn-solid" href="/hackathon">
-              The hackathon
+            <a className="btn btn-solid" href="/programs">
+              See the programs
               <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
             </a>
             <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
@@ -222,16 +242,16 @@ export default async function Page() {
           </div>
           <div className="hk-hero-facts reveal" style={{ "--d": "460ms" }}>
             <span>
-              <CalendarDays size={13} strokeWidth={1.75} aria-hidden="true" />
-              Sessions {EVENT.seriesRange}
+              <Rocket size={13} strokeWidth={1.75} aria-hidden="true" />
+              {PROGRAMS.length} programs · {SESSION_COUNT} sessions
             </span>
             <span>
-              <Rocket size={13} strokeWidth={1.75} aria-hidden="true" />
-              Hackathon {EVENT.datesShort}
+              <MapPin size={13} strokeWidth={1.75} aria-hidden="true" />
+              {PROGRAM_VENUES.join(" & ")}, Phoenix
             </span>
             <span>
               <Ticket size={13} strokeWidth={1.75} aria-hidden="true" />
-              Free · teams of 1–4
+              Free · open to all
             </span>
           </div>
           <div className="hero-foot reveal" style={{ "--d": "560ms" }}>
@@ -239,7 +259,79 @@ export default async function Page() {
           </div>
         </section>
 
-        <section className="sponsor-strip reveal" style={{ "--d": "600ms" }} aria-label="Sponsors">
+        {/* The programs are the main event now, so they run in the site's
+            section rhythm with a real heading. The cards keep the promo
+            markup; .hk-promo-inner carries all of its own styling. */}
+        <section id="programs" className="section">
+          <p className="kicker">The programs</p>
+          <h2>Pick your on-ramp.</h2>
+          {PROGRAMS.map((program) => {
+            const venueNames = [...new Set(program.sessions.map((w) => venueOf({ ...w, venue: w.venue || program.defaultVenue }).name))];
+            const statusLabel = program.status === "running"
+              ? "Running now — our current program"
+              : program.status === "tbd"
+                ? "Dates TBD — announcing soon"
+                : program.status === "upcoming"
+                  ? "Upcoming program"
+                  : "Past program";
+            return (
+              <div key={program.slug} className="hk-promo-inner">
+                <div>
+                  <p className={`hk-promo-tag${program.status === "tbd" ? " is-tbd" : ""}`}>
+                    <Rocket size={14} strokeWidth={1.75} aria-hidden="true" />
+                    {statusLabel}
+                  </p>
+                  <h2>{program.name}.</h2>
+                  <p className="hk-promo-copy">{program.tagline}</p>
+                  <p className="hk-promo-meta">
+                    <span><CalendarDays size={13} strokeWidth={1.75} aria-hidden="true" />{program.datesLabel || "Dates TBD"}</span>
+                    <span><MapPin size={13} strokeWidth={1.75} aria-hidden="true" />{venueNames.join(" & ")}</span>
+                    <span><Ticket size={13} strokeWidth={1.75} aria-hidden="true" />Free · {program.sessions.length} sessions</span>
+                  </p>
+                </div>
+                <div className="hk-promo-cta">
+                  <a className="btn btn-solid" href={`/programs/${program.slug}`}>
+                    View the program
+                    <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </section>
+
+        {/* Slim strip, not a section: the hackathon is how one program ends,
+            so it reuses the promo card at one line and a ghost CTA. */}
+        <section className="hk-promo" aria-label="Zero to Launch hackathon">
+          <div className="hk-promo-inner">
+            <div>
+              <p className="hk-promo-tag">
+                <Rocket size={14} strokeWidth={1.75} aria-hidden="true" />
+                {EVENT.dates} · {EVENT.venue}
+              </p>
+              <p className="hk-promo-copy">
+                Zero to Launch ends in a hackathon where you don&apos;t build — you launch.
+              </p>
+              <p className="hk-promo-meta">
+                <span>
+                  <CalendarDays size={13} strokeWidth={1.75} aria-hidden="true" />
+                  Submissions close {EVENT.deadline}
+                </span>
+                <span>
+                  <Ticket size={13} strokeWidth={1.75} aria-hidden="true" />
+                  Free · {EVENT.teams} · no application
+                </span>
+              </p>
+            </div>
+            <div className="hk-promo-cta">
+              <a className="btn btn-ghost" href="/hackathon">
+                The hackathon
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="sponsor-strip reveal" style={{ "--d": "660ms" }} aria-label="Sponsors">
           <p className="strip-label">proudly sponsored by</p>
           <div className="sponsor-row">
             {SPONSORS.map((s) => (
@@ -258,92 +350,8 @@ export default async function Page() {
             ))}
           </div>
           <p className="strip-cta">
-            Seeking corporate sponsors — help keep every session free and public.{" "}
+            Seeking corporate sponsors — help keep the programs free and public.{" "}
             <a href="/hackathon/sponsor">See what&apos;s fundable</a>
-          </p>
-        </section>
-
-        <section className="hk-promo reveal" style={{ "--d": "660ms" }} aria-labelledby="hk-promo-title">
-          <div className="hk-promo-inner">
-            <div>
-              <p className="hk-promo-tag">
-                <Rocket size={14} strokeWidth={1.75} aria-hidden="true" />
-                Running now — our current program
-              </p>
-              <h2 id="hk-promo-title">Zero to Launch.</h2>
-              <p className="hk-promo-copy">
-                Ship AI runs a program at a time. This one is for builders who ship
-                constantly and launch nothing. Six free sessions build the go-to-market,
-                then a hackathon in October where you don&apos;t build — you launch. Half-built
-                is fine on the Friday. Live is the point by Sunday.
-              </p>
-              <p className="hk-promo-meta">
-                <span>
-                  <CalendarDays size={13} strokeWidth={1.75} aria-hidden="true" />
-                  {EVENT.seriesRange}
-                </span>
-                <span>
-                  <MapPin size={13} strokeWidth={1.75} aria-hidden="true" />
-                  Workuity Biltmore &amp; CEI Gateway
-                </span>
-                <span>
-                  <Ticket size={13} strokeWidth={1.75} aria-hidden="true" />
-                  Free · teams of 1–4
-                </span>
-              </p>
-            </div>
-            <div className="hk-promo-cta">
-              <a className="btn btn-solid" href="/hackathon">
-                The hackathon
-                <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
-              </a>
-              <a className="btn btn-ghost" href="/hackathon#sponsor">
-                Sponsor it
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section id="program" className="section">
-          <p className="kicker">The curriculum</p>
-          <h2>Six sessions, then you launch.</h2>
-          <p className="section-lede">
-            The whole go-to-market framework, taught in order, straight off{" "}
-            <a href={GTM_DECK} target="_blank" rel="noreferrer">the deck</a>. Every session
-            is free and open whether you compete in October or not — and each one stands
-            alone, so dropping into one is a perfectly normal way to show up.
-          </p>
-          <div className="hk-acts">
-            {ACTS.map((a) => (
-              <div key={a.name} className="hk-act">
-                <span className="hk-act-name">{a.name}</span>
-                <span className="hk-act-range">{a.range}</span>
-                <p>{a.copy}</p>
-              </div>
-            ))}
-          </div>
-          <ol className="hk-series">
-            {WORKSHOPS.map((w) => (
-              <li key={w.slug}>
-                <a href={`/hackathon/workshops/${w.slug}`}>
-                  <span className="hk-series-n">{w.n}</span>
-                  <span className="hk-series-date">{w.date}</span>
-                  <span className="hk-series-title">
-                    {w.eventTitle}
-                    {w.audience && <span className="hk-ws-aud">{w.audience}</span>}
-                  </span>
-                  <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
-                </a>
-              </li>
-            ))}
-          </ol>
-          <p className="hk-note">
-            Sessions alternate between{" "}
-            <a href={venueOf(WORKSHOPS[0]).url} target="_blank" rel="noreferrer">Workuity Biltmore</a>{" "}
-            on the first Wednesday of the month and{" "}
-            <a href={venueOf(WORKSHOPS[1]).url} target="_blank" rel="noreferrer">CEI Gateway</a>{" "}
-            two Wednesdays later.{" "}
-            <a href="/hackathon/workshops">See the full curriculum</a>.
           </p>
         </section>
 
@@ -373,17 +381,27 @@ export default async function Page() {
           <div className="audience">
             <div className="aud-col aud-for">
               <p className="aud-head">This is for you if</p>
+              {/* Routes rather than filters. The old bullets sorted people
+                  into in and out; there are two programs now, so the
+                  honest answer to "am I ready" is "start here". */}
               <ul>
-                <li>You've shipped with AI — or at least tinkered your way to a working app.</li>
-                <li>You're a founder, engineer, designer, or researcher who's past the tutorials.</li>
-                <li>You'd rather watch a real demo — even one that breaks — than a canned sales pitch.</li>
+                <li>
+                  You&apos;re new to this. Start at{" "}
+                  <a href="/programs/day-one">Day One</a> — four sessions from a blank chat
+                  box to something running.
+                </li>
+                <li>
+                  You&apos;ve shipped something and nobody&apos;s using it yet. That&apos;s{" "}
+                  <a href="/programs/zero-to-launch">Zero to Launch</a> — six sessions on
+                  finding customers, then a hackathon.
+                </li>
+                <li>You&apos;d rather watch a real demo — even one that breaks — than a canned sales pitch.</li>
                 <li>You want a room that argues about tradeoffs, not definitions.</li>
               </ul>
             </div>
             <div className="aud-col aud-not">
               <p className="aud-head">Maybe not yet if</p>
               <ul>
-                <li>You want to watch rather than build. Half-finished counts, and nothing yet counts too — the build window opens Aug 3.</li>
                 <li>You're here to hard-sell or fill a lead list.</li>
                 <li>"AI-powered" is the whole pitch and there's no build behind it.</li>
               </ul>
@@ -461,7 +479,7 @@ export default async function Page() {
             The rest of the calendar lives on{" "}
             <a href={LUMA} target="_blank" rel="noreferrer">Luma</a> and{" "}
             <a href={MEETUP} target="_blank" rel="noreferrer">Meetup</a> — or see the{" "}
-            <a href="/hackathon/workshops">full curriculum</a>.
+            <a href="/programs/zero-to-launch">full curriculum</a>.
           </p>
         </section>
 
@@ -474,7 +492,7 @@ export default async function Page() {
         </div>
         <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
-          <a href="/hackathon/workshops">Workshops</a>
+          <a href="/programs">Programs</a>
           <a href="/ai-meetup-phoenix">Phoenix</a>
           <a href="/ai-meetup-tempe">Tempe</a>
         </nav>

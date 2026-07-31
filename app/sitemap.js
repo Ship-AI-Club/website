@@ -1,6 +1,7 @@
-import { DECKS } from "../lib/decks";
-import { GUIDES } from "../lib/guides";
-import { WORKSHOPS } from "../lib/hackathon";
+import { DECKS_BY_PROGRAM } from "../lib/decks";
+import { GUIDES_BY_PROGRAM } from "../lib/guides";
+import { PROGRAMS } from "../lib/programs";
+import registry from "../lib/skills.generated.json";
 
 const BASE = "https://www.shipai.club";
 
@@ -8,37 +9,23 @@ export default function sitemap() {
   const lastModified = new Date();
   return [
     { url: `${BASE}/`, lastModified, changeFrequency: "daily", priority: 1 },
+    { url: `${BASE}/programs`, lastModified, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/hackathon`, lastModified, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${BASE}/hackathon/workshops`, lastModified, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${BASE}/hackathon/skills`, lastModified, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE}/hackathon/sponsor`, lastModified, changeFrequency: "weekly", priority: 0.8 },
-    ...WORKSHOPS.flatMap((w) => [
-      {
-        url: `${BASE}/hackathon/workshops/${w.slug}`,
-        lastModified,
-        changeFrequency: "weekly",
-        priority: 0.7,
-      },
-      ...(GUIDES[w.slug]
-        ? [
-            {
-              url: `${BASE}/hackathon/workshops/${w.slug}/guide`,
-              lastModified,
-              changeFrequency: "weekly",
-              priority: 0.6,
-            },
-          ]
+    ...PROGRAMS.flatMap((program) => [
+      { url: `${BASE}/programs/${program.slug}`, lastModified, changeFrequency: "weekly", priority: 0.9 },
+      ...(registry.manifest.programs?.[program.slug]
+        ? [{ url: `${BASE}/programs/${program.slug}/skills`, lastModified, changeFrequency: "weekly", priority: 0.8 }]
         : []),
-      ...(DECKS[w.slug]
-        ? [
-            {
-              url: `${BASE}/hackathon/workshops/${w.slug}/deck`,
-              lastModified,
-              changeFrequency: "weekly",
-              priority: 0.5,
-            },
-          ]
-        : []),
+      ...program.sessions.flatMap((session) => [
+        { url: `${BASE}/programs/${program.slug}/${session.slug}`, lastModified, changeFrequency: "weekly", priority: 0.7 },
+        ...(GUIDES_BY_PROGRAM[program.slug]?.[session.slug]
+          ? [{ url: `${BASE}/programs/${program.slug}/${session.slug}/guide`, lastModified, changeFrequency: "weekly", priority: 0.6 }]
+          : []),
+        ...(DECKS_BY_PROGRAM[program.slug]?.[session.slug]
+          ? [{ url: `${BASE}/programs/${program.slug}/${session.slug}/deck`, lastModified, changeFrequency: "weekly", priority: 0.5 }]
+          : []),
+      ]),
     ]),
     { url: `${BASE}/hackathon/submit`, lastModified, changeFrequency: "weekly", priority: 0.6 },
     { url: `${BASE}/ai-meetup-phoenix`, lastModified, changeFrequency: "weekly", priority: 0.8 },

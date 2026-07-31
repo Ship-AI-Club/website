@@ -61,7 +61,7 @@ function Column({ col, tone }) {
   );
 }
 
-export function Slide({ slide, workshop, index, total }) {
+export function Slide({ slide, workshop, program, index, total }) {
   const body = (() => {
     switch (slide.kind) {
       case "title":
@@ -69,7 +69,7 @@ export function Slide({ slide, workshop, index, total }) {
           <div className="dk-title">
             <Stagger>
               <p className="dk-eyebrow">
-                Zero to Launch · Session {workshop.n} · {workshop.date}, 2026
+                {program.name} · Session {workshop.n} · {workshop.iso ? `${workshop.date}, ${workshop.iso.slice(0, 4)}` : "Dates TBD"}
               </p>
               <h2>{workshop.eventTitle}</h2>
               <p className="dk-title-sub">{slide.sub}</p>
@@ -128,7 +128,7 @@ export function Slide({ slide, workshop, index, total }) {
         return (
           <>
             <Heading>{slide.title}</Heading>
-            <Timeline now={workshop.n} />
+            <Timeline sessions={program.sessions} now={workshop.n} hasHackathon={program.hasHackathon} />
             <Note>{slide.note}</Note>
           </>
         );

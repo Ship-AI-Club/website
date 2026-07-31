@@ -43,7 +43,7 @@ export default async function Page() {
       <Article kicker="Tempe, Arizona" title={TITLE} updated={UPDATED}>
         <p className="article-lede">
           <strong>Ship AI</strong> runs AI builder events in Tempe, Arizona — part of the
-          same community that hosts <a href="/hackathon/workshops">workshops and presentations</a> in{" "}
+          same community that hosts <a href="/programs">workshops and presentations</a> in{" "}
           <a href="/ai-meetup-phoenix">Phoenix</a>. Tempe sessions lean hands-on: Saturday
           deep dives where builders work through agentic workflows, modern AI toolchains,
           and what it takes to get an AI product from prototype to production.
@@ -76,9 +76,9 @@ export default async function Page() {
 
         <h2>One community, two cities</h2>
         <p>
-          Phoenix and Tempe events share one member base, one Discord, and one agenda
-          process — topics and demo requests are submitted on GitHub and voted on by the
-          community. If you're near Arizona State University or the East Valley, Tempe is
+          Phoenix and Tempe events share one member base, one Discord, and one format —
+          the 20-minute news briefing, the workshop built live on screen, then 5-minute
+          demos. If you're near Arizona State University or the East Valley, Tempe is
           your closest session; the <a href="/ai-meetup-phoenix">Phoenix sessions</a>{" "}
           on Camelback Road are fifteen minutes away.
         </p>

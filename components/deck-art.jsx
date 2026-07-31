@@ -1,5 +1,3 @@
-import { WORKSHOPS } from "../lib/hackathon";
-
 /* ------------------------------------------------------------------
    Deck artwork — the visual system.
 
@@ -166,10 +164,16 @@ export function Flow({ steps, className = "" }) {
    already run are dimmed, tonight is lit. It answers "where are we" in
    a ten-week course without spending a slide on it, and it's what makes
    six separate decks feel like one course. */
-export function Timeline({ now, className = "" }) {
+export function Timeline({ sessions, now, hasHackathon = false, className = "" }) {
   const stops = [
-    ...WORKSHOPS.map((w) => ({ n: w.n, date: w.date.replace("Wed ", ""), t: w.eventTitle })),
-    { n: "—", date: "Oct 16", t: "Hackathon" },
+    ...sessions.map((w) => ({
+      n: w.n,
+      /* Four stops all reading "TBD" is a timeline with no line in it —
+         an unscheduled program numbers its sessions instead. */
+      date: w.iso ? w.date.replace("Wed ", "") : `Session ${w.n}`,
+      t: w.eventTitle,
+    })),
+    ...(hasHackathon ? [{ n: "—", date: "Weekend", t: "Hackathon" }] : []),
   ];
   const nowIndex = stops.findIndex((s) => s.n === now);
 

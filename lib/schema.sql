@@ -285,7 +285,7 @@ create index if not exists sponsorships_user_idx on sponsorships (user_id);
 /* ---------- certificates ---------- */
 
 /* `id` is the public slug and the credential id at once — it's what
-   goes on LinkedIn and in /hackathon/certificate/<id>, so it is
+   goes on LinkedIn and in /programs/zero-to-launch/hackathon/certificate/<id>, so it is
    permanent and never reused. Text, not uuid, because a human picks
    it and it has to read well in a URL. */
 create table if not exists certificates (
@@ -442,6 +442,40 @@ create table if not exists broadcasts (
   sent_at    timestamptz not null default now()
 );
 create index if not exists broadcasts_sent_idx on broadcasts (sent_at desc);
+
+/* ---------- waitlist ---------- */
+
+/* People who want to hear when a program that has no dates yet gets
+   them. Keyed by program slug rather than a foreign key: programs are
+   defined in lib/programs.js, not in the database, so the next program
+   to go up unscheduled gets this table for free.
+
+   Deliberately not an account. Asking someone to create one before
+   they can say "tell me when this runs" would lose most of them, so
+   the email is the identity and there is no user_id. */
+create table if not exists waitlist (
+  id         uuid primary key default gen_random_uuid(),
+  /* lib/programs.js slug — 'day-zero', and whatever comes next */
+  program    text not null,
+  name       text not null,
+  company    text not null default '',
+  /* lowercased by the route before it gets here, same as users.email */
+  email      text not null,
+  /* what they want out of the program, in their words */
+  goal       text not null default '',
+  notes      text not null default '',
+  /* Rate-limit key only, same as login_codes.ip. Never displayed. */
+  ip         text not null default '',
+  created_at timestamptz not null default now()
+);
+
+/* One row per person per program. Signing up twice is somebody
+   checking they're on the list, not a second signup — the route says
+   so and writes nothing. As a separate index rather than a table
+   constraint so it lands on an existing table too. */
+create unique index if not exists waitlist_program_email_uniq on waitlist (program, email);
+create index if not exists waitlist_program_idx on waitlist (program, created_at desc);
+create index if not exists waitlist_ip_idx on waitlist (ip, created_at desc);
 
 /* ------------------------------------------------------------------
    Catching up an existing database.

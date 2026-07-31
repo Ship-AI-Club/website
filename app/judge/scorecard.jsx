@@ -10,7 +10,7 @@ import { saveScoreAction } from "./actions";
    The scorecard.
 
    Four axes, 0–10 each, weighted 40/30/20/10 — the same four criteria
-   published on /hackathon, in the same order, with the same words.
+   published on /programs/zero-to-launch/hackathon, in the same order, with the same words.
    That's the point: a team can read exactly what they'll be scored on
    months before anybody scores them.
 

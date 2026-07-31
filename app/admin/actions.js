@@ -400,7 +400,7 @@ export async function setAwardAction(prev, formData) {
 
   await audit(admin.id, "set-award", submissionId, { award, crowd });
   refresh();
-  revalidatePath("/hackathon/results");
+  revalidatePath("/programs/zero-to-launch/hackathon/results");
   return { ok: award || crowd ? "Award recorded." : "Award cleared." };
 }
 
@@ -515,7 +515,7 @@ export async function issueCertificatesAction(prev, formData) {
   }
 
   refresh();
-  revalidatePath("/hackathon/results");
+  revalidatePath("/programs/zero-to-launch/hackathon/results");
   return {
     ok: `${issued} issued, ${updated} updated. ${EDITION.name} credentials are live.`,
   };
@@ -527,7 +527,7 @@ export async function revokeCertificateAction(prev, formData) {
   await sql`update certificates set revoked_at = now() where id = ${id}`;
   await audit(admin.id, "revoke-certificate", id);
   refresh();
-  revalidatePath("/hackathon/results");
+  revalidatePath("/programs/zero-to-launch/hackathon/results");
   return { ok: "Revoked. The public URL now 404s." };
 }
 
@@ -543,6 +543,6 @@ export async function setSettingAction(prev, formData) {
 
   await audit(admin.id, "set-setting", key, { value });
   refresh();
-  revalidatePath("/hackathon/results");
+  revalidatePath("/programs/zero-to-launch/hackathon/results");
   return { ok: `${key.replace(/_/g, " ")} is now ${value ? "on" : "off"}.` };
 }

@@ -64,6 +64,7 @@ const names = readdirSync(skillsSrc, { withFileTypes: true })
   .sort();
 
 const skills = new Map(names.map((n) => [n, parseSkill(n)]));
+const reservedSessionSlugs = new Set(["skills", "hackathon"]);
 
 /* Validate route-safe program data, then record which sessions use each
    skill. Slugs only need to be unique inside their own program. */
@@ -71,7 +72,9 @@ for (const p of PROGRAMS) {
   if (p.slug === "skills") throw new Error('Program slug "skills" is reserved');
   const slugs = new Set();
   for (const w of p.sessions) {
-    if (w.slug === "skills") throw new Error(`Program ${p.slug} uses reserved session slug "skills"`);
+    if (reservedSessionSlugs.has(w.slug)) {
+      throw new Error(`Program ${p.slug} uses reserved session slug "${w.slug}"`);
+    }
     if (slugs.has(w.slug)) throw new Error(`Program ${p.slug} has duplicate session slug "${w.slug}"`);
     slugs.add(w.slug);
     for (const s of w.skills || []) {

@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import {
   ArrowRight,
   Award,
@@ -24,11 +25,12 @@ import {
   Users,
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
-import { JsonLd } from "../../components/article";
-import HackathonCountdown from "../../components/hackathon-countdown";
-import HackathonRoster from "../../components/hackathon-roster";
-import HackathonSponsors from "../../components/hackathon-sponsors";
-import { TIERS } from "../../lib/sponsors";
+import { JsonLd } from "../../../../components/article";
+import HackathonCountdown from "../../../../components/hackathon-countdown";
+import HackathonRoster from "../../../../components/hackathon-roster";
+import HackathonSponsors from "../../../../components/hackathon-sponsors";
+import { PROGRAMS, programBySlug } from "../../../../lib/programs";
+import { TIERS } from "../../../../lib/sponsors";
 
 import {
   EVENT,
@@ -43,9 +45,9 @@ import {
   GTM_DECK,
   WORKSHOPS,
   ACTS,
-} from "../../lib/hackathon";
-import { CATEGORIES } from "../../lib/results";
-import { VOLUNTEER_JOBS } from "../../lib/accounts";
+} from "../../../../lib/hackathon";
+import { CATEGORIES } from "../../../../lib/results";
+import { VOLUNTEER_JOBS } from "../../../../lib/accounts";
 
 function BrandGlyph({ icon, size = 18 }) {
   return (
@@ -287,7 +289,7 @@ const FAQS = [
   },
   {
     q: "What's the GitHub repo for?",
-    a: "Optional, and genuinely useful. It's all open source: a folder per session and 25 skill files that do the mechanical half of the go-to-market work — positioning brief, pricing model, content map, launch checklist. Take it and run the process yourself whenever you like, whether or not you make it to a session. Nobody is disqualified for not having one.",
+    a: "Optional, and genuinely useful. It's all open source: a folder per session and 31 skill files that do the mechanical half of the go-to-market work — positioning brief, pricing model, content map, launch checklist. Take it and run the process yourself whenever you like, whether or not you make it to a session. Nobody is disqualified for not having one.",
   },
   {
     q: "What if I'm not clear on my value prop yet?",
@@ -355,7 +357,7 @@ const EVENT_SCHEMA = {
   eventStatus: "https://schema.org/EventScheduled",
   location: { "@type": "Place", name: EVENT.venue, address: EVENT.address },
   organizer: { "@type": "Organization", name: "Ship AI", url: "https://www.shipai.club" },
-  url: "https://www.shipai.club/hackathon",
+  url: "https://www.shipai.club/programs/zero-to-launch/hackathon",
   isAccessibleForFree: true,
   offers: {
     "@type": "Offer",
@@ -383,11 +385,11 @@ const DESCRIPTION =
 export const metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: "https://www.shipai.club/hackathon" },
+  alternates: { canonical: "https://www.shipai.club/programs/zero-to-launch/hackathon" },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
-    url: "https://www.shipai.club/hackathon",
+    url: "https://www.shipai.club/programs/zero-to-launch/hackathon",
     siteName: "Ship AI",
   },
 };
@@ -398,7 +400,17 @@ export const metadata = {
    inside how fast a signup list needs to feel live. */
 export const revalidate = 300;
 
-export default function Page() {
+export function generateStaticParams() {
+  return PROGRAMS.filter((program) => program.hasHackathon).map((program) => ({
+    program: program.slug,
+  }));
+}
+
+export default async function Page({ params }) {
+  const { program: programSlug } = await params;
+  const program = programBySlug(programSlug);
+  if (!program?.hasHackathon) notFound();
+
   return (
     <>
       <JsonLd data={EVENT_SCHEMA} />
@@ -685,7 +697,7 @@ export default function Page() {
           </div>
           <p className="hk-note">
             The listing and the certifications live on{" "}
-            <a href="/hackathon/results">the results page</a>, published the Sunday of the
+            <a href="/programs/zero-to-launch/hackathon/results">the results page</a>, published the Sunday of the
             weekend, straight after the awards.
           </p>
         </section>
@@ -716,7 +728,7 @@ export default function Page() {
             <a className="btn btn-solid" href="/dashboard">
               Register for the hackathon
             </a>
-            <a className="btn btn-ghost" href="/hackathon/submit">
+            <a className="btn btn-ghost" href="/programs/zero-to-launch/hackathon/submit">
               What the form asks for
             </a>
           </div>
@@ -760,7 +772,7 @@ export default function Page() {
             credit each one carries.
           </p>
           <div className="cta-row">
-            <a className="btn btn-solid" href="/hackathon/sponsor">
+            <a className="btn btn-solid" href="/programs/zero-to-launch/hackathon/sponsor">
               See the full sponsorship menu
             </a>
           </div>
@@ -789,7 +801,7 @@ export default function Page() {
               <p>
                 The panel is small and picked by hand, so this is an application rather than a
                 sign-up. A seat also comes with Gold and Platinum sponsorship — see{" "}
-                <a href="/hackathon/sponsor">the menu</a>.
+                <a href="/programs/zero-to-launch/hackathon/sponsor">the menu</a>.
               </p>
               <p className="hk-role-cta">
                 <a href="/dashboard/requests">Apply to judge</a>
@@ -888,8 +900,8 @@ export default function Page() {
         <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
           <a href="/">Home</a>
-          <a href="/hackathon/submit">Submit</a>
-          <a href="/hackathon/results">Results</a>
+          <a href="/programs/zero-to-launch/hackathon/submit">Submit</a>
+          <a href="/programs/zero-to-launch/hackathon/results">Results</a>
           <a href="/programs">Programs</a>
           <a href="/programs/zero-to-launch">Sessions</a>
         </nav>

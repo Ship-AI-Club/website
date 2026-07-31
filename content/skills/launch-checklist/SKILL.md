@@ -25,6 +25,6 @@ Pre-flight. Verify each item rather than asking whether it's done.
 **Contingency**
 - What you do if it goes quiet in the first hour. Having an answer prevents the panic-rewrite.
 
-Report a plain pass/fail list. Do not mark anything green you haven't actually verified.
+Report a plain pass/fail list. Do not mark anything green you haven't actually verified. Where an item genuinely can't apply — an authenticated feature has no signed-out URL — mark it N/A and write what you checked instead. Lying is worse than skipping.
 
 Write the result to `06-growth/launch-checklist.md` and report the summary inline. A checklist that only exists in a chat log is not something a teammate can open on Saturday.

@@ -1,4 +1,4 @@
-/* Every /hackathon/certificate/<id> that was never issued lands here,
+/* Every /programs/zero-to-launch/hackathon/certificate/<id> that was never issued lands here,
    so this page is the verification failure path for a public
    credential — it should say the id isn't real, not show an unbranded
    framework error. */
@@ -20,8 +20,8 @@ export default function NotFound() {
         </a>
         <nav>
           <a href="/programs">Programs</a>
-          <a href="/hackathon">Hackathon</a>
-          <a href="/hackathon/results">Results</a>
+          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
+          <a href="/programs/zero-to-launch/hackathon/results">Results</a>
         </nav>
       </header>
 
@@ -41,7 +41,7 @@ export default function NotFound() {
           <a className="btn btn-solid" href="/programs">
             Browse the programs
           </a>
-          <a className="btn btn-ghost" href="/hackathon/results">
+          <a className="btn btn-ghost" href="/programs/zero-to-launch/hackathon/results">
             Check the results
           </a>
         </div>
@@ -56,8 +56,8 @@ export default function NotFound() {
         <nav>
           <a href="/">Home</a>
           <a href="/programs">Programs</a>
-          <a href="/hackathon">Hackathon</a>
-          <a href="/hackathon/results">Results</a>
+          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
+          <a href="/programs/zero-to-launch/hackathon/results">Results</a>
         </nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

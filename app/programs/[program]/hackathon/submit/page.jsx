@@ -1,5 +1,7 @@
+import { notFound } from "next/navigation";
 import { AlertTriangle, ArrowRight, CheckCircle2 } from "lucide-react";
-import { JsonLd } from "../../../components/article";
+import { JsonLd } from "../../../../../components/article";
+import { PROGRAMS, programBySlug } from "../../../../../lib/programs";
 
 const DISCORD = "https://discord.gg/kZSJMNveYM";
 const DEADLINE = "12:00 PM MST, Sunday October 18, 2026";
@@ -18,7 +20,7 @@ const DESCRIPTION =
 export const metadata = {
   title: `${TITLE} — Ship AI`,
   description: DESCRIPTION,
-  alternates: { canonical: "https://www.shipai.club/hackathon/submit" },
+  alternates: { canonical: "https://www.shipai.club/programs/zero-to-launch/hackathon/submit" },
   openGraph: { title: TITLE, description: DESCRIPTION },
   robots: { index: true, follow: true },
 };
@@ -64,7 +66,17 @@ const FIELDS = [
   },
 ];
 
-export default function Page() {
+export function generateStaticParams() {
+  return PROGRAMS.filter((program) => program.hasHackathon).map((program) => ({
+    program: program.slug,
+  }));
+}
+
+export default async function Page({ params }) {
+  const { program: programSlug } = await params;
+  const program = programBySlug(programSlug);
+  if (!program?.hasHackathon) notFound();
+
   return (
     <>
       <JsonLd
@@ -73,8 +85,8 @@ export default function Page() {
           "@type": "WebPage",
           name: TITLE,
           description: DESCRIPTION,
-          url: "https://www.shipai.club/hackathon/submit",
-          isPartOf: { "@type": "WebPage", url: "https://www.shipai.club/hackathon" },
+          url: "https://www.shipai.club/programs/zero-to-launch/hackathon/submit",
+          isPartOf: { "@type": "WebPage", url: "https://www.shipai.club/programs/zero-to-launch/hackathon" },
         }}
       />
 
@@ -85,9 +97,9 @@ export default function Page() {
         </a>
         <nav>
           <a href="/programs">Programs</a>
-          <a href="/hackathon">Hackathon</a>
-          <a href="/hackathon#rules">Rules</a>
-          <a href="/hackathon#prizes">Prizes</a>
+          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
+          <a href="/programs/zero-to-launch/hackathon#rules">Rules</a>
+          <a href="/programs/zero-to-launch/hackathon#prizes">Prizes</a>
         </nav>
         <div className="nav-ctas">
           <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
@@ -117,7 +129,7 @@ export default function Page() {
           <a className="btn btn-solid" href={SUBMIT_URL}>
             Open your submission
           </a>
-          <a className="btn btn-ghost" href="/hackathon/results">
+          <a className="btn btn-ghost" href="/programs/zero-to-launch/hackathon/results">
             Past results
           </a>
         </div>
@@ -169,7 +181,7 @@ export default function Page() {
           <a className="btn btn-solid" href={SUBMIT_URL}>
             Open your submission
           </a>
-          <a className="btn btn-ghost" href="/hackathon">
+          <a className="btn btn-ghost" href="/programs/zero-to-launch/hackathon">
             Back to the hackathon
             <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
           </a>
@@ -184,7 +196,7 @@ export default function Page() {
         <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
           <a href="/">Home</a>
-          <a href="/hackathon">Hackathon</a>
+          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
           <a href="/programs">Programs</a>
           <a href="/programs/zero-to-launch">Sessions</a>
         </nav>

@@ -411,7 +411,7 @@ export default function OnboardingWizard({ user, next }) {
                 <p className="ac-hint">
                   Not a commitment — it tells us which conversation to have. The itemised menu
                   is on the{" "}
-                  <a href="/hackathon/sponsor" target="_blank" rel="noreferrer">
+                  <a href="/programs/zero-to-launch/hackathon/sponsor" target="_blank" rel="noreferrer">
                     sponsorship page
                   </a>
                   .

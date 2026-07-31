@@ -17,7 +17,7 @@ import {
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { getUpcomingEvents } from "../lib/meetup";
 import { JsonLd } from "../components/article";
-import { EVENT, venueOf } from "../lib/hackathon";
+import { venueOf } from "../lib/hackathon";
 import { PROGRAMS } from "../lib/programs";
 
 export const metadata = {
@@ -71,6 +71,9 @@ const PROGRAM_VENUES = [
 const SPONSORS = [
   { href: "https://www.workuity.com/", name: "Workuity", img: "/sponsor-workuity.png" },
   { href: "https://www.ceigateway.com/", name: "CEI Gateway", img: "/sponsor-cei.png" },
+  /* wide: a one-line wordmark far wider than it is tall — rendered at a
+     smaller height so it carries the same optical weight as the others */
+  { href: "https://venturecafephoenix.org/", name: "Venture Café Phoenix", img: "/sponsor-venturecafe.png", wide: true },
   { href: "https://www.desic.xyz/", name: "desic", img: "/sponsor-desic.svg", wordmark: true },
 ];
 
@@ -195,7 +198,7 @@ export default async function Page() {
         </a>
         <nav>
           <a href="/programs">Programs</a>
-          <a href="/hackathon">Hackathon</a>
+          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
           <a href={GITHUB} target="_blank" rel="noreferrer">GitHub</a>
           <a href="/dashboard">Account</a>
         </nav>
@@ -226,7 +229,7 @@ export default async function Page() {
           <p className="lede reveal" style={{ "--d": "280ms" }}>
             Ship AI runs free, multi-session programs for AI builders in Phoenix. Every
             session gets built live on screen, every file we make is published, and you
-            demo what you shipped. Day One takes you from a blank chat box to something
+            demo what you shipped. Day Zero takes you from a blank chat box to something
             running. Zero to Launch takes the thing you built and finds it customers.
           </p>
           {/* Two buttons, not three. The programs are the front door; the
@@ -257,6 +260,40 @@ export default async function Page() {
           <div className="hero-foot reveal" style={{ "--d": "560ms" }}>
             <PixelTrail />
           </div>
+        </section>
+
+        <section className="sponsor-strip reveal" style={{ "--d": "620ms" }} aria-label="Community partners">
+          <p className="strip-label">community partners</p>
+          {/* A slow ticker: the track holds two identical sets and slides by
+              half its own width, so the loop is seamless. The second set is
+              decoration — hidden from the tree, unfocusable. */}
+          <div className="sponsor-row">
+            <div className="sponsor-track">
+              {[0, 1].map((dup) => (
+                <div key={dup} className="sponsor-set" aria-hidden={dup === 1 || undefined}>
+                  {SPONSORS.map((s) => (
+                    <a
+                      key={s.name}
+                      href={s.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={dup === 1 ? undefined : s.name}
+                      title={s.name}
+                      className="sponsor"
+                      tabIndex={dup === 1 ? -1 : undefined}
+                    >
+                      <img src={s.img} alt={dup === 1 ? "" : s.name} className={`sponsor-logo${s.wide ? " sponsor-logo-wide" : ""}`} />
+                      {s.wordmark && <span className="sponsor-name">{s.name}</span>}
+                    </a>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+          <p className="strip-cta">
+            Seeking corporate sponsors — help keep the programs free and public.{" "}
+            <a href="/programs/zero-to-launch/hackathon/sponsor">See what&apos;s fundable</a>
+          </p>
         </section>
 
         {/* The programs are the main event now, so they run in the site's
@@ -294,65 +331,15 @@ export default async function Page() {
                     View the program
                     <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
                   </a>
+                  {program.hasHackathon && (
+                    <a className="btn btn-ghost" href={program.hackathonHref}>
+                      The hackathon
+                    </a>
+                  )}
                 </div>
               </div>
             );
           })}
-        </section>
-
-        {/* Slim strip, not a section: the hackathon is how one program ends,
-            so it reuses the promo card at one line and a ghost CTA. */}
-        <section className="hk-promo" aria-label="Zero to Launch hackathon">
-          <div className="hk-promo-inner">
-            <div>
-              <p className="hk-promo-tag">
-                <Rocket size={14} strokeWidth={1.75} aria-hidden="true" />
-                {EVENT.dates} · {EVENT.venue}
-              </p>
-              <p className="hk-promo-copy">
-                Zero to Launch ends in a hackathon where you don&apos;t build — you launch.
-              </p>
-              <p className="hk-promo-meta">
-                <span>
-                  <CalendarDays size={13} strokeWidth={1.75} aria-hidden="true" />
-                  Submissions close {EVENT.deadline}
-                </span>
-                <span>
-                  <Ticket size={13} strokeWidth={1.75} aria-hidden="true" />
-                  Free · {EVENT.teams} · no application
-                </span>
-              </p>
-            </div>
-            <div className="hk-promo-cta">
-              <a className="btn btn-ghost" href="/hackathon">
-                The hackathon
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section className="sponsor-strip reveal" style={{ "--d": "660ms" }} aria-label="Sponsors">
-          <p className="strip-label">proudly sponsored by</p>
-          <div className="sponsor-row">
-            {SPONSORS.map((s) => (
-            <a
-              key={s.name}
-              href={s.href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={s.name}
-              title={s.name}
-              className="sponsor"
-            >
-              <img src={s.img} alt={s.name} className="sponsor-logo" />
-              {s.wordmark && <span className="sponsor-name">{s.name}</span>}
-            </a>
-            ))}
-          </div>
-          <p className="strip-cta">
-            Seeking corporate sponsors — help keep the programs free and public.{" "}
-            <a href="/hackathon/sponsor">See what&apos;s fundable</a>
-          </p>
         </section>
 
         <section className="section">
@@ -387,7 +374,7 @@ export default async function Page() {
               <ul>
                 <li>
                   You&apos;re new to this. Start at{" "}
-                  <a href="/programs/day-one">Day One</a> — four sessions from a blank chat
+                  <a href="/programs/day-zero">Day Zero</a> — four sessions from a blank chat
                   box to something running.
                 </li>
                 <li>

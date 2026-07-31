@@ -12,8 +12,9 @@ Build a voice skill from evidence, not from adjectives.
 3. **Capture the words they own and the words they never use.** The avoided ones are usually the stronger signal — most people have two or three industry terms they refuse on principle.
 4. **Note the register shifts.** Almost everyone writes differently to a customer than to a peer. Label which sample is which and say when each applies.
 5. **The tell-check.** List the constructions that mark a draft as machine-written for this user specifically: the em-dash habit, "in today's fast-paced world", "it's not just X, it's Y", tidy rule-of-three lists, a closing paragraph that summarises what was just said. Instruct the skill to strike them on sight.
-6. **Test it.** Generate three short drafts and have the user mark the sentences that sound wrong. Those marks are the edit list. Tune on them, not on your own read of the output.
+6. **Give it something to refuse.** Sounding like someone is not a licence to speak for them: the skill must never invent a number, a customer name, or a date. Write a flagged placeholder instead and say what's missing. A draft that sounds exactly right and made a figure up is worse than one that reads generic, because nobody re-reads the one that sounds right.
+7. **Test it.** Generate three short drafts and have the user mark the sentences that sound wrong. Those marks are the edit list. Tune on them, not on your own read of the output. Running unattended? Write the three test drafts and a numbered grading checklist into the skill itself, and tell the user to mark the wrong sentences before they trust a word of it.
 
 Do not smooth the voice out. If they write in fragments, the skill says write in fragments. The target is a draft their own customers wouldn't clock as written by something else.
 
-Write to `01-voice/skills/brand-voice/SKILL.md`, and keep the samples beside it in `01-voice/samples/`.
+Write to `.claude/skills/brand-voice/SKILL.md` — where the agent reads it — and copy the same file to `01-voice/skills/brand-voice/SKILL.md` so it commits with the session's work. Keep the samples beside it in `01-voice/samples/`, and quote enough of them inside the skill that it stands alone without the folder: a rule that only makes sense next to the samples breaks the first time someone runs it somewhere else.

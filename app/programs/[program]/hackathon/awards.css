@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------
    Results listing and certificates.
 
-   Imported by /hackathon/results and /hackathon/certificate/[id]
+   Imported by /programs/zero-to-launch/hackathon/results and /programs/zero-to-launch/hackathon/certificate/[id]
    rather than @import-ed into globals.css, so the styles ship in the
    route bundles that use them. Tokens and the shared primitives
    (.kicker, .btn, .hk-cats, .hk-subhead, .rule-line) come from
@@ -51,7 +51,7 @@ button.btn {
   margin-bottom: 2.5rem;
 }
 
-/* matches .hk-subhead on /hackathon — the hairline is the site's
+/* matches .hk-subhead on /programs/zero-to-launch/hackathon — the hairline is the site's
    section marker and the most important heading here shouldn't have
    less structure than the ones it echoes */
 .rs-subhead {

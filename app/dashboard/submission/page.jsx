@@ -122,7 +122,7 @@ export default async function Page() {
         </ul>
         <p className="ac-fine">
           The full rules and the scoring rubric are on{" "}
-          <a href="/hackathon#rules">the hackathon page</a>.
+          <a href="/programs/zero-to-launch/hackathon#rules">the hackathon page</a>.
         </p>
       </section>
     </>

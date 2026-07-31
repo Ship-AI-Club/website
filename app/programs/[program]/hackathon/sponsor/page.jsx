@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import {
   ArrowRight,
   BadgeCheck,
@@ -12,7 +13,8 @@ import {
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { CalendarDays } from "lucide-react";
 
-import { EVENT, DISCORD, MEETUP, LUMA, GITHUB, X_URL } from "../../../lib/hackathon";
+import { EVENT, DISCORD, MEETUP, LUMA, GITHUB, X_URL } from "../../../../../lib/hackathon";
+import { PROGRAMS, programBySlug } from "../../../../../lib/programs";
 import {
   TIERS,
   MENU,
@@ -24,7 +26,7 @@ import {
   VALUATION,
   YEAR_ROUND,
   SPONSOR_CONTACT,
-} from "../../../lib/sponsors";
+} from "../../../../../lib/sponsors";
 
 import "./sponsor.css";
 
@@ -51,16 +53,26 @@ const DESCRIPTION =
 export const metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: "https://www.shipai.club/hackathon/sponsor" },
+  alternates: { canonical: "https://www.shipai.club/programs/zero-to-launch/hackathon/sponsor" },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
-    url: "https://www.shipai.club/hackathon/sponsor",
+    url: "https://www.shipai.club/programs/zero-to-launch/hackathon/sponsor",
     siteName: "Ship AI",
   },
 };
 
-export default function Page() {
+export function generateStaticParams() {
+  return PROGRAMS.filter((program) => program.hasHackathon).map((program) => ({
+    program: program.slug,
+  }));
+}
+
+export default async function Page({ params }) {
+  const { program: programSlug } = await params;
+  const program = programBySlug(programSlug);
+  if (!program?.hasHackathon) notFound();
+
   return (
     <>
       <header className="nav">
@@ -70,7 +82,7 @@ export default function Page() {
         </a>
         <nav>
           <a href="/programs">Programs</a>
-          <a href="/hackathon">Hackathon</a>
+          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
           <a href="#tiers">Tiers</a>
           <a href="#menu">The menu</a>
           <a href="#credits">Credits</a>
@@ -329,10 +341,10 @@ export default function Page() {
         <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
           <a href="/">Home</a>
-          <a href="/hackathon">Hackathon</a>
+          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
           <a href="/programs">Programs</a>
           <a href="/programs/zero-to-launch">Sessions</a>
-          <a href="/hackathon/results">Results</a>
+          <a href="/programs/zero-to-launch/hackathon/results">Results</a>
         </nav>
         <div className="socials">
           {SOCIALS.map((s) => (

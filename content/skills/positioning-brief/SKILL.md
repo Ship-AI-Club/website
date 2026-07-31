@@ -5,6 +5,8 @@ description: Work out who it's for, what it replaces, and the one thing only you
 
 Produce a one-page positioning brief. Interview the user rather than guessing, but read the product first so the questions are specific.
 
+**Read first:** `01-voice/skills/brand-voice/SKILL.md` and `01-voice/skills/icp-profile/SKILL.md` if they exist. The brief is downstream of both — who pays and what triggered it come from the profile, and the one-liner has to survive being read back in the user's own voice rather than a house style you picked.
+
 **Six questions, in order:**
 1. **Who exactly is this for?** Push until it's uncomfortably narrow. "Developers" is not an answer. "Solo founders shipping their first paid API" is. If they resist narrowing, ask who the last three people to actually use it were.
 2. **What are they doing today instead?** The honest answer is usually a spreadsheet, a manual process, or nothing — not a named competitor. Do not let them name a competitor unless real users actually switched from it.

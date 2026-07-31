@@ -1,11 +1,11 @@
 ---
 name: ask-santos
-description: Find the right skill — Zero to Launch or Day One — for what you're actually trying to do. Use when someone describes a go-to-market problem in their own words, asks "where do I start", "what should I run", or doesn't know which skill applies.
+description: Find the right skill — Zero to Launch or Day Zero — for what you're actually trying to do. Use when someone describes a go-to-market problem in their own words, asks "where do I start", "what should I run", or doesn't know which skill applies.
 ---
 
 Route the user to the right skill. Answer in three lines, not an essay.
 
-**Don't ask them to fill in a form.** Read the repo first — README, site, `01-roadmap/` … `06-growth/` for Zero to Launch, `01-voice/` … `04-agents/` for Day One — and infer what stage they're at. Ask at most one question, and only if the answer changes which skill you'd name.
+**Don't ask them to fill in a form.** Read the repo first — README, site, `01-roadmap/` … `06-growth/` for Zero to Launch, `01-voice/` … `04-agents/` for Day Zero — and infer what stage they're at. Ask at most one question, and only if the answer changes which skill you'd name.
 
 ## The map
 
@@ -33,27 +33,32 @@ Route the user to the right skill. Answer in three lines, not an essay.
 | Write one good article | `/article-draft` | 05 |
 | Find what their profiles say about them | `/social-audit` | 05 |
 | Fix one profile | `/social-profile` | 05 |
+| Write the post for something they shipped | `/social-post` | 06 |
+| Get more than one post out of one article | `/content-repurpose` | 06 |
+| Tell people the thing is live | `/ship-announcement` | 06 |
 | Post without remembering to | `/social-automation` | 06 |
 | Run ads properly | `/paid-basics` | 06 |
 | Know the most they can pay per customer | `/unit-economics` | 06 |
 | Decide what to charge | `/pricing-model` | 06 |
 | Not break anything on launch day | `/launch-checklist` | weekend |
 
-## The map, Day One
+## The map, Day Zero
 
 Earlier in the story: someone still working out how to get real work out of a chat window. Same skills library, different starting point.
 
 | If they're trying to… | Run | Session |
 |---|---|---|
-| Stop re-explaining the same thing every thread | `/skill-writer` | Day One 01 |
-| Sound like themselves and not like a model | `/brand-voice` | Day One 01 |
-| Say who actually pays and who to turn away | `/icp-profile` | Day One 01 |
-| Know what to post for the next four weeks | `/content-calendar` | Day One 02 |
-| Get the numbers without opening a dashboard | `/weekly-report` | Day One 02 |
-| Answer the same customer question at 2am | `/support-agent` | Day One 04 |
-| Have work happen on a schedule, not a nudge | `/scheduled-workflow` | Day One 04 |
+| Stop re-explaining the same thing every thread | `/skill-writer` | Day Zero 01 |
+| Sound like themselves and not like a model | `/brand-voice` | Day Zero 01 |
+| Say who actually pays and who to turn away | `/icp-profile` | Day Zero 01 |
+| Know what to post for the next four weeks | `/content-calendar` | Day Zero 02 |
+| Get the numbers without opening a dashboard | `/weekly-report` | Day Zero 02 |
+| Turn one shipped thing into posts | `/social-post` | Day Zero 02 |
+| Cut one article into several posts | `/content-repurpose` | Day Zero 04 |
+| Answer the same customer question at 2am | `/support-agent` | Day Zero 04 |
+| Have work happen on a schedule, not a nudge | `/scheduled-workflow` | Day Zero 04 |
 
-Day One reuses the rest: `/positioning-brief` and `/article-draft` in 01, `/icp-builder` and `/outbound-sequence` in 02, the whole site set (`/site-structure`, `/landing-copy`, `/site-scaffold`, `/content-map`, `/programmatic-pages`, `/og-image`, `/perf-pass`) in 03. Those skills name Zero to Launch folders in their output paths — tell them the Day One folder instead (`01-voice/`, `02-routines/`, `03-site/`, `04-agents/`) rather than editing the skill.
+Day Zero reuses the rest: `/positioning-brief` and `/article-draft` in 01, `/icp-builder` and `/outbound-sequence` in 02, the whole site set (`/site-structure`, `/landing-copy`, `/site-scaffold`, `/content-map`, `/programmatic-pages`, `/og-image`, `/perf-pass`) in 03. Those skills name Zero to Launch folders in their output paths — tell them the Day Zero folder instead (`01-voice/`, `02-routines/`, `03-site/`, `04-agents/`) rather than editing the skill.
 
 ## Rules
 

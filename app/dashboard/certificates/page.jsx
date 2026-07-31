@@ -17,9 +17,9 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-/* Every team that submits gets one — that's a promise on /hackathon,
+/* Every team that submits gets one — that's a promise on /programs/zero-to-launch/hackathon,
    and this is where it gets collected. The public page at
-   /hackathon/certificate/<id> is the credential itself; this page is
+   /programs/zero-to-launch/hackathon/certificate/<id> is the credential itself; this page is
    the index of the ones that are yours, plus the exact fields
    LinkedIn's certification form asks for. */
 
@@ -106,7 +106,7 @@ export default async function Page() {
 
       <p className="ac-fine">
         Issued by {ISSUER} for {EVENT.name}, {EDITION.held}. Every credential is also listed
-        on the public <a href="/hackathon/results">results page</a>.
+        on the public <a href="/programs/zero-to-launch/hackathon/results">results page</a>.
       </p>
     </>
   );

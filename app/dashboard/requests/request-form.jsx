@@ -197,7 +197,7 @@ export function RequestForm({ available, sponsorTier }) {
           </label>
           <p className="ac-hint">
             Not a commitment — it tells us which conversation to have. The full menu is on the{" "}
-            <a href="/hackathon/sponsor" target="_blank" rel="noreferrer">
+            <a href="/programs/zero-to-launch/hackathon/sponsor" target="_blank" rel="noreferrer">
               sponsorship page
             </a>
             .

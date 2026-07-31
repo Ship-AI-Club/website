@@ -1,10 +1,12 @@
 /* ------------------------------------------------------------------
-   Pull the Zero to Launch skill files in from the planning repo.
+   Push the site's skill catalog out to the planning repo's template
+   mirror.
 
-   The site repo is deployed on its own, so the skills have to be
-   vendored into content/skills/ rather than read across directories at
-   build time. Source of truth stays the template repo; run this
-   whenever a SKILL.md changes there.
+   Direction matters: content/skills/ in THIS repo is the source of
+   truth — the Day Zero skills and every QA fix live here first. The
+   template-repo mirror under events/zero-to-launch/ is a downstream
+   copy for publishing to GitHub. (This script used to pull the other
+   way; that direction now destroys newer work. Don't flip it back.)
 
      node scripts/sync-skills.mjs
 
@@ -17,15 +19,15 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const src = resolve(root, "../events/zero-to-launch/template-repo/.claude/skills");
-const dest = resolve(root, "content/skills");
+const src = resolve(root, "content/skills");
+const dest = resolve(root, "../events/zero-to-launch/template-repo/.claude/skills");
 
-if (!existsSync(src)) {
-  console.error(`No skill source at ${src} — nothing to sync.`);
+if (!existsSync(resolve(dest, ".."))) {
+  console.error(`No template-repo mirror at ${dirname(dest)} — nothing to sync to.`);
   process.exit(1);
 }
 
 rmSync(dest, { recursive: true, force: true });
 cpSync(src, dest, { recursive: true });
 
-console.log(`Synced ${readdirSync(dest).length} skills → content/skills`);
+console.log(`Synced ${readdirSync(dest).length} skills → template-repo mirror`);

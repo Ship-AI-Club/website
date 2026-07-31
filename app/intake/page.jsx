@@ -59,7 +59,7 @@ export default function Page() {
         <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
           <a href="/">Home</a>
-          <a href="/hackathon">Hackathon</a>
+          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
         </nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

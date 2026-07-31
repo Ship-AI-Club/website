@@ -67,7 +67,7 @@ export default function Page() {
         </a>
         <nav>
           <a href="/programs">Programs</a>
-          <a href="/hackathon">Hackathon</a>
+          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
         </nav>
         <div className="nav-ctas">
           <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
@@ -119,7 +119,7 @@ export default function Page() {
           <span>Ship AI</span>
         </div>
         <p>Phoenix &amp; Tempe, Arizona</p>
-        <nav><a href="/">Home</a><a href="/programs">Programs</a><a href="/hackathon">Hackathon</a></nav>
+        <nav><a href="/">Home</a><a href="/programs">Programs</a><a href="/programs/zero-to-launch/hackathon">Hackathon</a></nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>
     </>

@@ -25,6 +25,20 @@ const nextConfig = {
         destination: "/programs/zero-to-launch/skills",
         permanent: true,
       },
+      {
+        source: "/hackathon/:path*",
+        destination: "/programs/zero-to-launch/hackathon/:path*",
+        permanent: true,
+      },
+      // The program shipped as "Day One" and was renamed to "Day Zero" the
+      // same day. Short-lived URLs, but they were live and indexable, so the
+      // old paths keep resolving. `:path*` matches zero segments too, which
+      // covers the bare /programs/day-one.
+      {
+        source: "/programs/day-one/:path*",
+        destination: "/programs/day-zero/:path*",
+        permanent: true,
+      },
     ];
   },
 };

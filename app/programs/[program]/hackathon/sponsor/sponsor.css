@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------
    Sponsorship page.
 
-   Imported by /hackathon/sponsor rather than @import-ed into
+   Imported by /programs/zero-to-launch/hackathon/sponsor rather than @import-ed into
    globals.css, so the styles ship in that route's bundle only.
    Tokens and the shared primitives (.section, .kicker, .btn,
    .section-lede, .hk-subhead, .hk-note) come from globals.css —

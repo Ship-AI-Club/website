@@ -5,7 +5,7 @@ import "../account.css";
 import { AccountHeader, AccountFooter } from "../../components/account-chrome";
 import AccountNav from "../../components/account-nav";
 import { requireAdmin } from "../../lib/auth";
-import { pendingRequests } from "../../lib/store";
+import { pendingRequests, waitlistCount } from "../../lib/store";
 import { sql } from "../../lib/db";
 
 export const dynamic = "force-dynamic";
@@ -20,6 +20,10 @@ export default async function AdminLayout({ children }) {
   const [{ unread }] = await sql`
     select count(*)::int as unread from inbound_emails
      where read_at is null and archived_at is null`;
+
+  /* Badged the same way: nobody goes looking for a waitlist, so the
+     count is the only thing that says one exists. */
+  const waiting = await waitlistCount();
 
   const sections = [
     /* Ops first, and on its own. Everything below it is records you
@@ -41,6 +45,7 @@ export default async function AdminLayout({ children }) {
         { href: "/admin/requests", label: "Requests", count: requests.length },
         { href: "/admin/users", label: "Users" },
         { href: "/admin/invites", label: "Invites" },
+        { href: "/admin/waitlist", label: "Waitlist", count: waiting },
         { href: "/admin/assignments", label: "Assignments" },
         { href: "/admin/submissions", label: "Submissions" },
         { href: "/admin/scores", label: "Leaderboard" },

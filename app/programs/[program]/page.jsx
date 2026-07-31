@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import {
   ArrowRight,
+  BellRing,
   BookOpen,
   Briefcase,
   CalendarDays,
@@ -13,10 +14,12 @@ import {
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup } from "simple-icons";
 import { JsonLd } from "../../../components/article";
+import { hasDb } from "../../../lib/db";
 import { deckFor } from "../../../lib/decks";
 import { guideFor } from "../../../lib/guides";
 import registry from "../../../lib/skills.generated.json";
 import { PROGRAMS, programBySlug, sessionScheduled } from "../../../lib/programs";
+import WaitlistForm from "./waitlist-form";
 import {
   DISCORD,
   EVENT,
@@ -86,6 +89,12 @@ export default async function Page({ params }) {
   const schema = seriesSchema(program);
   const venueNames = [...new Set(program.sessions.map((w) => programVenue(program, w).name))];
 
+  /* Nothing to RSVP to until the dates exist, so an unscheduled program
+     collects names instead. `hasDb()` is the same rule the rest of the
+     site follows: a database that isn't there degrades the page, it
+     never breaks it — the Discord CTA is what's left. */
+  const waitlistOpen = !program.startISO && hasDb();
+
   return (
     <>
       {schema && <JsonLd data={schema} />}
@@ -101,15 +110,23 @@ export default async function Page({ params }) {
           {manifest && <a href={`/programs/${program.slug}/skills`}>Skills</a>}
         </nav>
         {/* Register is the hackathon's account flow. A program without one
-            has nothing to register for, so the CTA is the only thing that
-            is actually true: hear about it when dates land. */}
+            has nothing to register for, so the CTA is the waitlist —
+            the only thing that's actually true until dates exist. The
+            Discord sits beside it rather than instead of it: one is how
+            you hear, the other is where the program lives. */}
         <div className="nav-ctas">
           {program.hasHackathon ? (
             <>
               <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
               <a className="btn btn-solid" href="/dashboard">Register</a>
             </>
+          ) : waitlistOpen ? (
+            <>
+              <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
+              <a className="btn btn-solid" href="#waitlist">Join the waitlist</a>
+            </>
           ) : (
+            /* No waitlist to point at — the Discord is the whole CTA again. */
             <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Get notified</a>
           )}
         </div>
@@ -155,6 +172,19 @@ export default async function Page({ params }) {
               <Briefcase size={16} strokeWidth={1.75} aria-hidden="true" />LinkedIn
             </a>
           </div>
+        ) : waitlistOpen ? (
+          <>
+            <h2 className="hk-subhead" id="waitlist">
+              <BellRing size={18} strokeWidth={1.75} aria-hidden="true" />Get the dates first
+            </h2>
+            {program.datesCopy && <p className="hk-note">{program.datesCopy}</p>}
+            <p>
+              Put your name down and you get the dates the day they&apos;re set. Telling us what
+              you want working by the end isn&apos;t a formality either — it&apos;s what gets
+              built on screen.
+            </p>
+            <WaitlistForm program={program.slug} programName={program.name} discord={DISCORD} />
+          </>
         ) : (
           <>
             {program.datesCopy && <p className="hk-note">{program.datesCopy}</p>}

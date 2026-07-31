@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, BadgeCheck, Trophy } from "lucide-react";
-import { JsonLd } from "../../../../components/article";
-import { DISCORD, EVENT } from "../../../../lib/hackathon";
+import { JsonLd } from "../../../../../../components/article";
+import { DISCORD, EVENT } from "../../../../../../lib/hackathon";
+import { PROGRAMS, programBySlug } from "../../../../../../lib/programs";
 import {
   EDITION,
   ISSUER,
@@ -13,8 +14,8 @@ import {
   isWinner,
   placementOf,
   previewEntrants,
-} from "../../../../lib/results";
-import { certificateById } from "../../../../lib/store";
+} from "../../../../../../lib/results";
+import { certificateById } from "../../../../../../lib/store";
 import CertActions from "./cert-actions";
 import "../../awards.css";
 
@@ -28,6 +29,12 @@ import "../../awards.css";
    isn't a database read per visitor. */
 export const revalidate = 60;
 
+export function generateStaticParams() {
+  return PROGRAMS.filter((program) => program.hasHackathon).map((program) => ({
+    program: program.slug,
+  }));
+}
+
 async function entrantFor(id) {
   const row = await certificateById(id);
   if (row) return fromCertificate(row);
@@ -36,7 +43,9 @@ async function entrantFor(id) {
 }
 
 export async function generateMetadata({ params }) {
-  const { id } = await params;
+  const { program: programSlug, id } = await params;
+  const program = programBySlug(programSlug);
+  if (!program?.hasHackathon) notFound();
   const e = await entrantFor(id);
   if (!e) return {};
   const title = `${e.team} — ${credentialName(e)}`;
@@ -61,7 +70,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const { id } = await params;
+  const { program: programSlug, id } = await params;
+  const program = programBySlug(programSlug);
+  if (!program?.hasHackathon) notFound();
   const e = await entrantFor(id);
   if (!e) return notFound();
 
@@ -94,7 +105,7 @@ export default async function Page({ params }) {
             name: EDITION.event,
             startDate: EVENT.startISO,
             endDate: EVENT.endISO,
-            url: "https://www.shipai.club/hackathon",
+            url: "https://www.shipai.club/programs/zero-to-launch/hackathon",
           },
           recognizedBy: {
             "@type": "Organization",
@@ -110,8 +121,8 @@ export default async function Page({ params }) {
           <span>Ship AI</span>
         </a>
         <nav>
-          <a href="/hackathon">Hackathon</a>
-          <a href="/hackathon/results">Results</a>
+          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
+          <a href="/programs/zero-to-launch/hackathon/results">Results</a>
         </nav>
         <div className="nav-ctas">
           <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
@@ -184,7 +195,7 @@ export default async function Page({ params }) {
           </p>
 
           <p className="cert-verify">
-            Verify at shipai.club/hackathon/certificate/{e.id}.
+            Verify at shipai.club/programs/zero-to-launch/hackathon/certificate/{e.id}.
           </p>
         </div>
 
@@ -207,7 +218,7 @@ export default async function Page({ params }) {
         </p>
 
         <p className="cert-back">
-          <a className="rs-cert" href="/hackathon/results">
+          <a className="rs-cert" href="/programs/zero-to-launch/hackathon/results">
             <ArrowLeft size={14} strokeWidth={1.75} aria-hidden="true" />
             All {EDITION.name} results
           </a>
@@ -222,8 +233,8 @@ export default async function Page({ params }) {
         <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
           <a href="/">Home</a>
-          <a href="/hackathon">Hackathon</a>
-          <a href="/hackathon/results">Results</a>
+          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
+          <a href="/programs/zero-to-launch/hackathon/results">Results</a>
         </nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

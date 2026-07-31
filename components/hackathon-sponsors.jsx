@@ -30,7 +30,7 @@ export default async function HackathonSponsors() {
         money. The rooms we meet in, the food, the prize pool, platform credits, mentors in
         Saturday&apos;s rotations, judges on Sunday&apos;s panel, and introductions that
         outlast the weekend. All of it is{" "}
-        <a href="/hackathon/sponsor">priced in the open</a>.
+        <a href="/programs/zero-to-launch/hackathon/sponsor">priced in the open</a>.
       </p>
 
       {groups.map(({ tier, sponsors }) => (

@@ -9,7 +9,7 @@ import { saveSubmissionAction } from "../actions";
 /* ------------------------------------------------------------------
    The submission.
 
-   Same nine fields the /hackathon/submit page has always described,
+   Same nine fields the /programs/zero-to-launch/hackathon/submit page has always described,
    now filed against the team's account instead of a GitHub issue.
    Two buttons: save a draft, or file it. Filing is not final — the
    entry stays editable until the deadline, which is deliberate,

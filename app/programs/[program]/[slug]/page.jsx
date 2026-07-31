@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup } from "simple-icons";
 import { JsonLd } from "../../../../components/article";
+import { hasDb } from "../../../../lib/db";
 import { deckFor } from "../../../../lib/decks";
 import { guideFor } from "../../../../lib/guides";
 import registry from "../../../../lib/skills.generated.json";
@@ -77,6 +78,9 @@ export default async function Page({ params }) {
   const programManifest = registry.manifest.programs[program.slug];
   const kit = programManifest?.sessions[slug];
   const programHref = `/programs/${program.slug}`;
+  /* Matches the program page: an unscheduled program collects names,
+     and the CTA points back at the form that lives there. */
+  const waitlistOpen = !program.startISO && hasDb();
   /* Where the last session hands off when there's no hackathon to end on. */
   const nextProgram = program.nextProgram ? programBySlug(program.nextProgram) : null;
 
@@ -126,6 +130,11 @@ export default async function Page({ params }) {
               <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
               <a className="btn btn-solid" href="/dashboard">Register</a>
             </>
+          ) : waitlistOpen ? (
+            <>
+              <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
+              <a className="btn btn-solid" href={`${programHref}#waitlist`}>Join the waitlist</a>
+            </>
           ) : (
             <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Get notified</a>
           )}
@@ -164,7 +173,16 @@ export default async function Page({ params }) {
             )}
           </>
         ) : (
-          <p className="hk-note">{program.datesCopy || "Dates will be announced on Discord and the Ship AI calendars."}</p>
+          <>
+            <p className="hk-note">{program.datesCopy || "Dates will be announced on Discord and the Ship AI calendars."}</p>
+            {/* The calendars above are the passive route. This is the one
+                that reaches you without you checking. */}
+            {waitlistOpen && (
+              <p className="hk-note">
+                Or <a href={`${programHref}#waitlist`}>join the waitlist</a> and the dates come to you.
+              </p>
+            )}
+          </>
         )}
 
         <p className="hk-note">Format: the host presents and builds live on screen. Bring a laptop and work along if you want to, or just watch — nobody is put on the spot or asked to present.</p>

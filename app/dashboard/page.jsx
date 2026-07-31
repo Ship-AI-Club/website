@@ -174,7 +174,7 @@ export default async function Page({ searchParams }) {
                 Teams you mentor
               </a>
             )}
-            <a className="btn btn-ghost ac-btn-sm" href="/hackathon#rules">
+            <a className="btn btn-ghost ac-btn-sm" href="/programs/zero-to-launch/hackathon#rules">
               How it&apos;s scored
             </a>
           </div>

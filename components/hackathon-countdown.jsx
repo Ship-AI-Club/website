@@ -91,7 +91,7 @@ export default function HackathonCountdown({ delay = "440ms" }) {
         <p className="hk-countdown-label">{EVENT.datesShort} · that&apos;s a wrap</p>
         <p className="hk-countdown-done">
           Zero to Launch {new Date(EVENT.startISO).getFullYear()} is over.{" "}
-          <a href="/hackathon/results">See what shipped</a>.
+          <a href="/programs/zero-to-launch/hackathon/results">See what shipped</a>.
         </p>
       </section>
     );

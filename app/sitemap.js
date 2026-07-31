@@ -10,10 +10,16 @@ export default function sitemap() {
   return [
     { url: `${BASE}/`, lastModified, changeFrequency: "daily", priority: 1 },
     { url: `${BASE}/programs`, lastModified, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${BASE}/hackathon`, lastModified, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${BASE}/hackathon/sponsor`, lastModified, changeFrequency: "weekly", priority: 0.8 },
     ...PROGRAMS.flatMap((program) => [
       { url: `${BASE}/programs/${program.slug}`, lastModified, changeFrequency: "weekly", priority: 0.9 },
+      ...(program.hasHackathon
+        ? [
+            { url: `${BASE}${program.hackathonHref}`, lastModified, changeFrequency: "weekly", priority: 0.9 },
+            { url: `${BASE}${program.hackathonHref}/sponsor`, lastModified, changeFrequency: "weekly", priority: 0.8 },
+            { url: `${BASE}${program.hackathonHref}/submit`, lastModified, changeFrequency: "weekly", priority: 0.6 },
+            { url: `${BASE}${program.hackathonHref}/results`, lastModified, changeFrequency: "weekly", priority: 0.6 },
+          ]
+        : []),
       ...(registry.manifest.programs?.[program.slug]
         ? [{ url: `${BASE}/programs/${program.slug}/skills`, lastModified, changeFrequency: "weekly", priority: 0.8 }]
         : []),
@@ -27,7 +33,6 @@ export default function sitemap() {
           : []),
       ]),
     ]),
-    { url: `${BASE}/hackathon/submit`, lastModified, changeFrequency: "weekly", priority: 0.6 },
     { url: `${BASE}/ai-meetup-phoenix`, lastModified, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE}/ai-meetup-tempe`, lastModified, changeFrequency: "weekly", priority: 0.8 },
   ];

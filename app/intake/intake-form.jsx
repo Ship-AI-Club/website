@@ -254,7 +254,7 @@ export default function IntakeForm() {
           changing, send it again; the newer one wins.
         </p>
         <div className="cta-row">
-          <a className="btn btn-ghost" href="/hackathon">
+          <a className="btn btn-ghost" href="/programs/zero-to-launch/hackathon">
             Back to the hackathon
           </a>
           <button

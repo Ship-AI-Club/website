@@ -6,17 +6,18 @@ import "./globals.css";
 
 export const metadata = {
   metadataBase: new URL("https://www.shipai.club"),
-  title: "Ship AI — programs for AI builders in Phoenix",
+  title: "Ship AI — Free AI programs in Phoenix",
   description:
     "Free multi-session AI programs and workshops in Phoenix and Tempe. The work gets built live on screen, you ship something real, then 5-minute demos. Free and in person.",
   openGraph: {
-    title: "Ship AI — programs for AI builders in Phoenix",
+    title: "Demos over memos — free AI programs in Phoenix",
     description:
-      "Free multi-session AI programs and workshops in Phoenix and Tempe. Built live on screen, shipped for real, demoed in five minutes. Demos over memos.",
+      "Free multi-session AI programs and workshops in Phoenix and Tempe. Built live on screen, shipped for real, demoed in five minutes.",
     url: "https://www.shipai.club",
     siteName: "Ship AI",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
   },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport = {

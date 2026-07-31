@@ -21,7 +21,7 @@ export const metadata = {
   title: `${TITLE} — Ship AI`,
   description: DESCRIPTION,
   alternates: { canonical: "https://www.shipai.club/programs/zero-to-launch/hackathon/submit" },
-  openGraph: { title: TITLE, description: DESCRIPTION },
+  openGraph: { title: TITLE, description: DESCRIPTION, images: [{ url: "/og-image.jpg", width: 1200, height: 630 }] },
   robots: { index: true, follow: true },
 };
 

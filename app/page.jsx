@@ -21,16 +21,20 @@ import { venueOf } from "../lib/hackathon";
 import { PROGRAMS } from "../lib/programs";
 
 export const metadata = {
-  title: "Ship AI — free AI programs in Phoenix",
+  title: "Ship AI — Free AI programs in Phoenix",
   description:
-    "Free AI programs, workshops and demo nights for builders in Phoenix and Tempe. Sessions get built live on screen, then 5-minute demos. No tickets, no tiers.",
+    "Free AI programs, workshops and demo nights for builders in Phoenix and Tempe. Everything gets built live on screen, shipped for real, and demoed in five minutes. No tickets, no tiers.",
   alternates: { canonical: "https://www.shipai.club" },
   openGraph: {
-    title: "Ship AI — free AI programs in Phoenix",
+    /* Share sheets strip a leading site name from og:title (it duplicates
+       siteName), so the title has to stand on its own — lead with the
+       thesis, not the brand. */
+    title: "Demos over memos — free AI programs in Phoenix",
     description:
-      "Free AI programs and workshops for builders in Phoenix and Tempe. Built live on screen, then 5-minute demos. Demos over memos.",
+      "Everything gets built live on screen, shipped for real, and demoed in five minutes. Free and in person, Phoenix and Tempe. No tickets, no tiers.",
     url: "https://www.shipai.club",
     siteName: "Ship AI",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
   },
 };
 

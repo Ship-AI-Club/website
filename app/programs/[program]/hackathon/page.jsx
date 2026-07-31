@@ -391,6 +391,7 @@ export const metadata = {
     description: DESCRIPTION,
     url: "https://www.shipai.club/programs/zero-to-launch/hackathon",
     siteName: "Ship AI",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
   },
 };
 

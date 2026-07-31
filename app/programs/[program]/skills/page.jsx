@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: "Ship AI" },
+    openGraph: { title, description, url, siteName: "Ship AI", images: [{ url: "/og-image.jpg", width: 1200, height: 630 }] },
   };
 }
 

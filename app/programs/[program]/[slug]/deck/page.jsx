@@ -25,7 +25,7 @@ export async function generateMetadata({ params }) {
     title: `${title} — Ship AI`,
     description: `The ${program.name} session ${w.n} presentation. ${w.copy}`.slice(0, 300),
     alternates: { canonical: url },
-    openGraph: { title, description: w.copy.slice(0, 200), url, siteName: "Ship AI" },
+    openGraph: { title, description: w.copy.slice(0, 200), url, siteName: "Ship AI", images: [{ url: "/og-image.jpg", width: 1200, height: 630 }] },
   };
 }
 

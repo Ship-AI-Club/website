@@ -73,6 +73,7 @@ export default async function Page({ params }) {
     ["LinkedIn", display(user.linkedin, "Not provided")],
     ["Website", display(user.website, "Not provided")],
     ["Avatar URL", display(user.avatar_url, "Not set")],
+    ["Company logo", display(user.company_logo, "Not set")],
     ["Interests", displayList(user.interests, "None selected")],
     ["Goals", displayList(user.goals, "None selected")],
     ["Goal note", display(user.goal_note, "Not provided")],

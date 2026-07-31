@@ -1,7 +1,9 @@
 /* ------------------------------------------------------------------
-   /intake — sponsor, mentor and judge intake form, and /intake/inbox.
-   Same black / white / #678ff2 and pixel-Geist system as the rest of
-   the site; the form controls are the only new primitives here.
+   Shared public-form primitives (the ik-* classes) — born on the old
+   /intake page, kept when that flow was replaced by invites +
+   onboarding because the waitlist form (and any future public form)
+   uses them. Same black / white / #678ff2 and pixel-Geist system as
+   the rest of the site.
 ------------------------------------------------------------------ */
 
 .ik-page {

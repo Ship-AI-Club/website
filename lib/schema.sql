@@ -42,6 +42,12 @@ create table if not exists users (
      scopes and what a delete would target; the URL is what renders. */
   avatar_path  text not null default '',
   avatar_url   text not null default '',
+  /* The company's mark, same two-column shape as the avatar and
+     written by the same upload route. Asked for at onboarding from
+     anyone who says they're sponsoring, so a logo arrives with the
+     interest rather than chased down by email a month later. */
+  company_logo      text not null default '',
+  company_logo_path text not null default '',
   /* Practical facts about a person being in the room. These sit on
      the account rather than on `registrations` because registration
      means "competing", and a judge, mentor or sponsor eats the same
@@ -529,6 +535,13 @@ alter table users drop column if exists pronouns;
 
 alter table users add column if not exists dietary     text not null default '';
 alter table users add column if not exists access_note text not null default '';
+
+/* The sponsor's logo, collected at onboarding. `company_logo` is the
+   URL that renders; `company_logo_path` is the blob pathname the
+   upload route scopes and a delete would target — the same pair the
+   avatar keeps, for the same reasons. */
+alter table users add column if not exists company_logo      text not null default '';
+alter table users add column if not exists company_logo_path text not null default '';
 
 /* Same reasoning as the pronouns drop, and safe for the same reason:
    these moved to `users` before anybody had filled them in, so there

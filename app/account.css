@@ -609,6 +609,22 @@ button.btn:disabled {
   object-fit: cover;
 }
 
+/* A logo is a rectangle and it must not be cropped — a wordmark cut
+   to a circle loses the word. Wider box, rounded corners rather than
+   a pill, and `contain` so the whole mark survives. The panel stays
+   dark because that is the background it will be sitting on. */
+.ac-avatar.is-logo {
+  width: 7.5rem;
+  height: 4rem;
+  border-radius: 6px;
+  background: rgba(248, 248, 250, 0.03);
+}
+
+.ac-avatar.is-logo img {
+  object-fit: contain;
+  padding: 0.4rem;
+}
+
 .ac-avatar b {
   font-family: var(--font-geist-mono), monospace;
   font-size: 1.1rem;

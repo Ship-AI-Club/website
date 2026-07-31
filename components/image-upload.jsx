@@ -6,7 +6,7 @@ import { upload } from "@vercel/blob/client";
 import { AVATAR_TYPES, MAX_AVATAR_BYTES, uploadPath } from "../lib/accounts";
 
 /* ------------------------------------------------------------------
-   Avatars and team logos.
+   Avatars, company logos and team logos.
 
    The file goes straight from the browser to Vercel Blob through a
    token minted by /api/uploads, so a photo off a phone never passes
@@ -33,6 +33,12 @@ export default function ImageUpload({
   name = "",
   label = "Photo",
   hint = "A face makes the roster feel like a room. Square works best.",
+  /* A face wants a circle and a crop; a wordmark wants a rectangle
+     and no crop at all. Same uploader, one class apart — cropping a
+     logo to a circle is how you lose the half of it with the name
+     in. */
+  preview = "round",
+  fine = "PNG, JPEG, WebP or GIF, up to 5 MB.",
 }) {
   const [url, setUrl] = useState(currentUrl);
   const [busy, setBusy] = useState(false);
@@ -77,7 +83,10 @@ export default function ImageUpload({
       <p className="ac-hint">{hint}</p>
 
       <div className="ac-upload">
-        <span className="ac-avatar" aria-hidden={url ? undefined : "true"}>
+        <span
+          className={`ac-avatar${preview === "logo" ? " is-logo" : ""}`}
+          aria-hidden={url ? undefined : "true"}
+        >
           {url ? <img src={url} alt="" /> : <b>{initials(name)}</b>}
         </span>
 
@@ -95,7 +104,7 @@ export default function ImageUpload({
               {error}
             </span>
           ) : (
-            <span className="ac-fine">PNG, JPEG, WebP or GIF, up to 5 MB.</span>
+            <span className="ac-fine">{fine}</span>
           )}
         </div>
 

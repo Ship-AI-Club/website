@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import {
   BUILDER_GOALS,
   COMMUNITY_GOALS,
+  COMPANY_LOGO_COPY,
   INTERESTS,
   SPONSOR_CHOICES,
   suggestHandle,
@@ -125,6 +126,12 @@ export default function OnboardingWizard({ user, next }) {
   const competing = chosen.has("participating");
   const sponsoring = chosen.has("sponsoring");
   const advising = chosen.has("mentoring") || chosen.has("judging");
+
+  /* Someone an admin has already made a sponsor gets asked for a logo
+     even if they never ticked the box — the role is the stronger
+     statement of the two, and the brand asset is the thing we'd
+     otherwise be chasing over email. */
+  const sponsorish = sponsoring || (user.roles ?? []).includes("sponsor");
 
   const toggle = (setter) => (value, on) =>
     setter((prev) => {
@@ -431,6 +438,19 @@ export default function OnboardingWizard({ user, next }) {
                   </label>
                 ))}
               </fieldset>
+            )}
+
+            {sponsorish && (
+              <ImageUpload
+                kind="company-logo"
+                ownerId={user.id}
+                currentUrl={user.company_logo}
+                name={user.company || name || user.name}
+                preview="logo"
+                label={COMPANY_LOGO_COPY.label}
+                hint={COMPANY_LOGO_COPY.hint}
+                fine={COMPANY_LOGO_COPY.fine}
+              />
             )}
 
             {advising && (

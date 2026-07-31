@@ -158,28 +158,16 @@ it. With no `RESEND_API_KEY` set, login codes are printed to the server console 
 the sign-in page, so the whole flow works without a mail provider — production refuses to do
 either.
 
-## Sponsor / mentor / judge intake
+## Sponsor / mentor / judge onboarding
 
-`/intake` is a hidden page — noindex, absent from the sitemap, linked from nowhere. Send
-the URL to someone once they've agreed to sponsor, mentor or judge, and it collects their
-name, title, avatar, company, logo and any other brand assets in one pass. Same fields for
-all three roles; the role selector only changes the blurb and where the files land.
-
-| Piece | Route | What it does |
-| --- | --- | --- |
-| Form | `/intake` | `app/intake/intake-form.jsx` — client component |
-| Token issuer | `/api/intake/upload` | Mints path-scoped blob tokens; the browser uploads direct |
-| Record | `/api/intake` | Validates and writes `record.json` |
-| Inbox | `/intake/inbox?key=…` | Reads submissions back, newest first |
-| File proxy | `/api/intake/file?key=…&path=…` | Serves private blobs to the inbox |
-
-Files go **straight from the browser to Vercel Blob**, so the 4.5 MB serverless request-body
-limit never applies and a 64 MB brand kit uploads fine. The store (`shipai-intake`) is
-**private**: uploads have no public URL, and the inbox is the only way to read them back
-short of the Vercel dashboard.
-
-Shared contract — roles, blob layout, size caps, allowed types — lives in `lib/intake.js`
-and is imported by the client and both route handlers, so there's one place to change it.
+The old hidden `/intake` form is gone — confirmed sponsors, mentors and judges come in
+through the account flow instead. Create an invite at `/admin/invites` (pick the roles),
+hand over the `/invite/<code>` link, and they sign in already holding the roles. The
+onboarding wizard collects name, title, avatar and company, and anyone with the sponsor
+role (or the sponsoring interest) also gets a **company logo upload** — stored via
+`/api/uploads` in the public blob store (`company-logos/<user-id>/…`), recorded on
+`users.company_logo`, and shown on `/admin/sponsors` for pulling down into
+`public/sponsors/` when their placement ships.
 `parseIntakePath()` is the security boundary: the token route refuses to sign anything it
 rejects, so a caller can't write outside its own submission folder.
 

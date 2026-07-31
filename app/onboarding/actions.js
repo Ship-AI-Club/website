@@ -135,6 +135,12 @@ export async function saveStepAction(prev, formData) {
     const goals = pickIds(formData.getAll("goals"), GOAL_IDS);
     const tierRaw = text(formData.get("sponsor_tier"), 40);
 
+    /* `company_logo` is deliberately absent from the update below.
+       Like the avatar, it's written by /api/uploads when the blob
+       lands, because a URL arriving in this form post would be a URL
+       the client invented. The upload has already saved it by the
+       time this step submits. */
+
     await sql`
       update users set
         goals        = ${goals}::text[],

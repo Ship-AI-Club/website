@@ -1,4 +1,4 @@
-/* Keep the admin overview concrete: counts, switches, intake, and audit. */
+/* Keep the admin overview concrete: counts, switches, and audit. */
 
 import { requireAdmin } from "../../lib/auth";
 import { INTERESTS, goalLabel } from "../../lib/accounts";

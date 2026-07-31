@@ -9,7 +9,7 @@ import {
 } from "../../../lib/accounts";
 
 /* ------------------------------------------------------------------
-   Profile avatars and team logos.
+   Profile avatars, company logos and team logos.
 
    The browser uploads straight to Vercel Blob, so a photo off a phone
    never passes through a serverless function and the 4.5 MB body
@@ -22,7 +22,7 @@ import {
    any signed-in account could write into any other account's avatar
    folder just by naming it.
 
-   Unlike the sponsor intake, these blobs are public: an avatar is
+   These blobs are deliberately public: an avatar is
    rendered on a roster and a team logo on a results page, and both
    want a plain URL rather than a proxied read.
 ------------------------------------------------------------------ */
@@ -32,6 +32,13 @@ export const dynamic = "force-dynamic";
 
 async function ownsTarget(user, parsed) {
   if (parsed.kind === "avatar") return parsed.ownerId === user.id;
+
+  /* A company logo hangs off the account that uploaded it, so the
+     check is the same one an avatar gets. No role gate: someone can
+     tick "sponsoring" at onboarding minutes before an admin grants
+     them the role, and refusing their logo until then would be a
+     rule they'd have to discover by failing. */
+  if (parsed.kind === "company-logo") return parsed.ownerId === user.id;
 
   if (parsed.kind === "team-logo") {
     /* Any member can set the team's logo — the same rule the
@@ -80,6 +87,11 @@ export async function POST(request) {
         if (meta.kind === "avatar") {
           await sql`
             update users set avatar_url = ${blob.url}, avatar_path = ${blob.pathname}
+             where id = ${meta.ownerId}`;
+        } else if (meta.kind === "company-logo") {
+          await sql`
+            update users
+               set company_logo = ${blob.url}, company_logo_path = ${blob.pathname}
              where id = ${meta.ownerId}`;
         } else if (meta.kind === "team-logo") {
           await sql`

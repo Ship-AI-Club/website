@@ -9,7 +9,7 @@ export default function robots() {
         /* The signed-in surfaces. Every page under these is already
            noindex and behind a session, but a crawler shouldn't spend
            its budget finding that out one 302 at a time. */
-        disallow: ["/dashboard", "/admin", "/judge", "/login", "/onboarding", "/auth/", "/intake"],
+        disallow: ["/dashboard", "/admin", "/judge", "/login", "/onboarding", "/auth/"],
       },
     ],
     sitemap: "https://www.shipai.club/sitemap.xml",

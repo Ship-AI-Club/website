@@ -7,7 +7,7 @@ import { siDiscord } from "simple-icons";
 /* The controls are the same primitives as /intake — same labels, same
    hints, same hidden honeypot — so this reuses that stylesheet rather
    than starting a second form namespace. */
-import "../../intake/intake.css";
+import "../../forms.css";
 import { FIELD_LIMITS } from "../../../lib/waitlist";
 
 /* A program with no dates has nothing to RSVP to. This is the honest

@@ -6,6 +6,7 @@ import { useFormStatus } from "react-dom";
 import {
   BUILDER_GOALS,
   COMMUNITY_GOALS,
+  COMPANY_LOGO_COPY,
   INTERESTS,
   SPONSOR_CHOICES,
 } from "../../../lib/accounts";
@@ -39,6 +40,11 @@ export default function ProfileForm({ user }) {
     });
 
   const competing = interests.has("participating");
+
+  /* Same rule as onboarding: the logo field follows the sponsor role
+     or the sponsoring interest, whichever is true, so a logo can be
+     added or swapped long after the wizard is behind you. */
+  const sponsorish = interests.has("sponsoring") || (user.roles ?? []).includes("sponsor");
 
   return (
     <form action={action} className="ac-form">
@@ -196,6 +202,19 @@ export default function ProfileForm({ user }) {
             ))}
           </select>
         </div>
+      )}
+
+      {sponsorish && (
+        <ImageUpload
+          kind="company-logo"
+          ownerId={user.id}
+          currentUrl={user.company_logo}
+          name={user.company || user.name}
+          preview="logo"
+          label={COMPANY_LOGO_COPY.label}
+          hint={COMPANY_LOGO_COPY.hint}
+          fine={COMPANY_LOGO_COPY.fine}
+        />
       )}
 
       <fieldset className="ac-choices">

@@ -53,16 +53,22 @@ async function ownsTarget(user, parsed) {
 }
 
 export async function POST(request) {
-  const user = await currentUser();
-  if (!user) return Response.json({ error: "Sign in first." }, { status: 401 });
-
   const body = await request.json();
 
   try {
     const result = await handleUpload({
       body,
       request,
+      /* The session check lives INSIDE the token branch, not at the top
+         of the route: the upload-completed event is Vercel's servers
+         calling back with no session cookie, authenticated by the blob
+         signature that handleUpload verifies itself. A route-level 401
+         would bounce that callback and the uploaded URL would never
+         reach the database. */
       onBeforeGenerateToken: async (pathname) => {
+        const user = await currentUser();
+        if (!user) throw new Error("Sign in first.");
+
         const parsed = parseUploadPath(pathname);
         if (!parsed) throw new Error("That upload path isn't allowed.");
         if (!(await ownsTarget(user, parsed))) {

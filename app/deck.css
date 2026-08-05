@@ -132,7 +132,9 @@
 .dk-statement-slide .dk-body,
 .dk-quote-slide .dk-body,
 .dk-end-slide .dk-body,
-.dk-act-slide .dk-body {
+.dk-act-slide .dk-body,
+.dk-break-slide .dk-body,
+.dk-thanks-slide .dk-body {
   justify-content: center;
   padding-bottom: 7cqh;
 }
@@ -192,7 +194,10 @@
 .dk-bignum-v,
 .dk-loop-n,
 .dk-time-date,
-.dk-score-pct {
+.dk-score-pct,
+.dk-news-n,
+.dk-break-clock,
+.dk-walk-n {
   font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
   font-variant-numeric: tabular-nums;
 }
@@ -236,6 +241,28 @@
   font-size: 7.4cqw;
   letter-spacing: -0.04em;
   line-height: 0.92;
+}
+
+/* The ASCII wordmark — the homepage hero, projected. Explicit mono:
+   a <pre> left to the UA falls back to Courier and the blocks shear. */
+.dk-ascii {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 3.1cqw;
+  line-height: 1;
+  white-space: pre;
+  color: var(--ink);
+  text-shadow: 0 0 24px rgba(103, 143, 242, 0.35);
+  margin: 2cqw 0 0.8cqw;
+}
+
+/* visually hidden, read aloud — the ascii art is aria-hidden */
+.dk-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .dk-title-sub {
@@ -303,6 +330,30 @@
   font-size: 30cqw;
   line-height: 0.7;
   color: var(--accent-ghost);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* a brand asset bleeding off the act's right edge, behind the type —
+   the counterweight to the numeral bleeding off the left */
+.dk-act-art {
+  position: absolute;
+  right: -7cqw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34cqw;
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dk-contact-art {
+  position: absolute;
+  right: -5cqw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30cqw;
+  opacity: 0.45;
   z-index: 0;
   pointer-events: none;
 }
@@ -702,6 +753,388 @@
   letter-spacing: 0.06em;
 }
 
+/* ---------- news (the brief) ---------- */
+
+/* One story per slide, argued about rather than read out. The index
+   numeral bleeds off the right edge the way the act numeral bleeds off
+   the left — the brief is a segment, not a different deck. */
+.dk-news {
+  position: relative;
+  display: grid;
+  gap: 1.5cqw;
+  justify-items: start;
+}
+
+.dk-news-n {
+  position: absolute;
+  right: -8cqw;
+  top: 50%;
+  transform: translateY(-52%);
+  font-size: 26cqw;
+  line-height: 0.7;
+  color: var(--accent-ghost);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dk-news-h {
+  font-size: 4.6cqw;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  max-width: 17ch;
+  text-wrap: balance;
+  position: relative;
+  z-index: 1;
+}
+
+.dk-news-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8cqw;
+}
+
+.dk-news-src {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5cqw;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.1cqw;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+  background: var(--accent-ghost);
+  padding: 0.35cqw 0.9cqw;
+}
+
+.dk-news-src svg {
+  width: 1.1cqw;
+  height: 1.1cqw;
+  stroke-width: 2;
+}
+
+a.dk-news-src:hover {
+  background: var(--accent-fill);
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.dk-news-video svg {
+  fill: currentColor;
+}
+
+/* ---------- walkthrough (progressive stages, detail beside) ---------- */
+
+/* The rail is the map, the detail card is the territory. Stages the
+   presenter hasn't reached yet sit at low opacity; the current one is
+   the slide's single accent. Without dk-motion (print, no JS, the
+   embedded preview) the details simply stack — the slide degrades to a
+   complete, readable list. */
+.dk-walk {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 4cqw;
+  align-items: start;
+  width: 100%;
+}
+
+.dk-walk-rail {
+  list-style: none;
+  display: grid;
+  gap: 2cqw;
+}
+
+.dk-walk-rail li {
+  display: grid;
+  grid-template-columns: 1.2cqw 1fr;
+  column-gap: 1.4cqw;
+  align-items: baseline;
+  position: relative;
+  cursor: pointer;
+}
+
+.dk-walk-rail li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 0.55cqw;
+  top: 1.6cqw;
+  bottom: -2cqw;
+  border-left: 1px dashed var(--hairline);
+}
+
+.dk-walk-dot {
+  width: 1.1cqw;
+  height: 1.1cqw;
+  border-radius: 50%;
+  background: var(--faint);
+  align-self: center;
+  position: relative;
+  z-index: 1;
+  outline: 0.4cqw solid var(--bg);
+}
+
+.dk-walk-t {
+  font-size: 1.9cqw;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.dk-walk-c {
+  grid-column: 2;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.25cqw;
+  color: var(--dim);
+  margin-top: 0.3cqw;
+}
+
+.dk-motion .dk-walk-rail li {
+  opacity: 0.35;
+  transition: opacity 360ms var(--ease-out-quint);
+}
+
+.dk-motion .dk-walk-rail li.is-on {
+  opacity: 1;
+}
+
+.dk-walk-rail li.is-now .dk-walk-dot {
+  background: var(--accent);
+  box-shadow: 0 0 0.9cqw rgba(103, 143, 242, 0.85);
+}
+
+.dk-walk-rail li.is-now .dk-walk-t {
+  color: var(--ink);
+}
+
+.dk-walk-details {
+  display: grid;
+  gap: 1.8cqw;
+}
+
+.dk-frag-detail {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.8cqw;
+  align-items: start;
+  border-left: 1px solid var(--accent-line);
+  padding-left: 1.8cqw;
+}
+
+.dk-walk-n {
+  font-size: 5.5cqw;
+  line-height: 0.8;
+  color: var(--accent);
+  opacity: 0.55;
+}
+
+.dk-walk-d {
+  font-size: 1.7cqw;
+  line-height: 1.5;
+  max-width: 40ch;
+}
+
+/* interactive mode: all detail cards share one cell and crossfade */
+.dk-motion .dk-walk-details {
+  gap: 0;
+}
+
+.dk-motion .dk-frag-detail {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(1cqw);
+  transition: opacity 360ms var(--ease-out-quint), transform 360ms var(--ease-out-quint);
+  pointer-events: none;
+}
+
+.dk-motion .dk-frag-detail.is-now {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* ---------- tags (accent chips under a statement) ---------- */
+
+.dk-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8cqw;
+}
+
+.dk-tags li {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.25cqw;
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+  background: var(--accent-ghost);
+  padding: 0.35cqw 0.9cqw;
+}
+
+.dk-news-facts {
+  list-style: none;
+  display: grid;
+  gap: 0.9cqw;
+  border-left: 1px solid var(--hairline);
+  padding-left: 1.6cqw;
+  max-width: 54ch;
+  position: relative;
+  z-index: 1;
+}
+
+.dk-news-facts li {
+  font-size: 1.6cqw;
+  line-height: 1.4;
+}
+
+/* ---------- break ---------- */
+
+/* The one slide that runs the room instead of the other way around: the
+   bar starts draining when the slide arrives, in sixty pixel steps. */
+.dk-break {
+  display: grid;
+  gap: 1.8cqw;
+  justify-items: start;
+  width: 100%;
+}
+
+.dk-break-clock {
+  font-size: 21cqw;
+  line-height: 0.78;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.dk-break-c {
+  font-size: 1.8cqw;
+  color: var(--dim);
+  max-width: 40ch;
+  line-height: 1.45;
+}
+
+.dk-break-bar {
+  width: 100%;
+  height: 1.2cqw;
+  margin-top: 1.6cqw;
+  background: rgba(248, 248, 250, 0.06);
+  position: relative;
+}
+
+.dk-break-bar span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 100%;
+  background: var(--accent);
+}
+
+.dk-motion .is-active .dk-break-bar span {
+  animation: dk-drain calc(var(--secs, 300) * 1s) steps(60, end) forwards;
+}
+
+@keyframes dk-drain {
+  to {
+    width: 0%;
+  }
+}
+
+/* ---------- thanks ---------- */
+
+.dk-thanks {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 4cqw;
+  width: 100%;
+}
+
+.dk-thanks-h {
+  font-size: 5.4cqw;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  margin-top: 1.2cqw;
+}
+
+.dk-thanks-tag {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.25cqw;
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+  background: var(--accent-ghost);
+  padding: 0.3cqw 0.8cqw;
+  justify-self: start;
+  margin-top: 1.2cqw;
+}
+
+.dk-thanks-c {
+  font-size: 1.6cqw;
+  color: var(--dim);
+  line-height: 1.5;
+  max-width: 38ch;
+  margin-top: 1.4cqw;
+}
+
+.dk-thanks-art {
+  width: 20cqw;
+}
+
+/* White monochrome, as on the homepage strip — half these marks are
+   dark artwork on transparency and invisible on black otherwise. */
+.dk-thanks-art img {
+  width: 100%;
+  height: auto;
+  max-height: 22cqw;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+
+/* mascot-style marks lose everything as a silhouette — let them keep
+   their colour; one deliberate spotlight, not a new palette */
+.dk-thanks-art.is-color img {
+  filter: none;
+}
+
+/* ---------- contact ---------- */
+
+.dk-contact-rows {
+  list-style: none;
+  display: grid;
+  gap: 1.4cqw;
+  border-left: 1px solid var(--hairline);
+  padding-left: 1.6cqw;
+}
+
+.dk-contact-rows li {
+  display: grid;
+  grid-template-columns: 13cqw 1fr;
+  align-items: baseline;
+  column-gap: 2cqw;
+}
+
+.dk-contact-l {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.1cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.dk-contact-v {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 2.1cqw;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.dk-contact-rows li.is-lit .dk-contact-v {
+  color: var(--accent);
+}
+
+.dk-contact-c {
+  grid-column: 2;
+  font-size: 1.25cqw;
+  color: var(--dim);
+  line-height: 1.4;
+}
+
 /* ---------- print ---------- */
 
 /* One 16:9 page per slide, so the PDF, the projector and the screen are
@@ -787,9 +1220,12 @@
   stroke: rgba(248, 248, 250, 0.3);
 }
 
-.dk-prism-body {
+.dk-prism-body,
+.dk-art-solid {
   stroke: rgba(248, 248, 250, 0.5);
+  stroke-width: 1;
   fill: var(--accent-ghost);
+  vector-effect: non-scaling-stroke;
 }
 
 .dk-node {
@@ -1337,6 +1773,7 @@
 .dk-motion .dk-matrix tbody tr,
 .dk-motion .dk-prism-labels li,
 .dk-motion .dk-score li,
+.dk-motion .dk-contact-rows li,
 .dk-motion .dk-h,
 .dk-motion .dk-quote p {
   opacity: 0;
@@ -1356,6 +1793,7 @@
 .dk-motion .is-active .dk-matrix tbody tr,
 .dk-motion .is-active .dk-prism-labels li,
 .dk-motion .is-active .dk-score li,
+.dk-motion .is-active .dk-contact-rows li,
 .dk-motion .is-active .dk-h,
 .dk-motion .is-active .dk-quote p {
   animation: dk-enter 460ms var(--ease-out-quint) forwards;
@@ -1494,6 +1932,7 @@
   .dk-motion .dk-matrix tbody tr,
   .dk-motion .dk-prism-labels li,
   .dk-motion .dk-score li,
+  .dk-motion .dk-contact-rows li,
   .dk-motion .dk-h,
   .dk-motion .dk-quote p {
     opacity: 1;
@@ -1504,8 +1943,26 @@
   .dk-globe-nodes .dk-node,
   .dk-arc,
   .dk-loop-run,
-  .dk-term-cursor {
+  .dk-term-cursor,
+  .dk-break-bar span {
     animation: none;
+  }
+
+  /* walkthroughs degrade to the full stacked list */
+  .dk-motion .dk-walk-rail li,
+  .dk-motion .dk-frag-detail {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .dk-motion .dk-frag-detail {
+    grid-area: auto;
+    pointer-events: auto;
+  }
+
+  .dk-motion .dk-walk-details {
+    gap: 1.8cqw;
   }
 
   .dk-ray,
@@ -1535,6 +1992,7 @@
   .dk-motion .dk-matrix tbody tr,
   .dk-motion .dk-prism-labels li,
   .dk-motion .dk-score li,
+  .dk-motion .dk-contact-rows li,
   .dk-motion .dk-h,
   .dk-motion .dk-quote p {
     opacity: 1 !important;
@@ -1548,5 +2006,23 @@
     opacity: 1 !important;
     stroke-dashoffset: 0 !important;
     animation: none !important;
+  }
+
+  .dk-break-bar span {
+    animation: none !important;
+  }
+
+  .dk-motion .dk-walk-rail li,
+  .dk-motion .dk-frag-detail {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .dk-motion .dk-frag-detail {
+    grid-area: auto !important;
+  }
+
+  .dk-motion .dk-walk-details {
+    gap: 1.8cqw !important;
   }
 }

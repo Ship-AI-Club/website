@@ -47,6 +47,46 @@ export default function DeckControls({ total }) {
       const target = Math.min(Math.max(n, 1), total);
       el.scrollTo({ top: (target - 1) * el.clientHeight, behavior: "smooth" });
     };
+
+    /* Fragments: a walkthrough slide advances through its own stages
+       before the deck moves on. State lives on the slide element so it
+       survives scrolling away and back. */
+    const fragAt = (slide) => Number(slide?.dataset.frag || 0);
+    const setFrag = (slide, k) => {
+      slide.dataset.frag = k;
+      for (const f of slide.querySelectorAll(".dk-frag")) {
+        const i = Number(f.dataset.i);
+        f.classList.toggle("is-on", i < k);
+        f.classList.toggle("is-now", i === k - 1);
+      }
+      for (const f of slide.querySelectorAll(".dk-frag-detail")) {
+        f.classList.toggle("is-now", Number(f.dataset.i) === k - 1);
+      }
+    };
+    const fragged = [...document.querySelectorAll(".dk-slide[data-frags]")];
+    for (const slide of fragged) setFrag(slide, 1);
+
+    const next = () => {
+      const cur = document.getElementById(`slide-${at()}`);
+      const frags = Number(cur?.dataset.frags || 0);
+      if (frags && fragAt(cur) < frags) setFrag(cur, fragAt(cur) + 1);
+      else go(at() + 1);
+    };
+    const prev = () => {
+      const cur = document.getElementById(`slide-${at()}`);
+      const frags = Number(cur?.dataset.frags || 0);
+      if (frags && fragAt(cur) > 1) setFrag(cur, fragAt(cur) - 1);
+      else go(at() - 1);
+    };
+
+    /* a rail step is also a control: click (or tap) jumps the
+       walkthrough straight to that stage */
+    const onRailClick = (e) => {
+      const step = e.target.closest?.(".dk-frag");
+      const slide = e.target.closest?.(".dk-slide[data-frags]");
+      if (step && slide) setFrag(slide, Number(step.dataset.i) + 1);
+    };
+
     const onKey = (e) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       switch (e.key) {
@@ -54,11 +94,11 @@ export default function DeckControls({ total }) {
         case "ArrowDown":
         case "PageDown":
         case " ":
-          e.preventDefault(); go(at() + 1); break;
+          e.preventDefault(); next(); break;
         case "ArrowLeft":
         case "ArrowUp":
         case "PageUp":
-          e.preventDefault(); go(at() - 1); break;
+          e.preventDefault(); prev(); break;
         case "Home":
           e.preventDefault(); go(1); break;
         case "End":
@@ -83,10 +123,12 @@ export default function DeckControls({ total }) {
 
     window.addEventListener("keydown", onKey);
     el.addEventListener("scroll", onScroll, { passive: true });
+    el.addEventListener("click", onRailClick);
     document.addEventListener("fullscreenchange", onFull);
     return () => {
       window.removeEventListener("keydown", onKey);
       el.removeEventListener("scroll", onScroll);
+      el.removeEventListener("click", onRailClick);
       document.removeEventListener("fullscreenchange", onFull);
     };
   }, [total]);

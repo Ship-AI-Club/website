@@ -322,6 +322,154 @@ export function Scorecard({ rows, className = "" }) {
   );
 }
 
+/* ---------- bolt ---------- */
+
+/* Lightning, the deck's shorthand for automation: energy that fires
+   without a hand on the switch. The charge line travels the left edge
+   in steps, and the strike point is the slide's lit node. */
+export function Bolt({ className = "" }) {
+  return (
+    <svg
+      viewBox="0 0 160 200"
+      className={`dk-art dk-bolt ${className}`}
+      role="img"
+      aria-label="A lightning bolt with a charge travelling down its edge"
+    >
+      <path className="dk-art-solid" d="M92 8 L36 112 L72 112 L56 192 L128 84 L88 84 Z" />
+      <path className="dk-arc" d="M92 8 L36 112 L72 112 L56 192" />
+      <circle className="dk-node dk-node-lit" cx="56" cy="192" r="4" />
+      <circle className="dk-node" cx="92" cy="8" r="3" />
+    </svg>
+  );
+}
+
+/* ---------- dome ---------- */
+
+/* A geodesic dome — desic's namesake. Concentric arcs, radial struts,
+   and the zigzag diagonals that make triangles out of both: strength
+   from many small identical members, which is also the pitch. */
+export function Dome({ className = "" }) {
+  const C = { x: 100, y: 158 };
+  const rings = [80, 53, 27];
+  const step = 30;
+  const angles = [];
+  for (let a = 0; a <= 180; a += step) angles.push(a);
+  const pt = (r, deg) => {
+    const rad = (deg * Math.PI) / 180;
+    return { x: C.x + r * Math.cos(rad), y: C.y - r * Math.sin(rad) };
+  };
+  const d = (p, q) => `M${p.x.toFixed(1)} ${p.y.toFixed(1)} L${q.x.toFixed(1)} ${q.y.toFixed(1)}`;
+
+  const struts = [];
+  for (const a of angles) {
+    /* radials, ring to ring */
+    for (let k = 0; k < rings.length - 1; k++) struts.push(d(pt(rings[k], a), pt(rings[k + 1], a)));
+    /* diagonals, one step around — the triangulation */
+    if (a + step <= 180) {
+      for (let k = 0; k < rings.length - 1; k++) struts.push(d(pt(rings[k], a), pt(rings[k + 1], a + step)));
+    }
+  }
+
+  return (
+    <svg
+      viewBox="0 0 200 200"
+      className={`dk-art dk-dome ${className}`}
+      role="img"
+      aria-label="A wireframe geodesic dome"
+    >
+      {rings.map((r) => (
+        <path
+          key={r}
+          className="dk-wire"
+          d={`M${C.x - r} ${C.y} A${r} ${r} 0 0 1 ${C.x + r} ${C.y}`}
+        />
+      ))}
+      <line className="dk-wire" x1={C.x - rings[0]} y1={C.y} x2={C.x + rings[0]} y2={C.y} />
+      {struts.map((s) => (
+        <path key={s} className="dk-wire" d={s} />
+      ))}
+      {angles.map((a) => {
+        const p = pt(rings[0], a);
+        return <circle key={a} className="dk-node" cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r="2.5" />;
+      })}
+      <circle className="dk-node dk-node-lit" cx={C.x} cy={C.y - rings[0]} r="4" />
+    </svg>
+  );
+}
+
+/* ---------- mark ---------- */
+
+/* The Ship AI sail with the dots connected to it — the mark doing the
+   deck's favourite verb. Scattered nodes, dashed signal arcs into the
+   sail, and the apex lit: many inputs, one direction. */
+export function Mark({ className = "" }) {
+  return (
+    <svg
+      viewBox="0 0 200 200"
+      className={`dk-art dk-mark ${className}`}
+      role="img"
+      aria-label="The Ship AI sail mark with signal arcs connecting scattered dots to it"
+    >
+      <path className="dk-art-solid" d="M74 36 L74 164 L152 100 Z" />
+      <path className="dk-arc" d="M28 56 Q52 60 74 78" />
+      <path className="dk-arc dk-arc-2" d="M36 150 Q54 140 74 128" />
+      <path className="dk-arc" d="M120 24 Q112 42 96 62" />
+      <path className="dk-arc dk-arc-2" d="M172 168 Q160 138 152 104" />
+      <circle className="dk-node" cx="28" cy="56" r="3.5" />
+      <circle className="dk-node" cx="36" cy="150" r="3.5" />
+      <circle className="dk-node" cx="120" cy="24" r="3.5" />
+      <circle className="dk-node" cx="172" cy="168" r="3.5" />
+      <circle className="dk-node dk-node-lit" cx="152" cy="100" r="4.5" />
+    </svg>
+  );
+}
+
+/* ---------- net ---------- */
+
+/* The network — nodes and hairline edges, with signal travelling two
+   of them. The internet as the deck actually thinks of it: not a cloud,
+   a graph you can put things into. */
+export function Net({ className = "" }) {
+  const nodes = [
+    { x: 30, y: 60 },
+    { x: 86, y: 24 },
+    { x: 158, y: 44 },
+    { x: 178, y: 112 },
+    { x: 128, y: 168 },
+    { x: 52, y: 152 },
+    { x: 100, y: 96 },
+  ];
+  const edges = [
+    [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0],
+    [0, 6], [1, 6], [3, 6], [4, 6], [2, 6],
+  ];
+
+  return (
+    <svg
+      viewBox="0 0 200 200"
+      className={`dk-art dk-net ${className}`}
+      role="img"
+      aria-label="A network graph of connected nodes with signals travelling between them"
+    >
+      {edges.map(([a, b]) => (
+        <line
+          key={`${a}-${b}`}
+          className="dk-wire"
+          x1={nodes[a].x}
+          y1={nodes[a].y}
+          x2={nodes[b].x}
+          y2={nodes[b].y}
+        />
+      ))}
+      <path className="dk-arc" d={`M${nodes[0].x} ${nodes[0].y} Q60 70 ${nodes[6].x} ${nodes[6].y}`} />
+      <path className="dk-arc dk-arc-2" d={`M${nodes[6].x} ${nodes[6].y} Q150 80 ${nodes[3].x} ${nodes[3].y}`} />
+      {nodes.map((n, i) => (
+        <circle key={i} className={`dk-node${i === 6 ? " dk-node-lit" : ""}`} cx={n.x} cy={n.y} r={i === 6 ? 4.5 : 3.5} />
+      ))}
+    </svg>
+  );
+}
+
 /* ---------- QR ---------- */
 
 /* The matrix is encoded at build time (scripts/build-kits.mjs) so there

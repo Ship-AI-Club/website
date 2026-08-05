@@ -264,6 +264,7 @@ const qrTargets = {
   skills: `${SITE}/programs/zero-to-launch/skills`,
   workshops: `${SITE}/programs/zero-to-launch`,
   repo: TEMPLATE_REPO,
+  sponsors: `${SITE}/programs/zero-to-launch/hackathon/sponsor`,
   ...Object.fromEntries(
     PROGRAMS.flatMap((p) =>
       p.sessions.map((w) => [

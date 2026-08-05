@@ -44,6 +44,16 @@ const SPONSORS = [
     sort: 2,
   },
   {
+    org: "AutomationInterns.com",
+    tier: "gold",
+    amount: 5000,
+    website: "https://automationinterns.com/",
+    logo_url: "/sponsor-automationinterns.png",
+    items: "Program underwrite.",
+    credit_name: "Jon S",
+    sort: 3,
+  },
+  {
     org: "CEI Gateway",
     tier: "silver",
     amount: 2500,
@@ -51,7 +61,7 @@ const SPONSORS = [
     logo_url: "/sponsor-cei.png",
     items: "The venue for the alternating Wednesday sessions.",
     credit_name: "CEI Gateway",
-    sort: 3,
+    sort: 4,
   },
 ];
 

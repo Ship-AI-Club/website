@@ -1,5 +1,19 @@
-import { Chart, Flow, Funnel, Globe, Loop, Matrix, Prism, QR, Scorecard, Timeline } from "./deck-art";
+import { ArrowUpRight, Play } from "lucide-react";
+import { Bolt, Chart, Dome, Flow, Funnel, Globe, Loop, Mark, Matrix, Net, Prism, QR, Scorecard, Timeline } from "./deck-art";
 import codes from "../lib/qr.generated.json";
+
+/* the brand asset library — slides pick one by name via `art` */
+const ART = { bolt: Bolt, dome: Dome, globe: Globe, mark: Mark, net: Net };
+
+function Art({ name, className }) {
+  const C = ART[name];
+  if (!C) return null;
+  return (
+    <div className={className} aria-hidden="true">
+      <C />
+    </div>
+  );
+}
 
 /* ------------------------------------------------------------------
    Slide renderer.
@@ -20,6 +34,7 @@ import codes from "../lib/qr.generated.json";
               chart · scorecard
      motif    prism
      command  terminal
+     live     news · break · thanks · contact
 ------------------------------------------------------------------ */
 
 /* wrap children so each gets a stagger index without every kind having
@@ -71,7 +86,16 @@ export function Slide({ slide, workshop, program, index, total }) {
               <p className="dk-eyebrow">
                 {program.name} · Session {workshop.n} · {workshop.iso ? `${workshop.date}, ${workshop.iso.slice(0, 4)}` : "Dates TBD"}
               </p>
-              <h2>{workshop.eventTitle}</h2>
+              {slide.ascii ? (
+                <>
+                  <pre className="dk-ascii" aria-hidden="true">
+                    {slide.ascii}
+                  </pre>
+                  <h2 className="dk-sr">{workshop.eventTitle}</h2>
+                </>
+              ) : (
+                <h2>{workshop.eventTitle}</h2>
+              )}
               <p className="dk-title-sub">{slide.sub}</p>
               <p className="dk-title-foot">
                 <span>Ship AI</span>
@@ -91,6 +115,7 @@ export function Slide({ slide, workshop, program, index, total }) {
             <span className="dk-act-n" aria-hidden="true">
               {slide.n}
             </span>
+            {slide.art ? <Art name={slide.art} className="dk-act-art" /> : null}
             <Stagger>
               <p className="dk-eyebrow">{slide.eyebrow || "Act"}</p>
               <h2 className="dk-act-name">{slide.title}</h2>
@@ -103,7 +128,17 @@ export function Slide({ slide, workshop, program, index, total }) {
         return (
           <div className="dk-statement">
             <Stagger>
+              {slide.title ? <p className="dk-eyebrow">{slide.title}</p> : null}
               <p className="dk-big">{slide.text}</p>
+              {slide.tags?.length ? (
+                <ul className="dk-tags">
+                  {slide.tags.map((t, i) => (
+                    <li key={t} style={{ "--i": i }}>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
               {slide.note ? <Note>{slide.note}</Note> : null}
             </Stagger>
           </div>
@@ -295,6 +330,142 @@ export function Slide({ slide, workshop, program, index, total }) {
           </>
         );
 
+      /* one story from the wire — ghost index numeral, headline, facts,
+         and a prompt to argue about. The room talks; the slide listens. */
+      case "news": {
+        const base = slide.src ? 3 : 2;
+        return (
+          <div className="dk-news">
+            <span className="dk-news-n" aria-hidden="true">
+              {slide.n}
+            </span>
+            <p className="dk-eyebrow dk-step" style={{ "--i": 0 }}>
+              {slide.eyebrow || "The brief"} · {slide.n} / {slide.of || "05"}
+            </p>
+            <h2 className="dk-news-h dk-step" style={{ "--i": 1 }}>
+              {slide.title}
+            </h2>
+            {slide.src ? (
+              <p className="dk-news-links dk-step" style={{ "--i": 2 }}>
+                {slide.href ? (
+                  <a className="dk-news-src" href={slide.href} target="_blank" rel="noreferrer">
+                    {slide.src}
+                    <ArrowUpRight aria-hidden="true" />
+                  </a>
+                ) : (
+                  <span className="dk-news-src">{slide.src}</span>
+                )}
+                {slide.video ? (
+                  <a className="dk-news-src dk-news-video" href={slide.video} target="_blank" rel="noreferrer">
+                    <Play aria-hidden="true" />
+                    Watch
+                  </a>
+                ) : null}
+              </p>
+            ) : null}
+            <ul className="dk-news-facts">
+              {slide.facts.map((f, i) => (
+                <li key={f} className="dk-step" style={{ "--i": base + i }}>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            {slide.prompt ? (
+              <p className="dk-note dk-step" style={{ "--i": base + slide.facts.length }}>
+                {slide.prompt}
+              </p>
+            ) : null}
+          </div>
+        );
+      }
+
+      /* the countdown starts when the slide scrolls into view, and the
+         bar drains in pixel steps — leave it up and it runs the break */
+      case "break":
+        return (
+          <div className="dk-break">
+            <Stagger>
+              <p className="dk-eyebrow">{slide.eyebrow || "Intermission"}</p>
+              <p className="dk-break-clock">{slide.clock || "05:00"}</p>
+              <p className="dk-break-c">{slide.c}</p>
+            </Stagger>
+            <div className="dk-break-bar" style={{ "--secs": slide.secs || 300 }} aria-hidden="true">
+              <span />
+            </div>
+          </div>
+        );
+
+      case "thanks":
+        return (
+          <div className="dk-thanks">
+            <div>
+              <Stagger>
+                <p className="dk-eyebrow">{slide.eyebrow || "Thank you"}</p>
+                <h2 className="dk-thanks-h">{slide.title}</h2>
+                {slide.tag ? <p className="dk-thanks-tag">{slide.tag}</p> : null}
+                <p className="dk-thanks-c">{slide.c}</p>
+              </Stagger>
+            </div>
+            {slide.img ? (
+              <div className={`dk-thanks-art dk-step${slide.color ? " is-color" : ""}`} style={{ "--i": 3 }}>
+                <img src={slide.img} alt={slide.imgAlt || slide.title} />
+              </div>
+            ) : null}
+          </div>
+        );
+
+      case "contact":
+        return (
+          <>
+            {slide.art ? <Art name={slide.art} className="dk-contact-art" /> : null}
+            <Heading>{slide.title}</Heading>
+            <ul className="dk-contact-rows">
+              {slide.rows.map((r, i) => (
+                <li key={r.l} className={r.lit ? "is-lit" : undefined} style={{ "--i": i }}>
+                  <span className="dk-contact-l">{r.l}</span>
+                  <span className="dk-contact-v">{r.v}</span>
+                  {r.c ? <span className="dk-contact-c">{r.c}</span> : null}
+                </li>
+              ))}
+            </ul>
+            <Note>{slide.note}</Note>
+          </>
+        );
+
+      /* progressive walkthrough — a stage rail that lights up step by
+         step, with the current stage's full explanation beside it.
+         DeckControls owns the stepping: → advances the fragment, and
+         only moves to the next slide once every stage has been walked.
+         Without JS (print, iframe preview) everything is visible. */
+      case "walk":
+        return (
+          <>
+            <Heading>{slide.title}</Heading>
+            <div className="dk-walk">
+              <ol className="dk-walk-rail">
+                {slide.steps.map((s, i) => (
+                  <li key={s.t} className="dk-frag" data-i={i}>
+                    <span className="dk-walk-dot" aria-hidden="true" />
+                    <span className="dk-walk-t">{s.t}</span>
+                    {s.c ? <span className="dk-walk-c">{s.c}</span> : null}
+                  </li>
+                ))}
+              </ol>
+              <div className="dk-walk-details">
+                {slide.steps.map((s, i) => (
+                  <div key={s.t} className="dk-frag-detail" data-i={i}>
+                    <span className="dk-walk-n" aria-hidden="true">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <p className="dk-walk-d">{s.d}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <Note>{slide.note}</Note>
+          </>
+        );
+
       case "quote":
         return (
           <div className="dk-quote">
@@ -323,7 +494,11 @@ export function Slide({ slide, workshop, program, index, total }) {
   })();
 
   return (
-    <section className={`dk-slide dk-${slide.kind}-slide`} id={`slide-${index + 1}`}>
+    <section
+      className={`dk-slide dk-${slide.kind}-slide`}
+      id={`slide-${index + 1}`}
+      data-frags={slide.kind === "walk" ? slide.steps.length : undefined}
+    >
       <div className="dk-frame">
         <div className="dk-body">{body}</div>
         <div className="dk-chrome">

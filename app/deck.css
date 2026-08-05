@@ -1958,19 +1958,39 @@ a.dk-news-src:hover {
   opacity: 1;
 }
 
+/* The rail must fit whatever viewport it lands on: 49 slides at a
+   fixed 14px is wider than a phone, and dots that render off-screen
+   are dots you can't tap. Buttons keep 14px while there's room and
+   compress evenly once there isn't — a seek bar, never an overflow. */
 .dk-rail {
   display: flex;
   align-items: flex-end;
   gap: 3px;
   pointer-events: auto;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .dk-rail button {
-  width: 14px;
+  flex: 0 1 14px;
+  width: auto;
+  min-width: 0;
   padding: 6px 0;
   background: none;
   border: 0;
   cursor: pointer;
+}
+
+/* On touch widths the buttons tile edge to edge so every point on the
+   bar is tappable; the visual gap moves inside the button. */
+@media (max-width: 700px) {
+  .dk-rail {
+    gap: 0;
+  }
+
+  .dk-rail button::after {
+    margin-right: 1px;
+  }
 }
 
 .dk-rail button::after {

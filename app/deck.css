@@ -253,6 +253,44 @@
   color: var(--ink);
   text-shadow: 0 0 24px rgba(103, 143, 242, 0.35);
   margin: 2cqw 0 0.8cqw;
+  /* standby-style breathing, in steps — the slide is alive while the
+     room settles, without anything easing */
+  animation: dk-breathe 5.2s steps(10) infinite alternate;
+}
+
+@keyframes dk-breathe {
+  from {
+    text-shadow: 0 0 18px rgba(103, 143, 242, 0.2);
+  }
+  to {
+    text-shadow: 0 0 34px rgba(103, 143, 242, 0.5);
+  }
+}
+
+/* the homepage pixel trail: eight cells, each holding the signal for
+   exactly an eighth of the loop */
+.dk-trail {
+  display: flex;
+  gap: 0.6cqw;
+  margin-top: 3cqw;
+}
+
+.dk-trail i {
+  width: 0.8cqw;
+  height: 0.8cqw;
+  background: var(--accent);
+  opacity: 0.12;
+  animation: dk-blink-px 2.8s steps(1, end) infinite;
+  animation-delay: calc(var(--i) * 0.35s);
+}
+
+@keyframes dk-blink-px {
+  0%, 12.5% {
+    opacity: 1;
+  }
+  12.6%, 100% {
+    opacity: 0.12;
+  }
 }
 
 /* visually hidden, read aloud — the ascii art is aria-hidden */
@@ -1139,6 +1177,10 @@ a.dk-news-src:hover {
   margin: 1cqw 0;
 }
 
+.dk-sponsor.is-color img {
+  filter: none;
+}
+
 .dk-sponsor-name {
   font-size: 1.6cqw;
   font-weight: 600;
@@ -1400,6 +1442,47 @@ a.dk-news-src:hover {
   100% { opacity: 0; }
 }
 
+/* ---------- sail (title art) ---------- */
+
+/* The mark scaled up: ghosted block cells behind the type, the beam
+   dimmer than the sail, the three dots the only accent. */
+.dk-sail path {
+  shape-rendering: crispEdges;
+}
+
+.dk-sail-body {
+  fill: rgba(248, 248, 250, 0.82);
+  filter: drop-shadow(0 0 0.4px rgba(103, 143, 242, 0.25));
+}
+
+.dk-sail-line {
+  fill: rgba(248, 248, 250, 0.55);
+}
+
+.dk-sail-node {
+  fill: rgba(248, 248, 250, 0.75);
+}
+
+.dk-sail-ring {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 0.5px rgba(103, 143, 242, 0.9));
+  animation: dk-pulse 3.2s steps(4, end) infinite;
+}
+
+/* unlike the globe, the sail has a business end — keep the nodes on
+   screen instead of bleeding them off the frame edge */
+.dk-title-art:has(.dk-sail) {
+  right: 4cqw;
+  width: 34cqw;
+  opacity: 1;
+}
+
+.dk-sail-dot {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 0.5px rgba(103, 143, 242, 0.9));
+  animation: dk-pulse 3.2s steps(4, end) infinite;
+}
+
 /* ---------- prism ---------- */
 
 .dk-motion .dk-ray-g {
@@ -1501,7 +1584,12 @@ a.dk-news-src:hover {
 
 .dk-funnel li.is-lit .dk-funnel-band path {
   fill: var(--accent-fill);
-  stroke: var(--accent-line);
+  stroke: var(--accent);
+  filter: drop-shadow(0 0 4px rgba(103, 143, 242, 0.55));
+}
+
+.dk-funnel li.is-lit .dk-funnel-t {
+  color: var(--accent);
 }
 
 .dk-funnel-t {
@@ -2086,7 +2174,10 @@ a.dk-news-src:hover {
   .dk-term-cursor,
   .dk-break-bar span,
   .dk-bolt-glow,
-  .dk-bolt-spark {
+  .dk-bolt-spark,
+  .dk-ascii,
+  .dk-trail i,
+  .dk-sail-ring {
     animation: none;
   }
 

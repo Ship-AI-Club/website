@@ -365,6 +365,65 @@ export function Bolt({ className = "" }) {
   );
 }
 
+/* ---------- sail (the logo, scaled up, pixel-drawn) ---------- */
+
+/* The Ship AI mark: an upward sail with wind slashes cut through it,
+   and three circuit lines running out the right to ringed nodes — the
+   top node the only lit element. Cells, not curves, so it sits in the
+   same block language as the wordmark. */
+/* Slashes cut in from the left and stop short of the right edge, so
+   the sail stays one shape with wind through it, not a stack of tiers. */
+const SAIL_CUTS = { 8: 8, 12: 9, 15: 10 }; /* row → last column removed */
+const SAIL_BODY = (() => {
+  const cells = [];
+  for (let r = 1; r <= 17; r++) {
+    const half = Math.floor((r - 1) * 0.35);
+    for (let c = 7 - half; c <= 8 + half; c++) {
+      if (SAIL_CUTS[r] !== undefined && c <= SAIL_CUTS[r]) continue;
+      cells.push([c, r]);
+    }
+  }
+  return cells;
+})();
+/* the slashes trail off past the left edge */
+const SAIL_STREAKS = [
+  [2, 8], [3, 8],
+  [1, 12], [2, 12],
+  [0, 15], [1, 15],
+];
+/* three circuit lines climbing off the right edge, longest on top */
+const SAIL_LINES = [
+  [10, 6], [11, 5], [12, 5], [13, 4], [14, 4], [15, 3], [16, 3],
+  [11, 9], [12, 8], [13, 8], [14, 7], [15, 7], [16, 6],
+  [12, 12], [13, 11], [14, 11], [15, 10],
+];
+/* 3×3 ring, hollow centre — the big lit node */
+const SAIL_RING = [
+  [17, 1], [18, 1], [19, 1],
+  [17, 2], [19, 2],
+  [17, 3], [18, 3], [19, 3],
+];
+const SAIL_NODE_MID = [
+  [17, 5], [18, 5], [17, 6], [18, 6],
+];
+const SAIL_NODE_LOW = [[16, 9], [16, 10]];
+
+export function Sail({ className = "" }) {
+  return (
+    <svg
+      viewBox="0 0 21 19"
+      className={`dk-art dk-sail ${className}`}
+      role="img"
+      aria-label="The Ship AI logo in pixel blocks: an upward sail with three circuit lines ending in nodes"
+    >
+      <path className="dk-sail-body" d={px([...SAIL_BODY, ...SAIL_STREAKS])} />
+      <path className="dk-sail-line" d={px(SAIL_LINES)} />
+      <path className="dk-sail-node" d={px([...SAIL_NODE_MID, ...SAIL_NODE_LOW])} />
+      <path className="dk-sail-ring" d={px(SAIL_RING)} />
+    </svg>
+  );
+}
+
 /* ---------- dome ---------- */
 
 /* A geodesic dome — desic's namesake. Concentric arcs, radial struts,

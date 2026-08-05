@@ -1,9 +1,9 @@
 import { ArrowUpRight, Play } from "lucide-react";
-import { Bolt, Chart, Dome, Flow, Funnel, Globe, Loop, Mark, Matrix, Net, Prism, QR, Scorecard, Timeline } from "./deck-art";
+import { Bolt, Chart, Dome, Flow, Funnel, Globe, Loop, Mark, Matrix, Net, Prism, QR, Sail, Scorecard, Timeline } from "./deck-art";
 import codes from "../lib/qr.generated.json";
 
 /* the brand asset library — slides pick one by name via `art` */
-const ART = { bolt: Bolt, dome: Dome, globe: Globe, mark: Mark, net: Net };
+const ART = { bolt: Bolt, dome: Dome, globe: Globe, mark: Mark, net: Net, sail: Sail };
 
 function Art({ name, className }) {
   const C = ART[name];
@@ -102,10 +102,15 @@ export function Slide({ slide, workshop, program, index, total }) {
                 <span>Phoenix, Arizona</span>
                 <span className="dk-title-hint">Press → to begin</span>
               </p>
+              {/* the homepage's pixel signal, keeping the slide alive
+                  while the room settles */}
+              <span className="dk-trail" aria-hidden="true">
+                {Array.from({ length: 8 }, (_, i) => (
+                  <i key={i} style={{ "--i": i }} />
+                ))}
+              </span>
             </Stagger>
-            <div className="dk-title-art" aria-hidden="true">
-              <Globe />
-            </div>
+            <Art name={slide.art || "globe"} className="dk-title-art" />
           </div>
         );
 
@@ -404,7 +409,7 @@ export function Slide({ slide, workshop, program, index, total }) {
             <Heading>{slide.title}</Heading>
             <div className="dk-sponsors">
               {slide.orgs.map((o, i) => (
-                <div key={o.name} className={`dk-sponsor${o.wide ? " is-wide" : ""} dk-step`} style={{ "--i": i }}>
+                <div key={o.name} className={`dk-sponsor${o.wide ? " is-wide" : ""}${o.color ? " is-color" : ""} dk-step`} style={{ "--i": i }}>
                   <img src={o.img} alt={o.name} />
                   <span className="dk-sponsor-name">{o.name}</span>
                   {o.tag ? <span className="dk-sponsor-tag">{o.tag}</span> : null}

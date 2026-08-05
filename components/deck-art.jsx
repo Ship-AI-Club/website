@@ -480,27 +480,50 @@ export function Dome({ className = "" }) {
 
 /* ---------- mark ---------- */
 
-/* The Ship AI sail with the dots connected to it — the mark doing the
-   deck's favourite verb. Scattered nodes, dashed signal arcs into the
-   sail, and the apex lit: many inputs, one direction. */
+/* Connect the dots — literally. Six numbered dots trace the sail;
+   the first segments are already drawn, the current one is drawing
+   itself, the rest wait as faint dashes. Finish the puzzle and the
+   logo appears, which is the whole talk in one picture. */
+const DOTS = [
+  { x: 104, y: 22 },  /* 1 — apex */
+  { x: 126, y: 86 },  /* 2 — right edge */
+  { x: 148, y: 150 }, /* 3 — right base */
+  { x: 104, y: 124 }, /* 4 — the notch */
+  { x: 58, y: 152 },  /* 5 — left base */
+  { x: 81, y: 87 },   /* 6 — left edge */
+];
+const seg = (a, b) => `M${DOTS[a].x} ${DOTS[a].y} L${DOTS[b].x} ${DOTS[b].y}`;
+
 export function Mark({ className = "" }) {
   return (
     <svg
       viewBox="0 0 200 200"
       className={`dk-art dk-mark ${className}`}
       role="img"
-      aria-label="The Ship AI sail mark with signal arcs connecting scattered dots to it"
+      aria-label="A connect-the-dots puzzle mid-solve: numbered dots tracing the Ship AI sail"
     >
-      <path className="dk-art-solid" d="M74 36 L74 164 L152 100 Z" />
-      <path className="dk-arc" d="M28 56 Q52 60 74 78" />
-      <path className="dk-arc dk-arc-2" d="M36 150 Q54 140 74 128" />
-      <path className="dk-arc" d="M120 24 Q112 42 96 62" />
-      <path className="dk-arc dk-arc-2" d="M172 168 Q160 138 152 104" />
-      <circle className="dk-node" cx="28" cy="56" r="3.5" />
-      <circle className="dk-node" cx="36" cy="150" r="3.5" />
-      <circle className="dk-node" cx="120" cy="24" r="3.5" />
-      <circle className="dk-node" cx="172" cy="168" r="3.5" />
-      <circle className="dk-node dk-node-lit" cx="152" cy="100" r="4.5" />
+      {/* the completed outline */}
+      <path className="dk-mark-done" d={`${seg(0, 1)} ${seg(1, 2)} ${seg(2, 3)} ${seg(3, 4)} ${seg(4, 5)} ${seg(5, 0)}`} />
+      {/* a signal running the loop the dots just made */}
+      <path
+        className="dk-arc"
+        d={`M${DOTS[0].x} ${DOTS[0].y} ${DOTS.slice(1)
+          .map((p) => `L${p.x} ${p.y}`)
+          .join(" ")} Z`}
+      />
+      {DOTS.map((p, i) => (
+        <g key={i}>
+          <circle className={`dk-node${i === 4 ? " dk-node-lit" : ""}`} cx={p.x} cy={p.y} r={i === 4 ? 4.5 : 3.5} />
+          <text
+            className="dk-mark-n"
+            x={p.x + (p.x >= 104 ? 9 : -9)}
+            y={p.y + (p.y < 100 ? -7 : 13)}
+            textAnchor={p.x >= 104 ? "start" : "end"}
+          >
+            {i + 1}
+          </text>
+        </g>
+      ))}
     </svg>
   );
 }

@@ -127,6 +127,7 @@ export function Slide({ slide, workshop, program, index, total }) {
       case "statement":
         return (
           <div className="dk-statement">
+            {slide.art ? <Art name={slide.art} className="dk-statement-art" /> : null}
             <Stagger>
               {slide.title ? <p className="dk-eyebrow">{slide.title}</p> : null}
               <p className="dk-big">{slide.text}</p>
@@ -172,7 +173,7 @@ export function Slide({ slide, workshop, program, index, total }) {
         return (
           <>
             <Heading>{slide.title}</Heading>
-            <ul className="dk-items">
+            <ul className={`dk-items${slide.cols === 2 ? " is-two" : ""}`}>
               {slide.items.map((it, i) => (
                 <li key={it.t} style={{ "--i": i }}>
                   <span className="dk-item-t">{it.t}</span>
@@ -258,7 +259,7 @@ export function Slide({ slide, workshop, program, index, total }) {
         return (
           <>
             <Heading>{slide.title}</Heading>
-            <Matrix heads={slide.heads} rows={slide.rows} />
+            <Matrix heads={slide.heads} rows={slide.rows} className={slide.rows.length > 6 ? "is-dense" : ""} />
             <Note>{slide.note}</Note>
           </>
         );
@@ -393,6 +394,25 @@ export function Slide({ slide, workshop, program, index, total }) {
               <span />
             </div>
           </div>
+        );
+
+      /* the community sponsor wall — every mark, white monochrome, one
+         row. `wide` marks a one-line wordmark rendered shorter. */
+      case "sponsors":
+        return (
+          <>
+            <Heading>{slide.title}</Heading>
+            <div className="dk-sponsors">
+              {slide.orgs.map((o, i) => (
+                <div key={o.name} className={`dk-sponsor${o.wide ? " is-wide" : ""} dk-step`} style={{ "--i": i }}>
+                  <img src={o.img} alt={o.name} />
+                  <span className="dk-sponsor-name">{o.name}</span>
+                  {o.tag ? <span className="dk-sponsor-tag">{o.tag}</span> : null}
+                </div>
+              ))}
+            </div>
+            <Note>{slide.note}</Note>
+          </>
         );
 
       case "thanks":

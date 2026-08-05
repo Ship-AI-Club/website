@@ -325,20 +325,42 @@ export function Scorecard({ rows, className = "" }) {
 /* ---------- bolt ---------- */
 
 /* Lightning, the deck's shorthand for automation: energy that fires
-   without a hand on the switch. The charge line travels the left edge
-   in steps, and the strike point is the slide's lit node. */
+   without a hand on the switch. Drawn as pixel cells — the same block
+   language as the ASCII wordmark — with a hard-stepped flicker, because
+   electricity doesn't ease. Detached spark cells flicker on their own
+   clock so the two never sync visibly. */
+const BOLT_CELLS = [
+  [5, 0], [6, 0], [7, 0],
+  [4, 1], [5, 1], [6, 1],
+  [4, 2], [5, 2], [6, 2],
+  [3, 3], [4, 3], [5, 3],
+  [2, 4], [3, 4], [4, 4],
+  [2, 5], [3, 5], [4, 5], [5, 5], [6, 5], [7, 5],
+  [4, 6], [5, 6], [6, 6],
+  [4, 7], [5, 7],
+  [3, 8], [4, 8],
+  [3, 9], [4, 9],
+  [2, 10], [3, 10],
+  [2, 11],
+  [1, 12],
+];
+const BOLT_SPARKS = [
+  [0, 6], [8, 3], [0, 10], [4, 12], [7, 7],
+];
+const px = (cells) => cells.map(([c, r]) => `M${c} ${r}h1v1h-1z`).join("");
+
 export function Bolt({ className = "" }) {
+  const bolt = px(BOLT_CELLS);
   return (
     <svg
-      viewBox="0 0 160 200"
+      viewBox="0 0 10 14"
       className={`dk-art dk-bolt ${className}`}
       role="img"
-      aria-label="A lightning bolt with a charge travelling down its edge"
+      aria-label="A pixel-art lightning bolt pulsing with electricity"
     >
-      <path className="dk-art-solid" d="M92 8 L36 112 L72 112 L56 192 L128 84 L88 84 Z" />
-      <path className="dk-arc" d="M92 8 L36 112 L72 112 L56 192" />
-      <circle className="dk-node dk-node-lit" cx="56" cy="192" r="4" />
-      <circle className="dk-node" cx="92" cy="8" r="3" />
+      <path className="dk-bolt-base" d={bolt} />
+      <path className="dk-bolt-glow" d={bolt} />
+      <path className="dk-bolt-spark" d={px(BOLT_SPARKS)} />
     </svg>
   );
 }

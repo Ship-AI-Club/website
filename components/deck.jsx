@@ -1,5 +1,5 @@
 import { ArrowUpRight, Play } from "lucide-react";
-import { Bolt, Chart, Dome, Flow, Funnel, Globe, Loop, Mark, Matrix, Net, Prism, QR, Sail, Scorecard, Timeline } from "./deck-art";
+import { Bolt, Chart, Dome, Engine, Flow, Funnel, Globe, Loop, Mark, Matrix, Net, Prism, QR, Sail, Scorecard, Timeline } from "./deck-art";
 import codes from "../lib/qr.generated.json";
 
 /* the brand asset library — slides pick one by name via `art` */
@@ -303,6 +303,16 @@ export function Slide({ slide, workshop, program, index, total }) {
             </div>
             <Prism rays={slide.rays} />
           </div>
+        );
+
+      /* the distribution engine — one big animated diagram, minimal text */
+      case "engine":
+        return (
+          <>
+            <Heading>{slide.title}</Heading>
+            <Engine />
+            <Note>{slide.note}</Note>
+          </>
         );
 
       /* the "go run this" slide, for a room that lives in a terminal */

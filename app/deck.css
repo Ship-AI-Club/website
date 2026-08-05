@@ -1453,6 +1453,38 @@ a.dk-news-src:hover {
   100% { opacity: 0; }
 }
 
+/* ---------- engine (the distribution machine) ---------- */
+
+.dk-engine {
+  max-height: 32cqw;
+}
+
+.dk-eng-doc {
+  fill: var(--accent-ghost);
+  stroke: rgba(248, 248, 250, 0.5);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.dk-eng-rail {
+  stroke: var(--hairline);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+/* user units — this text lives inside a scaled viewBox */
+.dk-eng-label {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  fill: var(--dim);
+}
+
+.dk-eng-node {
+  animation: dk-pulse 2.4s steps(4, end) infinite;
+  animation-delay: calc(var(--i, 0) * 0.4s);
+}
+
 /* ---------- mark (connect the dots) ---------- */
 
 .dk-mark-done {
@@ -2212,7 +2244,8 @@ a.dk-news-src:hover {
   .dk-bolt-spark,
   .dk-ascii,
   .dk-trail i,
-  .dk-sail-ring {
+  .dk-sail-ring,
+  .dk-eng-node {
     animation: none;
   }
 

@@ -424,6 +424,57 @@ export function Sail({ className = "" }) {
   );
 }
 
+/* ---------- engine (the distribution machine) ---------- */
+
+/* One piece of content enters the prism and leaves as three surfaces.
+   Everything flows left to right and never stops flowing — the beam
+   and the rays are the same travelling dash, because it's the same
+   content the whole way through. */
+const ENG_OUT = [
+  { x: 330, y: 42, label: "Marketing site" },
+  { x: 342, y: 100, label: "Socials" },
+  { x: 330, y: 158, label: "Paid ads" },
+];
+
+export function Engine({ className = "" }) {
+  return (
+    <svg
+      viewBox="0 0 470 200"
+      className={`dk-art dk-engine ${className}`}
+      role="img"
+      aria-label="One piece of content entering the Ship AI prism and being distributed to the marketing site, socials, and paid ads"
+    >
+      {/* the one piece of content */}
+      <rect className="dk-eng-doc" x="20" y="74" width="38" height="52" />
+      <line className="dk-wire" x1="27" y1="88" x2="51" y2="88" />
+      <line className="dk-wire" x1="27" y1="100" x2="51" y2="100" />
+      <line className="dk-wire" x1="27" y1="112" x2="45" y2="112" />
+      <text className="dk-eng-label" x="39" y="146" textAnchor="middle">
+        One piece of content
+      </text>
+
+      {/* into the prism */}
+      <line className="dk-eng-rail" x1="58" y1="100" x2="162" y2="100" />
+      <path className="dk-arc" d="M58 100 L162 100" />
+
+      {/* the mark */}
+      <path className="dk-art-solid" d="M162 42 L162 158 L242 100 Z" />
+
+      {/* out to every surface */}
+      {ENG_OUT.map((o, i) => (
+        <g key={o.label} className="dk-eng-ray" style={{ "--i": i }}>
+          <line className="dk-eng-rail" x1="242" y1="100" x2={o.x} y2={o.y} />
+          <path className="dk-arc" d={`M242 100 L${o.x} ${o.y}`} />
+          <circle className="dk-node dk-node-lit dk-eng-node" cx={o.x} cy={o.y} r="4.5" />
+          <text className="dk-eng-label" x={o.x + 14} y={o.y + 4}>
+            {o.label}
+          </text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
 /* ---------- dome ---------- */
 
 /* A geodesic dome — desic's namesake. Concentric arcs, radial struts,

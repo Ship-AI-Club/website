@@ -2266,4 +2266,27 @@ a.dk-news-src:hover {
   .dk-motion .dk-walk-details {
     gap: 1.8cqw !important;
   }
+
+  /* stacked detail cards are taller than the live overlay — compact
+     the walkthrough so the printed page keeps every stage */
+  .dk-walk {
+    gap: 3cqw;
+  }
+
+  .dk-walk-rail {
+    gap: 1.2cqw;
+  }
+
+  .dk-walk-details {
+    gap: 1cqw !important;
+  }
+
+  .dk-walk-n {
+    font-size: 3cqw;
+  }
+
+  .dk-walk-d {
+    font-size: 1.35cqw;
+    line-height: 1.4;
+  }
 }

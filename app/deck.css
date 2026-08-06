@@ -1588,8 +1588,8 @@ a.dk-news-src:hover {
 }
 
 .dk-motion .dk-ray {
-  stroke-dasharray: 120;
-  stroke-dashoffset: 120;
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
 }
 
 .dk-motion .is-active .dk-ray {

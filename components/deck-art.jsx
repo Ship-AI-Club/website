@@ -70,31 +70,46 @@ export function Globe({ className = "" }) {
 
 /* ---------- the sail as a prism ---------- */
 
-/* The mark's sail is already a triangle. Pointing a beam at it and
-   letting it fan out into channels is the one metaphor in this program
-   that's both accurate and free: one product, many routes to market. */
+/* One beam in, many channels out — drawn as the pixel sail with
+   circuit traces leaving its right edge at different heights, routed
+   at right angles like the logo's own lines. No single spray point:
+   each channel gets its own exit. */
+const PRISM_EXITS = [
+  { y: 52, out: 34, elbow: 196 },
+  { y: 82, out: 78, elbow: 208 },
+  { y: 112, out: 122, elbow: 208 },
+  { y: 142, out: 166, elbow: 196 },
+];
+
 export function Prism({ rays = 4, className = "" }) {
-  const spread = [-16, -5, 6, 17].slice(0, rays);
+  const exits = PRISM_EXITS.slice(0, rays);
 
   return (
     <svg
-      viewBox="0 0 260 180"
+      viewBox="0 0 260 200"
       className={`dk-art dk-prism ${className}`}
       role="img"
-      aria-label="A beam entering a prism and splitting into separate channels"
+      aria-label="One beam entering the pixel sail and leaving as separate routed channels"
     >
-      {/* the beam runs into the sail's face, not up to a gap beside it */}
-      <line className="dk-beam" x1="0" y1="90" x2="96" y2="90" />
-      <circle className="dk-node" cx="14" cy="90" r="3" />
+      <line className="dk-eng-rail" x1="0" y1="90" x2="100" y2="90" />
+      <path className="dk-arc" d="M0 90 L100 90" />
 
-      <path className="dk-prism-body" d="M96 26 L96 154 L150 90 Z" />
-
-      {spread.map((dy, i) => (
-        <g key={dy} className="dk-ray-g" style={{ "--i": i }}>
-          <line className="dk-ray" x1="150" y1="90" x2="244" y2={90 + dy * 3.4} />
-          <circle className="dk-node dk-node-lit" cx="244" cy={90 + dy * 3.4} r="3.5" />
+      {exits.map((e, i) => (
+        <g key={e.y} className="dk-ray-g" style={{ "--i": i }}>
+          <path
+            className="dk-ray"
+            d={`M150 ${e.y} L${e.elbow} ${e.y} L${e.elbow} ${e.out} L236 ${e.out}`}
+            fill="none"
+          />
+          <circle className="dk-node" cx={e.elbow} cy={e.out} r="2.5" />
+          <circle className="dk-node dk-node-lit" cx="236" cy={e.out} r="3.5" />
         </g>
       ))}
+
+      {/* the sail sits over the rails, so traces emerge from behind it */}
+      <g transform="translate(64 22) scale(8.6)">
+        <path className="dk-eng-core" d={px([...SAIL_BODY, ...SAIL_STREAKS])} />
+      </g>
     </svg>
   );
 }

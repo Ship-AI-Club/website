@@ -1485,6 +1485,32 @@ a.dk-news-src:hover {
   animation-delay: calc(var(--i, 0) * 0.4s);
 }
 
+/* the engine core is the sail itself */
+.dk-eng-core {
+  fill: rgba(248, 248, 250, 0.5);
+  shape-rendering: crispEdges;
+}
+
+.dk-eng-chip {
+  fill: var(--accent-ghost);
+  stroke: var(--accent-line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.dk-eng-chip-t {
+  fill: var(--ink);
+}
+
+/* attribution flows the other way, quieter */
+.dk-eng-return {
+  stroke: rgba(103, 143, 242, 0.35);
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+  vector-effect: non-scaling-stroke;
+  animation: dk-travel 2.4s steps(8, end) infinite reverse;
+}
+
 /* ---------- mark (connect the dots) ---------- */
 
 .dk-mark-done {

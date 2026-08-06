@@ -426,51 +426,68 @@ export function Sail({ className = "" }) {
 
 /* ---------- engine (the distribution machine) ---------- */
 
-/* One piece of content enters the prism and leaves as three surfaces.
-   Everything flows left to right and never stops flowing — the beam
-   and the rays are the same travelling dash, because it's the same
-   content the whole way through. */
-const ENG_OUT = [
-  { x: 330, y: 42, label: "Marketing site" },
-  { x: 342, y: 100, label: "Socials" },
-  { x: 330, y: 158, label: "Paid ads" },
+/* One piece of content enters the mark and leaves as three surfaces —
+   drawn as a schematic: Manhattan-routed traces with junction dots,
+   labelled surface chips, and an attribution rail returning along the
+   bottom, because the loop closing IS the argument. The engine core is
+   the pixel sail itself. */
+const ENG_TRACES = [
+  { d: "M226 70 L252 70 L252 40 L300 40", chipY: 27, dotY: 40, label: "Marketing site", bend: [252, 70, 252, 40] },
+  { d: "M232 100 L300 100", chipY: 87, dotY: 100, label: "Socials" },
+  { d: "M226 130 L252 130 L252 160 L300 160", chipY: 147, dotY: 160, label: "Paid ads", bend: [252, 130, 252, 160] },
 ];
+const ENG_RETURN = "M412 52 L436 52 L436 198 L39 198 L39 130";
 
 export function Engine({ className = "" }) {
   return (
     <svg
-      viewBox="0 0 470 200"
+      viewBox="0 0 470 224"
       className={`dk-art dk-engine ${className}`}
       role="img"
-      aria-label="One piece of content entering the Ship AI prism and being distributed to the marketing site, socials, and paid ads"
+      aria-label="Schematic: one piece of content enters the Ship AI sail and is routed to the marketing site, socials, and paid ads, with attribution reporting back"
     >
       {/* the one piece of content */}
-      <rect className="dk-eng-doc" x="20" y="74" width="38" height="52" />
-      <line className="dk-wire" x1="27" y1="88" x2="51" y2="88" />
-      <line className="dk-wire" x1="27" y1="100" x2="51" y2="100" />
-      <line className="dk-wire" x1="27" y1="112" x2="45" y2="112" />
-      <text className="dk-eng-label" x="39" y="146" textAnchor="middle">
-        One piece of content
+      <rect className="dk-eng-doc" x="20" y="78" width="38" height="52" />
+      <line className="dk-wire" x1="27" y1="92" x2="51" y2="92" />
+      <line className="dk-wire" x1="27" y1="104" x2="51" y2="104" />
+      <line className="dk-wire" x1="27" y1="116" x2="45" y2="116" />
+      <text className="dk-eng-label" x="39" y="150" textAnchor="middle">
+        One piece
+      </text>
+      <text className="dk-eng-label" x="39" y="164" textAnchor="middle">
+        of content
       </text>
 
-      {/* into the prism */}
-      <line className="dk-eng-rail" x1="58" y1="100" x2="162" y2="100" />
-      <path className="dk-arc" d="M58 100 L162 100" />
+      {/* in-rail, running under the sail's left edge */}
+      <line className="dk-eng-rail" x1="58" y1="104" x2="170" y2="104" />
+      <path className="dk-arc" d="M58 104 L170 104" />
 
-      {/* the mark */}
-      <path className="dk-art-solid" d="M162 42 L162 158 L242 100 Z" />
-
-      {/* out to every surface */}
-      {ENG_OUT.map((o, i) => (
-        <g key={o.label} className="dk-eng-ray" style={{ "--i": i }}>
-          <line className="dk-eng-rail" x1="242" y1="100" x2={o.x} y2={o.y} />
-          <path className="dk-arc" d={`M242 100 L${o.x} ${o.y}`} />
-          <circle className="dk-node dk-node-lit dk-eng-node" cx={o.x} cy={o.y} r="4.5" />
-          <text className="dk-eng-label" x={o.x + 14} y={o.y + 4}>
-            {o.label}
+      {/* out-traces, Manhattan-routed like the logo's circuit lines */}
+      {ENG_TRACES.map((t) => (
+        <g key={t.label}>
+          <path className="dk-eng-rail" d={t.d} fill="none" />
+          <path className="dk-arc" d={t.d} />
+          {t.bend ? <circle className="dk-node" cx={t.bend[2]} cy={t.bend[3]} r="2.5" /> : null}
+          <circle className="dk-node dk-node-lit dk-eng-node" cx="300" cy={t.dotY} r="4.5" />
+          <rect className="dk-eng-chip" x="300" y={t.chipY} width="112" height="26" />
+          <text className="dk-eng-label dk-eng-chip-t" x="316" y={t.chipY + 17}>
+            {t.label}
           </text>
         </g>
       ))}
+
+      {/* the engine core: the sail itself, pixel-drawn, over the rails */}
+      <g transform="translate(150 46) scale(6)">
+        <path className="dk-eng-core" d={px([...SAIL_BODY, ...SAIL_STREAKS])} />
+      </g>
+
+      {/* attribution returns along the bottom — the loop closing */}
+      <path className="dk-eng-return" d={ENG_RETURN} fill="none" />
+      <circle className="dk-node" cx="436" cy="198" r="2.5" />
+      <circle className="dk-node" cx="39" cy="198" r="2.5" />
+      <text className="dk-eng-label" x="237" y="212" textAnchor="middle">
+        attribution
+      </text>
     </svg>
   );
 }

@@ -233,6 +233,29 @@ export default async function Page({ params }) {
 
         {w.deck && <p className="hk-note">Working from the GTM deck: <a href={GTM_DECK} target="_blank" rel="noreferrer">gtm.desic.xyz</a></p>}
 
+        {w.media && (
+          <>
+            <h2 className="hk-subhead" id="recap"><CalendarDays size={18} strokeWidth={1.75} aria-hidden="true" />From the night</h2>
+            {w.media.recording && (
+              <div className="hk-recording">
+                {/* preload=none: a session page must not pull a multi-GB
+                    file until somebody presses play */}
+                <video src={w.media.recording} controls preload="none" poster={w.media.photos?.[0]} />
+                <p className="hk-note">The full session recording. Also archived in Discord.</p>
+              </div>
+            )}
+            {w.media.photos?.length > 0 && (
+              <div className="hk-photos">
+                {w.media.photos.map((src, i) => (
+                  <a key={src} href={src} target="_blank" rel="noreferrer">
+                    <img src={src} alt={`${w.eventTitle} — photo ${i + 1}`} loading="lazy" />
+                  </a>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
         <div className="hk-discord">
           <svg viewBox="0 0 24 24" width={22} height={22} fill="currentColor" aria-hidden="true"><path d={siDiscord.path} /></svg>
           <div><h3>Join the community online</h3><p>Session recaps, archive links, questions between sessions and everyone else&apos;s work in progress.</p></div>

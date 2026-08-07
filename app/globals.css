@@ -3365,3 +3365,46 @@ h3 .icon {
 .ac-spread.is-wide {
   color: #f0c674;
 }
+
+/* ---------- session media: From the night ---------- */
+
+.hk-recording video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid var(--hairline);
+  display: block;
+}
+
+.hk-recording .hk-note {
+  margin-top: 0.6rem;
+}
+
+.hk-photos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.hk-photos img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
+  border: 1px solid var(--hairline);
+  filter: saturate(0.92);
+  transition: filter 200ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hk-photos a:hover img {
+    filter: saturate(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .hk-photos {
+    grid-template-columns: 1fr;
+  }
+}

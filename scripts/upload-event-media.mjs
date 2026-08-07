@@ -29,8 +29,10 @@ if (!process.env.BLOB_READ_WRITE_TOKEN) {
 }
 
 const VIDEO = new Set([".mp4", ".mov", ".webm", ".m4v"]);
+const CAPTIONS = new Set([".vtt", ".srt"]);
 const photos = [];
 let recording = null;
+let captions = null;
 
 for (const file of files) {
   const name = basename(file);
@@ -43,16 +45,19 @@ for (const file of files) {
     addRandomSuffix: false,
     allowOverwrite: true,
     multipart: isVideo,
+    ...(CAPTIONS.has(ext) ? { contentType: "text/vtt" } : {}),
   });
   console.log("done");
   console.log(`  ${blob.url}`);
   if (isVideo) recording = blob.url;
+  else if (CAPTIONS.has(ext)) captions = blob.url;
   else photos.push(blob.url);
 }
 
 console.log("\nPaste into the session's entry in lib/hackathon.js:\n");
 console.log("    media: {");
 if (recording) console.log(`      recording: "${recording}",`);
+if (captions) console.log(`      captions: "${captions}",`);
 if (photos.length) {
   console.log("      photos: [");
   for (const u of photos) console.log(`        "${u}",`);

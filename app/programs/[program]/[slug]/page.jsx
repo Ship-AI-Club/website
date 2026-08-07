@@ -238,10 +238,13 @@ export default async function Page({ params }) {
             <h2 className="hk-subhead" id="recap"><CalendarDays size={18} strokeWidth={1.75} aria-hidden="true" />From the night</h2>
             {w.media.recording && (
               <div className="hk-recording">
-                {/* preload=none: a session page must not pull a multi-GB
-                    file until somebody presses play */}
-                <video src={w.media.recording} controls preload="none" poster={w.media.photos?.[0]} />
-                <p className="hk-note">The full session recording. Also archived in Discord.</p>
+                {/* preload=none: a session page must not pull the whole
+                    file until somebody presses play. crossOrigin lets the
+                    captions track load from the blob origin. */}
+                <video src={w.media.recording} controls preload="none" poster={w.media.photos?.[0]} crossOrigin="anonymous">
+                  {w.media.captions && <track kind="captions" src={w.media.captions} srcLang="en" label="English" />}
+                </video>
+                <p className="hk-note">The full session recording{w.media.captions ? ", captions included" : ""}. Also archived in Discord.</p>
               </div>
             )}
             {w.media.photos?.length > 0 && (

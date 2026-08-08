@@ -296,7 +296,7 @@ export default async function Page() {
             </div>
           </div>
           <p className="strip-cta">
-            Seeking corporate sponsors — help keep the programs free and public.{" "}
+            Workuity is the meetup venue sponsor. Seeking corporate sponsors — help keep the programs free and public.{" "}
             <a href="/programs/zero-to-launch/hackathon/sponsor">See what&apos;s fundable</a>
           </p>
         </section>

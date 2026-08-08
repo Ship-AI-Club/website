@@ -212,7 +212,7 @@ export default async function Page({ params }) {
           </>
         )}
 
-        <p className="hk-note">Format: the host presents and builds live on screen. Bring a laptop and work along if you want to, or just watch — nobody is put on the spot or asked to present.</p>
+        <p className="hk-note">Venue sponsor: <a href={venue.sponsorUrl} target="_blank" rel="noreferrer">{venue.sponsor}</a>. Format: the host presents and builds live on screen. Bring a laptop and work along if you want to, or just watch — nobody is put on the spot or asked to present.</p>
 
         <h2 className="hk-subhead">Why this session exists</h2><p>{w.why}</p>
         <h2 className="hk-subhead"><ListChecks size={18} strokeWidth={1.75} aria-hidden="true" />What we cover</h2>

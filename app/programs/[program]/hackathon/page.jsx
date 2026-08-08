@@ -468,7 +468,8 @@ export default async function Page({ params }) {
           </div>
           <p className="lede reveal" style={{ "--d": "280ms" }}>
             Ten weeks of go-to-market, then a weekend where you don&apos;t build — you launch.
-            Six free workshops on alternating Wednesdays from August 5, a build window that opens{" "}
+            Six free workshops at Workuity Biltmore on alternating Wednesdays from August 5 — Workuity
+            is the venue sponsor — a build window that opens{" "}
             {EVENT.buildOpensShort}, and a hackathon in October where it all goes public.
             Bring the product you&apos;ve been sitting on. Wherever it stands on the Friday,
             you close it out and put it in front of people. Judged on what shipped, not on

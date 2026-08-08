@@ -63,8 +63,8 @@ function seriesSchema(program) {
     startDate: program.startISO,
     endDate: program.endISO,
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    /* No series-level location: venues alternate, and the subEvents below
-       each carry the room they actually happen in. */
+    /* The series has one room, and each subEvent carries the same venue and
+       sponsor credit for calendar consumers. */
     organizer: { "@type": "Organization", name: "Ship AI", url: SITE },
     isAccessibleForFree: true,
     subEvent: program.sessions.filter(sessionScheduled).map((w) => ({
@@ -157,6 +157,8 @@ export default async function Page({ params }) {
             </div>
           )}
         </div>
+
+        <p className="hk-note">Every meetup takes place at <a href="https://www.workuity.com/" target="_blank" rel="noreferrer">Workuity Biltmore</a>, the venue sponsor for the series.</p>
 
         {/* Nothing is on a calendar until the dates land, so an unscheduled
             program gets the one thing that works: tell me when. */}

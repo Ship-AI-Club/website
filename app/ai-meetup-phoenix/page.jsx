@@ -16,7 +16,7 @@ export const metadata = {
 const FAQS = [
   {
     q: "Where does the Ship AI Phoenix meetup happen?",
-    a: "Ship AI meets at 2390 E Camelback Rd #130 in Phoenix, Arizona (the Camelback Corridor / Biltmore area), with some sessions at CEI Gateway on N Gateway Dr. Always check the specific event listing on Meetup or Luma — venues are confirmed per event.",
+    a: "Ship AI meets at Workuity Biltmore, 2390 E Camelback Rd #130 in Phoenix, Arizona (the Camelback Corridor / Biltmore area). Workuity is the venue sponsor of the meetup. Always check the specific event listing on Meetup or Luma for the date and time.",
   },
   {
     q: "Who attends the Phoenix Ship AI meetup?",
@@ -60,8 +60,8 @@ export default async function Page() {
 
         <h2>Where and when</h2>
         <p>
-          Ship AI sessions in Phoenix meet at <strong>2390 E Camelback Rd #130</strong> in
-          the Camelback Corridor. Exact dates and times are on the{" "}
+          Ship AI sessions in Phoenix meet at <strong>Workuity Biltmore, 2390 E Camelback Rd #130</strong> in
+          the Camelback Corridor. Workuity is the venue sponsor of the meetup. Exact dates and times are on the{" "}
           <a href="https://www.meetup.com/shipai/" target="_blank" rel="noreferrer">Meetup group</a>{" "}
           and <a href="https://luma.com/shipai" target="_blank" rel="noreferrer">Luma calendar</a>{" "}
           — the list below is pulled live from Meetup, so it's always current.

@@ -3384,7 +3384,9 @@ h3 .icon {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
-  margin-top: 1.25rem;
+  /* the recap sits mid-page now — close it with the same 56px breath
+     the section headings open with, or whatever follows crowds it */
+  margin: 1.25rem 0 3.5rem;
 }
 
 .hk-photos img {

@@ -161,6 +161,33 @@ export default async function Page({ params }) {
 
         <p className="article-lede">{w.lede}</p>
 
+        {/* a session that already happened leads with the night itself */}
+        {w.media && (
+          <>
+            <h2 className="hk-subhead" id="recap"><CalendarDays size={18} strokeWidth={1.75} aria-hidden="true" />From the night</h2>
+            {w.media.recording && (
+              <div className="hk-recording">
+                {/* preload=none: a session page must not pull the whole
+                    file until somebody presses play. crossOrigin lets the
+                    captions track load from the blob origin. */}
+                <video src={w.media.recording} controls preload="none" poster={w.media.photos?.[0]} crossOrigin="anonymous">
+                  {w.media.captions && <track kind="captions" src={w.media.captions} srcLang="en" label="English" />}
+                </video>
+                <p className="hk-note">The full session recording{w.media.captions ? ", captions included" : ""}. Also archived in Discord.</p>
+              </div>
+            )}
+            {w.media.photos?.length > 0 && (
+              <div className="hk-photos">
+                {w.media.photos.map((src, i) => (
+                  <a key={src} href={src} target="_blank" rel="noreferrer">
+                    <img src={src} alt={`${w.eventTitle} — photo ${i + 1}`} loading="lazy" />
+                  </a>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
         {scheduled ? (
           <>
             <div className="hk-ws-rsvp">
@@ -232,32 +259,6 @@ export default async function Page({ params }) {
         )}
 
         {w.deck && <p className="hk-note">Working from the GTM deck: <a href={GTM_DECK} target="_blank" rel="noreferrer">gtm.desic.xyz</a></p>}
-
-        {w.media && (
-          <>
-            <h2 className="hk-subhead" id="recap"><CalendarDays size={18} strokeWidth={1.75} aria-hidden="true" />From the night</h2>
-            {w.media.recording && (
-              <div className="hk-recording">
-                {/* preload=none: a session page must not pull the whole
-                    file until somebody presses play. crossOrigin lets the
-                    captions track load from the blob origin. */}
-                <video src={w.media.recording} controls preload="none" poster={w.media.photos?.[0]} crossOrigin="anonymous">
-                  {w.media.captions && <track kind="captions" src={w.media.captions} srcLang="en" label="English" />}
-                </video>
-                <p className="hk-note">The full session recording{w.media.captions ? ", captions included" : ""}. Also archived in Discord.</p>
-              </div>
-            )}
-            {w.media.photos?.length > 0 && (
-              <div className="hk-photos">
-                {w.media.photos.map((src, i) => (
-                  <a key={src} href={src} target="_blank" rel="noreferrer">
-                    <img src={src} alt={`${w.eventTitle} — photo ${i + 1}`} loading="lazy" />
-                  </a>
-                ))}
-              </div>
-            )}
-          </>
-        )}
 
         <div className="hk-discord">
           <svg viewBox="0 0 24 24" width={22} height={22} fill="currentColor" aria-hidden="true"><path d={siDiscord.path} /></svg>

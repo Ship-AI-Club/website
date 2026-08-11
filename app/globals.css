@@ -1901,9 +1901,17 @@ h3 .icon {
   margin-bottom: 2.5rem;
 }
 
+/* Four-stage programs are one continuous builder path on wide screens.
+   Giving the sequence its real column count also prevents the grid's
+   divider background from rendering as empty gray cells. */
+.hk-acts.hk-acts-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .hk-act {
   background: var(--bg);
   padding: 1.5rem;
+  min-width: 0;
 }
 
 .hk-act-name {
@@ -2418,6 +2426,18 @@ h3 .icon {
 
   .hk-ws-next span {
     justify-content: flex-start;
+  }
+}
+
+@media (max-width: 1100px) {
+  .hk-acts.hk-acts-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .hk-acts.hk-acts-4 {
+    grid-template-columns: 1fr;
   }
 }
 

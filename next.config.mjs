@@ -39,6 +39,18 @@ const nextConfig = {
         destination: "/programs/day-zero/:path*",
         permanent: true,
       },
+      // Product Builder became The First Build before its first cohort.
+      // Keep the original route working anywhere it was already shared.
+      {
+        source: "/programs/product-builder/product-builder-hackathon",
+        destination: "/programs/the-first-build/first-build-hackathon",
+        permanent: true,
+      },
+      {
+        source: "/programs/product-builder/:path*",
+        destination: "/programs/the-first-build/:path*",
+        permanent: true,
+      },
     ];
   },
 };

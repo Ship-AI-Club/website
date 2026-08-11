@@ -205,7 +205,7 @@ export default async function Page({ params }) {
               The curriculum is presented in order, with each session standing on its own. Nothing is
               asked of the room: follow along on a laptop, or simply watch the live build.
             </p>
-            <div className="hk-acts">
+            <div className={`hk-acts hk-acts-${Math.min(program.acts.length, 4)}`}>
               {program.acts.map((a) => (
                 <div key={a.name} className="hk-act">
                   <span className="hk-act-name">{a.name}</span><span className="hk-act-range">{a.range}</span><p>{a.copy}</p>

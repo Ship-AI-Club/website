@@ -4,19 +4,11 @@ import { siDiscord, siGithub } from "simple-icons";
 import { JsonLd } from "../../../../../components/article";
 import { guideFor, setupFor } from "../../../../../lib/guides";
 import { deckFor } from "../../../../../lib/decks";
-import { PROGRAMS, programBySlug, sessionBySlug, sessionScheduled } from "../../../../../lib/programs";
-import { DISCORD, venueOf } from "../../../../../lib/hackathon";
+import { PROGRAMS, programBySlug, sessionBySlug, sessionDateLabel, sessionVenues } from "../../../../../lib/programs";
+import { DISCORD } from "../../../../../lib/hackathon";
 import registry from "../../../../../lib/skills.generated.json";
 
 const SITE = "https://www.shipai.club";
-
-function programVenue(program, session) {
-  return venueOf({ ...session, venue: session.venue || program.defaultVenue });
-}
-
-function sessionDateLabel(session) {
-  return `${session.date}, ${session.iso.slice(0, 4)}`;
-}
 
 export function generateStaticParams() {
   return PROGRAMS.flatMap((program) =>
@@ -52,7 +44,7 @@ export default async function Page({ params }) {
   const manifest = registry.manifest.programs[program.slug];
   const kit = manifest?.sessions[slug];
   const setup = setupFor(program);
-  const venue = programVenue(program, w);
+  const venueLabel = sessionVenues(w, program).map((item) => item.name).join(" & ");
   const programHref = `/programs/${program.slug}`;
   const schema = {
     "@context": "https://schema.org",
@@ -78,7 +70,7 @@ export default async function Page({ params }) {
         <div className="hk-ws-hero">
           <span className="hk-ws-bignum">{w.n}</span>
           <div>
-            <p className="hk-ws-meta"><span className="hk-ws-act">Guide</span><span><Clock size={12} strokeWidth={1.75} aria-hidden="true" /> {g.minutes}</span><span>{sessionScheduled(w) ? sessionDateLabel(w) : "Dates TBD"}</span><span className="hk-ws-venue">{venue.name}</span></p>
+            <p className="hk-ws-meta"><span className="hk-ws-act">Guide</span><span><Clock size={12} strokeWidth={1.75} aria-hidden="true" /> {g.minutes}</span><span>{sessionDateLabel(w)}</span><span className="hk-ws-venue">{venueLabel}</span></p>
             <h1>{w.eventTitle}</h1><p className="hk-ws-sub">Follow along</p>
           </div>
         </div>

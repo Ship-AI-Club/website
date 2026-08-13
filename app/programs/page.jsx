@@ -1,7 +1,7 @@
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import { JsonLd } from "../../components/article";
-import { PROGRAMS } from "../../lib/programs";
-import { DISCORD, venueOf } from "../../lib/hackathon";
+import { PROGRAMS, programVenueNames } from "../../lib/programs";
+import { DISCORD } from "../../lib/hackathon";
 
 const SITE = "https://www.shipai.club";
 
@@ -12,15 +12,8 @@ const STATUS_LABELS = {
   past: "Past program",
 };
 
-/* Venues alternate inside a program, so the card reads them off the
-   sessions rather than the default — Zero to Launch is two rooms, not
-   one. */
 function venueNames(program) {
-  return [
-    ...new Set(
-      program.sessions.map((w) => venueOf({ ...w, venue: w.venue || program.defaultVenue }).name)
-    ),
-  ];
+  return programVenueNames(program);
 }
 
 const LIST_SCHEMA = {

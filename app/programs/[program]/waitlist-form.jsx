@@ -214,7 +214,7 @@ export default function WaitlistForm({ program, programName, discord }) {
           </a>
         )}
         <p className="ik-status" role="status" aria-live="polite">
-          {sending ? "Sending…" : "Free, like every Ship AI session. One email when the dates land."}
+          {sending ? "Sending…" : "Free, like every Ship AI session. One email when the next dates land."}
         </p>
       </div>
 

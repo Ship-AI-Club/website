@@ -18,7 +18,7 @@ import { hasDb } from "../../../lib/db";
 import { deckFor } from "../../../lib/decks";
 import { guideFor } from "../../../lib/guides";
 import registry from "../../../lib/skills.generated.json";
-import { PROGRAMS, programBySlug, sessionScheduled } from "../../../lib/programs";
+import { PROGRAMS, programBySlug, programVenueNames, sessionDateLabel, sessionNights, sessionScheduled, sessionVenues } from "../../../lib/programs";
 import WaitlistForm from "./waitlist-form";
 import {
   DISCORD,
@@ -33,10 +33,6 @@ const SITE = "https://www.shipai.club";
 
 export function generateStaticParams() {
   return PROGRAMS.map((program) => ({ program: program.slug }));
-}
-
-function programVenue(program, session) {
-  return venueOf({ ...session, venue: session.venue || program.defaultVenue });
 }
 
 export async function generateMetadata({ params }) {
@@ -54,28 +50,34 @@ export async function generateMetadata({ params }) {
 }
 
 function seriesSchema(program) {
-  if (!program.startISO) return null;
+  const offerings = program.sessions.flatMap((w) =>
+    sessionNights(w).map((night) => ({ session: w, night }))
+  );
+  if (offerings.length === 0) return null;
+  const start = program.startISO || `${offerings[0].night.iso}T18:00:00-07:00`;
+  const end = program.endISO || `${offerings[offerings.length - 1].night.iso}T21:00:00-07:00`;
   return {
     "@context": "https://schema.org",
     "@type": "EventSeries",
     name: `${program.name} workshops`,
     description: program.description,
-    startDate: program.startISO,
-    endDate: program.endISO,
+    startDate: start,
+    endDate: end,
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    /* The series has one room, and each subEvent carries the same venue and
-       sponsor credit for calendar consumers. */
     organizer: { "@type": "Organization", name: "Ship AI", url: SITE },
     isAccessibleForFree: true,
-    subEvent: program.sessions.filter(sessionScheduled).map((w) => ({
-      "@type": "Event",
-      name: w.title,
-      startDate: `${w.iso}T18:00:00-07:00`,
-      url: `${SITE}/programs/${program.slug}/${w.slug}`,
-      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-      location: { "@type": "Place", name: programVenue(program, w).name, address: programVenue(program, w).address },
-      isAccessibleForFree: true,
-    })),
+    subEvent: offerings.map(({ session: w, night }) => {
+      const venue = venueOf({ venue: night.venue || w.venue || program.defaultVenue });
+      return {
+        "@type": "Event",
+        name: w.title,
+        startDate: `${night.iso}T18:00:00-07:00`,
+        url: `${SITE}/programs/${program.slug}/${w.slug}`,
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        location: { "@type": "Place", name: venue.name, address: venue.address },
+        isAccessibleForFree: true,
+      };
+    }),
   };
 }
 
@@ -87,7 +89,8 @@ export default async function Page({ params }) {
   const manifest = registry.manifest.programs[program.slug];
   const nextProgram = program.nextProgram ? programBySlug(program.nextProgram) : null;
   const schema = seriesSchema(program);
-  const venueNames = [...new Set(program.sessions.map((w) => programVenue(program, w).name))];
+  const venueNames = programVenueNames(program);
+  const someScheduled = program.sessions.some(sessionScheduled);
 
   /* Nothing to RSVP to until the dates exist, so an unscheduled program
      collects names instead. `hasDb()` is the same rule the rest of the
@@ -158,7 +161,15 @@ export default async function Page({ params }) {
           )}
         </div>
 
-        <p className="hk-note">Every meetup takes place at <a href="https://www.workuity.com/" target="_blank" rel="noreferrer">Workuity Biltmore</a>, the venue sponsor for the series.</p>
+        <p className="hk-note">
+          {program.venueNote || (
+            <>
+              Every meetup takes place at{" "}
+              <a href="https://www.workuity.com/" target="_blank" rel="noreferrer">Workuity Biltmore</a>
+              , the venue sponsor for the series.
+            </>
+          )}
+        </p>
 
         {/* Nothing is on a calendar until the dates land, so an unscheduled
             program gets the one thing that works: tell me when. */}
@@ -177,13 +188,14 @@ export default async function Page({ params }) {
         ) : waitlistOpen ? (
           <>
             <h2 className="hk-subhead" id="waitlist">
-              <BellRing size={18} strokeWidth={1.75} aria-hidden="true" />Get the dates first
+              <BellRing size={18} strokeWidth={1.75} aria-hidden="true" />
+              {someScheduled ? "Get the rest of the dates" : "Get the dates first"}
             </h2>
             {program.datesCopy && <p className="hk-note">{program.datesCopy}</p>}
             <p>
-              Put your name down and you get the dates the day they&apos;re set. Telling us what
-              you want working by the end isn&apos;t a formality either — it&apos;s what gets
-              built on screen.
+              {someScheduled
+                ? "Put your name down for the nights that aren't on the calendar yet. Telling us what you want working by the end isn't a formality either — it's what gets built on screen."
+                : "Put your name down and you get the dates the day they're set. Telling us what you want working by the end isn't a formality either — it's what gets built on screen."}
             </p>
             <WaitlistForm program={program.slug} programName={program.name} discord={DISCORD} />
           </>
@@ -238,10 +250,10 @@ export default async function Page({ params }) {
                 <a href={`/programs/${program.slug}/${w.slug}`}>
                   <div className="hk-ws-head">
                     <span className="hk-ws-n">{w.n}</span>
-                    <span className="hk-ws-date">{sessionScheduled(w) ? w.date : "Dates TBD"}</span>
+                    <span className="hk-ws-date">{sessionDateLabel(w)}</span>
                     {w.act && <span className="hk-ws-act">{w.act}</span>}
                     {w.audience && <span className="hk-ws-aud">{w.audience}</span>}
-                    <span className="hk-ws-venue">{programVenue(program, w).name}</span>
+                    <span className="hk-ws-venue">{sessionVenues(w, program).map((venue) => venue.name).join(" & ")}</span>
                   </div>
                   <h3>{w.eventTitle}</h3><p className="hk-ws-sub">{w.title}</p><p className="hk-ws-copy">{w.copy}</p>
                   <p className="hk-ws-take"><strong>You leave with:</strong> {w.take}</p>

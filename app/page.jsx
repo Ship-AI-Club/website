@@ -17,8 +17,7 @@ import {
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { getUpcomingEvents } from "../lib/meetup";
 import { JsonLd } from "../components/article";
-import { venueOf } from "../lib/hackathon";
-import { PROGRAMS } from "../lib/programs";
+import { PROGRAMS, programVenueNames } from "../lib/programs";
 
 export const metadata = {
   title: "Ship AI — Free AI programs in Phoenix",
@@ -64,13 +63,7 @@ const SOCIALS = [
 /* Hero facts are org-level and derived from the registry, so adding a
    program or a session updates the line instead of dating it. */
 const SESSION_COUNT = PROGRAMS.reduce((n, p) => n + p.sessions.length, 0);
-const PROGRAM_VENUES = [
-  ...new Set(
-    PROGRAMS.flatMap((p) =>
-      p.sessions.map((s) => venueOf({ ...s, venue: s.venue || p.defaultVenue }).name)
-    )
-  ),
-];
+const PROGRAM_VENUES = [...new Set(PROGRAMS.flatMap((p) => programVenueNames(p)))];
 
 const SPONSORS = [
   { href: "https://www.workuity.com/", name: "Workuity", img: "/sponsor-workuity.png" },
@@ -255,7 +248,7 @@ export default async function Page() {
             </span>
             <span>
               <MapPin size={13} strokeWidth={1.75} aria-hidden="true" />
-              {PROGRAM_VENUES.join(" & ")}, Phoenix
+              {PROGRAM_VENUES.join(" & ")}
             </span>
             <span>
               <Ticket size={13} strokeWidth={1.75} aria-hidden="true" />
@@ -308,7 +301,7 @@ export default async function Page() {
           <p className="kicker">The programs</p>
           <h2>Pick your on-ramp.</h2>
           {PROGRAMS.map((program) => {
-            const venueNames = [...new Set(program.sessions.map((w) => venueOf({ ...w, venue: w.venue || program.defaultVenue }).name))];
+            const venueNames = programVenueNames(program);
             const statusLabel = program.status === "running"
               ? "Running now — our current program"
               : program.status === "tbd"

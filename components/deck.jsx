@@ -1,3 +1,4 @@
+import { sessionDateLabel } from "../lib/programs";
 import { ArrowUpRight, Play } from "lucide-react";
 import { Bolt, Chart, Dome, Engine, Flow, Funnel, Globe, Loop, Mark, Matrix, Net, Prism, QR, Sail, Scorecard, Timeline } from "./deck-art";
 import codes from "../lib/qr.generated.json";
@@ -84,7 +85,7 @@ export function Slide({ slide, workshop, program, index, total }) {
           <div className="dk-title">
             <Stagger>
               <p className="dk-eyebrow">
-                {program.name} · Session {workshop.n} · {workshop.iso ? `${workshop.date}, ${workshop.iso.slice(0, 4)}` : "Dates TBD"}
+                {program.name} · Session {workshop.n} · {sessionDateLabel(workshop)}
               </p>
               {slide.ascii ? (
                 <>

@@ -4,16 +4,12 @@ import { siDiscord, siGithub } from "simple-icons";
 import { JsonLd } from "../../../../components/article";
 import { deckFor } from "../../../../lib/decks";
 import { guideFor } from "../../../../lib/guides";
-import { PROGRAMS, programBySlug, sessionScheduled } from "../../../../lib/programs";
+import { PROGRAMS, programBySlug, sessionDateLabel } from "../../../../lib/programs";
 import { DISCORD } from "../../../../lib/hackathon";
 import registry from "../../../../lib/skills.generated.json";
 
 const SITE = "https://www.shipai.club";
 const byName = new Map(registry.skills.map((s) => [s.name, s]));
-
-function sessionDateLabel(session) {
-  return `${session.date}, ${session.iso.slice(0, 4)}`;
-}
 
 export function generateStaticParams() {
   return PROGRAMS.filter((program) => registry.manifest.programs?.[program.slug]).map((program) => ({
@@ -97,7 +93,7 @@ export default async function Page({ params }) {
             <section key={w.slug} className="sk-session">
               <div className="sk-session-head">
                 <span className="sk-session-n">{w.n}</span>
-                <div><h3><a href={`${programHref}/${w.slug}`}>{w.eventTitle}</a></h3><p className="sk-session-meta">{sessionScheduled(w) ? sessionDateLabel(w) : "Dates TBD"} · {w.title}</p></div>
+                <div><h3><a href={`${programHref}/${w.slug}`}>{w.eventTitle}</a></h3><p className="sk-session-meta">{sessionDateLabel(w)} · {w.title}</p></div>
                 <div className="sk-session-dl"><a className="btn btn-ghost" href={`/skills/${kit.file}`} download><Download size={14} strokeWidth={1.75} aria-hidden="true" />{kit.count} skills</a></div>
               </div>
               <ul className="sk-list">

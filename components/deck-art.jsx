@@ -185,7 +185,11 @@ export function Timeline({ sessions, now, hasHackathon = false, className = "" }
       n: w.n,
       /* Four stops all reading "TBD" is a timeline with no line in it —
          an unscheduled program numbers its sessions instead. */
-      date: w.iso ? w.date.replace("Wed ", "") : `Session ${w.n}`,
+      date: Array.isArray(w.nights) && w.nights.length > 1
+        ? w.nights.map((night) => night.date.replace(/^[A-Za-z]+ /, "")).join(" / ")
+        : w.iso
+          ? w.date.replace(/^[A-Za-z]+ /, "")
+          : `Session ${w.n}`,
       t: w.eventTitle,
     })),
     ...(hasHackathon ? [{ n: "—", date: "Weekend", t: "Hackathon" }] : []),

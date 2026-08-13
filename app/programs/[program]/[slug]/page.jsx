@@ -24,8 +24,11 @@ import {
   PROGRAMS,
   programBySlug,
   sessionBySlug,
+  sessionDateLabel,
   sessionNeighbours,
+  sessionNights,
   sessionScheduled,
+  sessionVenues,
 } from "../../../../lib/programs";
 import { DISCORD, GTM_DECK, rsvpLinks, venueOf } from "../../../../lib/hackathon";
 
@@ -36,8 +39,51 @@ function programVenue(program, session) {
   return venueOf({ ...session, venue: session.venue || program.defaultVenue });
 }
 
-function sessionDateLabel(session) {
-  return `${session.date}, ${session.iso.slice(0, 4)}`;
+function sessionEventSchema(program, w, programHref) {
+  const nights = sessionNights(w);
+  if (nights.length === 0) return null;
+  const events = nights.map((night) => {
+    const venue = venueOf({ venue: night.venue || w.venue || program.defaultVenue });
+    return {
+      "@type": "Event",
+      name: `${w.title} — ${program.name} session ${w.n}`,
+      description: w.copy,
+      startDate: `${night.iso}T18:00:00-07:00`,
+      endDate: `${night.iso}T21:00:00-07:00`,
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      eventStatus: "https://schema.org/EventScheduled",
+      location: {
+        "@type": "Place",
+        name: venue.name,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: venue.street,
+          addressLocality: venue.city,
+          addressRegion: venue.region,
+          postalCode: venue.zip,
+        },
+      },
+      organizer: { "@type": "Organization", name: "Ship AI", url: SITE },
+      url: `${SITE}${programHref}/${w.slug}`,
+      isAccessibleForFree: true,
+      superEvent: { "@type": "EventSeries", name: `${program.name} workshops`, url: `${SITE}${programHref}` },
+    };
+  });
+  if (events.length === 1) {
+    return { "@context": "https://schema.org", ...events[0] };
+  }
+  return {
+    "@context": "https://schema.org",
+    "@type": "EventSeries",
+    name: `${w.title} — ${program.name} session ${w.n}`,
+    description: w.copy,
+    startDate: events[0].startDate,
+    endDate: events[events.length - 1].endDate,
+    url: `${SITE}${programHref}/${w.slug}`,
+    organizer: { "@type": "Organization", name: "Ship AI", url: SITE },
+    isAccessibleForFree: true,
+    subEvent: events,
+  };
 }
 
 export function generateStaticParams() {
@@ -52,7 +98,7 @@ export async function generateMetadata({ params }) {
   const w = sessionBySlug(program, slug);
   if (!program || !w) return {};
   const title = `${w.title} — ${program.name} session ${w.n}`;
-  const when = sessionScheduled(w) ? sessionDateLabel(w) : "Dates TBD";
+  const when = sessionDateLabel(w);
   const description = `${when} in Phoenix. ${w.copy}`.slice(0, 300);
   const url = `${SITE}/programs/${program.slug}/${w.slug}`;
   return {
@@ -73,6 +119,8 @@ export default async function Page({ params }) {
   const scheduled = sessionScheduled(w);
   const rsvp = scheduled ? rsvpLinks(w) : null;
   const venue = programVenue(program, w);
+  const venues = sessionVenues(w, program);
+  const venueLabel = venues.map((item) => item.name).join(" & ");
   const slides = deckFor(program.slug, slug);
   const guide = guideFor(program.slug, slug);
   const programManifest = registry.manifest.programs[program.slug];
@@ -84,33 +132,7 @@ export default async function Page({ params }) {
   /* Where the last session hands off when there's no hackathon to end on. */
   const nextProgram = program.nextProgram ? programBySlug(program.nextProgram) : null;
 
-  const schema = scheduled
-    ? {
-        "@context": "https://schema.org",
-        "@type": "Event",
-        name: `${w.title} — ${program.name} session ${w.n}`,
-        description: w.copy,
-        startDate: `${w.iso}T18:00:00-07:00`,
-        endDate: `${w.iso}T21:00:00-07:00`,
-        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-        eventStatus: "https://schema.org/EventScheduled",
-        location: {
-          "@type": "Place",
-          name: venue.name,
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: venue.street,
-            addressLocality: venue.city,
-            addressRegion: venue.region,
-            postalCode: venue.zip,
-          },
-        },
-        organizer: { "@type": "Organization", name: "Ship AI", url: SITE },
-        url: `${SITE}${programHref}/${w.slug}`,
-        isAccessibleForFree: true,
-        superEvent: { "@type": "EventSeries", name: `${program.name} workshops`, url: `${SITE}${programHref}` },
-      }
-    : null;
+  const schema = sessionEventSchema(program, w, programHref);
 
   return (
     <>
@@ -153,7 +175,7 @@ export default async function Page({ params }) {
               {w.act && <span className="hk-ws-act">{w.act}</span>}
               {w.audience && <span className="hk-ws-aud">{w.audience}</span>}
               <span>{scheduled ? `${sessionDateLabel(w)} · 6:00 PM` : "Dates TBD"}</span>
-              <span className="hk-ws-venue">{venue.name}</span>
+              <span className="hk-ws-venue">{venueLabel}</span>
             </p>
             <h1>{w.eventTitle}</h1><p className="hk-ws-sub">{w.title}</p>
           </div>
@@ -196,7 +218,26 @@ export default async function Page({ params }) {
               <a className="btn btn-ghost" href={rsvp.linkedin} target="_blank" rel="noreferrer"><Briefcase size={16} strokeWidth={1.75} aria-hidden="true" />LinkedIn</a>
             </div>
             {rsvp.pending && (
-              <p className="hk-note"><MapPin size={13} strokeWidth={1.75} aria-hidden="true" /><a href={venue.url} target="_blank" rel="noreferrer">{venue.name}</a> — {venue.address}. {venue.note} Individual event links go live closer to the date; these point at the Ship AI calendars.</p>
+              <p className="hk-note">
+                <MapPin size={13} strokeWidth={1.75} aria-hidden="true" />
+                {sessionNights(w).length > 1
+                  ? sessionNights(w).map((night, i, list) => {
+                      const nightVenue = venueOf({ venue: night.venue || w.venue || program.defaultVenue });
+                      return (
+                        <span key={night.iso}>
+                          {night.date} at <a href={nightVenue.url} target="_blank" rel="noreferrer">{nightVenue.name}</a>
+                          {" — "}{nightVenue.address}
+                          {i < list.length - 1 ? ". " : ". Same session — pick the room. "}
+                        </span>
+                      );
+                    })
+                  : (
+                    <>
+                      <a href={venue.url} target="_blank" rel="noreferrer">{venue.name}</a> — {venue.address}. {venue.note}{" "}
+                    </>
+                  )}
+                Individual event links go live closer to the date; these point at the Ship AI calendars.
+              </p>
             )}
           </>
         ) : (

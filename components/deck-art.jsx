@@ -279,8 +279,12 @@ export function Matrix({ rows, heads, className = "" }) {
 /* A step plot. Points are [label, value]; the line is drawn rather than
    eased in, using steps() on the dash reveal so it plots in pixel jumps
    like the rest of the site's motion. */
-export function Chart({ points, peak, peakLabel, projValue, projLabel, className = "" }) {
-  const W = 420;
+export function Chart({ points, peak, peakLabel, projValue, projLabel, wide = false, className = "" }) {
+  /* A wider viewBox, not a shorter one: the wide variant needs a flatter
+     plot, and spending the extra aspect on user units (rather than on
+     squashing the plot) keeps the tick text the same rendered size as the
+     two-column chart, so the pair reads as one typographic system. */
+  const W = wide ? 680 : 420;
   const PLOT = 170;
   const LABELS = 26; /* the tick row lives inside the viewBox, not below it */
   const H = PLOT + LABELS;
@@ -306,13 +310,18 @@ export function Chart({ points, peak, peakLabel, projValue, projLabel, className
   const last = solid.at(-1);
   const proj = firstProj === -1 ? null : xy.at(-1);
 
+  const figs = peak || projValue;
+
   return (
-    <div className={`dk-chart ${className}`}>
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Chart rising to ${peak}`}>
+    <div className={`dk-chart${figs ? "" : " is-bare"}${wide ? " is-wide" : ""} ${className}`}>
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Chart rising to ${peak || points.at(-1).l}`}>
         <line className="dk-chart-axis" x1={PAD} y1={PLOT - PAD} x2={W - PAD} y2={PLOT - PAD} />
         <line className="dk-chart-axis" x1={PAD} y1={PAD} x2={PAD} y2={PLOT - PAD} />
         <path className="dk-chart-fill" d={area} />
-        <path className="dk-chart-line" d={line} />
+        {/* normalised so one stroke-dasharray in the CSS reveals the whole
+            line at any viewBox width — a fixed dash length leaves a gap in
+            the wide variant */}
+        <path className="dk-chart-line" d={line} pathLength="100" />
         {projLine ? <path className="dk-chart-proj" d={projLine} /> : null}
         <circle className="dk-node dk-node-lit" cx={last.x} cy={last.y} r="4" />
         {proj ? <circle className="dk-chart-proj-node" cx={proj.x} cy={proj.y} r="4" /> : null}
@@ -330,16 +339,20 @@ export function Chart({ points, peak, peakLabel, projValue, projLabel, className
           </text>
         ))}
       </svg>
-      <div className="dk-chart-figs">
-        <p className="dk-chart-peak">{peak}</p>
-        {peakLabel ? <p className="dk-chart-fig-l">{peakLabel}</p> : null}
-        {projValue ? (
-          <>
-            <p className="dk-chart-proj-v">{projValue}</p>
-            <p className="dk-chart-fig-l is-proj">{projLabel}</p>
-          </>
-        ) : null}
-      </div>
+      {figs ? (
+        <div className="dk-chart-figs">
+          <div className="dk-chart-fig">
+            <p className="dk-chart-peak">{peak}</p>
+            {peakLabel ? <p className="dk-chart-fig-l">{peakLabel}</p> : null}
+          </div>
+          {projValue ? (
+            <div className="dk-chart-fig is-proj">
+              <p className="dk-chart-proj-v">{projValue}</p>
+              <p className="dk-chart-fig-l is-proj">{projLabel}</p>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }

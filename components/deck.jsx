@@ -53,9 +53,15 @@ function Stagger({ children }) {
   );
 }
 
-function Note({ children }) {
+/* Notes are the speaker's aside, and they vary from a clause to a
+   paragraph. A fixed 48ch measure turns the long ones into an eight-line
+   column that runs into the chrome, so the measure widens (and the type
+   steps down) as the note gets longer. Same block, three densities. */
+function Note({ children, className = "" }) {
   if (!children) return null;
-  return <p className="dk-note">{children}</p>;
+  const len = typeof children === "string" ? children.length : 0;
+  const size = len > 400 ? " is-max" : len > 230 ? " is-long" : "";
+  return <p className={`dk-note${size}${className ? ` ${className}` : ""}`}>{children}</p>;
 }
 
 function Heading({ children }) {
@@ -265,7 +271,11 @@ export function Slide({ slide, workshop, program, index, total }) {
         return (
           <>
             <Heading>{slide.title}</Heading>
-            <Matrix heads={slide.heads} rows={slide.rows} className={slide.rows.length > 6 ? "is-dense" : ""} />
+            <Matrix
+              heads={slide.heads}
+              rows={slide.rows}
+              className={`${slide.rows.length > 6 ? "is-dense" : ""}${slide.num ? " is-num" : ""}`.trim()}
+            />
             <Note>{slide.note}</Note>
           </>
         );
@@ -279,10 +289,16 @@ export function Slide({ slide, workshop, program, index, total }) {
           </>
         );
 
+      /* real creative, on screen. The note rides in the header rather than
+         under the strip: the images want the height, and a paragraph
+         stacked beneath four tiles lands in the chrome. */
       case "gallery":
         return (
           <>
-            <Heading>{slide.title}</Heading>
+            <div className="dk-gallery-head">
+              <Heading>{slide.title}</Heading>
+              <Note>{slide.note}</Note>
+            </div>
             <ul className="dk-gallery">
               {slide.imgs.map((im, i) => (
                 <li key={im.src} className="dk-step" style={{ "--i": i }}>
@@ -291,7 +307,6 @@ export function Slide({ slide, workshop, program, index, total }) {
                 </li>
               ))}
             </ul>
-            <Note>{slide.note}</Note>
           </>
         );
 
@@ -299,7 +314,14 @@ export function Slide({ slide, workshop, program, index, total }) {
         return (
           <>
             <Heading>{slide.title}</Heading>
-            <Chart points={slide.points} peak={slide.peak} peakLabel={slide.peakLabel} projValue={slide.projValue} projLabel={slide.projLabel} />
+            <Chart
+              points={slide.points}
+              peak={slide.peak}
+              peakLabel={slide.peakLabel}
+              projValue={slide.projValue}
+              projLabel={slide.projLabel}
+              wide={slide.wide}
+            />
             <Note>{slide.note}</Note>
           </>
         );
@@ -341,36 +363,57 @@ export function Slide({ slide, workshop, program, index, total }) {
           </>
         );
 
-      /* the "go run this" slide, for a room that lives in a terminal */
-      case "terminal":
+      /* the "go run this" slide, for a room that lives in a terminal.
+         `side` swaps the stack for a two-column composition — the same
+         parts, a different silhouette, so two run slides in a row don't
+         read as the same slide twice. */
+      case "terminal": {
+        const term = (
+          <div className="dk-term">
+            <div className="dk-term-bar">
+              <span className="dk-term-dot" />
+              <span className="dk-term-dot" />
+              <span className="dk-term-dot" />
+              <span>{slide.cwd || "~/your-product"}</span>
+            </div>
+            <div className="dk-term-body">
+              <p className="dk-term-cmd">{slide.cmd}</p>
+              {slide.out?.length > 0 && (
+                <p className="dk-term-out">
+                  {slide.out.map((line) => (
+                    <span key={line}>{line}</span>
+                  ))}
+                  <span aria-hidden="true">
+                    <i className="dk-term-cursor" />
+                  </span>
+                </p>
+              )}
+            </div>
+          </div>
+        );
+
+        if (slide.side) {
+          return (
+            <div className="dk-run is-side">
+              {term}
+              <div className="dk-run-aside">
+                <p className="dk-run-label">{slide.title}</p>
+                <p className="dk-run-c">{slide.c}</p>
+                <Note>{slide.note}</Note>
+              </div>
+            </div>
+          );
+        }
+
         return (
           <>
             <p className="dk-run-label">{slide.title}</p>
-            <div className="dk-term">
-              <div className="dk-term-bar">
-                <span className="dk-term-dot" />
-                <span className="dk-term-dot" />
-                <span className="dk-term-dot" />
-                <span>{slide.cwd || "~/your-product"}</span>
-              </div>
-              <div className="dk-term-body">
-                <p className="dk-term-cmd">{slide.cmd}</p>
-                {slide.out?.length > 0 && (
-                  <p className="dk-term-out">
-                    {slide.out.map((line) => (
-                      <span key={line}>{line}</span>
-                    ))}
-                    <span aria-hidden="true">
-                      <i className="dk-term-cursor" />
-                    </span>
-                  </p>
-                )}
-              </div>
-            </div>
+            {term}
             <p className="dk-run-c">{slide.c}</p>
             <Note>{slide.note}</Note>
           </>
         );
+      }
 
       /* one story from the wire — ghost index numeral, headline, facts,
          and a prompt to argue about. The room talks; the slide listens. */

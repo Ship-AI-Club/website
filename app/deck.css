@@ -233,6 +233,23 @@
   max-width: 48ch;
   padding-left: 1.2cqw;
   border-left: 1px solid var(--accent-line);
+  flex: none;
+}
+
+/* A note has a height budget, not just a measure. Left at 48ch a long one
+   becomes an eight-line column that runs past the body and into the
+   chrome, so the measure widens and the type steps down as it grows —
+   four lines of aside instead of eight, and the dead space to the right
+   of every note gets used. Set by <Note> from the string's length. */
+.dk-note.is-long {
+  font-size: 1.18cqw;
+  max-width: 72ch;
+}
+
+.dk-note.is-max {
+  font-size: 1.1cqw;
+  line-height: 1.5;
+  max-width: 88ch;
 }
 
 /* ---------- title ---------- */
@@ -588,9 +605,13 @@
   padding: 0 0.8cqw;
 }
 
-/* the conclusion belongs under both columns, not under the left one */
+/* the conclusion belongs under both columns, not under the left one — and
+   because it already has the full measure, it opts out of the long-note
+   step-down above */
 .dk-split-slide .dk-note {
   max-width: none;
+  font-size: 1.25cqw;
+  line-height: 1.55;
 }
 
 /* ---------- metric ---------- */
@@ -745,6 +766,43 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--faint);
+}
+
+/* `side`: the same parts, turned ninety degrees. Two run slides in a row
+   otherwise read as one slide shown twice. */
+.dk-run.is-side {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  gap: 4.4cqw;
+  align-items: center;
+  width: 100%;
+}
+
+.dk-run.is-side .dk-term {
+  margin: 0;
+}
+
+/* the narrower column can't carry the full-slide command size */
+.dk-run.is-side .dk-term-cmd {
+  font-size: 2.5cqw;
+}
+
+.dk-run-aside {
+  display: grid;
+  gap: 1.6cqw;
+  align-content: center;
+}
+
+.dk-run.is-side .dk-run-label {
+  color: var(--accent);
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  letter-spacing: 0.16em;
+}
+
+.dk-run.is-side .dk-run-c {
+  font-size: 1.7cqw;
+  color: var(--ink);
+  max-width: 30ch;
 }
 
 /* ---------- quote ---------- */
@@ -1933,10 +1991,26 @@ a.dk-news-src:hover {
   font-size: 1.4cqw;
 }
 
+/* A table of money and counts wants the numeral face and tabular figures,
+   or the columns don't line up and the sans reads as prose. Opt-in via
+   `num` so word tables keep the sans. */
+.dk-matrix.is-num td {
+  font-family: var(--font-geist-mono), monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.45cqw;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+
 .dk-matrix td.is-lit {
   color: var(--ink);
   background: var(--accent-ghost);
-  box-shadow: inset 2px 0 0 var(--accent);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+/* the one cell the slide is actually about */
+.dk-matrix.is-num td.is-lit {
+  color: var(--accent);
 }
 
 /* ---------- chart ---------- */
@@ -1945,33 +2019,57 @@ a.dk-news-src:hover {
    the line is plotted in pixel jumps, matching the site's motion. */
 /* ---------- gallery: real creative on screen, not described ---------- */
 
+/* The heading and its note share a line so the strip below gets every
+   pixel of remaining height — a paragraph stacked under four tiles is
+   what was landing in the chrome. */
+.dk-gallery-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 46cqw);
+  gap: 4cqw;
+  align-items: end;
+  flex: none;
+}
+
+.dk-gallery-head .dk-h {
+  max-width: 16ch;
+}
+
 .dk-gallery {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.6cqw;
-  margin: 1.4cqw 0 0;
+  gap: 1.2cqw;
+  margin: 0;
   padding: 0;
   list-style: none;
+  flex: 1;
+  min-height: 0;
 }
 
+/* Uniform cells, mixed source ratios: the 9:16 asset and the 4:5 assets
+   crop to the same tile so the strip reads as one set. */
 .dk-gallery li {
-  display: grid;
-  gap: 0.7cqw;
+  position: relative;
+  min-height: 0;
+  border: 1px solid var(--hairline);
+  overflow: hidden;
 }
 
 .dk-gallery img {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: 100%;
   object-fit: cover;
   display: block;
-  border: 1px solid var(--hairline);
 }
 
 .dk-gallery-cap {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 2.6cqw 0.9cqw 0.7cqw;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 1.05cqw;
-  letter-spacing: 0.06em;
-  color: var(--dim);
+  font-size: 0.95cqw;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0));
 }
 
 /* ---------- the startup curve ---------- */
@@ -1979,7 +2077,7 @@ a.dk-news-src:hover {
 .dk-curve svg {
   width: 100%;
   height: auto;
-  max-height: 34cqw;
+  max-height: 32cqw;
   display: block;
 }
 
@@ -2044,18 +2142,60 @@ a.dk-news-src:hover {
 
 .dk-chart {
   display: grid;
-  grid-template-columns: 1fr 22cqw;
-  gap: 3cqw;
+  grid-template-columns: minmax(0, 1fr) 24cqw;
+  gap: 3.6cqw;
   align-items: center;
 }
 
 /* Capped, or the plot's own aspect ratio eats the slide and pushes the
    caption into the chrome. The tick text scales with the SVG, so the cap
    also sets the tick size. */
+/* Height-first, not width-first. Sizing by width and capping the height
+   letterboxes the plot inside its own box — dead margin on both sides
+   that reads as a mistake. Fixing the height and letting the aspect pick
+   the width puts the y-axis on the same left edge as the heading. */
 .dk-chart svg {
-  width: 100%;
-  height: auto;
-  max-height: 24cqw;
+  width: auto;
+  height: 27cqw;
+  max-width: 100%;
+  justify-self: start;
+}
+
+/* Wide: the figures run as a headline row above a full-width plot. Two
+   chart slides in a row shouldn't be the same composition twice, and the
+   series that has no forecast to caption doesn't need a side column. */
+.dk-chart.is-wide,
+.dk-chart.is-bare {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.8cqw;
+}
+
+.dk-chart.is-wide svg,
+.dk-chart.is-bare svg {
+  height: 24cqw;
+}
+
+.dk-chart.is-wide .dk-chart-figs {
+  order: -1;
+  grid-auto-flow: column;
+  justify-content: start;
+  align-items: end;
+  gap: 3.2cqw;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 1.4cqw;
+}
+
+.dk-chart.is-wide .dk-chart-peak {
+  font-size: 3.4cqw;
+}
+
+.dk-chart.is-wide .dk-chart-fig.is-proj {
+  margin-top: 0;
+}
+
+.dk-chart.is-wide .dk-chart-proj-v {
+  font-size: 2.6cqw;
+  margin-top: 0;
 }
 
 .dk-chart-axis {
@@ -2072,8 +2212,8 @@ a.dk-news-src:hover {
 }
 
 .dk-motion .dk-chart-line {
-  stroke-dasharray: 420;
-  stroke-dashoffset: 420;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
 }
 
 .dk-motion .is-active .dk-chart-line {
@@ -2116,6 +2256,15 @@ a.dk-news-src:hover {
   gap: 0.4cqw;
 }
 
+.dk-chart-fig {
+  display: grid;
+  gap: 0.7cqw;
+}
+
+.dk-chart-fig.is-proj {
+  margin-top: 1.6cqw;
+}
+
 .dk-chart-peak {
   font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
   font-size: 4.4cqw;
@@ -2130,7 +2279,6 @@ a.dk-news-src:hover {
   line-height: 0.9;
   letter-spacing: -0.02em;
   color: var(--accent-line);
-  margin-top: 1.4cqw;
 }
 
 .dk-chart-fig-l {

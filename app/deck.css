@@ -227,10 +227,10 @@
 /* Captions and asides. --faint is chrome-only; anything a person in the
    fourth row has to read starts at --dim. */
 .dk-note {
-  font-size: 1.25cqw;
+  font-size: 1.72cqw;
   color: var(--dim);
-  line-height: 1.55;
-  max-width: 48ch;
+  line-height: 1.5;
+  max-width: 46ch;
   padding-left: 1.2cqw;
   border-left: 1px solid var(--accent-line);
   flex: none;
@@ -242,14 +242,14 @@
    four lines of aside instead of eight, and the dead space to the right
    of every note gets used. Set by <Note> from the string's length. */
 .dk-note.is-long {
-  font-size: 1.18cqw;
-  max-width: 72ch;
+  font-size: 1.44cqw;
+  max-width: 62ch;
 }
 
 .dk-note.is-max {
-  font-size: 1.1cqw;
-  line-height: 1.5;
-  max-width: 88ch;
+  font-size: 1.26cqw;
+  line-height: 1.45;
+  max-width: 78ch;
 }
 
 /* ---------- title ---------- */

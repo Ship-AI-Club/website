@@ -412,8 +412,8 @@ export function Slide({ slide, workshop, program, index, total }) {
               <p className="dk-term-cmd">{slide.cmd}</p>
               {slide.out?.length > 0 && (
                 <p className="dk-term-out">
-                  {slide.out.map((line) => (
-                    <span key={line}>{line}</span>
+                  {slide.out.map((line, i) => (
+                    <span key={i}>{line}</span>
                   ))}
                   <span aria-hidden="true">
                     <i className="dk-term-cursor" />

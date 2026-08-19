@@ -201,10 +201,13 @@ export function Slide({ slide, workshop, program, index, total }) {
         return (
           <>
             <Heading>{slide.title}</Heading>
-            <div className="dk-split">
-              <Column col={slide.left} tone="muted" />
+            {/* Two columns are a contrast by default — muted "vs" accent.
+                `pair` marks the slide as two of the same thing rather than
+                one against the other, so neither column reads as the loser. */}
+            <div className={`dk-split${slide.pair ? " is-pair" : ""}`}>
+              <Column col={slide.left} tone={slide.pair ? "accent" : "muted"} />
               <span className="dk-split-vs" aria-hidden="true">
-                vs
+                {slide.pair ? "and" : "vs"}
               </span>
               <Column col={slide.right} tone="accent" />
             </div>

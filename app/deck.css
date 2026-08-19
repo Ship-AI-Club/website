@@ -2072,6 +2072,13 @@ a.dk-news-src:hover {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0));
 }
 
+/* A row can carry a verdict. Used sparingly — one channel that worked and
+   one that plainly did not read faster in colour than in a sentence. */
+.dk-matrix tr.is-good th[scope="row"] { color: var(--good, #6ee7a8); }
+.dk-matrix tr.is-good td { color: var(--good, #6ee7a8); }
+.dk-matrix tr.is-bad th[scope="row"] { color: var(--bad, #f4796b); }
+.dk-matrix tr.is-bad td { color: var(--bad, #f4796b); }
+
 /* ---------- cohort retention ---------- */
 
 .dk-cohorts {

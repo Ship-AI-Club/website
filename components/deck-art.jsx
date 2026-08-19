@@ -260,7 +260,7 @@ export function Matrix({ rows, heads, className = "" }) {
       </thead>
       <tbody>
         {rows.map((r, i) => (
-          <tr key={r.t} style={{ "--i": i }}>
+          <tr key={r.t} className={r.tone ? `is-${r.tone}` : undefined} style={{ "--i": i }}>
             <th scope="row">{r.t}</th>
             {r.cells.map((c, j) => (
               <td key={j} className={c.lit ? "is-lit" : undefined}>

@@ -2078,12 +2078,40 @@ a.dk-news-src:hover {
   stroke: none;
 }
 
+/* the figure stack in the right column: banked on top, forecast under it,
+   each with its own label so neither can be read as the other */
+.dk-chart-figs {
+  display: grid;
+  gap: 0.4cqw;
+}
+
 .dk-chart-peak {
   font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
-  font-size: 5cqw;
+  font-size: 4.4cqw;
   line-height: 0.9;
   letter-spacing: -0.02em;
   color: var(--accent);
+}
+
+.dk-chart-proj-v {
+  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-size: 3.2cqw;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--accent-line);
+  margin-top: 1.4cqw;
+}
+
+.dk-chart-fig-l {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.05cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.dk-chart-fig-l.is-proj {
+  color: var(--accent-line);
 }
 
 /* user units, not cqw: this text sits inside a viewBox that is already

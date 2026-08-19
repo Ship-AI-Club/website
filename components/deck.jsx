@@ -283,7 +283,7 @@ export function Slide({ slide, workshop, program, index, total }) {
         return (
           <>
             <Heading>{slide.title}</Heading>
-            <Chart points={slide.points} peak={slide.peak} />
+            <Chart points={slide.points} peak={slide.peak} peakLabel={slide.peakLabel} projValue={slide.projValue} projLabel={slide.projLabel} />
             <Note>{slide.note}</Note>
           </>
         );

@@ -323,6 +323,62 @@ export function Chart({ points, peak, className = "" }) {
   );
 }
 
+/* ---------- the startup curve ----------
+   The canonical shape (Paul Graham's "The Process", and every chalkboard
+   redraw of it since), rebuilt in the deck's own hand rather than pasted
+   in as somebody's screenshot. Geometry lives here; the five annotations
+   come from the slide so the copy stays in decks.js. */
+
+const CURVE_MARKS = [
+  { px: 108, py: 50, tx: 92, ty: 38, lx1: 95, ly1: 43, lx2: 103, ly2: 48, anchor: "end" },
+  { px: 132, py: 150, tx: 150, ty: 134, lx1: 136, ly1: 148, lx2: 147, ly2: 140, anchor: "start" },
+  { px: 215, py: 202, tx: 215, ty: 226, lx1: 215, ly1: 208, lx2: 215, ly2: 216, anchor: "middle" },
+  { px: 365, py: 190, tx: 344, ty: 164, lx1: 362, ly1: 186, lx2: 348, ly2: 172, anchor: "end" },
+  { px: 424, py: 94, tx: 408, ty: 62, lx1: 413, ly1: 68, lx2: 420, ly2: 86, anchor: "end" },
+];
+
+/* x is spent roughly in proportion to the real calendar: Feb is three
+   weeks of a seven-month graph, Mar–Jun is four months of it. The trough
+   is meant to feel long, because it was. */
+const CURVE_PATH = [
+  "M42 118", "L78 118",
+  "C88 118 92 50 108 50",
+  "C124 50 122 196 136 199",
+  "C170 202 240 202 300 201",
+  "C316 201 322 210 330 205",
+  "C340 198 348 204 356 194",
+  "C366 184 374 192 384 176",
+  "C400 150 420 100 452 34",
+].join(" ");
+
+export function Curve({ marks = [], className = "" }) {
+  const W = 480;
+  const H = 250;
+
+  return (
+    <div className={`dk-curve ${className}`}>
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="The startup curve: a spike, a long trough, then the climb">
+        <line className="dk-curve-axis" x1="38" y1="20" x2="38" y2="232" />
+        <line className="dk-curve-axis" x1="38" y1="232" x2="462" y2="232" />
+        <path className="dk-curve-line" d={CURVE_PATH} />
+        {marks.map((m, i) => {
+          const g = CURVE_MARKS[i];
+          if (!g) return null;
+          return (
+            <g key={m.t} className="dk-curve-mark" style={{ "--i": i }}>
+              <line className="dk-curve-lead" x1={g.lx1} y1={g.ly1} x2={g.lx2} y2={g.ly2} />
+              <circle className={`dk-node${m.lit ? " dk-node-lit" : ""}`} cx={g.px} cy={g.py} r="3" />
+              <text className="dk-curve-t" x={g.tx} y={g.ty} textAnchor={g.anchor}>{m.t}</text>
+              <text className="dk-curve-c" x={g.tx} y={g.ty + 12} textAnchor={g.anchor}>{m.c}</text>
+            </g>
+          );
+        })}
+        <text className="dk-curve-axis-label" x="458" y="245" textAnchor="end">time →</text>
+      </svg>
+    </div>
+  );
+}
+
 /* ---------- scorecard ---------- */
 
 export function Scorecard({ rows, className = "" }) {

@@ -1,6 +1,6 @@
 import { sessionDateLabel } from "../lib/programs";
 import { ArrowUpRight, Play } from "lucide-react";
-import { Bolt, Chart, Dome, Engine, Flow, Funnel, Globe, Loop, Mark, Matrix, Net, Prism, QR, Sail, Scorecard, Timeline } from "./deck-art";
+import { Bolt, Chart, Curve, Dome, Engine, Flow, Funnel, Globe, Loop, Mark, Matrix, Net, Prism, QR, Sail, Scorecard, Timeline } from "./deck-art";
 import codes from "../lib/qr.generated.json";
 
 /* the brand asset library — slides pick one by name via `art` */
@@ -266,6 +266,15 @@ export function Slide({ slide, workshop, program, index, total }) {
           <>
             <Heading>{slide.title}</Heading>
             <Matrix heads={slide.heads} rows={slide.rows} className={slide.rows.length > 6 ? "is-dense" : ""} />
+            <Note>{slide.note}</Note>
+          </>
+        );
+
+      case "curve":
+        return (
+          <>
+            <Heading>{slide.title}</Heading>
+            <Curve marks={slide.marks} />
             <Note>{slide.note}</Note>
           </>
         );

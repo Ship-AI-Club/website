@@ -279,6 +279,22 @@ export function Slide({ slide, workshop, program, index, total }) {
           </>
         );
 
+      case "gallery":
+        return (
+          <>
+            <Heading>{slide.title}</Heading>
+            <ul className="dk-gallery">
+              {slide.imgs.map((im, i) => (
+                <li key={im.src} className="dk-step" style={{ "--i": i }}>
+                  <img src={im.src} alt={im.alt || ""} />
+                  {im.cap ? <span className="dk-gallery-cap">{im.cap}</span> : null}
+                </li>
+              ))}
+            </ul>
+            <Note>{slide.note}</Note>
+          </>
+        );
+
       case "chart":
         return (
           <>

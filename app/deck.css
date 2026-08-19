@@ -2072,6 +2072,86 @@ a.dk-news-src:hover {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0));
 }
 
+/* ---------- cohort retention ---------- */
+
+.dk-cohorts {
+  display: grid;
+  grid-template-columns: 1fr 20cqw;
+  gap: 2.4cqw;
+  align-items: center;
+}
+
+.dk-cohorts svg {
+  width: 100%;
+  height: auto;
+  max-height: 30cqw;
+  display: block;
+}
+
+.dk-cohort-line {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.dk-cohort-line.is-lit {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+}
+
+.dk-cohort-line.is-partial {
+  stroke: var(--accent-line);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+
+.dk-cohort-node {
+  fill: var(--accent);
+  stroke: none;
+}
+
+.dk-cohort-node.is-partial {
+  fill: none;
+  stroke: var(--accent-line);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.dk-cohort-key {
+  display: grid;
+  gap: 0.9cqw;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.1cqw;
+  color: var(--dim);
+}
+
+.dk-cohort-key li {
+  display: grid;
+  grid-template-columns: 1.6cqw 1fr auto;
+  align-items: center;
+  gap: 0.7cqw;
+}
+
+.dk-cohort-swatch {
+  height: 2px;
+  background: var(--hairline);
+}
+
+.dk-cohort-key li.is-lit { color: var(--ink); }
+.dk-cohort-key li.is-lit .dk-cohort-swatch { background: var(--accent); height: 3px; }
+.dk-cohort-key li.is-partial { color: var(--accent-line); }
+.dk-cohort-key li.is-partial .dk-cohort-swatch {
+  background: none;
+  border-top: 2px dashed var(--accent-line);
+  height: 0;
+}
+
+.dk-cohort-n { color: var(--dim); }
+
 /* ---------- the startup curve ---------- */
 
 .dk-curve svg {

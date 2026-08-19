@@ -357,6 +357,58 @@ export function Chart({ points, peak, peakLabel, projValue, projLabel, wide = fa
   );
 }
 
+/* ---------- cohort retention curves ----------
+   Several weekly cohorts on one D1..D7 axis. The most recent COMPLETED
+   cohort is drawn lit; a cohort still inside its own D7 window is drawn
+   dashed and labelled, so a partial read can never be mistaken for a
+   finished one. */
+
+export function Cohorts({ series = [], days = 7, className = "" }) {
+  const W = 440;
+  const PLOT = 200;
+  const LABELS = 26;
+  const H = PLOT + LABELS;
+  const PAD = 26;
+  const max = Math.max(...series.flatMap((c) => c.v)) || 1;
+
+  const xOf = (i) => PAD + (i / (days - 1)) * (W - PAD - 12);
+  const yOf = (v) => PLOT - PAD - (v / max) * (PLOT - PAD * 1.4);
+
+  return (
+    <div className={`dk-cohorts ${className}`}>
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Retention by weekly cohort, day one to day seven">
+        <line className="dk-curve-axis" x1={PAD} y1={PLOT - PAD} x2={W - 12} y2={PLOT - PAD} />
+        <line className="dk-curve-axis" x1={PAD} y1={16} x2={PAD} y2={PLOT - PAD} />
+        {series.map((c, ci) => {
+          const d = c.v.map((v, i) => `${i ? "L" : "M"}${xOf(i).toFixed(1)} ${yOf(v).toFixed(1)}`).join(" ");
+          const cls = c.partial ? "dk-cohort-line is-partial" : c.lit ? "dk-cohort-line is-lit" : "dk-cohort-line";
+          return (
+            <g key={c.t} style={{ "--i": ci }}>
+              <path className={cls} d={d} pathLength="100" />
+              {c.lit || c.partial ? (
+                <circle className={c.partial ? "dk-cohort-node is-partial" : "dk-cohort-node is-lit"} cx={xOf(c.v.length - 1)} cy={yOf(c.v.at(-1))} r="3" />
+              ) : null}
+            </g>
+          );
+        })}
+        {Array.from({ length: days }, (_, i) => (
+          <text key={i} className="dk-chart-tick" x={xOf(i)} y={PLOT + 12} textAnchor="middle">{`d${i + 1}`}</text>
+        ))}
+        <text className="dk-chart-tick" x={PAD - 6} y={yOf(max)} textAnchor="end">{`${Math.round(max)}%`}</text>
+      </svg>
+      <ul className="dk-cohort-key">
+        {series.map((c) => (
+          <li key={c.t} className={c.partial ? "is-partial" : c.lit ? "is-lit" : undefined}>
+            <span className="dk-cohort-swatch" aria-hidden="true" />
+            <span className="dk-cohort-t">{c.t}</span>
+            <span className="dk-cohort-n">{c.n}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 /* ---------- the startup curve ----------
    The canonical shape (Paul Graham's "The Process", and every chalkboard
    redraw of it since), rebuilt in the deck's own hand rather than pasted

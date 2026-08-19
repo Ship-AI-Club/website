@@ -2171,6 +2171,39 @@ a.dk-news-src:hover {
 .dk-matrix tr.is-bad th[scope="row"] { color: var(--bad, #f4796b); }
 .dk-matrix tr.is-bad td { color: var(--bad, #f4796b); }
 
+/* ---------- device screenshot ---------- */
+
+.dk-shot {
+  display: grid;
+  grid-template-columns: 1fr 20cqw;
+  gap: var(--dk-gutter, 4cqw);
+  align-items: center;
+  height: 100%;
+}
+
+.dk-shot-points {
+  display: grid;
+  gap: 1cqw;
+  margin: var(--dk-gap, 2.2cqw) 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.72cqw;
+  line-height: 1.4;
+}
+
+.dk-shot-points li {
+  padding-left: 1.6cqw;
+  border-left: 1px solid var(--accent-line);
+}
+
+.dk-shot-art img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--hairline);
+  border-radius: 1.4cqw;
+}
+
 /* ---------- cohort retention ---------- */
 
 .dk-cohorts {

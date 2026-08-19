@@ -322,6 +322,26 @@ export function Slide({ slide, workshop, program, index, total }) {
           </>
         );
 
+      case "shot":
+        return (
+          <div className="dk-shot">
+            <div>
+              <Heading>{slide.title}</Heading>
+              <ul className="dk-shot-points">
+                {slide.points.map((t, i) => (
+                  <li key={t} className="dk-step" style={{ "--i": i }}>
+                    {t}
+                  </li>
+                ))}
+              </ul>
+              <Note>{slide.note}</Note>
+            </div>
+            <div className="dk-shot-art dk-step" style={{ "--i": 1 }}>
+              <img src={slide.img} alt={slide.imgAlt || slide.title} />
+            </div>
+          </div>
+        );
+
       case "chart":
         return (
           <>

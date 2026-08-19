@@ -113,6 +113,19 @@
   border: 1px solid var(--hairline);
   padding: 4.4cqw;
   overflow: hidden; /* the title art bleeds and gets cropped by this */
+
+  /* ---- the deck's spacing scale ----
+     Three numbers, set once, consumed by every kind. Hand-tuning
+     twenty-four kinds independently is how a heading ends up at one
+     height on `matrix` and another on `bullets` — which reads as sloppy
+     the moment somebody pages through. */
+  /* Held at the value the body already used. The rhythm comes from
+     every kind sharing one number, not from the number being new —
+     and growing it would eat height that the densest slides in the
+     other decks do not have to spare. */
+  --dk-gap: 2.2cqw; /* heading → content, and content → note */
+  --dk-inset: 1.6cqw; /* text inset behind a left rule */
+  --dk-gutter: 4cqw; /* between two columns of type */
 }
 
 .dk-body {
@@ -120,10 +133,76 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2.2cqw;
+  gap: var(--dk-gap);
   min-height: 0;
   position: relative;
   z-index: 1;
+}
+
+/* ------------------------------------------------------------------
+   VERTICAL RHYTHM — the document-shaped slides
+
+   Two families live in this frame. HERO slides (title, act, statement,
+   quote, break, thanks, end) are one composed block, optically centred.
+   DOCUMENT slides are heading → content → note, and they are the ones
+   you page through in a run: matrix, then bullets, then split. For
+   those, the eye fixes on the heading, so the heading has to land at
+   exactly the same height on every one of them — flush with the top of
+   the body box. The note is the other fixed anchor: it sits on the
+   footer rule. Whatever height is left over belongs to the content,
+   which floats optically centred inside it.
+
+   The mechanism is a single auto margin on the content block, and it is
+   chosen over flex-grow and over justify-content for two reasons.
+
+   Not flex-grow: a table, an SVG or a grid that STRETCHES to fill is a
+   different bug — rows spreading apart, a plot letterboxing itself. An
+   auto margin moves a block at its natural size and nothing else.
+
+   Not justify-content: an auto margin only absorbs space that exists.
+   While the slide has room it takes all of it, which pins the heading
+   to the top and the note to the rule and leaves justify-content with
+   nothing to do. The moment a slide is over-full the margin collapses
+   to zero and the body's own `center` takes back over, so the overflow
+   splits top and bottom the way it always has instead of dumping the
+   whole of it through the footer rule. The rhythm is exact when it
+   fits and degrades gently when it can't.
+------------------------------------------------------------------ */
+
+/* The content block, and only the content block, takes the slack. With
+   a note under it that lands the note on the rule; without one the
+   content simply centres in the space below the heading, which is the
+   same silhouette either way. */
+.dk-body > .dk-agenda,
+.dk-body > .dk-time,
+.dk-body > .dk-items,
+.dk-body > .dk-split,
+.dk-body > .dk-metrics,
+.dk-body > .dk-funnel,
+.dk-body > .dk-flow,
+.dk-body > .dk-loop,
+.dk-body > .dk-matrix,
+.dk-body > .dk-cohorts,
+.dk-body > .dk-curve,
+.dk-body > .dk-chart,
+.dk-body > .dk-score,
+.dk-body > .dk-engine,
+.dk-body > .dk-sponsors,
+.dk-body > .dk-contact-rows,
+.dk-body > .dk-walk {
+  margin-block: auto;
+}
+
+/* The terminal has no heading and no single content block — it is a
+   label, a box and a caption. The label takes the heading's slot at the
+   top; box and caption stay one group and centre in what's left, rather
+   than the caption drifting down to the rule on its own. */
+.dk-terminal-slide .dk-body > .dk-term {
+  margin-top: auto;
+}
+
+.dk-terminal-slide .dk-body > :last-child {
+  margin-bottom: auto;
 }
 
 /* Optical centring: dead-centre in a 16:9 frame reads slightly low, so
@@ -231,7 +310,7 @@
   color: var(--dim);
   line-height: 1.5;
   max-width: 46ch;
-  padding-left: 1.2cqw;
+  padding-left: var(--dk-inset);
   border-left: 1px solid var(--accent-line);
   flex: none;
 }
@@ -459,6 +538,14 @@
   gap: 1.1cqw;
 }
 
+/* Ten lines is the point where the agenda stops being a list and starts
+   being a page of one. At 1.1cqw of leading the last item lands under
+   the footer rule, so a long agenda tightens its leading instead of
+   dropping off the bottom of the slide. */
+.dk-agenda:has(> li:nth-child(10)) {
+  gap: 0.55cqw;
+}
+
 .dk-agenda li {
   display: grid;
   grid-template-columns: 4.5cqw 1fr;
@@ -489,7 +576,7 @@
   gap: 1.5cqw;
   /* one continuous rule rather than a ragged barcode of per-item stubs */
   border-left: 1px solid var(--hairline);
-  padding-left: 1.6cqw;
+  padding-left: var(--dk-inset);
 }
 
 /* align-content, not the default stretch: in two-column mode the grid row
@@ -505,14 +592,14 @@
    both columns keep it */
 .dk-items.is-two {
   grid-template-columns: 1fr 1fr;
-  column-gap: 4cqw;
+  column-gap: var(--dk-gutter);
   border-left: 0;
   padding-left: 0;
 }
 
 .dk-items.is-two li {
   border-left: 1px solid var(--hairline);
-  padding-left: 1.6cqw;
+  padding-left: var(--dk-inset);
 }
 
 .dk-item-t {
@@ -537,7 +624,7 @@
 .dk-split {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  gap: 0 3cqw;
+  gap: 0 var(--dk-gutter);
   align-items: start;
 }
 
@@ -773,7 +860,7 @@
 .dk-run.is-side {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
-  gap: 4.4cqw;
+  gap: var(--dk-gutter);
   align-items: center;
   width: 100%;
 }
@@ -954,7 +1041,7 @@ a.dk-news-src:hover {
 .dk-walk {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  gap: 4cqw;
+  gap: var(--dk-gutter);
   align-items: start;
   width: 100%;
 }
@@ -1038,7 +1125,7 @@ a.dk-news-src:hover {
   gap: 1.8cqw;
   align-items: start;
   border-left: 1px solid var(--accent-line);
-  padding-left: 1.8cqw;
+  padding-left: var(--dk-inset);
 }
 
 .dk-walk-n {
@@ -1096,7 +1183,7 @@ a.dk-news-src:hover {
   display: grid;
   gap: 0.9cqw;
   border-left: 1px solid var(--hairline);
-  padding-left: 1.6cqw;
+  padding-left: var(--dk-inset);
   max-width: 54ch;
   position: relative;
   z-index: 1;
@@ -1229,7 +1316,7 @@ a.dk-news-src:hover {
   justify-items: start;
   gap: 1cqw;
   border-left: 1px solid var(--hairline);
-  padding-left: 1.8cqw;
+  padding-left: var(--dk-inset);
 }
 
 /* white monochrome, same treatment as the homepage strip */
@@ -1272,7 +1359,7 @@ a.dk-news-src:hover {
   display: grid;
   gap: 1.4cqw;
   border-left: 1px solid var(--hairline);
-  padding-left: 1.6cqw;
+  padding-left: var(--dk-inset);
 }
 
 .dk-contact-rows li {
@@ -1663,6 +1750,11 @@ a.dk-news-src:hover {
   to { opacity: 1; }
 }
 
+/* The one document-shaped kind that keeps a centred block: the prism is
+   a single composition of type against a diagram that bleeds off the
+   right edge, and pinning its heading to the top line leaves the
+   diagram stranded with half a slide of nothing under it. It stays as
+   composed. */
 .dk-prism-slide-inner {
   display: grid;
   grid-template-columns: 1fr 38cqw;
@@ -2088,10 +2180,17 @@ a.dk-news-src:hover {
   align-items: center;
 }
 
+/* Height-first, same as .dk-chart: sizing by width and then capping the
+   height letterboxes the plot inside its own box — dead margin on both
+   sides, and a y-axis that sits nowhere near the heading's left edge.
+   Fixing the height and letting the aspect pick the width puts the axis
+   back on the common left edge and leaves the key at the right margin,
+   which is exactly the chart slide's composition. */
 .dk-cohorts svg {
-  width: 100%;
-  height: auto;
-  max-height: 30cqw;
+  width: auto;
+  height: 27cqw;
+  max-width: 100%;
+  justify-self: start;
   display: block;
 }
 
@@ -2161,10 +2260,13 @@ a.dk-news-src:hover {
 
 /* ---------- the startup curve ---------- */
 
+/* height-first, for the same reason as .dk-chart and .dk-cohorts: a
+   width-sized plot with a height cap letterboxes itself and pushes its
+   own y-axis off the deck's left edge */
 .dk-curve svg {
-  width: 100%;
-  height: auto;
-  max-height: 32cqw;
+  width: auto;
+  height: 30cqw;
+  max-width: 100%;
   display: block;
 }
 
@@ -2257,9 +2359,12 @@ a.dk-news-src:hover {
   gap: 1.8cqw;
 }
 
+/* The wide plot runs under a headline row rather than beside a column,
+   so it has a caption's worth of height less to spend than the
+   two-column chart — at 24cqw the note underneath crossed the rule. */
 .dk-chart.is-wide svg,
 .dk-chart.is-bare svg {
-  height: 24cqw;
+  height: 21.5cqw;
 }
 
 .dk-chart.is-wide .dk-chart-figs {

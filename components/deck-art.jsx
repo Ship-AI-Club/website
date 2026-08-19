@@ -292,9 +292,19 @@ export function Chart({ points, peak, className = "" }) {
     ...p,
   }));
 
-  const line = xy.map((p, i) => `${i ? "L" : "M"}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(" ");
-  const area = `${line} L${xy.at(-1).x.toFixed(1)} ${PLOT - PAD} L${xy[0].x.toFixed(1)} ${PLOT - PAD} Z`;
-  const last = xy.at(-1);
+  /* a trailing point marked proj is a forecast, not a reading: the run of
+     actuals stays solid and the last leg goes dashed, so the slide can't
+     be read as if we already banked it */
+  const firstProj = xy.findIndex((p) => p.proj);
+  const solid = firstProj === -1 ? xy : xy.slice(0, firstProj);
+  const dashed = firstProj === -1 ? [] : xy.slice(firstProj - 1);
+
+  const draw = (pts) => pts.map((p, i) => `${i ? "L" : "M"}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(" ");
+  const line = draw(solid);
+  const projLine = dashed.length ? draw(dashed) : null;
+  const area = `${line} L${solid.at(-1).x.toFixed(1)} ${PLOT - PAD} L${xy[0].x.toFixed(1)} ${PLOT - PAD} Z`;
+  const last = solid.at(-1);
+  const proj = firstProj === -1 ? null : xy.at(-1);
 
   return (
     <div className={`dk-chart ${className}`}>
@@ -303,13 +313,15 @@ export function Chart({ points, peak, className = "" }) {
         <line className="dk-chart-axis" x1={PAD} y1={PAD} x2={PAD} y2={PLOT - PAD} />
         <path className="dk-chart-fill" d={area} />
         <path className="dk-chart-line" d={line} />
+        {projLine ? <path className="dk-chart-proj" d={projLine} /> : null}
         <circle className="dk-node dk-node-lit" cx={last.x} cy={last.y} r="4" />
+        {proj ? <circle className="dk-chart-proj-node" cx={proj.x} cy={proj.y} r="4" /> : null}
         {/* ticks are sized in user units — a cqw here would be scaled again
             by the viewBox and land three times too big */}
         {xy.map((p, i) => (
           <text
             key={p.l}
-            className="dk-chart-tick"
+            className={`dk-chart-tick${p.proj ? " is-proj" : ""}`}
             x={p.x}
             y={PLOT + 12}
             textAnchor={i === 0 ? "start" : i === xy.length - 1 ? "end" : "middle"}

@@ -2053,6 +2053,26 @@ a.dk-news-src:hover {
   to { stroke-dashoffset: 0; }
 }
 
+/* forecast, drawn as a forecast: dashed, dimmer, hollow node */
+.dk-chart-proj {
+  fill: none;
+  stroke: var(--accent-line);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+  vector-effect: non-scaling-stroke;
+}
+
+.dk-chart-proj-node {
+  fill: none;
+  stroke: var(--accent-line);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.dk-chart-tick.is-proj {
+  fill: var(--accent-line);
+}
+
 .dk-chart-fill {
   fill: var(--accent-ghost);
   stroke: none;

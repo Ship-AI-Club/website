@@ -166,8 +166,14 @@ export default async function Page() {
           {/* Two buttons, not three. RSVP is the front door; the hackathon
               is how one of the programs ends and has its own strip below. */}
           <div className="cta-row reveal" style={{ "--d": "380ms" }}>
-            <a className="btn btn-solid" href={MEETUP} target="_blank" rel="noreferrer">
-              <BrandGlyph icon={siMeetup} />
+            <a
+              className="btn btn-solid"
+              href={MEETUP}
+              target="_blank"
+              rel="noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+            >
+              <svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true"><path d={siMeetup.path} /></svg>
               RSVP on Meetup
             </a>
             <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">

@@ -530,6 +530,12 @@
   text-wrap: balance;
 }
 
+.dk-big-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8cqw;
+}
+
 /* ---------- agenda ---------- */
 
 .dk-agenda {

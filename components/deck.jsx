@@ -142,7 +142,18 @@ export function Slide({ slide, workshop, program, index, total }) {
             {slide.art ? <Art name={slide.art} className="dk-statement-art" /> : null}
             <Stagger>
               {slide.title ? <p className="dk-eyebrow">{slide.title}</p> : null}
-              <p className="dk-big">{slide.text}</p>
+              {/* text as an array renders each line as its own paragraph with
+                  a gap — for a beat that wants more air than one run-on
+                  sentence gives it. A plain string still renders as before. */}
+              {Array.isArray(slide.text) ? (
+                <div className="dk-big-stack">
+                  {slide.text.map((line, i) => (
+                    <p className="dk-big" key={i}>{line}</p>
+                  ))}
+                </div>
+              ) : (
+                <p className="dk-big">{slide.text}</p>
+              )}
               {slide.tags?.length ? (
                 <ul className="dk-tags">
                   {slide.tags.map((t, i) => (

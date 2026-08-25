@@ -504,6 +504,11 @@
   font-size: 6cqw;
   letter-spacing: -0.035em;
   line-height: 1;
+  /* .dk-act-art bleeds in from the right starting around 73cqw — a long
+     title with no cap runs straight under it. Cap short of that line
+     and let long titles wrap instead of overlapping the art. */
+  max-width: 62cqw;
+  text-wrap: balance;
 }
 
 .dk-act-copy {

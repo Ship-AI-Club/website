@@ -239,7 +239,7 @@ export default async function Page() {
           {PROGRAMS.map((program) => {
             const venueNames = programVenueNames(program);
             const statusLabel = program.status === "running"
-              ? "Running now — our current program"
+              ? "Running now"
               : program.status === "tbd"
                 ? "Dates TBD — announcing soon"
                 : program.status === "upcoming"

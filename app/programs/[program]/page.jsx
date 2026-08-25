@@ -111,9 +111,10 @@ export default async function Page({ params }) {
         </nav>
         {/* Register is the hackathon's account flow. A program without one
             has nothing to register for, so the CTA is the waitlist —
-            the only thing that's actually true until dates exist. The
-            Discord sits beside it rather than instead of it: one is how
-            you hear, the other is where the program lives. */}
+            the only thing that's actually true until dates exist. Once
+            dates land, RSVP replaces it. The Discord sits beside it rather
+            than instead of it: one is how you hear, the other is where
+            the program lives. */}
         <div className="nav-ctas">
           {program.hasHackathon ? (
             <>
@@ -124,6 +125,11 @@ export default async function Page({ params }) {
             <>
               <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
               <a className="btn btn-solid" href="#waitlist">Join the waitlist</a>
+            </>
+          ) : program.startISO ? (
+            <>
+              <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
+              <a className="btn btn-solid" href={MEETUP} target="_blank" rel="noreferrer">RSVP on Meetup</a>
             </>
           ) : (
             /* No waitlist to point at — the Discord is the whole CTA again. */

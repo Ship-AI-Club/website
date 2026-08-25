@@ -15,6 +15,13 @@ const nextConfig = {
         destination: "/programs/zero-to-launch",
         permanent: true,
       },
+      // Ship AI operates in Phoenix only now — Tempe was dropped as an
+      // operating city, so its indexed meetup page redirects to Phoenix's.
+      {
+        source: "/ai-meetup-tempe",
+        destination: "/ai-meetup-phoenix",
+        permanent: true,
+      },
       {
         source: "/hackathon/workshops/:path*",
         destination: "/programs/zero-to-launch/:path*",

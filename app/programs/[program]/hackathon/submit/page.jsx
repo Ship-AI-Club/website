@@ -13,7 +13,7 @@ const DEADLINE = "12:00 PM MST, Sunday October 18, 2026";
    worth reading in September; the form itself is behind sign-in. */
 const SUBMIT_URL = "/dashboard/submission";
 
-const TITLE = "Submit your project — Zero to Launch";
+const TITLE = "Submit Your Project — Zero to Launch";
 const DESCRIPTION =
   "Submission requirements and deadline for Zero to Launch, the Ship AI hackathon. One submission per team, due 12:00 PM MST Sunday October 18, 2026.";
 
@@ -32,16 +32,16 @@ const FIELDS = [
   },
   {
     name: "Team",
-    copy: "One to four people, one team per person. Made once from your account — whoever starts it gets an invite code to send round, and every member can edit the entry.",
+    copy: "One to four people, one team per person. Created once from your account — whoever starts it gets an invite code to send round, and every member can edit the entry.",
   },
   {
     name: "Track and category",
-    copy: "B2C or B2B, and which of the four categories you're entering. One category per team — if you win one you're out of the running for the others.",
+    copy: "B2C or B2B, and which of the four categories you're entering. One per team — win one and you're out of the running for the others.",
   },
   {
     name: "Live URL",
     required: true,
-    copy: "Publicly reachable, working, and not behind a login. This is the one field with no substitute: an entry without a live URL cannot place.",
+    copy: "Publicly reachable, working, not behind a login. The one field with no substitute: an entry without a live URL cannot place.",
   },
   {
     name: "What it does",
@@ -49,16 +49,16 @@ const FIELDS = [
   },
   {
     name: "What you launched this weekend",
-    copy: "The launch itself — where, to whom, when. Link the post, the listing, the email, the thread. Whatever the launch actually was.",
+    copy: "The launch itself — where, to whom, when. Link the post, the listing, the email, the thread.",
   },
   {
     name: "Receipts",
     required: true,
-    copy: "Numbers with evidence you can put on screen Sunday: visitors, signups, revenue, replies, conversion. Screenshots are fine. Small and true beats big and vague — and zero is a real answer if you can say what you learned from it.",
+    copy: "Numbers with evidence you can put on screen Sunday: visitors, signups, revenue, replies, conversion. Screenshots are fine. Small and true beats big and vague, and zero is a real answer if you can say what you learned.",
   },
   {
     name: "Growth engine",
-    copy: "The one channel you'd run again next month. How it works, what it produced this weekend, and why it repeats without a hero effort.",
+    copy: "The one channel you'd run again next month. How it works, what it produced, and why it repeats without a hero effort.",
   },
   {
     name: "Repo",
@@ -121,8 +121,8 @@ export default async function Page({ params }) {
         </p>
 
         <p className="article-lede">
-          One submission per team, filed from your Ship AI account. It takes about ten minutes
-          if you have your numbers ready, so read this Friday rather than at 11:50 on Sunday.
+          One submission per team, filed from your Ship AI account. Ten minutes if your numbers
+          are ready — so read this Friday, not at 11:50 on Sunday.
         </p>
 
         <div className="cta-row hk-submit-cta">
@@ -134,9 +134,9 @@ export default async function Page({ params }) {
           </a>
         </div>
         <p className="hk-note">
-          You&apos;ll need an account — an email address and a six-digit code, no password to
-          make. Start the entry as a draft whenever you like and keep editing it right up to
-          the deadline; any member of your team can. Stuck? Post in{" "}
+          You&apos;ll need an account — an email address and a six-digit code, no password.
+          Draft the entry whenever you like; any team member can edit it up to the deadline.
+          Stuck? Post in{" "}
           <a href={DISCORD} target="_blank" rel="noreferrer">the Discord</a> before the
           deadline, not after.
         </p>
@@ -158,8 +158,8 @@ export default async function Page({ params }) {
         <ul className="hk-check">
           <li>
             <CheckCircle2 size={16} strokeWidth={1.75} aria-hidden="true" />
-            Open your live URL in a private window. If it doesn&apos;t load for a stranger, it
-            doesn&apos;t count.
+            Open your live URL in a private window. If it doesn&apos;t load for a stranger,
+            it doesn&apos;t count.
           </li>
           <li>
             <CheckCircle2 size={16} strokeWidth={1.75} aria-hidden="true" />
@@ -193,7 +193,6 @@ export default async function Page({ params }) {
           <img src="/logo-icon.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
-        <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
           <a href="/">Home</a>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>

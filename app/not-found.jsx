@@ -4,7 +4,7 @@
    framework error. */
 
 export const metadata = {
-  title: "Not found — Ship AI",
+  title: "Not Found — Ship AI",
   description:
     "That page isn't here. Browse the Ship AI programs, or check a certificate id against the results page.",
   robots: { index: false, follow: true },
@@ -29,13 +29,12 @@ export default function NotFound() {
         <p className="kicker">404</p>
         <h1>Nothing here.</h1>
         <p className="article-lede">
-          This page doesn&apos;t exist — a stale link, a typo, or something we moved. The
-          programs are the best place to pick the thread back up.
+          Stale link, typo, or something we moved. The programs are the best place to pick
+          the thread back up.
         </p>
         <p>
-          If you followed a certificate link, that credential id was never issued — every
-          real one is listed on the results page, and a certification that doesn&apos;t
-          appear there isn&apos;t one of ours.
+          If you followed a certificate link, that credential id was never issued. Every
+          real one is listed on the results page.
         </p>
         <div className="cta-row hk-submit-cta">
           <a className="btn btn-solid" href="/programs">
@@ -52,7 +51,6 @@ export default function NotFound() {
           <img src="/logo-icon.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
-        <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
           <a href="/">Home</a>
           <a href="/programs">Programs</a>

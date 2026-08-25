@@ -47,11 +47,11 @@ export const metadata = {
 const WILL_LIST = [
   {
     strong: "Every team that submitted.",
-    copy: "Not a top three. If you shipped and filed a submission, you get a row — team, members, project and the live URL you shipped.",
+    copy: "Not a top three. Ship and file a submission and you get a row — team, members, project and live URL.",
   },
   {
     strong: "What each team placed.",
-    copy: "Category winners at the top, in award order, and Crowd Favorite alongside them. Everyone else reads as Launched, which is the bar the weekend was built around.",
+    copy: "Category winners at the top in award order, Crowd Favorite alongside them. Everyone else reads as Launched — the bar the weekend was built around.",
   },
   {
     strong: "A certification per team.",
@@ -141,14 +141,14 @@ export default async function Page({ params }) {
         {published ? (
           <p className="rs-lede">
             Everyone who shipped at {EDITION.event}, {EDITION.held} at {EDITION.venue},{" "}
-            {EDITION.city}. Winners first, then every other team that got it out the door —
-            the listing stays up, and so do the links.
+            {EDITION.city}. Winners first, then every other team that got it out the door.
+            The listing stays up, and so do the links.
           </p>
         ) : (
           <>
             <p className="rs-lede">
-              The hackathon runs {EDITION.held} at {EDITION.venue}, {EDITION.city}. This page
-              is where every team that ships ends up, permanently.
+              The hackathon runs {EDITION.held} at {EDITION.venue}, {EDITION.city}. Every team
+              that ships ends up here, permanently.
             </p>
             <div className="rs-pending">
               <p className="rs-pending-head">
@@ -156,7 +156,7 @@ export default async function Page({ params }) {
                 Results go up {EDITION.resultsDay}, straight after the awards.
               </p>
               <p>
-                If you want a row on it, the entry route is a live URL and a{" "}
+                Want a row? It takes a live URL and a{" "}
                 <a href="/programs/zero-to-launch/hackathon/submit">submission</a> by {EVENT.deadline}.
               </p>
             </div>
@@ -297,7 +297,6 @@ export default async function Page({ params }) {
           <img src="/logo-icon.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
-        <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
           <a href="/">Home</a>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>

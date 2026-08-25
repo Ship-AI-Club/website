@@ -8,7 +8,7 @@ import { judgesFor, submissionForTeam, teamFor } from "../../../lib/store";
 import SubmissionForm from "./submission-form";
 
 export const metadata = {
-  title: "Your submission — Ship AI",
+  title: "Your Submission — Ship AI",
   robots: { index: false, follow: false },
 };
 

@@ -230,7 +230,6 @@ export default async function Page({ params }) {
           <img src="/logo-icon.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
-        <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
           <a href="/">Home</a>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>

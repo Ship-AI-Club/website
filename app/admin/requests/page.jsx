@@ -9,7 +9,7 @@ import { decidedRequests, pendingRequests } from "../../../lib/store";
 import RequestForm from "../request-form";
 
 export const metadata = {
-  title: "Role requests — Ship AI",
+  title: "Role Requests — Ship AI",
   robots: { index: false, follow: false },
 };
 

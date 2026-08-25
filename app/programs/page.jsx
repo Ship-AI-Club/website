@@ -39,7 +39,7 @@ const LIST_SCHEMA = {
 
 export const metadata = {
   title: "Programs — Ship AI",
-  description: "Multi-session Ship AI programs for builders in Phoenix and Tempe, free and open to all.",
+  description: "Multi-session Ship AI programs for builders in Phoenix, free and open to all.",
   alternates: { canonical: "https://www.shipai.club/programs" },
   openGraph: {
     title: "Programs — Ship AI",
@@ -73,8 +73,8 @@ export default function Page() {
         <p className="kicker">Ship AI programs</p>
         <h1>Learn in public. Ship something real.</h1>
         <p className="article-lede">
-          Each program is a focused run of free sessions for builders in Phoenix. Drop into one,
-          follow the full series, or take the published materials and run it on your own schedule.
+          Free sessions for builders in Phoenix — drop into one, follow the full series, or take the
+          published materials and run it on your own schedule.
         </p>
 
         <ol className="hk-ws-list">
@@ -112,7 +112,6 @@ export default function Page() {
           <img src="/logo-icon.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
-        <p>Phoenix &amp; Tempe, Arizona</p>
         <nav><a href="/">Home</a><a href="/programs">Programs</a><a href="/programs/zero-to-launch/hackathon">Hackathon</a></nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

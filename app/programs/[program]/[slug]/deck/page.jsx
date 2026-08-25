@@ -19,7 +19,7 @@ export async function generateMetadata({ params }) {
   const program = programBySlug(programSlug);
   const w = sessionBySlug(program, slug);
   if (!program || !w) return {};
-  const title = `${w.eventTitle} — slides`;
+  const title = `${w.eventTitle} — Slides`;
   const url = `${SITE}/programs/${program.slug}/${w.slug}/deck`;
   return {
     title: `${title} — Ship AI`,

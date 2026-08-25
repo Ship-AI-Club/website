@@ -448,7 +448,7 @@ export default async function Page({ searchParams }) {
             <h2>Next meetup</h2>
           </div>
           <p>
-            Ship AI runs free, public events in Phoenix and Tempe year round — the program
+            Ship AI runs free, public events in Phoenix year round — the program
             is one season of them. Pulled live from the Meetup calendar.
           </p>
           <ul className="ac-list">

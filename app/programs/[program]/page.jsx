@@ -3,7 +3,6 @@ import {
   ArrowRight,
   BellRing,
   BookOpen,
-  Briefcase,
   CalendarDays,
   Download,
   GitBranch,
@@ -23,8 +22,6 @@ import WaitlistForm from "./waitlist-form";
 import {
   DISCORD,
   EVENT,
-  LINKEDIN,
-  LUMA,
   MEETUP,
   venueOf,
 } from "../../../lib/hackathon";
@@ -39,7 +36,7 @@ export async function generateMetadata({ params }) {
   const { program: programSlug } = await params;
   const program = programBySlug(programSlug);
   if (!program) return {};
-  const title = `${program.name} — Ship AI program`;
+  const title = `${program.name} — Ship AI Program`;
   const url = `${SITE}/programs/${program.slug}`;
   return {
     title,
@@ -164,9 +161,9 @@ export default async function Page({ params }) {
         <p className="hk-note">
           {program.venueNote || (
             <>
-              Every meetup takes place at{" "}
+              Every meetup is at{" "}
               <a href="https://www.workuity.com/" target="_blank" rel="noreferrer">Workuity Biltmore</a>
-              , the venue sponsor for the series.
+              , the venue sponsor.
             </>
           )}
         </p>
@@ -175,14 +172,8 @@ export default async function Page({ params }) {
             program gets the one thing that works: tell me when. */}
         {program.startISO ? (
           <div className="cta-row hk-submit-cta">
-            <a className="btn btn-solid" href={LUMA} target="_blank" rel="noreferrer">
-              <CalendarDays size={16} strokeWidth={1.75} aria-hidden="true" />Ship AI on Luma
-            </a>
-            <a className="btn btn-ghost" href={MEETUP} target="_blank" rel="noreferrer">
-              <svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true"><path d={siMeetup.path} /></svg>Meetup
-            </a>
-            <a className="btn btn-ghost" href={LINKEDIN} target="_blank" rel="noreferrer">
-              <Briefcase size={16} strokeWidth={1.75} aria-hidden="true" />LinkedIn
+            <a className="btn btn-solid" href={MEETUP} target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true"><path d={siMeetup.path} /></svg>Ship AI on Meetup
             </a>
           </div>
         ) : waitlistOpen ? (
@@ -194,8 +185,8 @@ export default async function Page({ params }) {
             {program.datesCopy && <p className="hk-note">{program.datesCopy}</p>}
             <p>
               {someScheduled
-                ? "Put your name down for the nights that aren't on the calendar yet. Telling us what you want working by the end isn't a formality either — it's what gets built on screen."
-                : "Put your name down and you get the dates the day they're set. Telling us what you want working by the end isn't a formality either — it's what gets built on screen."}
+                ? "Put your name down for the nights not on the calendar yet. Tell us what you want working by the end — that's what gets built on screen."
+                : "Put your name down and get the dates the day they're set. Tell us what you want working by the end — that's what gets built on screen."}
             </p>
             <WaitlistForm program={program.slug} programName={program.name} discord={DISCORD} />
           </>
@@ -214,8 +205,8 @@ export default async function Page({ params }) {
           <>
             <h2 className="hk-subhead"><Sparkles size={18} strokeWidth={1.75} aria-hidden="true" />How the program runs</h2>
             <p>
-              The curriculum is presented in order, with each session standing on its own. Nothing is
-              asked of the room: follow along on a laptop, or simply watch the live build.
+              Sessions run in order, and each one stands on its own. Follow along on a laptop, or just
+              watch the live build.
             </p>
             <div className={`hk-acts hk-acts-${Math.min(program.acts.length, 4)}`}>
               {program.acts.map((a) => (
@@ -231,8 +222,8 @@ export default async function Page({ params }) {
           <>
             <h2 className="hk-subhead"><GitBranch size={18} strokeWidth={1.75} aria-hidden="true" />The materials are open source</h2>
             <p>
-              Slides, follow-along guides and {manifest.all.count} skill files are published free to
-              take and run during the program or long after it.
+              Slides, follow-along guides and {manifest.all.count} skill files, published free to take
+              and run any time.
             </p>
             <div className="cta-row hk-materials-cta">
               <a className="btn btn-solid" href={`/programs/${program.slug}/skills`}><Download size={15} strokeWidth={1.75} aria-hidden="true" />All {manifest.all.count} skills</a>
@@ -271,7 +262,7 @@ export default async function Page({ params }) {
 
         <div className="hk-discord">
           <svg viewBox="0 0 24 24" width={22} height={22} fill="currentColor" aria-hidden="true"><path d={siDiscord.path} /></svg>
-          <div><h3>The program lives in Discord between sessions</h3><p>Session recaps, archive links, questions and everyone else&apos;s work in progress.</p></div>
+          <div><h3>The program lives in Discord between sessions</h3><p>Recaps, archive links, questions and everyone&apos;s work in progress.</p></div>
           <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>
         </div>
 
@@ -284,7 +275,7 @@ export default async function Page({ params }) {
           /* No hackathon to point at, so point at what you do next: the
              thing you built here is the thing the next program sells. */
           <>
-            <p className="hk-note">Finished the four sessions? {nextProgram.name} is what happens after the thing works — six sessions on finding the people who&apos;ll use it.</p>
+            <p className="hk-note">Finished the four sessions? {nextProgram.name} is six sessions on finding the people who&apos;ll use what you built.</p>
             <div className="cta-row hk-submit-cta">
               <a className="btn btn-solid" href={`/programs/${nextProgram.slug}`}>Next up: {nextProgram.name} <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" /></a>
             </div>
@@ -294,7 +285,6 @@ export default async function Page({ params }) {
 
       <footer className="footer">
         <div className="brand"><img src="/logo-icon.png" alt="" width={22} height={22} /><span>Ship AI</span></div>
-        <p>Phoenix &amp; Tempe, Arizona</p>
         <nav><a href="/">Home</a><a href="/programs">Programs</a>{manifest && <a href={`/programs/${program.slug}/skills`}>Skills</a>}{program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}</nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

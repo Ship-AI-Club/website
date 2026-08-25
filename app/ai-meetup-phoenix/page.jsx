@@ -16,19 +16,19 @@ export const metadata = {
 const FAQS = [
   {
     q: "Where does the Ship AI Phoenix meetup happen?",
-    a: "Ship AI meets at Workuity Biltmore, 2390 E Camelback Rd #130 in Phoenix, Arizona (the Camelback Corridor / Biltmore area). Workuity is the venue sponsor of the meetup. Always check the specific event listing on Meetup or Luma for the date and time.",
+    a: "Workuity Biltmore, 2390 E Camelback Rd #130 in Phoenix, Arizona — the Camelback Corridor / Biltmore area. Workuity is our venue sponsor. Check the event listing on Meetup for the date and time.",
   },
   {
     q: "Who attends the Phoenix Ship AI meetup?",
-    a: "Technical founders, engineers, and builders working with AI — people shipping products with LLMs, agents, and modern AI tooling. It's a discussion-and-demo format, not a networking mixer or pitch night.",
+    a: "Technical founders, engineers, and builders shipping with LLMs, agents, and modern AI tooling. It's a discussion-and-demo format, not a networking mixer or pitch night.",
   },
   {
     q: "How do I RSVP for a Ship AI event in Phoenix?",
-    a: "RSVP on the Ship AI Meetup group (meetup.com/shipai) or the Luma calendar (luma.com/shipai). Joining the Discord is the best way to follow announcements between events.",
+    a: "RSVP on Meetup (meetup.com/shipai). Join the Discord to catch announcements between events.",
   },
   {
     q: "Is the Phoenix meetup beginner-friendly?",
-    a: "It's builder-focused rather than intro-level — sessions assume you're actively building with AI or seriously trying to. If you're technical and curious, you'll keep up; the format rewards good questions as much as expertise.",
+    a: "It's builder-focused, not intro-level — sessions assume you're building with AI or seriously trying to. If you're technical and curious you'll keep up; good questions count as much as expertise.",
   },
 ];
 
@@ -43,28 +43,26 @@ export default async function Page() {
       <Article kicker="Phoenix, Arizona" title={TITLE} updated={UPDATED}>
         <p className="article-lede">
           <strong>Ship AI</strong> runs a recurring AI meetup in Phoenix, Arizona for
-          technical founders and builders. The format is the{" "}
-          <a href="/programs">workshop or builder presentation</a>: a 20-minute AI news briefing, the main
-          session built live on screen, then 5-minute demos of things members actually
-          shipped. Demos over memos — no slideware, no hard selling.
+          technical founders and builders. Every session: a 20-minute AI news briefing, a{" "}
+          <a href="/programs">workshop or builder presentation</a> built live on screen,
+          then 5-minute demos of what members shipped. Demos over memos — no slideware, no
+          hard selling.
         </p>
 
         <h2>What happens at a Phoenix session</h2>
         <p>
-          Phoenix sessions are evening events built around discussion and working software.
-          Every session opens with a 20-minute briefing on what matters for AI builders
-          right now, moves into the workshop — the host presents and builds on screen while
-          you follow along on a laptop or just watch — and closes with 5-minute demos from
-          members. Questions welcome throughout, receipts required.
+          Evening events built around working software. The briefing covers what matters
+          for AI builders right now. Then the host builds on screen — follow along on a
+          laptop or just watch — and members close with 5-minute demos. Questions welcome
+          throughout, receipts required.
         </p>
 
         <h2>Where and when</h2>
         <p>
-          Ship AI sessions in Phoenix meet at <strong>Workuity Biltmore, 2390 E Camelback Rd #130</strong> in
-          the Camelback Corridor. Workuity is the venue sponsor of the meetup. Exact dates and times are on the{" "}
+          Phoenix sessions meet at <strong>Workuity Biltmore, 2390 E Camelback Rd #130</strong> in
+          the Camelback Corridor. Workuity is our venue sponsor. Dates and times are on the{" "}
           <a href="https://www.meetup.com/shipai/" target="_blank" rel="noreferrer">Meetup group</a>{" "}
-          and <a href="https://luma.com/shipai" target="_blank" rel="noreferrer">Luma calendar</a>{" "}
-          — the list below is pulled live from Meetup, so it's always current.
+          — the list below pulls live from Meetup.
         </p>
 
         {phoenixEvents.length > 0 && (
@@ -76,11 +74,9 @@ export default async function Page() {
 
         <h2>Who it's for</h2>
         <p>
-          Ship AI is a high-signal community for people pushing the bleeding edge of AI —
-          founders shipping AI products, engineers working with agents and LLMs, and
+          Founders shipping AI products, engineers working with agents and LLMs, and
           builders who care about craft: the toolchain, the design decisions, the
-          tradeoffs. Ship AI also runs events in{" "}
-          <a href="/ai-meetup-tempe">Tempe</a>, fifteen minutes down the road.
+          tradeoffs.
         </p>
 
         <Faq faqs={FAQS} />

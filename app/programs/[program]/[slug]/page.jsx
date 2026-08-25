@@ -4,7 +4,6 @@ import {
   ArrowRight,
   Backpack,
   BookOpen,
-  Briefcase,
   CalendarDays,
   GitCommitHorizontal,
   ListChecks,
@@ -97,7 +96,7 @@ export async function generateMetadata({ params }) {
   const program = programBySlug(programSlug);
   const w = sessionBySlug(program, slug);
   if (!program || !w) return {};
-  const title = `${w.title} — ${program.name} session ${w.n}`;
+  const title = `${w.title} — ${program.name} Session ${w.n}`;
   const when = sessionDateLabel(w);
   const description = `${when} in Phoenix. ${w.copy}`.slice(0, 300);
   const url = `${SITE}/programs/${program.slug}/${w.slug}`;
@@ -195,7 +194,7 @@ export default async function Page({ params }) {
                 <video src={w.media.recording} controls preload="none" poster={w.media.photos?.[0]} crossOrigin="anonymous">
                   {w.media.captions && <track kind="captions" src={w.media.captions} srcLang="en" label="English" />}
                 </video>
-                <p className="hk-note">The full session recording{w.media.captions ? ", captions included" : ""}. Also archived in Discord.</p>
+                <p className="hk-note">The full recording{w.media.captions ? ", with captions" : ""}. Also archived in Discord.</p>
               </div>
             )}
             {w.media.photos?.length > 0 && (
@@ -213,9 +212,7 @@ export default async function Page({ params }) {
         {scheduled ? (
           <>
             <div className="hk-ws-rsvp">
-              <a className="btn btn-solid" href={rsvp.luma} target="_blank" rel="noreferrer"><CalendarDays size={16} strokeWidth={1.75} aria-hidden="true" />RSVP on Luma</a>
-              <a className="btn btn-ghost" href={rsvp.meetup} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true"><path d={siMeetup.path} /></svg>Meetup</a>
-              <a className="btn btn-ghost" href={rsvp.linkedin} target="_blank" rel="noreferrer"><Briefcase size={16} strokeWidth={1.75} aria-hidden="true" />LinkedIn</a>
+              <a className="btn btn-solid" href={rsvp.meetup} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true"><path d={siMeetup.path} /></svg>RSVP on Meetup</a>
             </div>
             {rsvp.pending && (
               <p className="hk-note">
@@ -227,7 +224,7 @@ export default async function Page({ params }) {
                         <span key={night.iso}>
                           {night.date} at <a href={nightVenue.url} target="_blank" rel="noreferrer">{nightVenue.name}</a>
                           {" — "}{nightVenue.address}
-                          {i < list.length - 1 ? ". " : ". Same session — pick the room. "}
+                          {i < list.length - 1 ? ". " : ". Same session — pick a room. "}
                         </span>
                       );
                     })
@@ -236,26 +233,26 @@ export default async function Page({ params }) {
                       <a href={venue.url} target="_blank" rel="noreferrer">{venue.name}</a> — {venue.address}. {venue.note}{" "}
                     </>
                   )}
-                Individual event links go live closer to the date; these point at the Ship AI calendars.
+                Event links go live closer to the date; these point at the Ship AI calendars.
               </p>
             )}
           </>
         ) : (
           <>
-            <p className="hk-note">{program.datesCopy || "Dates will be announced on Discord and the Ship AI calendars."}</p>
+            <p className="hk-note">{program.datesCopy || "Dates go out on Discord and the Ship AI calendars."}</p>
             {/* The calendars above are the passive route. This is the one
                 that reaches you without you checking. */}
             {waitlistOpen && (
               <p className="hk-note">
-                Or <a href={`${programHref}#waitlist`}>join the waitlist</a> and the dates come to you.
+                Or <a href={`${programHref}#waitlist`}>join the waitlist</a> — the dates come to you.
               </p>
             )}
           </>
         )}
 
-        <p className="hk-note">Venue sponsor: <a href={venue.sponsorUrl} target="_blank" rel="noreferrer">{venue.sponsor}</a>. Format: the host presents and builds live on screen. Bring a laptop and work along if you want to, or just watch — nobody is put on the spot or asked to present.</p>
+        <p className="hk-note">Venue sponsor: <a href={venue.sponsorUrl} target="_blank" rel="noreferrer">{venue.sponsor}</a>. Format: the host builds live on screen. Bring a laptop and work along, or just watch — nobody is put on the spot.</p>
 
-        <h2 className="hk-subhead">Why this session exists</h2><p>{w.why}</p>
+        <h2 className="hk-subhead">Why this session</h2><p>{w.why}</p>
         <h2 className="hk-subhead"><ListChecks size={18} strokeWidth={1.75} aria-hidden="true" />What we cover</h2>
         <ol className="hk-agenda-list">
           {w.agenda.map((a, i) => <li key={a.t}><span className="hk-agenda-n">{String(i + 1).padStart(2, "0")}</span><div><p className="hk-agenda-t">{a.t}</p><p>{a.c}</p></div></li>)}
@@ -263,23 +260,23 @@ export default async function Page({ params }) {
 
         <div className="hk-ws-grid">
           <div className="hk-ws-card"><h3><Sparkles size={16} strokeWidth={1.75} aria-hidden="true" />You leave with</h3><p>{w.take}</p></div>
-          <div className="hk-ws-card"><h3><Backpack size={16} strokeWidth={1.75} aria-hidden="true" />If you want to follow along</h3><p>{w.bring}</p></div>
+          <div className="hk-ws-card"><h3><Backpack size={16} strokeWidth={1.75} aria-hidden="true" />To follow along</h3><p>{w.bring}</p></div>
         </div>
 
-        <h2 className="hk-subhead"><GitCommitHorizontal size={18} strokeWidth={1.75} aria-hidden="true" />What to do afterward</h2>
-        <p>Nothing is required. The program compounds if you run the same work on your own product; this is the suggested output for the session:</p>
+        <h2 className="hk-subhead"><GitCommitHorizontal size={18} strokeWidth={1.75} aria-hidden="true" />Afterward</h2>
+        <p>Nothing is required. It compounds if you run the same work on your own product. The suggested output:</p>
         <p className="hk-commit"><code>{w.commit}</code></p>
         <p className="hk-note">
-          Everything is open source.{program.templateRepo && <> The <a href={program.templateRepo} target="_blank" rel="noreferrer">template repo</a> and its skill files are published — take them and run the process yourself.</>} Missed the session? It&apos;s archived in Discord.
+          Everything is open source.{program.templateRepo && <> The <a href={program.templateRepo} target="_blank" rel="noreferrer">template repo</a> and its skill files are published — take them and run it yourself.</>} Missed the session? It&apos;s archived in Discord.
         </p>
 
         {(slides || guide || kit) && (
           <>
             <h2 className="hk-subhead" id="kit"><Package size={18} strokeWidth={1.75} aria-hidden="true" />The session kit</h2>
-            <p>Slides, a follow-along guide and skill files, free and downloadable whether you make it to the room or not.</p>
+            <p>Slides, a follow-along guide and skill files. Free to download, room or no room.</p>
             <div className="kit-row">
               {slides && <a className="kit-card" href={`${programHref}/${w.slug}/deck`}><Presentation size={17} strokeWidth={1.75} aria-hidden="true" /><span className="kit-card-t">Slides</span><span className="kit-card-c">{slides.length} slides. Arrow keys, fullscreen, print to PDF.</span><span className="kit-card-go">Open the deck →</span></a>}
-              {guide && <a className="kit-card" href={`${programHref}/${w.slug}/guide`}><BookOpen size={17} strokeWidth={1.75} aria-hidden="true" /><span className="kit-card-t">Follow-along guide</span><span className="kit-card-c">{guide.steps.length} steps, {guide.minutes}. What to run, and what done looks like.</span><span className="kit-card-go">Read the guide →</span></a>}
+              {guide && <a className="kit-card" href={`${programHref}/${w.slug}/guide`}><BookOpen size={17} strokeWidth={1.75} aria-hidden="true" /><span className="kit-card-t">Follow-along guide</span><span className="kit-card-c">{guide.steps.length} steps, {guide.minutes}. What to run, what done looks like.</span><span className="kit-card-go">Read the guide →</span></a>}
               {kit && <a className="kit-card" href={`/skills/${kit.file}`} download><Package size={17} strokeWidth={1.75} aria-hidden="true" /><span className="kit-card-t">Skill files</span><span className="kit-card-c">{kit.count} skills as a zip. Unzips into <code>.claude/skills/</code>.</span><span className="kit-card-go">Download ({kit.count}) ↓</span></a>}
             </div>
           </>
@@ -295,7 +292,7 @@ export default async function Page({ params }) {
             <ul className="kit-skills">
               {w.skills.map((s) => { const skill = skillsByName.get(s); return <li key={s}><p className="kit-skill-name"><code>/{s}</code><a href={`/skills/${s}/SKILL.md`}>SKILL.md</a></p>{skill && <p className="kit-skill-desc">{skill.description}</p>}</li>; })}
             </ul>
-            {programManifest && <p className="hk-note">Every skill from the program is on the <a href={`${programHref}/skills`}>skills page</a>.</p>}
+            {programManifest && <p className="hk-note">Every program skill is on the <a href={`${programHref}/skills`}>skills page</a>.</p>}
           </>
         )}
 
@@ -303,7 +300,7 @@ export default async function Page({ params }) {
 
         <div className="hk-discord">
           <svg viewBox="0 0 24 24" width={22} height={22} fill="currentColor" aria-hidden="true"><path d={siDiscord.path} /></svg>
-          <div><h3>Join the community online</h3><p>Session recaps, archive links, questions between sessions and everyone else&apos;s work in progress.</p></div>
+          <div><h3>The community online</h3><p>Recaps, archive links, questions between sessions, everyone else&apos;s work in progress.</p></div>
           <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>
         </div>
 
@@ -314,7 +311,7 @@ export default async function Page({ params }) {
       </main>
 
       <footer className="footer">
-        <div className="brand"><img src="/logo-icon.png" alt="" width={22} height={22} /><span>Ship AI</span></div><p>Phoenix &amp; Tempe, Arizona</p>
+        <div className="brand"><img src="/logo-icon.png" alt="" width={22} height={22} /><span>Ship AI</span></div>
         <nav><a href="/">Home</a><a href="/programs">Programs</a><a href={programHref}>{program.name}</a>{programManifest && <a href={`${programHref}/skills`}>Skills</a>}{program.templateRepo && <a href={program.templateRepo} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={14} height={14} fill="currentColor" aria-hidden="true"><path d={siGithub.path} /></svg></a>}</nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

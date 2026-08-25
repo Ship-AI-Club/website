@@ -22,7 +22,7 @@ export async function generateMetadata({ params }) {
   const program = programBySlug(programSlug);
   const manifest = registry.manifest.programs?.[programSlug];
   if (!program || !manifest) return {};
-  const title = `${program.name} skills — Ship AI`;
+  const title = `${program.name} Skills — Ship AI`;
   const description = `The full set of skill files from the ${program.name} program, free to download. Plain markdown for Claude Code, the Codex extension, or anything that reads a skills directory.`;
   const url = `${SITE}/programs/${program.slug}/skills`;
   return {
@@ -68,9 +68,9 @@ export default async function Page({ params }) {
         <p className="kicker">{program.name} · {program.datesLabel || "Dates TBD"}</p>
         <h1 className="sk-h1">{total} skills,<br />free to take.</h1>
         <p className="article-lede">
-          Every mechanical piece of the {program.sessions.length}-session program, packaged as skill files.
-          Plain markdown with frontmatter — run them in Claude Code, the Codex extension, or anything else
-          that reads a skills directory. No account, signup or expiry.
+          Every mechanical piece of the {program.sessions.length}-session program, as skill files.
+          Plain markdown with frontmatter — run them in Claude Code, the Codex extension, or anything
+          that reads a skills directory. No account, no signup, no expiry.
         </p>
 
         <div className="sk-top">
@@ -80,9 +80,9 @@ export default async function Page({ params }) {
         </div>
 
         <h2 className="hk-subhead"><Terminal size={18} strokeWidth={1.75} aria-hidden="true" />Install</h2>
-        <p>The archive contains a <code>.claude/skills/</code> directory and nothing else, so it drops into an existing project without touching anything already there.</p>
+        <p>The archive is a <code>.claude/skills/</code> directory and nothing else, so it drops into an existing project without touching anything already there.</p>
         <pre className="sk-install"><code>{`curl -fsSLO ${SITE}/skills/${manifest.all.file}\nunzip -o ${manifest.all.file} -d .\nrm ${manifest.all.file}`}</code></pre>
-        <p className="hk-note">Prefer one session&apos;s worth? Every session below has its own bundle. Each skill also links to its raw <code>SKILL.md</code>.</p>
+        <p className="hk-note">Want just one session? Each below has its own bundle, and every skill links to its raw <code>SKILL.md</code>.</p>
 
         <h2 className="hk-subhead"><Package size={18} strokeWidth={1.75} aria-hidden="true" />By session</h2>
         {program.sessions.map((w) => {
@@ -107,19 +107,19 @@ export default async function Page({ params }) {
           );
         })}
 
-        <h2 className="hk-subhead">Questions people actually ask</h2>
+        <h2 className="hk-subhead">Questions people ask</h2>
         <div className="hk-faq">
-          <div className="hk-faq-item"><h3>Do I have to attend to use these?</h3><p>No. They&apos;re published so anyone can run the process during the program or years from now.</p></div>
-          <div className="hk-faq-item"><h3>Do they only work in Claude Code?</h3><p>No. They&apos;re markdown files with frontmatter. Anything that reads a skills directory can run them.</p></div>
-          <div className="hk-faq-item"><h3>Can I change them?</h3><p>Yes, and you should. They&apos;re opinionated on purpose; edit them to fit the product and workflow.</p></div>
+          <div className="hk-faq-item"><h3>Do I have to attend to use these?</h3><p>No. They&apos;re published so anyone can run the process, now or years from now.</p></div>
+          <div className="hk-faq-item"><h3>Do they only work in Claude Code?</h3><p>No. They&apos;re markdown with frontmatter — anything that reads a skills directory runs them.</p></div>
+          <div className="hk-faq-item"><h3>Can I change them?</h3><p>Yes, and you should. They&apos;re opinionated on purpose — edit them to fit your product and workflow.</p></div>
           <div className="hk-faq-item"><h3>What&apos;s the catch?</h3><p>None. Ship AI is a free community meetup in Phoenix.</p></div>
         </div>
 
-        <div className="hk-discord"><svg viewBox="0 0 24 24" width={22} height={22} fill="currentColor" aria-hidden="true"><path d={siDiscord.path} /></svg><div><h3>Ran one and it did something odd?</h3><p>Say so in Discord. These files improve based on what happens when people actually run them.</p></div><a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a></div>
+        <div className="hk-discord"><svg viewBox="0 0 24 24" width={22} height={22} fill="currentColor" aria-hidden="true"><path d={siDiscord.path} /></svg><div><h3>Ran one and it did something odd?</h3><p>Say so in Discord. These files improve on what people hit running them for real.</p></div><a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a></div>
       </main>
 
       <footer className="footer">
-        <div className="brand"><img src="/logo-icon.png" alt="" width={22} height={22} /><span>Ship AI</span></div><p>Phoenix &amp; Tempe, Arizona</p>
+        <div className="brand"><img src="/logo-icon.png" alt="" width={22} height={22} /><span>Ship AI</span></div>
         <nav><a href="/">Home</a><a href="/programs">Programs</a><a href={programHref}>{program.name}</a>{program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}{program.templateRepo && <a href={program.templateRepo} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={14} height={14} fill="currentColor" aria-hidden="true"><path d={siGithub.path} /></svg></a>}</nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

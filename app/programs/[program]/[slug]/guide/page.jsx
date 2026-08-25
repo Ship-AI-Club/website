@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
   const w = sessionBySlug(program, slug);
   const g = guideFor(programSlug, slug);
   if (!program || !w || !g) return {};
-  const title = `${w.eventTitle} — follow-along guide`;
+  const title = `${w.eventTitle} — Follow-Along Guide`;
   const url = `${SITE}/programs/${program.slug}/${w.slug}/guide`;
   return {
     title: `${title} — Ship AI`,
@@ -94,13 +94,13 @@ export default async function Page({ params }) {
 
         <h2 className="hk-subhead">What you leave with</h2><p className="hk-commit"><code>{g.output}</code></p>
         <h2 className="hk-subhead">If you get stuck</h2><p>{g.stuck}</p>
-        <p className="hk-note">Or ask in <a href={DISCORD} target="_blank" rel="noreferrer">Discord</a> — mentors and everyone else&apos;s work in progress are there between sessions.</p>
+        <p className="hk-note">Or ask in <a href={DISCORD} target="_blank" rel="noreferrer">Discord</a> — mentors and everyone else&apos;s work in progress live there between sessions.</p>
 
-        <div className="hk-discord"><svg viewBox="0 0 24 24" width={22} height={22} fill="currentColor" aria-hidden="true"><path d={siDiscord.path} /></svg><div><h3>Missed the session?</h3><p>The archive lives in Discord and this guide works without it. Nothing here expires.</p></div><a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a></div>
+        <div className="hk-discord"><svg viewBox="0 0 24 24" width={22} height={22} fill="currentColor" aria-hidden="true"><path d={siDiscord.path} /></svg><div><h3>Missed the session?</h3><p>The archive lives in Discord, and this guide works without it. Nothing expires.</p></div><a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a></div>
       </main>
 
       <footer className="footer">
-        <div className="brand"><img src="/logo-icon.png" alt="" width={22} height={22} /><span>Ship AI</span></div><p>Phoenix &amp; Tempe, Arizona</p>
+        <div className="brand"><img src="/logo-icon.png" alt="" width={22} height={22} /><span>Ship AI</span></div>
         <nav><a href="/">Home</a><a href="/programs">Programs</a><a href={programHref}>{program.name}</a>{manifest && <a href={`${programHref}/skills`}>Skills</a>}{program.templateRepo && <a href={program.templateRepo} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={14} height={14} fill="currentColor" aria-hidden="true"><path d={siGithub.path} /></svg></a>}</nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

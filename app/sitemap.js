@@ -9,6 +9,7 @@ export default function sitemap() {
   const lastModified = new Date();
   return [
     { url: `${BASE}/`, lastModified, changeFrequency: "daily", priority: 1 },
+    { url: `${BASE}/about`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/programs`, lastModified, changeFrequency: "weekly", priority: 0.9 },
     ...PROGRAMS.flatMap((program) => [
       { url: `${BASE}/programs/${program.slug}`, lastModified, changeFrequency: "weekly", priority: 0.9 },
@@ -34,6 +35,5 @@ export default function sitemap() {
       ]),
     ]),
     { url: `${BASE}/ai-meetup-phoenix`, lastModified, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${BASE}/ai-meetup-tempe`, lastModified, changeFrequency: "weekly", priority: 0.8 },
   ];
 }

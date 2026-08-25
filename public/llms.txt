@@ -1,6 +1,6 @@
 # Ship AI
 
-> Ship AI is a community of AI craftspeople in Phoenix and Tempe, Arizona. Technical founders and builders who show their work — the build, the workflow, the decisions behind it. Demos over memos: no slideware, no hard selling. If it ships, it speaks.
+> Ship AI is a community of AI craftspeople in Phoenix, Arizona. Technical founders and builders who show their work — the build, the workflow, the decisions behind it. Demos over memos: no slideware, no hard selling. If it ships, it speaks.
 
 Ship AI runs recurring in-person workshops and builder presentations. Every session follows the same three-part format: an AI News Briefing (first 20 minutes, a tight rundown of what matters for builders), the main session — a workshop or a presentation with a live build — and 5-Minute Demos (members show what they shipped and what they learned building it).
 
@@ -20,7 +20,6 @@ Every session ends in 5-minute demos, and what the room is stuck on between sess
 - [Day Zero](https://www.shipai.club/programs/day-zero): four beginner-to-intermediate sessions, what each covers, dates TBD
 - [Day Zero skills](https://www.shipai.club/programs/day-zero/skills): 20 free skill files (agent-runnable markdown), downloadable as a zip per session or all at once
 - [AI meetup in Phoenix](https://www.shipai.club/ai-meetup-phoenix): Phoenix events, venue, and format
-- [AI meetup in Tempe](https://www.shipai.club/ai-meetup-tempe): Tempe events, venue, and format
 
 ## Join
 

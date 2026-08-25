@@ -1,18 +1,9 @@
 import {
   ArrowRight,
-  BadgeCheck,
-  Scale,
   CalendarDays,
-  Gem,
-  Globe,
-  GraduationCap,
-  Hammer,
   MapPin,
-  MonitorPlay,
   Rocket,
   Ticket,
-  Users,
-  Zap,
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { getUpcomingEvents } from "../lib/meetup";
@@ -20,17 +11,17 @@ import { JsonLd } from "../components/article";
 import { PROGRAMS, programVenueNames } from "../lib/programs";
 
 export const metadata = {
-  title: "Ship AI — Free AI programs in Phoenix",
+  title: "Ship AI — Free AI Programs in Phoenix",
   description:
-    "Free AI programs, workshops and demo nights for builders in Phoenix and Tempe. Everything gets built live on screen, shipped for real, and demoed in five minutes. No tickets, no tiers.",
+    "Free AI programs, workshops and demo nights for builders in Phoenix. Community-run, craft over hype.",
   alternates: { canonical: "https://www.shipai.club" },
   openGraph: {
     /* Share sheets strip a leading site name from og:title (it duplicates
        siteName), so the title has to stand on its own — lead with the
        thesis, not the brand. */
-    title: "Demos over memos — free AI programs in Phoenix",
+    title: "Demos over Memos — Free AI Programs in Phoenix",
     description:
-      "Everything gets built live on screen, shipped for real, and demoed in five minutes. Free and in person, Phoenix and Tempe. No tickets, no tiers.",
+      "Community-run, craft over hype. Free and in person, in Phoenix.",
     url: "https://www.shipai.club",
     siteName: "Ship AI",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
@@ -55,7 +46,6 @@ function BrandGlyph({ icon, size = 18 }) {
 const SOCIALS = [
   { href: DISCORD, label: "Discord", glyph: <BrandGlyph icon={siDiscord} /> },
   { href: MEETUP, label: "Meetup", glyph: <BrandGlyph icon={siMeetup} /> },
-  { href: LUMA, label: "Luma", glyph: <CalendarDays size={18} strokeWidth={1.75} aria-hidden="true" /> },
   { href: X_URL, label: "X", glyph: <BrandGlyph icon={siX} /> },
   { href: GITHUB, label: "GitHub", glyph: <BrandGlyph icon={siGithub} /> },
 ];
@@ -96,60 +86,6 @@ const ASCII_MEMOS = `███╗   ███╗ ███████╗ ██
 ██║ ╚═╝ ██║ ███████╗ ██║ ╚═╝ ██║ ╚██████╔╝ ███████║
 ╚═╝     ╚═╝ ╚══════╝ ╚═╝     ╚═╝  ╚═════╝  ╚══════╝`;
 
-const values = [
-  {
-    title: "Free and open",
-    icon: GraduationCap,
-    copy: "Every session is free and public. You pay by teaching what you know back to the room. No tickets, no tiers, no gatekeeping.",
-  },
-  {
-    title: "Demos over memos",
-    icon: MonitorPlay,
-    copy: "Show the build, the workflow, the decision you'd make differently next time. Founders too — demo the product, skip the hard sell. If it ships, it speaks.",
-  },
-  {
-    title: "Craft over hype",
-    icon: Hammer,
-    copy: "The toolchain, the tradeoffs, the parts that hurt — the discipline that separates something shipped from something great.",
-  },
-  {
-    title: "Taste",
-    icon: Gem,
-    copy: "We hold opinions about design, architecture, and what's worth shipping at all. Curated over cranked out.",
-  },
-  {
-    title: "Living on the bleeding edge",
-    icon: Zap,
-    copy: "We push models past the defaults and past the docs, then turn what we find into product experiences nobody's shipped yet.",
-  },
-  {
-    title: "Honest starting points",
-    icon: Scale,
-    copy: "Say where you actually are, not where you'd like to sound. Half-built, no users, revenue flat, six months in with nothing shipped — all fine, and all workable. We can't help you from a position you're pretending to be in, and nothing solid gets built on an inflated baseline.",
-  },
-  {
-    title: "Proof of work",
-    icon: BadgeCheck,
-    copy: "Show the work and prove it. Screenshots, commits, the dashboard, the number that didn't go up. We'd rather see a small real result than hear a big vague one — claims are cheap and everyone has them.",
-  },
-  {
-    title: "Community-driven",
-    icon: Users,
-    copy: "The room shows its work. Every session ends in 5-minute demos, and what people are stuck on between them is what the next one gets built around.",
-  },
-];
-
-function PixelTrail() {
-  // easter egg: the signal leads somewhere
-  return (
-    <a href="/standby" className="trail" aria-label="Standby screen">
-      {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
-        <span key={i} className="px" style={{ animationDelay: `${i * 0.35}s` }} />
-      ))}
-    </a>
-  );
-}
-
 const ORG_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -157,9 +93,9 @@ const ORG_SCHEMA = {
   url: "https://www.shipai.club",
   logo: "https://www.shipai.club/logo-icon.png",
   description:
-    "Free, public AI education in Phoenix and Tempe, Arizona. A community-run space for open sessions, workshops, and knowledge-sharing where builders show their work. Demos over memos.",
+    "Free, public AI education in Phoenix, Arizona. A community-run space for open sessions, workshops, and knowledge-sharing where builders show their work. Demos over memos.",
   sameAs: [DISCORD, MEETUP, LUMA, GITHUB],
-  areaServed: ["Phoenix, AZ", "Tempe, AZ"],
+  areaServed: ["Phoenix, AZ"],
 };
 
 function eventsSchema(events) {
@@ -196,8 +132,7 @@ export default async function Page() {
         </a>
         <nav>
           <a href="/programs">Programs</a>
-          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
-          <a href={GITHUB} target="_blank" rel="noreferrer">GitHub</a>
+          <a href="/about">About</a>
           <a href="/dashboard">Account</a>
         </nav>
         <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
@@ -209,7 +144,7 @@ export default async function Page() {
         <section className="hero">
           <p className="eyebrow reveal" style={{ "--d": "0ms" }}>
             <a href="/standby" className="node" aria-label="Standby screen" />
-            phx · free ai programs
+            phoenix, az
           </p>
           <h1 className="sr-only">Ship AI — free AI programs in Phoenix.</h1>
           <div className="hero-title" aria-hidden="true">
@@ -225,10 +160,8 @@ export default async function Page() {
             </div>
           </div>
           <p className="lede reveal" style={{ "--d": "280ms" }}>
-            Ship AI runs free, multi-session programs for AI builders in Phoenix. Every
-            session gets built live on screen, every file we make is published, and you
-            demo what you shipped. Day Zero takes you from a blank chat box to something
-            running. Zero to Launch takes the thing you built and finds it customers.
+            Free AI programs for builders in Phoenix — community-run, craft over
+            hype.
           </p>
           {/* Two buttons, not three. The programs are the front door; the
               hackathon is how one of them ends and has its own strip below. */}
@@ -254,9 +187,6 @@ export default async function Page() {
               <Ticket size={13} strokeWidth={1.75} aria-hidden="true" />
               Free · open to all
             </span>
-          </div>
-          <div className="hero-foot reveal" style={{ "--d": "560ms" }}>
-            <PixelTrail />
           </div>
         </section>
 
@@ -289,7 +219,7 @@ export default async function Page() {
             </div>
           </div>
           <p className="strip-cta">
-            Workuity is the meetup venue sponsor. Seeking corporate sponsors — help keep the programs free and public.{" "}
+            Workuity is our venue sponsor. Seeking corporate sponsors to keep the programs free and public.{" "}
             <a href="/programs/zero-to-launch/hackathon/sponsor">See what&apos;s fundable</a>
           </p>
         </section>
@@ -340,97 +270,6 @@ export default async function Page() {
           })}
         </section>
 
-        <section className="section">
-          <p className="kicker">What we're about</p>
-          <p className="section-lede">
-            Ship AI is a free, community-run AI education project. The premise is simple: the
-            best AI education isn't behind a paywall or on a stage — it's builders showing each
-            other the work, in the open, for free.
-          </p>
-          <div className="values">
-            {values.map((v) => (
-              <div key={v.title} className="value">
-                <h3>
-                  <v.icon className="icon" size={18} strokeWidth={1.75} aria-hidden="true" />
-                  {v.title}
-                </h3>
-                <p>{v.copy}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section id="who" className="section">
-          <p className="kicker">Who it's for</p>
-          <h2>Come as you are, if you build.</h2>
-          <div className="audience">
-            <div className="aud-col aud-for">
-              <p className="aud-head">This is for you if</p>
-              {/* Routes rather than filters. The old bullets sorted people
-                  into in and out; there are two programs now, so the
-                  honest answer to "am I ready" is "start here". */}
-              <ul>
-                <li>
-                  You&apos;re new to this. Start at{" "}
-                  <a href="/programs/day-zero">Day Zero</a> — four sessions from a blank chat
-                  box to something running.
-                </li>
-                <li>
-                  You&apos;ve shipped something and nobody&apos;s using it yet. That&apos;s{" "}
-                  <a href="/programs/zero-to-launch">Zero to Launch</a> — six sessions on
-                  finding customers, then a hackathon.
-                </li>
-                <li>You&apos;d rather watch a real demo — even one that breaks — than a canned sales pitch.</li>
-                <li>You want a room that argues about tradeoffs, not definitions.</li>
-              </ul>
-            </div>
-            <div className="aud-col aud-not">
-              <p className="aud-head">Maybe not yet if</p>
-              <ul>
-                <li>You're here to hard-sell or fill a lead list.</li>
-                <li>"AI-powered" is the whole pitch and there's no build behind it.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section id="host" className="section">
-          <p className="kicker">Your host</p>
-          <div className="host">
-            <img
-              src="/santos.jpg"
-              alt="Santos Hernandez, founder and host of Ship AI"
-              width={140}
-              height={140}
-              className="host-photo"
-            />
-            <div className="host-body">
-              <h2>Santos Hernandez</h2>
-              <p className="host-role">Founder &amp; host</p>
-              <p>
-                Santos is a founder and Lead Product Engineer who builds agentic AI systems,
-                works on the models underneath them, and shapes the product experiences on
-                top. Before this he was the founding product hire at ZBD — the money layer
-                for games — taking the product from $0 to $12M ARR and helping secure the
-                EU's first MiCAR license approval plus money transmitter licenses across 26
-                states and D.C. He started Ship AI to give Phoenix and Tempe builders a room
-                where you show the work, not talk about it.
-              </p>
-              <p className="host-links">
-                <a href="https://santos.lol" target="_blank" rel="noreferrer" aria-label="santos.lol" title="santos.lol">
-                  <Globe size={18} strokeWidth={1.75} aria-hidden="true" />
-                </a>
-                <a href="https://x.com/5antoshernandez" target="_blank" rel="noreferrer" aria-label="X" title="X">
-                  <BrandGlyph icon={siX} />
-                </a>
-                <a href="https://github.com/5antoshernandez" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
-                  <BrandGlyph icon={siGithub} />
-                </a>
-              </p>
-            </div>
-          </div>
-        </section>
-
         <section id="events" className="section">
           <p className="kicker">Up next</p>
           <h2>Come see something get shipped.</h2>
@@ -461,9 +300,8 @@ export default async function Page() {
             </p>
           )}
           <p className="events-more">
-            The rest of the calendar lives on{" "}
-            <a href={LUMA} target="_blank" rel="noreferrer">Luma</a> and{" "}
-            <a href={MEETUP} target="_blank" rel="noreferrer">Meetup</a> — or see the{" "}
+            Full calendar on{" "}
+            <a href={MEETUP} target="_blank" rel="noreferrer">Meetup</a>, or see the{" "}
             <a href="/programs/zero-to-launch">full curriculum</a>.
           </p>
         </section>
@@ -475,11 +313,9 @@ export default async function Page() {
           <img src="/logo-icon.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
-        <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
           <a href="/programs">Programs</a>
-          <a href="/ai-meetup-phoenix">Phoenix</a>
-          <a href="/ai-meetup-tempe">Tempe</a>
+          <a href="/about">About</a>
         </nav>
         <div className="socials">
           {SOCIALS.map((s) => (

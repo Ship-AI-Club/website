@@ -10,7 +10,7 @@ import LoginForm from "./login-form";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Sign in — Ship AI",
+  title: "Sign In — Ship AI",
   description:
     "Sign in to your Ship AI account to register for Zero to Launch, submit a project, or pick up your certifications.",
   robots: { index: false, follow: false },
@@ -31,8 +31,8 @@ export default async function Page({ searchParams }) {
         <p className="ac-kicker">Ship AI account</p>
         <h1>Sign in</h1>
         <p className="ac-lede">
-          One account for the whole program — registering for the hackathon, forming a team,
-          submitting your project, judging, and picking up your certification afterwards.
+          One account for the whole program — hackathon registration, teams, project
+          submission, judging, and your certification afterwards.
         </p>
 
         {/* An expired or reused magic link lands back here with a
@@ -53,17 +53,16 @@ export default async function Page({ searchParams }) {
           <LoginForm next={next} />
         ) : (
           <p className="ac-error">
-            Accounts aren&apos;t available on this deployment yet. Everything else on the site
-            works as normal.
+            Accounts aren&apos;t available on this deployment yet. The rest of the site works
+            as normal.
           </p>
         )}
 
         <hr className="ac-divider" style={{ margin: "2.5rem 0 1.5rem" }} />
 
         <p className="ac-fine">
-          New here? Entering your email makes the account — there&apos;s nothing else to sign
-          up for. By signing in you agree we&apos;ll email you about the program and nothing
-          else.
+          New here? Entering your email makes the account — nothing else to sign up for. We
+          email you about the program and nothing else.
         </p>
       </main>
 

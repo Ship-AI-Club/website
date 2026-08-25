@@ -13,7 +13,7 @@ import {
 } from "../../../lib/results";
 
 export const metadata = {
-  title: "Your certificates — Ship AI",
+  title: "Your Certificates — Ship AI",
   robots: { index: false, follow: false },
 };
 

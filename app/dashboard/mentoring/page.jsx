@@ -3,7 +3,7 @@ import { mentorAssignmentsFor, teamMembers } from "../../../lib/store";
 import { EVENT, DISCORD } from "../../../lib/hackathon";
 
 export const metadata = {
-  title: "Teams you mentor — Ship AI",
+  title: "Teams You Mentor — Ship AI",
   robots: { index: false, follow: false },
 };
 

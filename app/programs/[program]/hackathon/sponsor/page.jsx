@@ -11,9 +11,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
-import { CalendarDays } from "lucide-react";
 
-import { EVENT, DISCORD, MEETUP, LUMA, GITHUB, X_URL } from "../../../../../lib/hackathon";
+import { EVENT, DISCORD, MEETUP, GITHUB, X_URL } from "../../../../../lib/hackathon";
 import { PROGRAMS, programBySlug } from "../../../../../lib/programs";
 import {
   TIERS,
@@ -41,7 +40,6 @@ function BrandGlyph({ icon, size = 18 }) {
 const SOCIALS = [
   { href: DISCORD, label: "Discord", glyph: <BrandGlyph icon={siDiscord} /> },
   { href: MEETUP, label: "Meetup", glyph: <BrandGlyph icon={siMeetup} /> },
-  { href: LUMA, label: "Luma", glyph: <CalendarDays size={18} strokeWidth={1.75} aria-hidden="true" /> },
   { href: X_URL, label: "X", glyph: <BrandGlyph icon={siX} /> },
   { href: GITHUB, label: "GitHub", glyph: <BrandGlyph icon={siGithub} /> },
 ];
@@ -99,15 +97,14 @@ export default async function Page({ params }) {
           <p className="kicker">Sponsorship</p>
           <h1>Put your name on the part you actually paid for.</h1>
           <p className="section-lede">
-            Zero to Launch is seven events over ten weeks — six free Wednesday sessions from{" "}
+            Seven events over ten weeks — six free Wednesday sessions from{" "}
             {EVENT.seriesStart.replace("Wednesday ", "")}, then a hackathon on{" "}
-            {EVENT.datesShort} where 30–50 Phoenix builders don&apos;t build, they ship. Every
-            session is free. Sponsorship is what keeps it that way.
+            {EVENT.datesShort} where 30–50 Phoenix builders don&apos;t build, they ship. All
+            free. Sponsorship is what keeps it that way.
           </p>
           <p className="sp-mech">
             <strong>Cash, platform credits and donated hours all count toward the same ladder</strong>
-            {" — "}the total you underwrite sets your tier. Two Bronze items make a Silver. Stack
-            to climb.
+            {" — "}the total you underwrite sets your tier. Two Bronze items make a Silver.
           </p>
           <div className="cta-row">
             <a className="btn btn-solid" href="#tiers">
@@ -139,9 +136,9 @@ export default async function Page({ params }) {
             ))}
           </div>
           <p className="hk-note">
-            Every item on the menu below carries its own named credit — fund the X account and
-            the bio reads &ldquo;powered by ___&rdquo; for the season. &ldquo;We paid for the
-            prize pool&rdquo; lands harder than &ldquo;we were a gold sponsor.&rdquo;
+            Every item on the menu carries its own named credit — fund the X account and the
+            bio reads &ldquo;powered by ___&rdquo; for the season. &ldquo;We paid for the prize
+            pool&rdquo; lands harder than &ldquo;we were a gold sponsor.&rdquo;
           </p>
         </section>
 
@@ -149,9 +146,9 @@ export default async function Page({ params }) {
           <p className="kicker">The menu</p>
           <h2>Underwrite a line item.</h2>
           <p className="section-lede">
-            Everything it takes to run seven events for fifty builders, priced at what it costs
-            us. We publish the numbers because you should be able to decide before you ever
-            message us. The total you take sets your tier.
+            Everything it takes to run seven events for fifty builders, priced at what it
+            costs us. The numbers are public so you can decide before you message us. The total
+            you take sets your tier.
           </p>
 
           {MENU.map((group) => (
@@ -249,7 +246,7 @@ export default async function Page({ params }) {
           </ul>
           <p className="hk-note">
             Sunday&apos;s pitches are also open to investors. If you write cheques for early
-            products with real numbers, come sit in the room — there&apos;s nothing to buy.
+            products with real numbers, come sit in the room. Nothing to buy.
           </p>
         </section>
 
@@ -298,10 +295,10 @@ export default async function Page({ params }) {
           <Megaphone size={22} strokeWidth={1.75} aria-hidden="true" />
           <h2>Sponsorship closes {EVENT.sponsorDeadline}.</h2>
           <p>
-            That&apos;s so prize amounts can go on the page before we push registration hard.
+            That&apos;s so prize amounts can go on the page before we push registration.
             Commit before {EVENT.seriesStart.replace("Wednesday ", "").replace(", 2026", "")} and
-            your name is on the program from session one. Tell us what you want your name on and
-            we&apos;ll be straight with you about where it lands.
+            your name is on the program from session one. Tell us what you want your name on
+            and we&apos;ll be straight about where it lands.
           </p>
           <div className="cta-row">
             <a className="btn btn-solid" href="/dashboard/requests">
@@ -317,8 +314,8 @@ export default async function Page({ params }) {
           <p className="kicker">Beyond the season</p>
           <h2>Year-round.</h2>
           <p className="section-lede">
-            Zero to Launch is one season; Ship AI runs free, public events in Phoenix and Tempe
-            continuously. Some sponsors would rather back the room than the program.
+            Zero to Launch is one season; Ship AI runs free, public events in Phoenix
+            year-round. Some sponsors would rather back the room than the program.
           </p>
           <ul className="sp-year">
             {YEAR_ROUND.map((y) => (
@@ -339,7 +336,6 @@ export default async function Page({ params }) {
           <img src="/logo-icon.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
-        <p>Phoenix &amp; Tempe, Arizona</p>
         <nav>
           <a href="/">Home</a>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>

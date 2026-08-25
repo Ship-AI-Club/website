@@ -13,7 +13,7 @@ import {
 } from "./team-forms";
 
 export const metadata = {
-  title: "Your team — Ship AI",
+  title: "Your Team — Ship AI",
   robots: { index: false, follow: false },
 };
 

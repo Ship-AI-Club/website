@@ -163,12 +163,12 @@ export default async function Page() {
             Free AI programs for builders in Phoenix — community-run, craft over
             hype.
           </p>
-          {/* Two buttons, not three. The programs are the front door; the
-              hackathon is how one of them ends and has its own strip below. */}
+          {/* Two buttons, not three. RSVP is the front door; the hackathon
+              is how one of the programs ends and has its own strip below. */}
           <div className="cta-row reveal" style={{ "--d": "380ms" }}>
-            <a className="btn btn-solid" href="/programs">
-              See the programs
-              <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
+            <a className="btn btn-solid" href={MEETUP} target="_blank" rel="noreferrer">
+              <BrandGlyph icon={siMeetup} />
+              RSVP on Meetup
             </a>
             <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
               Join the Discord

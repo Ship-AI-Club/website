@@ -56,7 +56,7 @@ export default function Page() {
       <JsonLd data={LIST_SCHEMA} />
       <header className="nav">
         <a href="/" className="brand">
-          <img src="/logo-icon.png" alt="" width={26} height={26} />
+          <img src="/logo-mark.png" alt="" width={26} height={26} />
           <span>Ship AI</span>
         </a>
         <nav>
@@ -109,7 +109,7 @@ export default function Page() {
 
       <footer className="footer">
         <div className="brand">
-          <img src="/logo-icon.png" alt="" width={22} height={22} />
+          <img src="/logo-mark.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
         <nav><a href="/">Home</a><a href="/programs">Programs</a><a href="/programs/zero-to-launch/hackathon">Hackathon</a></nav>

@@ -65,7 +65,7 @@ export default function ProfileForm({ user }) {
       <div className="ac-row">
         <div className="ac-field">
           <label className="ac-label" htmlFor="name">
-            Display name <span className="ac-req">required</span>
+            Display name <span className="ac-req">Required</span>
           </label>
           <input id="name" name="name" type="text" defaultValue={user.name} required />
         </div>

@@ -2,7 +2,7 @@
    Shared public-form primitives (the ik-* classes) — born on the old
    /intake page, kept when that flow was replaced by invites +
    onboarding because the waitlist form (and any future public form)
-   uses them. Same black / white / #678ff2 and pixel-Geist system as
+   uses them. Same paper / ink / accent system as
    the rest of the site.
 ------------------------------------------------------------------ */
 
@@ -19,9 +19,10 @@
 
 .ik-nav-note {
   margin-left: auto;
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
   font-size: 0.78rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   color: var(--faint);
 }
 
@@ -49,13 +50,13 @@
 }
 
 .ik-req {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 0.76rem;
+  letter-spacing: -0.005em;
   color: var(--bg);
   background: var(--accent);
   padding: 0.15rem 0.4rem;
+  font-weight: 500;
 }
 
 .ik-hint {
@@ -73,8 +74,8 @@
   font: inherit;
   font-size: 0.98rem;
   color: var(--ink);
-  background: rgba(248, 248, 250, 0.03);
-  border: 1px solid var(--hairline);
+  background: var(--surface);
+  border: 1px solid var(--edge);
   border-radius: 8px;
   padding: 0.75rem 0.9rem;
   transition: border-color 150ms ease, background 150ms ease;
@@ -90,7 +91,7 @@
 .ik-form textarea:focus {
   outline: none;
   border-color: var(--accent);
-  background: rgba(103, 143, 242, 0.06);
+  background: rgba(var(--accent-rgb), 0.06);
 }
 
 .ik-form input:disabled,
@@ -112,20 +113,20 @@
 }
 
 .ik-role {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.82rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 0.92rem;
+  letter-spacing: -0.005em;
   color: var(--dim);
   border: 1px solid var(--hairline);
   border-radius: 8px;
   padding: 0.6rem 1.15rem;
   cursor: pointer;
   transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
+  font-weight: 500;
 }
 
 .ik-role.is-on {
-  color: #000;
+  color: var(--bg);
   background: var(--ink);
   border-color: var(--ink);
 }
@@ -138,7 +139,7 @@
 @media (hover: hover) and (pointer: fine) {
   .ik-role:not(.is-on):hover {
     color: var(--ink);
-    border-color: rgba(248, 248, 250, 0.35);
+    border-color: var(--ink);
   }
 }
 
@@ -154,16 +155,16 @@
   padding: 1.6rem 1.1rem;
   color: var(--dim);
   font-size: 0.92rem;
-  border: 1px dashed rgba(248, 248, 250, 0.22);
+  border: 1px dashed rgba(var(--fg-rgb), 0.22);
   border-radius: 10px;
-  background: rgba(248, 248, 250, 0.02);
+  background: var(--surface);
   transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
 }
 
 .ik-drop.is-over {
   border-color: var(--accent);
   border-style: solid;
-  background: rgba(103, 143, 242, 0.08);
+  background: rgba(var(--accent-rgb), 0.08);
   color: var(--ink);
 }
 
@@ -197,7 +198,8 @@
   padding: 0.7rem 0.8rem;
   border: 1px solid var(--hairline);
   border-radius: 8px;
-  background: rgba(248, 248, 250, 0.02);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
 }
 
 .ik-file-thumb {
@@ -209,7 +211,7 @@
   border-radius: 6px;
   overflow: hidden;
   color: var(--faint);
-  background: rgba(248, 248, 250, 0.06);
+  background: rgba(var(--fg-rgb), 0.06);
 }
 
 .ik-file-thumb img {
@@ -231,7 +233,8 @@
 }
 
 .ik-file-size {
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
   font-size: 0.75rem;
   color: var(--faint);
 }
@@ -239,7 +242,7 @@
 .ik-bar {
   height: 2px;
   margin-top: 0.5rem;
-  background: rgba(248, 248, 250, 0.12);
+  background: rgba(var(--fg-rgb), 0.12);
   overflow: hidden;
 }
 
@@ -311,12 +314,12 @@
 }
 
 .ik-error {
-  color: #ff8080;
+  color: var(--bad);
   font-size: 0.92rem;
   padding: 0.8rem 1rem;
-  border: 1px solid rgba(255, 128, 128, 0.35);
+  border: 1px solid rgba(194, 54, 29, 0.35);
   border-radius: 8px;
-  background: rgba(255, 128, 128, 0.06);
+  background: rgba(194, 54, 29, 0.06);
 }
 
 /* ---------- done ---------- */
@@ -368,7 +371,8 @@
 }
 
 .ik-inbox-count {
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
   font-size: 0.85rem;
   color: var(--faint);
   margin-bottom: 2.5rem;
@@ -392,17 +396,18 @@
 }
 
 .ik-tag {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 0.76rem;
+  letter-spacing: -0.005em;
   color: var(--bg);
   background: var(--accent);
   padding: 0.15rem 0.45rem;
+  font-weight: 500;
 }
 
 .ik-sub-when {
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
   font-size: 0.75rem;
   color: var(--faint);
   margin-left: auto;
@@ -439,6 +444,8 @@
   border: 1px solid var(--hairline);
   border-radius: 8px;
   transition: color 150ms ease, border-color 150ms ease;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
 }
 
 .ik-asset img {
@@ -446,21 +453,21 @@
   height: 2rem;
   object-fit: contain;
   border-radius: 4px;
-  background: rgba(248, 248, 250, 0.06);
+  background: rgba(var(--fg-rgb), 0.06);
 }
 
 .ik-asset-kind {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 0.76rem;
+  letter-spacing: -0.005em;
   color: var(--faint);
+  font-weight: 500;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ik-asset:hover {
     color: var(--ink);
-    border-color: rgba(248, 248, 250, 0.35);
+    border-color: var(--ink);
   }
 }
 

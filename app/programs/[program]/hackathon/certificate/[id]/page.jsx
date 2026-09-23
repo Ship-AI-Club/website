@@ -117,7 +117,7 @@ export default async function Page({ params }) {
 
       <header className="nav">
         <a href="/" className="brand">
-          <img src="/logo-icon.png" alt="" width={26} height={26} />
+          <img src="/logo-mark.png" alt="" width={26} height={26} />
           <span>Ship AI</span>
         </a>
         <nav>
@@ -144,7 +144,7 @@ export default async function Page({ params }) {
         <div className="cert-plate">
           <span className="cert-keyline" aria-hidden="true" />
 
-          <img className="cert-seal" src="/logo-icon.png" alt="" width={42} height={42} />
+          <img className="cert-seal" src="/logo-mark.png" alt="" width={42} height={42} />
 
           <p className="cert-kind">
             {won ? "Certificate of achievement" : "Certificate of launch"}
@@ -227,7 +227,7 @@ export default async function Page({ params }) {
 
       <footer className="footer">
         <div className="brand">
-          <img src="/logo-icon.png" alt="" width={22} height={22} />
+          <img src="/logo-mark.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
         <nav>

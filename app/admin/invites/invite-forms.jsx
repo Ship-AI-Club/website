@@ -51,7 +51,7 @@ export function CreateInviteForm({ roles, origin }) {
 
       <fieldset className="ac-choices">
         <legend className="ac-label">
-          Grants <span className="ac-req">required</span>
+          Grants <span className="ac-req">Required</span>
         </legend>
         <p className="ac-hint">
           Tick everything this link should hand over. More than one is the point — a package

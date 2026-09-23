@@ -201,7 +201,7 @@ export default function OnboardingWizard({ user, next }) {
           <>
             <div className="ac-field">
               <label className="ac-label" htmlFor="name">
-                Display name <span className="ac-req">required</span>
+                Display name <span className="ac-req">Required</span>
               </label>
               <p className="ac-hint">
                 As it should read on a certificate, a name badge and the site.
@@ -220,7 +220,7 @@ export default function OnboardingWizard({ user, next }) {
 
             <div className="ac-field">
               <label className="ac-label" htmlFor="handle">
-                Handle <span className="ac-req">required</span>
+                Handle <span className="ac-req">Required</span>
               </label>
               <p className="ac-hint">
                 Your short name in the club — on the attendee list and next to your team.

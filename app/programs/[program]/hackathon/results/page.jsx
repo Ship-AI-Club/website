@@ -115,7 +115,7 @@ export default async function Page({ params }) {
 
       <header className="nav">
         <a href="/" className="brand">
-          <img src="/logo-icon.png" alt="" width={26} height={26} />
+          <img src="/logo-mark.png" alt="" width={26} height={26} />
           <span>Ship AI</span>
         </a>
         <nav>
@@ -182,7 +182,7 @@ export default async function Page({ params }) {
                   )}
                   <h3>
                     {c.name}
-                    {c.voted && <span className="hk-cat-tag">room-voted</span>}
+                    {c.voted && <span className="hk-cat-tag">Room-voted</span>}
                   </h3>
                   <p>{c.copy}</p>
                 </div>
@@ -217,7 +217,7 @@ export default async function Page({ params }) {
                       )}
                       <h3>
                         {category.name}
-                        {category.voted && <span className="hk-cat-tag">room-voted</span>}
+                        {category.voted && <span className="hk-cat-tag">Room-voted</span>}
                       </h3>
                       <p>
                         <strong className="rs-winner">{entrant.team}</strong>
@@ -277,7 +277,7 @@ export default async function Page({ params }) {
               </tbody>
             </table>
 
-            <p className="rule-line">just ship it</p>
+            <p className="rule-line">Just ship it.</p>
 
             <div className="cta-row">
               <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">
@@ -294,7 +294,7 @@ export default async function Page({ params }) {
 
       <footer className="footer">
         <div className="brand">
-          <img src="/logo-icon.png" alt="" width={22} height={22} />
+          <img src="/logo-mark.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
         <nav>

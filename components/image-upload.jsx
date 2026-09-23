@@ -100,7 +100,7 @@ export default function ImageUpload({
             {busy ? "Uploading…" : url ? "Replace" : "Upload"}
           </button>
           {error ? (
-            <span className="ac-fine" style={{ color: "#ff9d9d" }}>
+            <span className="ac-fine" style={{ color: "var(--bad)" }}>
               {error}
             </span>
           ) : (

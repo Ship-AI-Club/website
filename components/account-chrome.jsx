@@ -14,7 +14,7 @@ export function AccountHeader({ user, links = [] }) {
   return (
     <header className="nav">
       <a href="/" className="brand">
-        <img src="/logo-icon.png" alt="" width={26} height={26} />
+        <img src="/logo-mark.png" alt="" width={26} height={26} />
         <span>Ship AI</span>
       </a>
       <nav>
@@ -45,7 +45,7 @@ export function AccountFooter() {
   return (
     <footer className="footer">
       <div className="brand">
-        <img src="/logo-icon.png" alt="" width={22} height={22} />
+        <img src="/logo-mark.png" alt="" width={22} height={22} />
         <span>Ship AI</span>
       </div>
       

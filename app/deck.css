@@ -22,13 +22,20 @@
   inset: 0;
   display: flex;
   flex-direction: column;
-  background: #000;
   overflow: hidden;
 
+  /* The palette is global (globals.css). A projector needs two things
+     heavier than a screen does: rules, and SVG line art. */
+  --hairline: rgba(var(--fg-rgb), 0.22);
+  --wire: rgba(var(--fg-rgb), 0.5);
+
   /* accent ramp — diagrams get levels without introducing new hues */
-  --accent-line: rgba(103, 143, 242, 0.55);
-  --accent-fill: rgba(103, 143, 242, 0.16);
-  --accent-ghost: rgba(103, 143, 242, 0.07);
+  --accent-line: rgba(var(--accent-rgb), 0.6);
+  --accent-fill: rgba(var(--accent-rgb), 0.14);
+  --accent-ghost: rgba(var(--accent-rgb), 0.06);
+
+  background: var(--bg);
+  color: var(--ink);
 }
 
 /* ---------- top bar ---------- */
@@ -227,13 +234,13 @@
   padding-top: 1.6cqw;
   margin-top: 1.6cqw;
   border-top: 1px solid var(--hairline);
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.95cqw;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.4cqw;
+  letter-spacing: -0.005em;
   color: var(--faint);
   position: relative;
   z-index: 1;
+  font-weight: 500;
 }
 
 .dk-chrome-brand {
@@ -261,24 +268,33 @@
 
 /* ---------- numerals ---------- */
 
-/* The pixel face does every numeral in the system and nothing else.
-   Mono does code, commands and labels. Sans does prose. Three faces,
-   three unambiguous jobs — that's what stops the mix reading as
-   arbitrary. */
+/* Every figure is Geist Sans, semibold, tabular. The deck used to set
+   numerals in Geist Pixel; its square dots merge on a projector at any
+   size, so it's gone from the slides entirely. Mono does code, commands
+   and labels. Sans does prose and figures. */
 .dk-num,
-.dk-chrome-n,
 .dk-agenda li > span,
-.dk-act-n,
 .dk-metric-v,
-.dk-bignum-v,
 .dk-loop-n,
 .dk-time-date,
 .dk-score-pct,
+.dk-walk-n,
+.dk-act-n,
 .dk-news-n,
-.dk-break-clock,
-.dk-walk-n {
-  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+.dk-bignum-v,
+.dk-break-clock {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
+}
+
+/* display-size figures want tighter tracking than a label does */
+.dk-act-n,
+.dk-news-n,
+.dk-bignum-v,
+.dk-break-clock {
+  letter-spacing: -0.05em;
 }
 
 .dk-chrome-n span,
@@ -289,10 +305,10 @@
 /* ---------- shared type ---------- */
 
 .dk-eyebrow {
-  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
-  font-size: 0.95cqw;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.46cqw;
+  font-weight: 600;
+  letter-spacing: -0.005em;
   color: var(--accent);
 }
 
@@ -335,8 +351,11 @@
 
 .dk-title h2 {
   font-size: 7.4cqw;
-  letter-spacing: -0.04em;
-  line-height: 0.92;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  max-width: 11ch;
+  margin: 1.6cqw 0 0.4cqw;
+  text-wrap: balance;
 }
 
 /* The ASCII wordmark — the homepage hero, projected. Explicit mono:
@@ -347,21 +366,17 @@
   line-height: 1;
   white-space: pre;
   color: var(--ink);
-  text-shadow: 0 0 24px rgba(103, 143, 242, 0.35);
+  /* no glow on paper — a halo around dark type just reads as blur */
   margin: 2cqw 0 0.8cqw;
-  /* standby-style breathing, in steps — the slide is alive while the
-     room settles, without anything easing */
-  animation: dk-breathe 5.2s steps(10) infinite alternate;
 }
 
-@keyframes dk-breathe {
-  from {
-    text-shadow: 0 0 18px rgba(103, 143, 242, 0.2);
-  }
-  to {
-    text-shadow: 0 0 34px rgba(103, 143, 242, 0.5);
-  }
+/* Long session names keep the title slide's block-letter signature,
+   but use a denser two-line lockup so the mark and globe can coexist. */
+.dk-ascii-wide {
+  font-size: 1.35cqw;
+  letter-spacing: -0.04em;
 }
+
 
 /* the homepage pixel trail: eight cells, each holding the signal for
    exactly an eighth of the loop */
@@ -439,7 +454,7 @@
 /* the presenter hint is screen-only — it must not print */
 .dk-title-hint {
   color: var(--accent);
-  border: 1px solid var(--accent-line);
+  border: 1px solid var(--accent);
   padding: 0.3cqw 0.9cqw;
   margin-left: 1.6cqw;
 }
@@ -463,7 +478,7 @@
   transform: translateY(-52%);
   font-size: 30cqw;
   line-height: 0.7;
-  color: var(--accent-ghost);
+  color: rgba(var(--accent-rgb), 0.11);
   z-index: 0;
   pointer-events: none;
 }
@@ -476,7 +491,7 @@
   top: 50%;
   transform: translateY(-50%);
   width: 34cqw;
-  opacity: 0.55;
+  opacity: 0.8;
   z-index: 0;
   pointer-events: none;
 }
@@ -485,7 +500,7 @@
    at the wire marks' opacity it reads as the loudest thing on the slide
    and steals the act from its own name */
 .dk-act-art:has(.dk-bolt) {
-  opacity: 0.3;
+  opacity: 0.55;
 }
 
 .dk-contact-art,
@@ -495,7 +510,7 @@
   top: 50%;
   transform: translateY(-50%);
   width: 30cqw;
-  opacity: 0.45;
+  opacity: 0.75;
   z-index: 0;
   pointer-events: none;
 }
@@ -640,13 +655,13 @@
 }
 
 .dk-col-h {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 1.1cqw;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.51cqw;
+  letter-spacing: -0.005em;
   padding-bottom: 1cqw;
   margin-bottom: 1.2cqw;
   border-bottom: 1px solid var(--hairline);
+  font-weight: 500;
 }
 
 .dk-col ul {
@@ -690,10 +705,9 @@
 
 .dk-split-vs {
   align-self: stretch;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.95cqw;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.51cqw;
+  letter-spacing: -0.005em;
   color: var(--faint);
   border-left: 1px solid var(--hairline);
   border-right: 1px solid var(--hairline);
@@ -701,6 +715,7 @@
   display: grid;
   place-items: center;
   padding: 0 0.8cqw;
+  font-weight: 500;
 }
 
 /* the conclusion belongs under both columns, not under the left one — and
@@ -734,12 +749,12 @@
 }
 
 .dk-metric-l {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 1.1cqw;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.51cqw;
+  letter-spacing: -0.005em;
   color: var(--dim);
   margin-top: 1.2cqw;
+  font-weight: 500;
 }
 
 /* ---------- big number ---------- */
@@ -779,7 +794,7 @@
    live in a terminal. It should look like one. */
 .dk-term {
   border: 1px solid var(--hairline);
-  background: rgba(248, 248, 250, 0.02);
+  background: var(--surface);
   display: grid;
 }
 
@@ -787,10 +802,10 @@
   display: flex;
   align-items: center;
   gap: 0.8cqw;
-  padding: 0.9cqw 1.4cqw;
+  padding: 0.6cqw 1.4cqw;
   border-bottom: 1px solid var(--hairline);
   font-family: var(--font-geist-mono), monospace;
-  font-size: 1cqw;
+  font-size: 1.25cqw;
   color: var(--faint);
 }
 
@@ -859,11 +874,11 @@
 }
 
 .dk-run-label {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 1.1cqw;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.51cqw;
+  letter-spacing: -0.005em;
   color: var(--faint);
+  font-weight: 500;
 }
 
 /* `side`: the same parts, turned ninety degrees. Two run slides in a row
@@ -893,8 +908,9 @@
 
 .dk-run.is-side .dk-run-label {
   color: var(--accent);
-  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
-  letter-spacing: 0.16em;
+  font-family: var(--font-geist-mono), monospace;
+  font-weight: 600;
+  letter-spacing: 0.1em;
 }
 
 .dk-run.is-side .dk-run-c {
@@ -908,9 +924,10 @@
 /* left-aligned to the same axis as everything else — a centred slide
    reads as if it wandered in from another deck */
 .dk-quote p {
-  font-family: var(--font-geist-pixel-square), var(--font-geist-sans), sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-weight: 600;
   font-size: 5.5cqw;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.03em;
   line-height: 1.12;
   color: var(--accent);
   max-width: 24ch;
@@ -960,7 +977,8 @@
 .dk-qr svg {
   width: 20cqw;
   height: 20cqw;
-  background: var(--ink);
+  background: #fff;
+  border: 1px solid var(--hairline);
   /* the spec wants 4 modules of quiet zone; a 33-module code at 20cqw
      needs ~2.4cqw of padding to get there */
   padding: 2.4cqw;
@@ -968,7 +986,7 @@
 
 .dk-qr-label {
   font-family: var(--font-geist-mono), monospace;
-  font-size: 1.1cqw;
+  font-size: 1.35cqw;
   color: var(--dim);
   letter-spacing: 0.06em;
 }
@@ -992,7 +1010,7 @@
   transform: translateY(-52%);
   font-size: 26cqw;
   line-height: 0.7;
-  color: var(--accent-ghost);
+  color: rgba(var(--accent-rgb), 0.11);
   z-index: 0;
   pointer-events: none;
 }
@@ -1018,7 +1036,7 @@
   align-items: center;
   gap: 0.5cqw;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 1.1cqw;
+  font-size: 1.35cqw;
   letter-spacing: 0.04em;
   color: var(--accent);
   border: 1px solid var(--accent-line);
@@ -1107,18 +1125,21 @@ a.dk-news-src:hover {
   margin-top: 0.3cqw;
 }
 
-.dk-motion .dk-walk-rail li {
-  opacity: 0.35;
-  transition: opacity 360ms var(--ease-out-quint);
+.dk-walk-rail li .dk-walk-t,
+.dk-walk-rail li .dk-walk-c {
+  transition: color 360ms var(--ease-out-quint);
 }
 
-.dk-motion .dk-walk-rail li.is-on {
-  opacity: 1;
+/* Unreached stages step down to --faint rather than fading: opacity
+   on paper washes out to nothing on a projector, --faint stays AA. */
+.dk-motion .dk-walk-rail li:not(.is-on) .dk-walk-t,
+.dk-motion .dk-walk-rail li:not(.is-on) .dk-walk-c {
+  color: var(--faint);
 }
 
 .dk-walk-rail li.is-now .dk-walk-dot {
   background: var(--accent);
-  box-shadow: 0 0 0.9cqw rgba(103, 143, 242, 0.85);
+  box-shadow: 0 0 0 0.3cqw rgba(var(--accent-rgb), 0.18);
 }
 
 .dk-walk-rail li.is-now .dk-walk-t {
@@ -1143,7 +1164,6 @@ a.dk-news-src:hover {
   font-size: 5.5cqw;
   line-height: 0.8;
   color: var(--accent);
-  opacity: 0.55;
 }
 
 .dk-walk-d {
@@ -1234,7 +1254,7 @@ a.dk-news-src:hover {
   width: 100%;
   height: 1.2cqw;
   margin-top: 1.6cqw;
-  background: rgba(248, 248, 250, 0.06);
+  background: rgba(var(--fg-rgb), 0.06);
   position: relative;
 }
 
@@ -1291,19 +1311,61 @@ a.dk-news-src:hover {
   margin-top: 1.4cqw;
 }
 
+.dk-thanks-proofs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.2cqw;
+  max-width: 46cqw;
+  margin: 2cqw 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dk-thanks-proofs li {
+  display: grid;
+  gap: 0.45cqw;
+  padding-left: 1cqw;
+  border-left: 1px solid var(--accent-line);
+}
+
+.dk-thanks-proof-v {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 2.2cqw;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.dk-thanks-proof-l {
+  max-width: 18ch;
+  font-size: 1.35cqw;
+  line-height: 1.3;
+  color: var(--dim);
+}
+
+.dk-thanks-why {
+  max-width: 46ch;
+  margin-top: 1.8cqw;
+  padding-left: 1cqw;
+  border-left: 1px solid var(--hairline);
+  font-size: 1.35cqw;
+  line-height: 1.4;
+  color: var(--dim);
+}
+
 .dk-thanks-art {
   width: 20cqw;
 }
 
-/* White monochrome, as on the homepage strip — half these marks are
-   dark artwork on transparency and invisible on black otherwise. */
+/* Ink monochrome — one tone for every mark, so no sponsor's brand
+   colours out-shout another's; mascots opt out with is-color. */
 .dk-thanks-art img {
   width: 100%;
   height: auto;
   max-height: 22cqw;
   object-fit: contain;
   display: block;
-  filter: brightness(0) invert(1);
+  filter: brightness(0);
 }
 
 /* mascot-style marks lose everything as a silhouette — let them keep
@@ -1330,13 +1392,13 @@ a.dk-news-src:hover {
   padding-left: var(--dk-inset);
 }
 
-/* white monochrome, same treatment as the homepage strip */
+/* ink monochrome, same treatment as the thanks slide */
 .dk-sponsor img {
   height: 5cqw;
   width: auto;
   max-width: 100%;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+  filter: brightness(0);
 }
 
 .dk-sponsor.is-wide img {
@@ -1356,11 +1418,11 @@ a.dk-news-src:hover {
 }
 
 .dk-sponsor-tag {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 1.1cqw;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.51cqw;
+  letter-spacing: -0.005em;
   color: var(--dim);
+  font-weight: 500;
 }
 
 /* ---------- contact ---------- */
@@ -1381,11 +1443,11 @@ a.dk-news-src:hover {
 }
 
 .dk-contact-l {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 1.1cqw;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.51cqw;
+  letter-spacing: -0.005em;
   color: var(--dim);
+  font-weight: 500;
 }
 
 .dk-contact-v {
@@ -1401,7 +1463,7 @@ a.dk-news-src:hover {
 
 .dk-contact-c {
   grid-column: 2;
-  font-size: 1.25cqw;
+  font-size: 1.4cqw;
   color: var(--dim);
   line-height: 1.4;
 }
@@ -1450,10 +1512,19 @@ a.dk-news-src:hover {
     border: 0;
   }
 
+  body {
+    background: #fff !important;
+  }
+
+  .dk-page {
+    --bg: #fff;
+    --hairline: rgba(13, 15, 20, 0.3);
+  }
+
   .dk-page,
   .dk-slide,
   .dk-frame {
-    background: #000 !important;
+    background: var(--bg) !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -1481,19 +1552,19 @@ a.dk-news-src:hover {
 .dk-loop-ring,
 .dk-prism-body {
   fill: none;
-  stroke: var(--hairline);
+  stroke: var(--wire);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
 
 .dk-globe-rim,
 .dk-loop-ring {
-  stroke: rgba(248, 248, 250, 0.3);
+  stroke: rgba(var(--fg-rgb), 0.5);
 }
 
 .dk-prism-body,
 .dk-art-solid {
-  stroke: rgba(248, 248, 250, 0.5);
+  stroke: rgba(var(--fg-rgb), 0.5);
   stroke-width: 1;
   fill: var(--accent-ghost);
   vector-effect: non-scaling-stroke;
@@ -1505,8 +1576,7 @@ a.dk-news-src:hover {
 
 .dk-node-lit {
   fill: var(--accent);
-  filter: drop-shadow(0 0 5px rgba(103, 143, 242, 0.9));
-}
+  }
 
 .dk-beam {
   stroke: var(--ink);
@@ -1574,8 +1644,7 @@ a.dk-news-src:hover {
 .dk-bolt-glow {
   fill: var(--accent);
   opacity: 0.45;
-  filter: drop-shadow(0 0 0.35px rgba(103, 143, 242, 0.9));
-  animation: dk-zap 2.4s steps(1, end) infinite;
+    animation: dk-zap 2.4s steps(1, end) infinite;
 }
 
 .dk-bolt-spark {
@@ -1617,13 +1686,13 @@ a.dk-news-src:hover {
 
 .dk-eng-doc {
   fill: var(--accent-ghost);
-  stroke: rgba(248, 248, 250, 0.5);
+  stroke: rgba(var(--fg-rgb), 0.5);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
 
 .dk-eng-rail {
-  stroke: var(--hairline);
+  stroke: var(--wire);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
@@ -1643,7 +1712,7 @@ a.dk-news-src:hover {
 
 /* the engine core is the sail itself */
 .dk-eng-core {
-  fill: rgba(248, 248, 250, 0.5);
+  fill: rgba(var(--fg-rgb), 0.5);
   shape-rendering: crispEdges;
 }
 
@@ -1660,7 +1729,7 @@ a.dk-news-src:hover {
 
 /* attribution flows the other way, quieter */
 .dk-eng-return {
-  stroke: rgba(103, 143, 242, 0.35);
+  stroke: rgba(var(--accent-rgb), 0.35);
   stroke-width: 1;
   stroke-dasharray: 3 5;
   vector-effect: non-scaling-stroke;
@@ -1671,14 +1740,14 @@ a.dk-news-src:hover {
 
 .dk-mark-done {
   fill: none;
-  stroke: rgba(248, 248, 250, 0.5);
+  stroke: rgba(var(--fg-rgb), 0.5);
   stroke-width: 1.25;
   vector-effect: non-scaling-stroke;
 }
 
 .dk-mark-todo {
   fill: none;
-  stroke: var(--hairline);
+  stroke: var(--wire);
   stroke-width: 1;
   stroke-dasharray: 2 6;
   vector-effect: non-scaling-stroke;
@@ -1686,7 +1755,7 @@ a.dk-news-src:hover {
 
 /* user units, not cqw — this text lives inside a scaled viewBox */
 .dk-mark-n {
-  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-mono), monospace;
   font-size: 9px;
   fill: var(--dim);
 }
@@ -1700,22 +1769,20 @@ a.dk-news-src:hover {
 }
 
 .dk-sail-body {
-  fill: rgba(248, 248, 250, 0.82);
-  filter: drop-shadow(0 0 0.4px rgba(103, 143, 242, 0.25));
-}
+  fill: rgba(var(--fg-rgb), 0.82);
+  }
 
 .dk-sail-line {
-  fill: rgba(248, 248, 250, 0.55);
+  fill: rgba(var(--fg-rgb), 0.55);
 }
 
 .dk-sail-node {
-  fill: rgba(248, 248, 250, 0.75);
+  fill: rgba(var(--fg-rgb), 0.75);
 }
 
 .dk-sail-ring {
   fill: var(--accent);
-  filter: drop-shadow(0 0 0.5px rgba(103, 143, 242, 0.9));
-  animation: dk-pulse 3.2s steps(4, end) infinite;
+    animation: dk-pulse 3.2s steps(4, end) infinite;
 }
 
 /* unlike the globe, the sail has a business end — keep the nodes on
@@ -1728,8 +1795,7 @@ a.dk-news-src:hover {
 
 .dk-sail-dot {
   fill: var(--accent);
-  filter: drop-shadow(0 0 0.5px rgba(103, 143, 242, 0.9));
-  animation: dk-pulse 3.2s steps(4, end) infinite;
+    animation: dk-pulse 3.2s steps(4, end) infinite;
 }
 
 /* ---------- prism ---------- */
@@ -1830,8 +1896,8 @@ a.dk-news-src:hover {
 }
 
 .dk-funnel-band path {
-  fill: rgba(248, 248, 250, 0.08);
-  stroke: var(--hairline);
+  fill: rgba(var(--fg-rgb), 0.08);
+  stroke: var(--wire);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
@@ -1839,8 +1905,7 @@ a.dk-news-src:hover {
 .dk-funnel li.is-lit .dk-funnel-band path {
   fill: var(--accent-fill);
   stroke: var(--accent);
-  filter: drop-shadow(0 0 4px rgba(103, 143, 242, 0.55));
-}
+  }
 
 .dk-funnel li.is-lit .dk-funnel-t {
   color: var(--accent);
@@ -1868,7 +1933,8 @@ a.dk-news-src:hover {
 .dk-funnel-drop {
   grid-column: 3;
   grid-row: 1 / span 2;
-  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-weight: 600;
   font-size: 1.4cqw;
   color: var(--dim);
 }
@@ -1915,7 +1981,7 @@ a.dk-news-src:hover {
 
 .dk-flow li.is-lit .dk-flow-dot {
   background: var(--accent);
-  box-shadow: 0 0 0.8cqw rgba(103, 143, 242, 0.85);
+  box-shadow: 0 0 0 0.3cqw rgba(var(--accent-rgb), 0.18);
 }
 
 .dk-flow-t {
@@ -1966,21 +2032,21 @@ a.dk-news-src:hover {
 }
 
 .dk-time li.is-past::before {
-  background: rgba(248, 248, 250, 0.25);
+  background: rgba(var(--fg-rgb), 0.25);
 }
 
 .dk-time li.is-now::before {
   background: var(--accent);
-  box-shadow: 0 0 0.8cqw rgba(103, 143, 242, 0.9);
+  box-shadow: 0 0 0 0.3cqw rgba(var(--accent-rgb), 0.18);
 }
 
 .dk-time-date {
-  font-size: 1.25cqw;
+  font-size: 1.4cqw;
   color: var(--faint);
 }
 
 .dk-time-t {
-  font-size: 1.4cqw;
+  font-size: 1.7cqw;
   color: var(--dim);
   line-height: 1.2;
 }
@@ -2025,10 +2091,10 @@ a.dk-news-src:hover {
   width: 24cqw;
   transform: translateY(-50%);
   text-align: center;
-  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
-  font-size: 1.1cqw;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.51cqw;
+  letter-spacing: -0.005em;
   color: var(--dim);
   pointer-events: none;
 }
@@ -2068,10 +2134,9 @@ a.dk-news-src:hover {
 }
 
 .dk-matrix thead th {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 1.1cqw;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.4cqw;
+  letter-spacing: -0.005em;
   color: var(--dim);
   font-weight: 400;
 }
@@ -2148,6 +2213,17 @@ a.dk-news-src:hover {
   min-height: 0;
 }
 
+/* Customer evidence needs to remain readable, not become a decorative
+   thumbnail. A single screenshot gets the full stage and keeps its
+   original crop inside the frame. */
+.dk-gallery:has(li:only-child) {
+  grid-template-columns: 1fr;
+}
+
+.dk-gallery li:only-child img {
+  object-fit: contain;
+}
+
 /* Uniform cells, mixed source ratios: the 9:16 asset and the 4:5 assets
    crop to the same tile so the strip reads as one set. */
 .dk-gallery li {
@@ -2169,18 +2245,19 @@ a.dk-news-src:hover {
   inset: auto 0 0 0;
   padding: 2.6cqw 0.9cqw 0.7cqw;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 0.95cqw;
+  font-size: 1.35cqw;
   letter-spacing: 0.08em;
-  color: var(--ink);
+  /* sits on the photo, not the slide: white on a dark scrim */
+  color: #fff;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0));
 }
 
 /* A row can carry a verdict. Used sparingly — one channel that worked and
    one that plainly did not read faster in colour than in a sentence. */
-.dk-matrix tr.is-good th[scope="row"] { color: var(--good, #6ee7a8); }
-.dk-matrix tr.is-good td { color: var(--good, #6ee7a8); }
-.dk-matrix tr.is-bad th[scope="row"] { color: var(--bad, #f4796b); }
-.dk-matrix tr.is-bad td { color: var(--bad, #f4796b); }
+.dk-matrix tr.is-good th[scope="row"] { color: var(--good); }
+.dk-matrix tr.is-good td { color: var(--good); }
+.dk-matrix tr.is-bad th[scope="row"] { color: var(--bad); }
+.dk-matrix tr.is-bad td { color: var(--bad); }
 
 /* ---------- device screenshot ---------- */
 
@@ -2240,7 +2317,7 @@ a.dk-news-src:hover {
 
 .dk-cohort-line {
   fill: none;
-  stroke: var(--hairline);
+  stroke: var(--wire);
   stroke-width: 1.5;
   vector-effect: non-scaling-stroke;
 }
@@ -2275,7 +2352,7 @@ a.dk-news-src:hover {
   padding: 0;
   list-style: none;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 1.1cqw;
+  font-size: 1.35cqw;
   color: var(--dim);
 }
 
@@ -2293,7 +2370,7 @@ a.dk-news-src:hover {
 
 .dk-cohort-key li.is-lit { color: var(--ink); }
 .dk-cohort-key li.is-lit .dk-cohort-swatch { background: var(--accent); height: 3px; }
-.dk-cohort-key li.is-partial { color: var(--accent-line); }
+.dk-cohort-key li.is-partial { color: var(--accent); }
 .dk-cohort-key li.is-partial .dk-cohort-swatch {
   background: none;
   border-top: 2px dashed var(--accent-line);
@@ -2315,7 +2392,7 @@ a.dk-news-src:hover {
 }
 
 .dk-curve-axis {
-  stroke: var(--hairline);
+  stroke: var(--wire);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
@@ -2338,18 +2415,18 @@ a.dk-news-src:hover {
 }
 
 .dk-curve-lead {
-  stroke: var(--hairline);
+  stroke: var(--wire);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
 
 /* user units — this text is inside a viewBox that already scales */
 .dk-curve-t {
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: -0.005em;
   fill: var(--ink);
+  font-weight: 500;
 }
 
 .dk-curve-c {
@@ -2435,7 +2512,7 @@ a.dk-news-src:hover {
 }
 
 .dk-chart-axis {
-  stroke: var(--hairline);
+  stroke: var(--wire);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
@@ -2502,7 +2579,8 @@ a.dk-news-src:hover {
 }
 
 .dk-chart-peak {
-  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-weight: 600;
   font-size: 4.4cqw;
   line-height: 0.9;
   letter-spacing: -0.02em;
@@ -2510,23 +2588,24 @@ a.dk-news-src:hover {
 }
 
 .dk-chart-proj-v {
-  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-weight: 600;
   font-size: 3.2cqw;
   line-height: 0.9;
   letter-spacing: -0.02em;
-  color: var(--accent-line);
+  color: var(--accent);
 }
 
 .dk-chart-fig-l {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 1.05cqw;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.51cqw;
+  letter-spacing: -0.005em;
   color: var(--dim);
+  font-weight: 500;
 }
 
 .dk-chart-fig-l.is-proj {
-  color: var(--accent-line);
+  color: var(--accent);
 }
 
 /* user units, not cqw: this text sits inside a viewBox that is already
@@ -2558,7 +2637,7 @@ a.dk-news-src:hover {
 
 .dk-score-bar {
   height: 1.4cqw;
-  background: rgba(248, 248, 250, 0.06);
+  background: rgba(var(--fg-rgb), 0.06);
   position: relative;
 }
 
@@ -2566,7 +2645,7 @@ a.dk-news-src:hover {
   position: absolute;
   inset: 0 auto 0 0;
   width: var(--w);
-  background: rgba(248, 248, 250, 0.2);
+  background: rgba(var(--fg-rgb), 0.2);
 }
 
 .dk-score li.is-lit .dk-score-bar span {
@@ -2714,7 +2793,7 @@ a.dk-news-src:hover {
 }
 
 .dk-rail button.is-seen::after {
-  background: rgba(248, 248, 250, 0.28);
+  background: rgba(var(--fg-rgb), 0.28);
 }
 
 .dk-rail button.is-current::after {
@@ -2732,7 +2811,7 @@ a.dk-news-src:hover {
   gap: 0.35rem;
   padding: 0.3rem 0.4rem;
   border: 1px solid var(--hairline);
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(var(--bg-rgb), 0.85);
   backdrop-filter: blur(10px);
   pointer-events: auto;
 }
@@ -2753,7 +2832,7 @@ a.dk-news-src:hover {
 }
 
 .dk-controls-n {
-  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-mono), monospace;
   font-size: 0.75rem;
   color: var(--ink);
   min-width: 5.5ch;

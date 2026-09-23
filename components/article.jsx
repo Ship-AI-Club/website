@@ -40,7 +40,7 @@ export function Article({ kicker, title, updated, children }) {
     <>
       <header className="nav">
         <a href="/" className="brand">
-          <img src="/logo-icon.png" alt="" width={26} height={26} />
+          <img src="/logo-mark.png" alt="" width={26} height={26} />
           <span>Ship AI</span>
         </a>
         <nav>
@@ -68,7 +68,7 @@ export function Article({ kicker, title, updated, children }) {
       </main>
       <footer className="footer">
         <div className="brand">
-          <img src="/logo-icon.png" alt="" width={22} height={22} />
+          <img src="/logo-mark.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
         <nav>

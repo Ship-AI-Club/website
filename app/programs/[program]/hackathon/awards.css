@@ -8,14 +8,11 @@
    globals.css — everything below is only what those don't cover.
 ------------------------------------------------------------------ */
 
-/* The global --faint (#55585f) is 2.95:1 on black, under the 4.5:1 AA
-   floor. These two pages put their smallest type on things a stranger
-   reads closely — member names, credential id, the verify line — and
-   one of them is a link, so they use a tone that clears AA (5.4:1)
-   instead. Scoped here rather than changing the global token. */
+/* --faint already clears AA on paper; the alias stays so these pages'
+     rules read the same. */
 .rs-page,
 .cert-page {
-  --faint-aa: #7d818b;
+  --faint-aa: var(--faint);
 }
 
 /* .btn in globals.css was written for anchors, so it never clears the
@@ -65,16 +62,19 @@ button.btn {
 
 .rs-pending {
   border: 1px solid var(--hairline);
-  border-left: 2px solid var(--accent);
   padding: 1.6rem 1.5rem;
   margin-bottom: 2.5rem;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
 }
 
 .rs-pending-head {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
   font-size: 0.88rem;
   color: var(--ink);
   margin-bottom: 0.9rem;
@@ -134,6 +134,10 @@ button.btn {
   width: 100%;
   border-collapse: collapse;
   border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
 }
 
 .rs-table th,
@@ -150,11 +154,10 @@ button.btn {
 }
 
 .rs-table th {
-  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
-  font-size: 0.7rem;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 0.78rem;
   font-weight: 400;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: -0.005em;
   color: var(--dim);
   padding-top: 0.85rem;
   padding-bottom: 0.85rem;
@@ -195,7 +198,8 @@ button.btn {
 }
 
 .rs-place {
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
   font-size: 0.8rem;
   color: var(--dim);
   line-height: 1.45;
@@ -329,7 +333,8 @@ button.btn {
   border-top: 1px solid var(--hairline);
   margin-top: 2.5rem;
   padding-top: 1.5rem;
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
   font-size: 0.8rem;
   color: var(--dim);
 }
@@ -340,10 +345,10 @@ button.btn {
 }
 
 .cert-kind {
-  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.81rem;
+  letter-spacing: -0.005em;
   color: var(--accent);
   margin-bottom: 1.6rem;
 }
@@ -376,10 +381,11 @@ button.btn {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
   font-size: 0.85rem;
   color: var(--accent);
-  border: 1px solid rgba(103, 143, 242, 0.4);
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
   padding: 0.5rem 0.95rem;
   margin-bottom: 2.2rem;
 }
@@ -389,7 +395,7 @@ button.btn {
    is the visual grammar of a disabled control */
 .cert-award-plain {
   color: var(--ink);
-  border-color: rgba(248, 248, 250, 0.45);
+  border-color: rgba(var(--fg-rgb), 0.45);
 }
 
 .cert-meta {
@@ -408,16 +414,17 @@ button.btn {
 }
 
 .cert-meta dt {
-  font-family: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.81rem;
+  letter-spacing: -0.005em;
   color: var(--faint-aa);
   margin-bottom: 0.4rem;
 }
 
 .cert-meta dd {
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
   font-size: 0.82rem;
   color: var(--dim);
   line-height: 1.45;
@@ -452,7 +459,8 @@ button.btn {
 }
 
 .cert-preview {
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
   font-size: 0.78rem;
   color: var(--bg);
   background: var(--accent);
@@ -485,13 +493,6 @@ button.btn {
   .cert-plate {
     border-color: #bbb;
     page-break-inside: avoid;
-  }
-
-  /* the mark is white, built for dark surfaces — on paper it would be
-     an invisible square above an orphaned "Ship AI" */
-  .cert-seal,
-  .cert-issuer img {
-    filter: invert(1);
   }
 
   .cert-plate h1,

@@ -1,6 +1,5 @@
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { GeistPixelSquare } from "geist/font/pixel";
 import SmoothScroll from "./smooth-scroll";
 import "./globals.css";
 
@@ -10,7 +9,7 @@ export const metadata = {
   description:
     "Free multi-session AI programs and workshops in Phoenix. Community-run, craft over hype, free and in person.",
   openGraph: {
-    title: "Demos over Memos — Free AI Programs in Phoenix",
+    title: "Practical AI, Taught Free — Ship AI Phoenix",
     description:
       "Free multi-session AI programs and workshops in Phoenix. Community-run, craft over hype.",
     url: "https://www.shipai.club",
@@ -23,14 +22,14 @@ export const metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#000000",
+  themeColor: "#fbfbf9",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
       <body>
         <SmoothScroll />

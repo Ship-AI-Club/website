@@ -51,17 +51,17 @@ const SOCIALS = [
 
 const values = [
   {
-    title: "Free and open",
+    title: "Free and Open",
     icon: GraduationCap,
     copy: "Every session is free and public — you pay by teaching the room what you know.",
   },
   {
-    title: "Demos over memos",
+    title: "Demos Over Memos",
     icon: MonitorPlay,
     copy: "Show the build, the workflow, the call you'd make differently — founders too: demo the product, skip the hard sell.",
   },
   {
-    title: "Craft over hype",
+    title: "Craft Over Hype",
     icon: Hammer,
     copy: "The toolchain, the tradeoffs, the parts that hurt — what separates shipped from great.",
   },
@@ -71,22 +71,22 @@ const values = [
     copy: "We hold opinions about design, architecture, and what's worth shipping at all — curated over cranked out.",
   },
   {
-    title: "Living on the bleeding edge",
+    title: "Living on the Bleeding Edge",
     icon: Zap,
     copy: "We push models past the defaults and the docs, then ship what we find as products nobody's built yet.",
   },
   {
-    title: "Honest starting points",
+    title: "Honest Starting Points",
     icon: Scale,
     copy: "Say where you actually are — half-built, no users, revenue flat, six months in with nothing shipped — because nothing solid gets built on an inflated baseline.",
   },
   {
-    title: "Proof of work",
+    title: "Proof of Work",
     icon: BadgeCheck,
     copy: "Screenshots, commits, the number that didn't go up — a small real result beats a big vague claim.",
   },
   {
-    title: "Community-driven",
+    title: "Community-Driven",
     icon: Users,
     copy: "Every session ends in 5-minute demos, and what you're stuck on is what the next one gets built around.",
   },
@@ -97,7 +97,7 @@ export default function Page() {
     <>
       <header className="nav">
         <a href="/" className="brand">
-          <img src="/logo-icon.png" alt="" width={26} height={26} />
+          <img src="/logo-mark.png" alt="" width={26} height={26} />
           <span>Ship AI</span>
         </a>
         <nav>
@@ -169,7 +169,7 @@ export default function Page() {
 
       <footer className="footer">
         <div className="brand">
-          <img src="/logo-icon.png" alt="" width={22} height={22} />
+          <img src="/logo-mark.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
         <nav>

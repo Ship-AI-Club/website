@@ -59,7 +59,7 @@ export default async function Page({ params }) {
     <>
       <JsonLd data={schema} />
       <header className="nav">
-        <a href="/" className="brand"><img src="/logo-icon.png" alt="" width={26} height={26} /><span>Ship AI</span></a>
+        <a href="/" className="brand"><img src="/logo-mark.png" alt="" width={26} height={26} /><span>Ship AI</span></a>
         <nav><a href="/programs">Programs</a><a href={programHref}>Sessions</a>{program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}</nav>
         <div className="nav-ctas">{program.hasHackathon ? <><a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a><a className="btn btn-solid" href="/dashboard">Register</a></> : <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Get notified</a>}</div>
       </header>
@@ -119,7 +119,7 @@ export default async function Page({ params }) {
       </main>
 
       <footer className="footer">
-        <div className="brand"><img src="/logo-icon.png" alt="" width={22} height={22} /><span>Ship AI</span></div>
+        <div className="brand"><img src="/logo-mark.png" alt="" width={22} height={22} /><span>Ship AI</span></div>
         <nav><a href="/">Home</a><a href="/programs">Programs</a><a href={programHref}>{program.name}</a>{program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}{program.templateRepo && <a href={program.templateRepo} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={14} height={14} fill="currentColor" aria-hidden="true"><path d={siGithub.path} /></svg></a>}</nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

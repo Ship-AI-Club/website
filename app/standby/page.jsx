@@ -37,12 +37,12 @@ const WORDMARK = `███████╗ ██╗  ██╗ ██╗ ██
 ╚══════╝ ╚═╝  ╚═╝ ╚═╝ ╚═╝          ╚═╝  ╚═╝ ╚═╝`;
 
 const TAGLINES = [
-  "demos over memos",
-  "feel the fear and do it anyways",
-  "questions first · hot takes welcome · receipts required",
-  "just ship it",
-  "craft over hype",
-  "back in a moment — grab a drink",
+  "Demos Over Memos",
+  "Feel the Fear and Do It Anyways",
+  "Questions First · Hot Takes Welcome · Receipts Required",
+  "Just Ship It",
+  "Craft Over Hype",
+  "Back in a Moment — Grab a Drink",
 ];
 
 export default function Standby() {

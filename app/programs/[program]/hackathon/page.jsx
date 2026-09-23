@@ -34,9 +34,6 @@ import { TIERS } from "../../../../lib/sponsors";
 
 import {
   EVENT,
-  ASCII_ZERO,
-  ASCII_TO,
-  ASCII_LAUNCH,
   DISCORD,
   MEETUP,
   GITHUB,
@@ -417,7 +414,7 @@ export default async function Page({ params }) {
 
       <header className="nav">
         <a href="/" className="brand">
-          <img src="/logo-icon.png" alt="" width={26} height={26} />
+          <img src="/logo-mark.png" alt="" width={26} height={26} />
           <span>Ship AI</span>
         </a>
         {/* Five anchors, not seven. This nav had become a table of
@@ -450,20 +447,12 @@ export default async function Page({ params }) {
       <main id="top">
         <section className="hero hk-hero">
           <p className="eyebrow reveal" style={{ "--d": "0ms" }}>
-            6 free workshops · hackathon {EVENT.datesShort} · workuity biltmore, phx
+            6 free workshops · Hackathon {EVENT.datesShort} · Workuity Biltmore, Phoenix
           </p>
-          <h1 className="sr-only">Zero to Launch — the Ship AI hackathon</h1>
-          <div className="hero-title" aria-hidden="true">
-            <div className="reveal" style={{ "--d": "80ms" }}>
-              <pre className="ascii">{ASCII_ZERO}</pre>
-            </div>
-            <div className="reveal" style={{ "--d": "160ms" }}>
-              <pre className="ascii">{ASCII_TO}</pre>
-            </div>
-            <div className="reveal" style={{ "--d": "240ms" }}>
-              <pre className="ascii ascii-accent">{ASCII_LAUNCH}</pre>
-            </div>
-          </div>
+          <h1 className="hero-h1 reveal" style={{ "--d": "80ms" }}>
+            Zero to <span className="hero-accent">Launch</span>
+            <span className="sr-only"> — the Ship AI hackathon</span>
+          </h1>
           <p className="lede reveal" style={{ "--d": "280ms" }}>
             Ten weeks of go-to-market, then a weekend where you don&apos;t build — you launch.
             Six free workshops at Workuity Biltmore (our venue sponsor) on alternating
@@ -524,7 +513,7 @@ export default async function Page({ params }) {
             hours, and it dies on Monday. Here the code is the part you already have.
             What&apos;s missing is the launch — that&apos;s the whole deliverable.
           </p>
-          <p className="rule-line">feel the fear and do it anyways</p>
+          <p className="rule-line">Feel the fear and do it anyways.</p>
         </section>
 
         <section className="section" id="outcomes">
@@ -650,7 +639,7 @@ export default async function Page({ params }) {
                 )}
                 <h3>
                   {c.name}
-                  {c.voted && <span className="hk-cat-tag">room-voted</span>}
+                  {c.voted && <span className="hk-cat-tag">Room-voted</span>}
                 </h3>
                 <p>{c.copy}</p>
               </div>
@@ -826,7 +815,7 @@ export default async function Page({ params }) {
                 Volunteers
               </h3>
               <p className="hk-role-when">
-                {VOLUNTEER_JOBS.length} jobs · a few hours each
+                {VOLUNTEER_JOBS.length} jobs · A few hours each
               </p>
               <p>
                 The weekend doesn&apos;t run without these. None of them need you to know
@@ -881,13 +870,13 @@ export default async function Page({ params }) {
               Join the Discord
             </a>
           </div>
-          <p className="rule-line">just ship it</p>
+          <p className="rule-line">Just ship it.</p>
         </section>
       </main>
 
       <footer className="footer">
         <div className="brand">
-          <img src="/logo-icon.png" alt="" width={22} height={22} />
+          <img src="/logo-mark.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
         <nav>

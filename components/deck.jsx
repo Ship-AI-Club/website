@@ -93,16 +93,9 @@ export function Slide({ slide, workshop, program, index, total }) {
               <p className="dk-eyebrow">
                 {program.name} · Session {workshop.n} · {sessionDateLabel(workshop)}
               </p>
-              {slide.ascii ? (
-                <>
-                  <pre className="dk-ascii" aria-hidden="true">
-                    {slide.ascii}
-                  </pre>
-                  <h2 className="dk-sr">{workshop.eventTitle}</h2>
-                </>
-              ) : (
-                <h2>{workshop.eventTitle}</h2>
-              )}
+              {/* Set in type, not the ASCII wordmark — slide.ascii is still in the
+                  data, but block letters don't read from the back row. */}
+              <h2>{workshop.eventTitle}</h2>
               <p className="dk-title-sub">{slide.sub}</p>
               <p className="dk-title-foot">
                 <span>Ship AI</span>
@@ -551,6 +544,17 @@ export function Slide({ slide, workshop, program, index, total }) {
                 <h2 className="dk-thanks-h">{slide.title}</h2>
                 {slide.tag ? <p className="dk-thanks-tag">{slide.tag}</p> : null}
                 <p className="dk-thanks-c">{slide.c}</p>
+                {slide.proofs?.length ? (
+                  <ul className="dk-thanks-proofs">
+                    {slide.proofs.map((proof) => (
+                      <li key={proof.l}>
+                        <span className="dk-thanks-proof-v">{proof.v}</span>
+                        <span className="dk-thanks-proof-l">{proof.l}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+                {slide.why ? <p className="dk-thanks-why">{slide.why}</p> : null}
               </Stagger>
             </div>
             {slide.img ? (

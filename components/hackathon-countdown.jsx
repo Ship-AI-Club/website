@@ -23,10 +23,10 @@ import { EVENT } from "../lib/hackathon";
 ------------------------------------------------------------------ */
 
 const CELLS = [
-  ["days", "days"],
-  ["hours", "hrs"],
-  ["minutes", "min"],
-  ["seconds", "sec"],
+  ["days", "Days"],
+  ["hours", "Hours"],
+  ["minutes", "Min"],
+  ["seconds", "Sec"],
 ];
 
 function split(target, now) {

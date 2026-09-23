@@ -138,7 +138,7 @@ export default async function Page({ params }) {
       {schema && <JsonLd data={schema} />}
 
       <header className="nav">
-        <a href="/" className="brand"><img src="/logo-icon.png" alt="" width={26} height={26} /><span>Ship AI</span></a>
+        <a href="/" className="brand"><img src="/logo-mark.png" alt="" width={26} height={26} /><span>Ship AI</span></a>
         <nav>
           <a href="/programs">Programs</a>
           <a href={programHref}>Sessions</a>
@@ -194,7 +194,6 @@ export default async function Page({ params }) {
                 <video src={w.media.recording} controls preload="none" poster={w.media.photos?.[0]} crossOrigin="anonymous">
                   {w.media.captions && <track kind="captions" src={w.media.captions} srcLang="en" label="English" />}
                 </video>
-                <p className="hk-note">The full recording{w.media.captions ? ", with captions" : ""}. Also archived in Discord.</p>
               </div>
             )}
             {w.media.photos?.length > 0 && (
@@ -311,7 +310,7 @@ export default async function Page({ params }) {
       </main>
 
       <footer className="footer">
-        <div className="brand"><img src="/logo-icon.png" alt="" width={22} height={22} /><span>Ship AI</span></div>
+        <div className="brand"><img src="/logo-mark.png" alt="" width={22} height={22} /><span>Ship AI</span></div>
         <nav><a href="/">Home</a><a href="/programs">Programs</a><a href={programHref}>{program.name}</a>{programManifest && <a href={`${programHref}/skills`}>Skills</a>}{program.templateRepo && <a href={program.templateRepo} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={14} height={14} fill="currentColor" aria-hidden="true"><path d={siGithub.path} /></svg></a>}</nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

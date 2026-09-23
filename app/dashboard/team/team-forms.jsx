@@ -133,7 +133,7 @@ export function RemoveMemberForm({ memberId, label }) {
         </button>
       </form>
       {state.error && (
-        <span className="ac-fine" style={{ color: "#ff9d9d" }}>
+        <span className="ac-fine" style={{ color: "var(--bad)" }}>
           {state.error}
         </span>
       )}

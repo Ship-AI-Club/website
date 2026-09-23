@@ -129,7 +129,7 @@ export function RequestForm({ available, sponsorTier }) {
       {role === "volunteer" && (
         <fieldset className="ac-choices">
           <legend className="ac-label">
-            What can you cover? <span className="ac-req">required</span>
+            What can you cover? <span className="ac-req">Required</span>
           </legend>
           <p className="ac-hint">
             Pick as many as you like. Each one says roughly what it asks of you, so nobody
@@ -161,7 +161,7 @@ export function RequestForm({ available, sponsorTier }) {
       <div className="ac-field">
         <label className="ac-label" htmlFor="message">
           {role === "volunteer" ? "When are you around?" : "What do you have in mind?"}{" "}
-          <span className="ac-req">required</span>
+          <span className="ac-req">Required</span>
         </label>
         <p className="ac-hint">{prompt.lede}</p>
         <textarea

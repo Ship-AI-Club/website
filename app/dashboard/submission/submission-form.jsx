@@ -71,7 +71,7 @@ export default function SubmissionForm({ submission, categories, deadline, open 
       <fieldset disabled={!open} style={{ border: 0, display: "grid", gap: "2rem" }}>
         <div className="ac-field">
           <label className="ac-label" htmlFor="project">
-            Project name <span className="ac-req">required</span>
+            Project name <span className="ac-req">Required</span>
           </label>
           <p className="ac-hint">What it&apos;s called.</p>
           <input id="project" name="project" type="text" defaultValue={value("project")} />
@@ -93,7 +93,7 @@ export default function SubmissionForm({ submission, categories, deadline, open 
 
           <div className="ac-field">
             <label className="ac-label" htmlFor="category">
-              Category <span className="ac-req">required</span>
+              Category <span className="ac-req">Required</span>
             </label>
             <p className="ac-hint">
               One per team. Win it and you&apos;re out of the running for the others.
@@ -111,7 +111,7 @@ export default function SubmissionForm({ submission, categories, deadline, open 
 
         <div className="ac-field">
           <label className="ac-label" htmlFor="live_url">
-            Live URL <span className="ac-req">required</span>
+            Live URL <span className="ac-req">Required</span>
           </label>
           <p className="ac-hint">
             Publicly reachable, working, not behind a login. This is the one field with no
@@ -149,7 +149,7 @@ export default function SubmissionForm({ submission, categories, deadline, open 
 
         <div className="ac-field">
           <label className="ac-label" htmlFor="receipts">
-            Receipts <span className="ac-req">required</span>
+            Receipts <span className="ac-req">Required</span>
           </label>
           <p className="ac-hint">
             Numbers with evidence you can put on screen Sunday: visitors, signups, revenue,

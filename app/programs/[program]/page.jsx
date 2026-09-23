@@ -101,7 +101,7 @@ export default async function Page({ params }) {
 
       <header className="nav">
         <a href="/" className="brand">
-          <img src="/logo-icon.png" alt="" width={26} height={26} />
+          <img src="/logo-mark.png" alt="" width={26} height={26} />
           <span>Ship AI</span>
         </a>
         <nav>
@@ -290,7 +290,7 @@ export default async function Page({ params }) {
       </main>
 
       <footer className="footer">
-        <div className="brand"><img src="/logo-icon.png" alt="" width={22} height={22} /><span>Ship AI</span></div>
+        <div className="brand"><img src="/logo-mark.png" alt="" width={22} height={22} /><span>Ship AI</span></div>
         <nav><a href="/">Home</a><a href="/programs">Programs</a>{manifest && <a href={`/programs/${program.slug}/skills`}>Skills</a>}{program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}</nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

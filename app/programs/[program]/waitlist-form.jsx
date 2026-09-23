@@ -89,7 +89,7 @@ export default function WaitlistForm({ program, programName, discord }) {
     <form className="ik-form hk-waitlist-form" onSubmit={send} noValidate>
       <div className="ik-field">
         <label className="ik-label" htmlFor="wl-name">
-          Name <span className="ik-req">required</span>
+          Name <span className="ik-req">Required</span>
         </label>
         <p className="ik-hint" id="wl-name-hint">
           Whatever you go by in a room full of builders.
@@ -109,7 +109,7 @@ export default function WaitlistForm({ program, programName, discord }) {
 
       <div className="ik-field">
         <label className="ik-label" htmlFor="wl-email">
-          Email <span className="ik-req">required</span>
+          Email <span className="ik-req">Required</span>
         </label>
         <p className="ik-hint" id="wl-email-hint">
           Where the dates go, and the only thing it gets used for. Never published, never a list.
@@ -149,7 +149,7 @@ export default function WaitlistForm({ program, programName, discord }) {
 
       <div className="ik-field">
         <label className="ik-label" htmlFor="wl-goal">
-          What do you want working by the end? <span className="ik-req">required</span>
+          What do you want working by the end? <span className="ik-req">Required</span>
         </label>
         <p className="ik-hint" id="wl-goal-hint">
           Name the thing, not the skill. &ldquo;A site that answers my customers without

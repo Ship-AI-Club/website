@@ -9,6 +9,7 @@ import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { getUpcomingEvents } from "../lib/meetup";
 import { JsonLd } from "../components/article";
 import { PROGRAMS, programVenueNames } from "../lib/programs";
+import { EVENT } from "../lib/hackathon";
 
 export const metadata = {
   title: "Ship AI — Free AI Programs in Phoenix",
@@ -19,7 +20,7 @@ export const metadata = {
     /* Share sheets strip a leading site name from og:title (it duplicates
        siteName), so the title has to stand on its own — lead with the
        thesis, not the brand. */
-    title: "Demos over Memos — Free AI Programs in Phoenix",
+    title: "Practical AI, Taught Free — Ship AI Phoenix",
     description:
       "Community-run, craft over hype. Free and in person, in Phoenix.",
     url: "https://www.shipai.club",
@@ -65,27 +66,6 @@ const SPONSORS = [
   { href: "https://automationinterns.com/", name: "AutomationInterns.com", img: "/sponsor-automationinterns.png", wordmark: true },
 ];
 
-const ASCII_DEMOS = `██████╗  ███████╗ ███╗   ███╗  ██████╗  ███████╗
-██╔══██╗ ██╔════╝ ████╗ ████║ ██╔═══██╗ ██╔════╝
-██║  ██║ █████╗   ██╔████╔██║ ██║   ██║ ███████╗
-██║  ██║ ██╔══╝   ██║╚██╔╝██║ ██║   ██║ ╚════██║
-██████╔╝ ███████╗ ██║ ╚═╝ ██║ ╚██████╔╝ ███████║
-╚═════╝  ╚══════╝ ╚═╝     ╚═╝  ╚═════╝  ╚══════╝`;
-
-const ASCII_OVER = ` ██████╗  ██╗   ██╗ ███████╗ ██████╗
-██╔═══██╗ ██║   ██║ ██╔════╝ ██╔══██╗
-██║   ██║ ██║   ██║ █████╗   ██████╔╝
-██║   ██║ ╚██╗ ██╔╝ ██╔══╝   ██╔══██╗
-╚██████╔╝  ╚████╔╝  ███████╗ ██║  ██║
- ╚═════╝    ╚═══╝   ╚══════╝ ╚═╝  ╚═╝`;
-
-const ASCII_MEMOS = `███╗   ███╗ ███████╗ ███╗   ███╗  ██████╗  ███████╗
-████╗ ████║ ██╔════╝ ████╗ ████║ ██╔═══██╗ ██╔════╝
-██╔████╔██║ █████╗   ██╔████╔██║ ██║   ██║ ███████╗
-██║╚██╔╝██║ ██╔══╝   ██║╚██╔╝██║ ██║   ██║ ╚════██║
-██║ ╚═╝ ██║ ███████╗ ██║ ╚═╝ ██║ ╚██████╔╝ ███████║
-╚═╝     ╚═╝ ╚══════╝ ╚═╝     ╚═╝  ╚═════╝  ╚══════╝`;
-
 const ORG_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -118,8 +98,11 @@ function eventsSchema(events) {
   };
 }
 
+const FEATURED = PROGRAMS.find((p) => p.status === "running" && p.hasHackathon) || PROGRAMS.find((p) => p.status === "running");
+
 export default async function Page() {
   const events = await getUpcomingEvents(1);
+  const nextEvent = events[0];
 
   return (
     <>
@@ -127,7 +110,7 @@ export default async function Page() {
       {events.length > 0 && <JsonLd data={eventsSchema(events)} />}
       <header className="nav">
         <a href="#top" className="brand">
-          <img src="/logo-icon.png" alt="" width={26} height={26} />
+          <img src="/logo-mark.png" alt="" width={26} height={26} />
           <span>Ship AI</span>
         </a>
         <nav>
@@ -142,62 +125,91 @@ export default async function Page() {
 
       <main id="top">
         <section className="hero">
-          <p className="eyebrow reveal" style={{ "--d": "0ms" }}>
-            <a href="/standby" className="node" aria-label="Standby screen" />
-            phoenix, az
-          </p>
-          <h1 className="sr-only">Ship AI — free AI programs in Phoenix.</h1>
-          <div className="hero-title" aria-hidden="true">
-            <div className="reveal" style={{ "--d": "80ms" }}>
-              <pre className="ascii">{ASCII_DEMOS}</pre>
-            </div>
-            <div className="reveal" style={{ "--d": "160ms" }}>
-              <pre className="ascii">{ASCII_OVER}</pre>
-            </div>
-            <div className="memos reveal" style={{ "--d": "240ms" }}>
-              <pre className="ascii ascii-memos">{ASCII_MEMOS}</pre>
-              <span className="strike" aria-hidden="true" />
-            </div>
-          </div>
-          <p className="lede reveal" style={{ "--d": "280ms" }}>
-            Free AI programs for builders in Phoenix — community-run, craft over
-            hype.
-          </p>
-          {/* Two buttons, not three. RSVP is the front door; the hackathon
-              is how one of the programs ends and has its own strip below. */}
-          <div className="cta-row reveal" style={{ "--d": "380ms" }}>
-            <a
-              className="btn btn-solid"
-              href={MEETUP}
-              target="_blank"
-              rel="noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
-            >
-              <svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true"><path d={siMeetup.path} /></svg>
-              RSVP on Meetup
+          {FEATURED && (
+            <a className="hero-pill reveal" style={{ "--d": "0ms" }} href={FEATURED.hackathonHref || `/programs/${FEATURED.slug}`}>
+              <span className="hero-pill-tag">Now running</span>
+              <span className="hero-pill-text">
+                {FEATURED.name}
+                {FEATURED.hasHackathon ? ` — hackathon ${EVENT.datesShort.replace(/, \d{4}$/, "")}` : ""}
+              </span>
+              <ArrowRight size={14} strokeWidth={2} aria-hidden="true" />
             </a>
-            <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
-              Join the Discord
-            </a>
+          )}
+          {/* headline and lede share one measure: the lede is exactly as
+              wide as the headline above it */}
+          <div className="hero-head">
+            <h1 className="hero-h1 reveal" style={{ "--d": "80ms" }}>
+              <span className="sr-only">Ship AI: </span>
+              Practical AI, <span className="hero-mark">Taught Free</span>
+            </h1>
+            <p className="hero-lede reveal" style={{ "--d": "160ms" }}>
+              Free workshops in Phoenix on the AI tools and workflows builders use day to day.
+              Every deck, guide and skill is yours to keep.
+            </p>
           </div>
-          <div className="hk-hero-facts reveal" style={{ "--d": "460ms" }}>
-            <span>
-              <Rocket size={13} strokeWidth={1.75} aria-hidden="true" />
-              {PROGRAMS.length} programs · {SESSION_COUNT} sessions
-            </span>
-            <span>
-              <MapPin size={13} strokeWidth={1.75} aria-hidden="true" />
-              {PROGRAM_VENUES.join(" & ")}
-            </span>
-            <span>
-              <Ticket size={13} strokeWidth={1.75} aria-hidden="true" />
-              Free · open to all
-            </span>
+          <div className="hero-grid">
+            <div className="hero-copy">
+              {/* Two buttons, not three. RSVP is the front door; the hackathon
+                  is how one of the programs ends and has its own strip below. */}
+              <div className="cta-row reveal" style={{ "--d": "240ms" }}>
+                <a className="btn btn-solid btn-lg" href={MEETUP} target="_blank" rel="noreferrer">
+                  <svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true"><path d={siMeetup.path} /></svg>
+                  RSVP on Meetup
+                </a>
+                <a className="btn btn-ghost btn-lg" href="/programs">
+                  Explore programs
+                  <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
+                </a>
+              </div>
+              <dl className="hero-stats reveal" style={{ "--d": "320ms" }}>
+                <div><dt>Programs</dt><dd>{PROGRAMS.length}</dd></div>
+                <div><dt>Sessions</dt><dd>{SESSION_COUNT}</dd></div>
+                <div><dt>Venues</dt><dd>{PROGRAM_VENUES.length}</dd></div>
+                <div><dt>To attend</dt><dd>$0</dd></div>
+              </dl>
+            </div>
+
+            <aside id="events" className="hero-card reveal" style={{ "--d": "200ms" }} aria-label="Next session">
+              <div className="hero-card-head">
+                <span>Next session</span>
+                <a href="/standby" className="hero-live" aria-label="Standby screen">
+                  <i aria-hidden="true" />
+                  RSVPs open
+                </a>
+              </div>
+              {nextEvent ? (
+                <>
+                  <p className="hero-card-date">{nextEvent.date}</p>
+                  <p className="hero-card-time">{nextEvent.time} · Phoenix, AZ</p>
+                  <h2 className="hero-card-title">{nextEvent.title}</h2>
+                  <p className="hero-card-venue">
+                    <MapPin size={14} strokeWidth={1.75} aria-hidden="true" />
+                    {nextEvent.place}
+                  </p>
+                  <a className="btn btn-solid hero-card-cta" href={nextEvent.url} target="_blank" rel="noreferrer">
+                    Reserve a seat
+                    <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
+                  </a>
+                </>
+              ) : (
+                <>
+                  <h2 className="hero-card-title">New sessions post every few weeks.</h2>
+                  <a className="btn btn-solid hero-card-cta" href={MEETUP} target="_blank" rel="noreferrer">
+                    See the calendar
+                    <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
+                  </a>
+                </>
+              )}
+              <p className="hero-card-foot">
+                <span>Free and open to all</span>
+                <a href={MEETUP} target="_blank" rel="noreferrer">Full calendar</a>
+              </p>
+            </aside>
           </div>
         </section>
 
         <section className="sponsor-strip reveal" style={{ "--d": "620ms" }} aria-label="Community partners">
-          <p className="strip-label">community partners</p>
+          <p className="strip-label">Community partners</p>
           {/* A slow ticker: the track holds two identical sets and slides by
               half its own width, so the loop is seamless. The second set is
               decoration — hidden from the tree, unfocusable. */}
@@ -252,7 +264,7 @@ export default async function Page() {
                     <Rocket size={14} strokeWidth={1.75} aria-hidden="true" />
                     {statusLabel}
                   </p>
-                  <h2>{program.name}.</h2>
+                  <h2>{program.name}</h2>
                   <p className="hk-promo-copy">{program.tagline}</p>
                   <p className="hk-promo-meta">
                     <span><CalendarDays size={13} strokeWidth={1.75} aria-hidden="true" />{program.datesLabel || "Dates TBD"}</span>
@@ -276,47 +288,12 @@ export default async function Page() {
           })}
         </section>
 
-        <section id="events" className="section">
-          <p className="kicker">Up next</p>
-          <h2>Come see something get shipped.</h2>
-          {events.length > 0 ? (
-            <div className="events">
-              {events.map((e) => (
-                <a key={e.url + e.title} className="event" href={e.url} target="_blank" rel="noreferrer">
-                  <div className="event-when">
-                    <span>{e.date}</span>
-                    <span>{e.time}</span>
-                  </div>
-                  <div className="event-body">
-                    <h3>{e.title}</h3>
-                    <p className="event-venue">
-                      <MapPin size={13} strokeWidth={1.75} aria-hidden="true" />
-                      {e.place}
-                    </p>
-                  </div>
-                  <span className="event-arrow" aria-hidden="true">
-                    <ArrowRight size={18} strokeWidth={1.75} />
-                  </span>
-                </a>
-              ))}
-            </div>
-          ) : (
-            <p className="events-empty">
-              Next sessions are posted on <a href={MEETUP} target="_blank" rel="noreferrer">Meetup</a>.
-            </p>
-          )}
-          <p className="events-more">
-            Full calendar on{" "}
-            <a href={MEETUP} target="_blank" rel="noreferrer">Meetup</a>, or see the{" "}
-            <a href="/programs/zero-to-launch">full curriculum</a>.
-          </p>
-        </section>
 
       </main>
 
       <footer className="footer">
         <div className="brand">
-          <img src="/logo-icon.png" alt="" width={22} height={22} />
+          <img src="/logo-mark.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
         <nav>

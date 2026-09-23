@@ -92,7 +92,7 @@ export default async function Page({ params }) {
 
       <header className="nav">
         <a href="/" className="brand">
-          <img src="/logo-icon.png" alt="" width={26} height={26} />
+          <img src="/logo-mark.png" alt="" width={26} height={26} />
           <span>Ship AI</span>
         </a>
         <nav>
@@ -147,7 +147,7 @@ export default async function Page({ params }) {
             <li key={f.name}>
               <p className="hk-field-name">
                 {f.name}
-                {f.required && <span className="hk-field-req">required</span>}
+                {f.required && <span className="hk-field-req">Required</span>}
               </p>
               <p>{f.copy}</p>
             </li>
@@ -175,7 +175,7 @@ export default async function Page({ params }) {
           </li>
         </ul>
 
-        <p className="rule-line">receipts required</p>
+        <p className="rule-line">Receipts required.</p>
 
         <div className="cta-row hk-submit-cta">
           <a className="btn btn-solid" href={SUBMIT_URL}>
@@ -190,7 +190,7 @@ export default async function Page({ params }) {
 
       <footer className="footer">
         <div className="brand">
-          <img src="/logo-icon.png" alt="" width={22} height={22} />
+          <img src="/logo-mark.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
         <nav>

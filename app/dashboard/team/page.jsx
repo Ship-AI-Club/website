@@ -33,7 +33,7 @@ export default async function Page() {
           <h1>Your team</h1>
           <p>
             One team per person. Solo entries compete on exactly the same footing, so going
-            alone costs you nothing — and Friday night has a 60-second pitch round and a team
+            alone costs you nothing — and Saturday morning has a 60-second pitch round and a team
             formation block if you&apos;d rather not.
           </p>
         </div>

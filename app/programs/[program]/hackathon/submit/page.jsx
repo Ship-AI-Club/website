@@ -122,7 +122,7 @@ export default async function Page({ params }) {
 
         <p className="article-lede">
           One submission per team, filed from your Ship AI account. Ten minutes if your numbers
-          are ready — so read this Friday, not at 11:50 on Sunday.
+          are ready — so read this before Saturday, not at 11:50 on Sunday.
         </p>
 
         <div className="cta-row hk-submit-cta">

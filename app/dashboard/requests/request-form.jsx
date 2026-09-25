@@ -52,7 +52,7 @@ const PROMPTS = {
   },
   volunteer: {
     lede: "A few hours makes the weekend work. Tell us which days you can be there and roughly when — we'll build the rota around what people actually offer.",
-    placeholder: "Around all day Saturday, and Friday from about 6…",
+    placeholder: "Saturday 9 to 5, and Sunday until 2…",
     expertise: null,
   },
 };

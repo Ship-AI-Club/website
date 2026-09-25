@@ -273,7 +273,7 @@ export default async function Page({ searchParams }) {
             <>
               <p>
                 One team per person, up to four people. Solo is fine and competes on the same
-                footing — Friday night has a team formation block if you&apos;d rather not.
+                footing — Saturday morning has a team formation block if you&apos;d rather not.
               </p>
               <a className="btn btn-ghost ac-btn-sm" href="/dashboard/team">
                 Create or join a team

@@ -60,7 +60,7 @@ export default async function Page() {
         <h1>Your submission</h1>
         <p>
           One entry per team, filed here. It takes about ten minutes if you have your numbers
-          ready — so read this Friday rather than at 11:50 on Sunday.
+          ready — so read this before Saturday rather than at 11:50 on Sunday.
         </p>
       </div>
 

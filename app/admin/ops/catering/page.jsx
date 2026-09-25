@@ -11,7 +11,7 @@ export const metadata = {
 };
 
 const DAY_LABELS = { friday: "Friday", saturday: "Saturday", sunday: "Sunday" };
-const DAYS = ["friday", "saturday", "sunday"];
+const DAYS = ["saturday", "sunday"];
 
 export default async function Page() {
   const admin = await requireAdmin("/admin/ops/catering");

@@ -102,56 +102,32 @@ const DELIVERABLES = [
 
 const SCHEDULE = [
   {
-    day: "Friday",
-    date: "Oct 16",
-    title: "Kickoff & launch plans",
+    day: "Saturday",
+    date: "Oct 17",
+    title: "Kickoff & launch day",
     slots: [
-      { time: "6:00 PM", name: "Doors, food, check-in" },
+      { time: "9:00 AM", name: "Doors, coffee, check-in" },
       {
-        time: "6:30 PM",
-        name: "Kickoff — ten weeks, two days left",
-        copy: "The framework condensed for anyone joining fresh, plus the rules, the categories and the deadline.",
+        time: "9:30 AM",
+        name: "Kickoff — rules, categories, deadline",
+        copy: "The framework condensed for anyone joining fresh, plus the rules, the categories and the noon-Sunday deadline.",
         deck: true,
       },
       {
-        time: "7:00 PM",
-        name: "Launch rehearsal",
-        copy: "Pre-flight as a room: site live, analytics firing, tracking that survives a judge's question, assets exported, copy written. Then we break every plan on purpose — better Friday than Sunday.",
+        time: "10:00 AM",
+        name: "60-second pitches & team formation",
+        copy: "Everyone delivers the pitch they wrote in September. Newcomers get the crash version and pitch anyway. Solo is fine. Teams up to four. Dry run for Sunday.",
       },
       {
-        time: "7:45 PM",
-        name: "60-second pitches",
-        copy: "Everyone delivers the pitch they wrote in September. Newcomers get the crash version and pitch anyway. Dry run for Sunday.",
-      },
-      {
-        time: "8:15 PM",
-        name: "Team formation",
-        copy: "Solo is fine. Teams up to four. Been building alone since August? This is where you pick up help.",
-      },
-      {
-        time: "8:45 PM",
+        time: "10:30 AM",
         name: "Launch plans locked",
         copy: "Every team writes it down: what goes live, on what channel, to which audience, at what hour. Posted in Discord so the room can hold you to it.",
         hard: true,
       },
-      { time: "9:15 PM", name: "Building starts" },
-    ],
-  },
-  {
-    day: "Saturday",
-    date: "Oct 17",
-    title: "Launch day",
-    slots: [
-      { time: "9:00 AM", name: "Doors, coffee" },
       {
-        time: "9:30 AM",
-        name: "Launch clinic",
-        copy: "The last mile: site live, analytics wired, tracking that survives Sunday's questions, launch post written. Forty-five minutes, then you go do it.",
-      },
-      {
-        time: "10:15 AM",
-        name: "Build & mentor hours",
-        copy: "1:1 rotations running all day. Sites, performance, paid acquisition, B2B sales, content, design.",
+        time: "11:00 AM",
+        name: "Launch clinic, then mentor hours",
+        copy: "The last mile: site live, analytics wired, tracking that survives Sunday's questions, launch post written. Then 1:1 rotations — sites, performance, paid acquisition, B2B sales, content, design.",
       },
       { time: "12:00 PM", name: "Lunch" },
       {
@@ -161,10 +137,11 @@ const SCHEDULE = [
         hard: true,
       },
       {
-        time: "3:00 PM →",
+        time: "3:00 PM",
         name: "Iterate on what the channel tells you",
-        copy: "The launch is data. Saturday evening is for acting on it rather than admiring it.",
+        copy: "The launch is data. The rest of the afternoon is for acting on it.",
       },
+      { time: "5:00 PM", name: "Doors close" },
     ],
   },
   {
@@ -176,16 +153,16 @@ const SCHEDULE = [
       {
         time: "12:00 PM",
         name: "Submissions close",
-        copy: "Hard deadline. Lunch while the judges read.",
+        copy: "Hard deadline. Pitches start as soon as the form closes.",
         hard: true,
       },
       {
-        time: "1:00 PM",
+        time: "12:15 PM",
         name: "Pitches",
-        copy: "Five minutes plus three of questions, live product on screen.",
+        copy: "Five minutes, live product on screen. The room votes Crowd Favorite.",
       },
-      { time: "3:30 PM", name: "Judging" },
-      { time: "4:00 PM", name: "Awards & closing" },
+      { time: "1:30 PM", name: "Awards & closing" },
+      { time: "2:00 PM", name: "Doors close" },
     ],
   },
 ];
@@ -258,7 +235,7 @@ const CRITERIA = [
 const RULES = [
   "Teams of 1–4. One team per person. Solo entries are fine.",
   `Bring a product you've already built, or start when the build window opens ${EVENT.buildOpens}. Both are eligible — this is a launch hackathon, not a from-scratch hackathon.`,
-  "Anyone can compete. No workshop attendance required — turn up on the Friday with something to launch and you're in. The sessions make you better at it; they were never a gate.",
+  "Anyone can compete. No workshop attendance required — turn up on Saturday with something to launch and you're in. The sessions make you better at it; they were never a gate.",
   `Your launch has to go public during the hackathon weekend, ${EVENT.datesShort}. A live, publicly reachable URL is required.`,
   `Submit your project by ${EVENT.deadline}. No late submissions.`,
   "You keep 100% of your IP. Ship AI claims nothing. Open source is welcome, not required.",
@@ -276,11 +253,11 @@ const FAQS = [
   },
   {
     q: "What's the difference between the workshops and the hackathon?",
-    a: "The workshops are six free sessions on alternating Wednesdays from August 5 to October 14 — the whole go-to-market curriculum, in order, with the work done live on screen. Watch, or follow along on your laptop. The hackathon weekend, October 16 to 18, is the finale: you launch publicly, build the growth engine, and pitch what happened. You build across the ten weeks; you ship at the weekend.",
+    a: "The workshops are six free sessions on alternating Wednesdays from August 5 to October 14 — the whole go-to-market curriculum, in order, with the work done live on screen. Watch, or follow along on your laptop. The hackathon weekend, October 17 to 18, is the finale: you launch publicly, build the growth engine, and pitch what happened. You build across the ten weeks; you ship at the weekend.",
   },
   {
     q: "Do I have to attend the workshops to compete?",
-    a: "No. Come to all six, one, or none. Turn up on the Friday with something to launch and you're in. The sessions are free and make the launch go better, but they were never a gate.",
+    a: "No. Come to all six, one, or none. Turn up on Saturday with something to launch and you're in. The sessions are free and make the launch go better, but they were never a gate.",
   },
   {
     q: "What's the GitHub repo for?",
@@ -308,7 +285,7 @@ const FAQS = [
   },
   {
     q: "Do I need a team?",
-    a: "No. Solo entries compete on the same footing. Friday night has a 60-second pitch round and a team formation block, so come alone and leave with a team if you want one.",
+    a: "No. Solo entries compete on the same footing. Saturday morning has a 60-second pitch round and a team formation block, so come alone and leave with a team if you want one.",
   },
   {
     q: "Do I need to be a developer?",
@@ -327,8 +304,8 @@ const FAQS = [
     a: "Not this round. The mentor rotations and the pitch session only work in a room. The Discord stays open all weekend, but entries have to be in person.",
   },
   {
-    q: "What if I can't be there all three days?",
-    a: "Come for what you can. Friday's keynote and Sunday's pitches are the two that matter most — the deadline applies to everyone either way.",
+    q: "What if I can't be there both days?",
+    a: "Come for what you can. Saturday's kickoff and Sunday's pitches are the two that matter most — the deadline applies to everyone either way.",
   },
   {
     q: "What should I bring?",
@@ -345,7 +322,7 @@ const EVENT_SCHEMA = {
   "@type": "Event",
   name: EVENT.name,
   description:
-    "A 48-hour hackathon for builders who need to launch. Plan the launch, execute it, and build a growth engine — judged on what actually shipped.",
+    "A two-day hackathon for builders who need to launch. Plan the launch, execute it, and build a growth engine — judged on what actually shipped.",
   startDate: EVENT.startISO,
   endDate: EVENT.endISO,
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -359,7 +336,7 @@ const EVENT_SCHEMA = {
     price: "0",
     priceCurrency: "USD",
     availability: "https://schema.org/InStock",
-    url: MEETUP,
+    url: EVENT.meetup,
   },
 };
 
@@ -375,7 +352,7 @@ const FAQ_SCHEMA = {
 
 const TITLE = "Zero to Launch — Ship AI Hackathon";
 const DESCRIPTION =
-  "A free 48-hour hackathon at Workuity Biltmore, Phoenix, Oct 16–18 2026, for builders who need to launch. Plan the launch, execute it, build a growth engine. Judged on what shipped.";
+  "A free two-day hackathon at Workuity Biltmore, Phoenix, Oct 17–18 2026, for builders who need to launch. Plan the launch, execute it, build a growth engine. Judged on what shipped.";
 
 export const metadata = {
   title: TITLE,
@@ -467,7 +444,7 @@ export default async function Page({ params }) {
             <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
               Join the Discord
             </a>
-            <a className="btn btn-ghost" href={MEETUP} target="_blank" rel="noreferrer">
+            <a className="btn btn-ghost" href={EVENT.meetup} target="_blank" rel="noreferrer">
               RSVP on Meetup
             </a>
           </div>
@@ -583,12 +560,12 @@ export default async function Page({ params }) {
 
         <section className="section" id="schedule">
           <p className="kicker">The weekend</p>
-          <h2>Friday night to Sunday afternoon.</h2>
+          <h2>Saturday morning to Sunday afternoon.</h2>
           <p className="section-lede">
-            No teaching this weekend — that happened on Wednesdays. Friday you lock a launch
-            plan, Saturday you execute it in a room full of people doing the same thing,
-            Sunday you show what it produced. The B2C and B2B playbooks were sessions two and
-            three; mentors run those 1:1 on Saturday.
+            No teaching this weekend — that happened on Wednesdays. Saturday morning you lock a
+            launch plan and put it live in a room full of people doing the same thing, Sunday
+            you show what it produced. The B2C and B2B playbooks were sessions two and three;
+            mentors run those 1:1 on Saturday. Doors are 9 AM–5 PM Saturday and 9 AM–2 PM Sunday.
           </p>
           <div className="hk-days">
             {SCHEDULE.map((d) => (
@@ -706,7 +683,7 @@ export default async function Page({ params }) {
           <p>
             One submission per team, filed from your Ship AI account: project, live URL, what
             you launched, the numbers. Draft it whenever, edit until the deadline. The full
-            requirements are on the submission page — read them Friday, not Sunday morning.
+            requirements are on the submission page — read them before Saturday, not Sunday morning.
           </p>
           <div className="cta-row">
             <a className="btn btn-solid" href="/dashboard">

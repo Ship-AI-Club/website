@@ -158,7 +158,7 @@ export default async function Page({ params }) {
           <p className="cert-body">
             This certifies that <strong>{e.team}</strong> shipped{" "}
             <strong>{e.project}</strong> publicly at <strong>{EDITION.event}</strong>, held{" "}
-            {EDITION.held} at {EDITION.venue}, {EDITION.city} — a 48-hour hackathon judged on
+            {EDITION.held} at {EDITION.venue}, {EDITION.city} — a two-day hackathon judged on
             what shipped rather than what was demoed.
           </p>
 

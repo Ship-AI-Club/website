@@ -8,7 +8,7 @@ import { EVENT } from "../lib/hackathon";
    Time until the doors open.
 
    Three states, because a countdown that goes negative is worse than
-   no countdown: it counts down to the Friday, says the weekend is
+   no countdown: it counts down to Saturday morning, says the weekend is
    running while it's running, and points at the results once it's
    over. The page is revalidated every five minutes and this ticks
    every second, so the clock is the one part of it that's genuinely
@@ -61,11 +61,11 @@ export default function HackathonCountdown({ delay = "440ms" }) {
   const finished = now !== null && now >= end;
 
   /* Four states, because the number that matters keeps changing.
-     Before the Friday it's when to turn up; once it's running it's
+     Before Saturday morning it's when to turn up; once it's running it's
      how long you've got; after Sunday noon submissions are shut and
      the next thing anyone cares about is the awards. Counting to a
      deadline that has passed would leave the clock frozen at zero for
-     the five hours that are, for the teams, the whole point. */
+     the two hours between noon and the 2 PM close. */
   const target = closed ? end : started ? deadline : start;
   const time = now === null ? null : split(target, now);
 

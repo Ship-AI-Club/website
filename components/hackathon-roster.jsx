@@ -29,11 +29,10 @@ export default async function HackathonRoster() {
   const more = Math.max(roster.length - visibleRoster.length, 0);
 
   return (
-    <section className="hk-roster-section" aria-labelledby="hk-roster-heading">
+    <section className="section hk-roster-section" id="teams" aria-labelledby="hk-roster-heading">
       <div className="hk-roster-head">
-        <p className="hk-roster-kicker">The room</p>
         <h2 className="hk-roster-heading" id="hk-roster-heading">
-          Registered builders
+          Teams &amp; builders
         </h2>
       </div>
 
@@ -66,6 +65,7 @@ export default async function HackathonRoster() {
                 </span>
                 <div className="hk-roster-body">
                   <h3 className="hk-roster-name">{member.name}</h3>
+                  {member.team_name && <p className="hk-roster-team">Team {member.team_name}</p>}
                   {meta && <p className="hk-roster-meta">{meta}</p>}
                 </div>
               </article>

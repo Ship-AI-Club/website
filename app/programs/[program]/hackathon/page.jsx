@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { CalendarDays, Coins, MapPin, Ticket } from "lucide-react";
 import { JsonLd } from "../../../../components/article";
 import HackathonJudges from "../../../../components/hackathon-judges";
+import HackathonRoster from "../../../../components/hackathon-roster";
 import HackathonSponsors from "../../../../components/hackathon-sponsors";
 import { PROGRAMS, programBySlug } from "../../../../lib/programs";
 import { EVENT, DISCORD } from "../../../../lib/hackathon";
@@ -87,6 +88,7 @@ export default async function Page({ params }) {
         <nav>
           <a href="#focus">What to build</a>
           <a href="#schedule">Weekend</a>
+          <a href="#teams">Teams</a>
           <a href="#judges">Judges</a>
         </nav>
         <a className="btn btn-solid nav-cta" href="/dashboard">Register your team</a>
@@ -156,6 +158,7 @@ export default async function Page({ params }) {
           <p className="hk-note">Arizona time · {EVENT.address}. Please park in the surface lot.</p>
         </section>
 
+        <HackathonRoster />
         <HackathonJudges />
         <HackathonSponsors compact />
 

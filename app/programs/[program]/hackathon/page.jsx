@@ -123,7 +123,7 @@ export default async function Page({ params }) {
         </section>
 
         <section className="section" id="focus">
-          <h2>Design, craft, and receipts <span className="hk-focus-note">(amount shipped)</span></h2>
+          <h2>Design, craft, and receipts</h2>
           <div className="hk-focus-grid">
             {FOCUS.map((item) => (
               <div key={item.name}>

@@ -19,7 +19,9 @@ export default async function HackathonJudges() {
             </span>
             <div className="hk-roster-body">
               <h3>{judge.name}</h3>
-              <p>{[judge.title, judge.company].filter(Boolean).join(" · ")}</p>
+              {(judge.title || judge.company) && (
+                <p>{[judge.title, judge.company].filter(Boolean).join(" · ")}</p>
+              )}
             </div>
           </li>
         ))}

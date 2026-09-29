@@ -44,7 +44,7 @@ const SOCIALS = [
   { href: GITHUB, label: "GitHub", glyph: <BrandGlyph icon={siGithub} /> },
 ];
 
-const TITLE = "Sponsor Zero to Launch — Ship AI";
+const TITLE = `Sponsor ${EVENT.name}`;
 const DESCRIPTION =
   "Seven events over ten weeks for 30–50 Phoenix builders. Four tiers, an itemized menu with the prices on it, and credits or donated hours count the same as cash.";
 

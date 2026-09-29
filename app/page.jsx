@@ -129,8 +129,9 @@ export default async function Page() {
             <a className="hero-pill reveal" style={{ "--d": "0ms" }} href={FEATURED.hackathonHref || `/programs/${FEATURED.slug}`}>
               <span className="hero-pill-tag">Now running</span>
               <span className="hero-pill-text">
-                {FEATURED.name}
-                {FEATURED.hasHackathon ? ` — hackathon ${EVENT.datesShort.replace(/, \d{4}$/, "")}` : ""}
+                {FEATURED.hasHackathon
+                  ? `${EVENT.name} · ${EVENT.datesShort.replace(/, \d{4}$/, "")}`
+                  : FEATURED.name}
               </span>
               <ArrowRight size={14} strokeWidth={2} aria-hidden="true" />
             </a>

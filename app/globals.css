@@ -1362,6 +1362,11 @@ h3 .icon {
   padding-bottom: 3rem;
 }
 
+.hk-hero .hero-h1 {
+  white-space: normal;
+  text-wrap: balance;
+}
+
 /* fact strip under the hero */
 
 .hk-facts {

@@ -6,20 +6,16 @@ import {
   Briefcase,
   CalendarDays,
   Coins,
-  Eye,
   Camera,
   Gauge,
   Globe2,
   GraduationCap,
   Handshake,
-  LineChart,
-  ListOrdered,
   MapPin,
   Megaphone,
   Mic,
   Rocket,
   Scale,
-  Target,
   Ticket,
   Trophy,
   Users,
@@ -61,7 +57,7 @@ const SOCIALS = [
 ];
 
 const FACTS = [
-  { icon: GraduationCap, label: "Workshops", value: `${EVENT.seriesCount} sessions, ${EVENT.seriesRange}` },
+  { icon: Coins, label: "Prize pool", value: "$1,000" },
   { icon: CalendarDays, label: "Hackathon", value: EVENT.dates },
   { icon: MapPin, label: "Where", value: `${EVENT.venue} — ${EVENT.city}` },
   { icon: Ticket, label: "Cost", value: "Free · teams of 1–4" },
@@ -69,34 +65,19 @@ const FACTS = [
 
 const DELIVERABLES = [
   {
-    icon: Target,
-    title: "Positioning that holds up",
-    copy: "A one-page brief: who it's for, what they use today instead, your sharp edge, the outcome in their words. Swap-tested before anything gets built on it.",
-  },
-  {
-    icon: Mic,
-    title: "An elevator pitch you've delivered",
-    copy: "Sixty seconds, five beats, a real ask. One version for customers, one for investors. Said out loud, on the clock, on demo day.",
-  },
-  {
     icon: Globe2,
     title: "A live marketing site",
-    copy: "Real URL, real copy, content and SEO in place. Not a placeholder with a waitlist form.",
+    copy: "Build a site that makes your product clear: who it helps, why it matters, and what to do next. Publish it at a URL you can share.",
   },
   {
     icon: Rocket,
-    title: "A public launch",
-    copy: "Executed during the weekend. A date, a channel, an audience. If nobody outside the room can reach it, it didn't launch.",
+    title: "Your site and product, launched",
+    copy: "Put your work in front of people. Bring an existing project or start fresh, then take it public during the weekend.",
   },
   {
-    icon: LineChart,
-    title: "A growth engine",
-    copy: "One repeatable channel with numbers attached. Not a plan for one — a running one.",
-  },
-  {
-    icon: BadgeCheck,
-    title: "Receipts",
-    copy: "Analytics, signups, revenue, replies. Flat is a valid result if you can show what you learned.",
+    icon: Mic,
+    title: "A recorded pitch to share",
+    copy: "Show what you shipped and leave with a recorded pitch and content for your project, ready to share after the event.",
   },
 ];
 
@@ -126,8 +107,8 @@ const SCHEDULE = [
       },
       {
         time: "11:00 AM",
-        name: "Launch clinic, then mentor hours",
-        copy: "The last mile: site live, analytics wired, tracking that survives Sunday's questions, launch post written. Then 1:1 rotations — sites, performance, paid acquisition, B2B sales, content, design.",
+        name: "On-site sessions & mentor hours",
+        copy: "Build and improve your marketing site with sessions on positioning, copy, design, and launch preparation. Get help from mentors as you put it into practice.",
       },
       { time: "12:00 PM", name: "Lunch" },
       {
@@ -158,8 +139,8 @@ const SCHEDULE = [
       },
       {
         time: "12:15 PM",
-        name: "Pitches",
-        copy: "Five minutes, live product on screen. The room votes Crowd Favorite.",
+        name: "Recorded pitches",
+        copy: "Five minutes, live site and product on screen. Your pitch is recorded, and the room votes Crowd Favorite.",
       },
       { time: "1:30 PM", name: "Awards & closing" },
       { time: "2:00 PM", name: "Doors close" },
@@ -194,34 +175,39 @@ const TRACKS = [
 
 const BENEFITS = [
   {
-    icon: Award,
-    title: "A certification, for everyone who enters",
-    copy: "Submit a project and you get one, not just the winners. It names what you shipped and where you placed, at a public URL you can put on LinkedIn or send to a hiring manager. Turning up and shipping is the bar.",
-  },
-  {
-    icon: ListOrdered,
-    title: "A permanent listing on this site",
-    copy: "Every entrant gets a row: team, project, live URL, category and placement. It stays up long after the room empties.",
-  },
-  {
     icon: Coins,
-    title: "The prize pool",
-    copy: "Cash plus in-kind — API credits, hosting, tools — split across the five categories. It grows with sponsorship, and amounts land on this page as sponsors confirm. Entry is free either way.",
-  },
-  {
-    icon: Trophy,
-    title: "A trophy, for the shelf",
-    copy: "Every category winner takes home a physical award, engraved with the category and the year. Cash gets spent and credits get burned. This is the part still on your desk in five years.",
+    title: "$1,000 prize pool",
+    copy: "Compete for the prize pool while building and shipping the best marketing site. Entry is free.",
   },
   {
     icon: Briefcase,
-    title: "An internship, as a prize",
-    copy: "One award is a seat rather than a payout: a paid internship with a sponsor company. If you're early in your career, it's the fastest route from a weekend project to getting paid to build.",
+    title: "Employers and business professionals",
+    copy: "Meet employers and business professionals attending the hackathon. Show them a live project and the work behind it.",
   },
   {
-    icon: Eye,
-    title: "Visibility to investors",
-    copy: "Sunday's pitches are open to the venture capitalists, angels and operators we bring in, and the judging panel comes from the same pool. Five minutes, live product, real numbers. No deck round — just the launch you executed.",
+    icon: Award,
+    title: "Certifications issued",
+    copy: "Everyone who submits a project receives a certification with a public URL to share on LinkedIn or with a hiring manager.",
+  },
+  {
+    icon: Rocket,
+    title: "Launch your site & product",
+    copy: "Turn your idea or existing product into a public launch. The goal is a live marketing site you can show.",
+  },
+  {
+    icon: Handshake,
+    title: "Networking & team building",
+    copy: "Bring a teammate or come solo and find one. Meet builders, designers, marketers, and founders while you work together.",
+  },
+  {
+    icon: GraduationCap,
+    title: "On-site sessions on Saturday",
+    copy: "Work through your marketing site and launch with in-person sessions and mentor support at Workuity Biltmore.",
+  },
+  {
+    icon: Camera,
+    title: "Recorded pitch & project content",
+    copy: "Leave with a recording of your pitch and content for your project, so the work keeps reaching people after the weekend.",
   },
 ];
 
@@ -234,7 +220,7 @@ const CRITERIA = [
 
 const RULES = [
   "Teams of 1–4. One team per person. Solo entries are fine.",
-  `Bring a product you've already built, or start when the build window opens ${EVENT.buildOpens}. Both are eligible — this is a launch hackathon, not a from-scratch hackathon.`,
+  `Bring a product you've already built, or start when the build window opens ${EVENT.buildOpens}. Both are eligible. Build and ship a live marketing site for your project.`,
   "Anyone can compete. No workshop attendance required — turn up on Saturday with something to launch and you're in. The sessions make you better at it; they were never a gate.",
   `Your launch has to go public during the hackathon weekend, ${EVENT.datesShort}. A live, publicly reachable URL is required.`,
   `Submit your project by ${EVENT.deadline}. No late submissions.`,
@@ -249,11 +235,11 @@ const RULES = [
 const FAQS = [
   {
     q: "Do I need to already have a product to enter?",
-    a: "No, but it helps a lot. Most hackathons ban pre-existing projects — this one is built around them. If you're starting fresh, the build window opens Monday August 3, ten weeks before the weekend. Either way the score is weighted toward launching, not building.",
+    a: "No. Bring an existing product or start fresh. The focus is building and shipping the best marketing site, with a live URL you can show by Sunday. You can begin before the weekend; the build window opened August 3.",
   },
   {
     q: "What's the difference between the workshops and the hackathon?",
-    a: "The workshops are six free sessions on alternating Wednesdays from August 5 to October 14 — the whole go-to-market curriculum, in order, with the work done live on screen. Watch, or follow along on your laptop. The hackathon weekend, October 17 to 18, is the finale: you launch publicly, build the growth engine, and pitch what happened. You build across the ten weeks; you ship at the weekend.",
+    a: "The workshops are six free sessions on alternating Wednesdays from August 5 to October 14 — the whole go-to-market curriculum, in order, with the work done live on screen. Watch, or follow along on your laptop. The Ship AI AZ GTM Hackathon, October 17–18, is the Zero to Launch finale: build and ship your marketing site, join on-site sessions on Saturday, then pitch what you launched on Sunday.",
   },
   {
     q: "Do I have to attend the workshops to compete?",
@@ -273,15 +259,11 @@ const FAQS = [
   },
   {
     q: "What do I get if I don't win?",
-    a: "A certification and a permanent listing on this site, same as everyone else who submits. The certification names your project and your placement at a public URL you can link from LinkedIn or a job application; the listing keeps your live URL up after the weekend. And your product is launched, in front of the judges, investors and operators in the room whether you place or not.",
+    a: "A certification and a permanent listing on this site, same as everyone else who submits. The certification names your project and your placement at a public URL you can link from LinkedIn or a job application; the listing keeps your live URL up after the weekend. You also leave with a live marketing site, a recorded pitch, and content for your project, with opportunities to meet employers and business professionals.",
   },
   {
-    q: "How does the internship prize work?",
-    a: "One award is a paid internship seat with a sponsor company rather than a cash prize, aimed at builders early in their career. The sponsor makes the final call on the offer, and the details go on this page once sponsorship closes October 2.",
-  },
-  {
-    q: "Will there be investors in the room?",
-    a: "That's the plan. Sunday's pitches are open to the venture capitalists, angels and operators we bring in, and the judging panel is drawn from the same pool. Nobody is raising on stage — you show the launch you executed and the numbers it produced, which beats a deck anyway.",
+    q: "Who will I meet?",
+    a: "Employers and business professionals are attending alongside builders, designers, marketers, and founders. Bring a teammate or come solo and find one during Saturday's team formation block.",
   },
   {
     q: "Do I need a team?",
@@ -313,7 +295,7 @@ const FAQS = [
   },
   {
     q: "How do I sponsor, judge, mentor or volunteer?",
-    a: `Make an account and send the request from your dashboard — one short form each, straight to Santos rather than a Discord thread he might miss. Mentoring is Saturday's 1:1 rotations. Volunteering is photography or the check-in booth, a few hours. Judging is an application rather than a sign-up: the panel is small and picked by hand, and a seat also comes with Gold and Platinum sponsorship. Sponsorship closes ${EVENT.sponsorDeadline} so prize amounts can go on this page before registration opens.`,
+    a: `Make an account and send the request from your dashboard — one short form each, straight to Santos rather than a Discord thread he might miss. Mentoring is Saturday's 1:1 rotations. Volunteering is photography or the check-in booth, a few hours. Judging is an application rather than a sign-up: the panel is small and picked by hand, and a seat also comes with Gold and Platinum sponsorship. Sponsorship closes ${EVENT.sponsorDeadline} to support the prize pool and event.`,
   },
 ];
 
@@ -321,8 +303,7 @@ const EVENT_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Event",
   name: EVENT.name,
-  description:
-    "A two-day hackathon for builders who need to launch. Plan the launch, execute it, and build a growth engine — judged on what actually shipped.",
+  description: EVENT.description,
   startDate: EVENT.startISO,
   endDate: EVENT.endISO,
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -350,9 +331,8 @@ const FAQ_SCHEMA = {
   })),
 };
 
-const TITLE = "Zero to Launch — Ship AI Hackathon";
-const DESCRIPTION =
-  "A free two-day hackathon at Workuity Biltmore, Phoenix, Oct 17–18 2026, for builders who need to launch. Plan the launch, execute it, build a growth engine. Judged on what shipped.";
+const TITLE = EVENT.name;
+const DESCRIPTION = EVENT.description;
 
 export const metadata = {
   title: TITLE,
@@ -424,22 +404,20 @@ export default async function Page({ params }) {
       <main id="top">
         <section className="hero hk-hero">
           <p className="eyebrow reveal" style={{ "--d": "0ms" }}>
-            6 free workshops · Hackathon {EVENT.datesShort} · Workuity Biltmore, Phoenix
+            Zero to Launch · {EVENT.datesShort} · Workuity Biltmore, Phoenix
           </p>
           <h1 className="hero-h1 reveal" style={{ "--d": "80ms" }}>
-            Zero to <span className="hero-accent">Launch</span>
-            <span className="sr-only"> — the Ship AI hackathon</span>
+            Ship AI AZ{" "}<br />
+            <span className="hero-accent">GTM Hackathon</span>
           </h1>
           <p className="lede reveal" style={{ "--d": "280ms" }}>
-            Ten weeks of go-to-market, then a weekend where you don&apos;t build — you launch.
-            Six free workshops at Workuity Biltmore (our venue sponsor) on alternating
-            Wednesdays from August 5, a build window that opens {EVENT.buildOpensShort}, and a
-            hackathon in October where it all goes public. Bring the product you&apos;ve been
-            sitting on. Judged on what shipped, not on what you demoed.
+            Build and ship the best marketing site. Join Ship AI Club for a free weekend
+            with a $1,000 prize pool, employers and business professionals, and a live site
+            you can show. Bring a teammate or come solo and find one.
           </p>
           <div className="cta-row reveal" style={{ "--d": "380ms" }}>
             <a className="btn btn-solid" href="/dashboard">
-              Register for the hackathon
+              Register your team
             </a>
             <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
               Join the Discord
@@ -464,41 +442,35 @@ export default async function Page({ params }) {
           ))}
         </section>
 
-        <section className="section" id="why">
-          <p className="kicker">Why this exists</p>
-          <h2>Two kinds of builder, stuck in the same place.</h2>
-          <div className="audience">
-            <div className="aud-col aud-not">
-              <p className="aud-head">The perpetual builder</p>
-              <ul>
-                <li>Shipping code every day, launched nothing.</li>
-                <li>Not sure the product is right, so the answer is another feature.</li>
-                <li>The product bloats, the date slides, and there&apos;s still no customer on the other end.</li>
-              </ul>
-            </div>
-            <div className="aud-col aud-not">
-              <p className="aud-head">The ready-but-frozen builder</p>
-              <ul>
-                <li>The product works. The next move doesn&apos;t exist.</li>
-                <li>No site, no audience, no channel, no first ten customers.</li>
-                <li>No idea which of those to do first.</li>
-              </ul>
-            </div>
-          </div>
-          <p className="section-lede hk-thesis">
-            This weekend is for both. Most hackathons reward building something new in 48
-            hours, and it dies on Monday. Here the code is the part you already have.
-            What&apos;s missing is the launch — that&apos;s the whole deliverable.
+        <section className="section" id="benefits">
+          <p className="kicker">What’s in it for you</p>
+          <h2>Build something worth showing.</h2>
+          <p className="section-lede">
+            A weekend to launch your work, meet people, and leave with more than a project.
+            Here’s what you can take away from the Ship AI AZ GTM Hackathon.
           </p>
-          <p className="rule-line">Feel the fear and do it anyways.</p>
+          <div className="hk-cats">
+            {BENEFITS.map((b) => (
+              <div key={b.title} className="hk-cat">
+                <b.icon className="icon" size={18} strokeWidth={1.75} aria-hidden="true" />
+                <h3>{b.title}</h3>
+                <p>{b.copy}</p>
+              </div>
+            ))}
+          </div>
+          <p className="hk-note">
+            The listing and the certifications live on{" "}
+            <a href="/programs/zero-to-launch/hackathon/results">the results page</a>,
+            published Sunday, straight after the awards.
+          </p>
         </section>
 
         <section className="section" id="outcomes">
           <p className="kicker">What you leave with</p>
-          <h2>Six things, by Sunday afternoon.</h2>
+          <h2>A live site you can show.</h2>
           <p className="section-lede">
-            The first two are written in August and everything after is built on them. The
-            last four are what the judges score at the weekend.
+            By Sunday afternoon, your marketing site is live, your product is in front of
+            people, and you have a pitch and content to keep sharing.
           </p>
           <div className="values">
             {DELIVERABLES.map((d) => (
@@ -562,10 +534,10 @@ export default async function Page({ params }) {
           <p className="kicker">The weekend</p>
           <h2>Saturday morning to Sunday afternoon.</h2>
           <p className="section-lede">
-            No teaching this weekend — that happened on Wednesdays. Saturday morning you lock a
-            launch plan and put it live in a room full of people doing the same thing, Sunday
-            you show what it produced. The B2C and B2B playbooks were sessions two and three;
-            mentors run those 1:1 on Saturday. Doors are 9 AM–5 PM Saturday and 9 AM–2 PM Sunday.
+            Saturday brings team formation, on-site sessions, and time to build and launch
+            your marketing site with mentor support. Sunday is for finishing your site,
+            recording your pitch, and showing what you shipped. Doors are 9 AM–5 PM Saturday
+            and 9 AM–2 PM Sunday. Please park in the surface lot. Sponsored by Workuity.
           </p>
           <div className="hk-days">
             {SCHEDULE.map((d) => (
@@ -603,8 +575,8 @@ export default async function Page({ params }) {
           <p className="kicker">Prizes &amp; judging</p>
           <h2>Five categories. One judged award per team.</h2>
           <p className="section-lede">
-            The pool is cash plus in-kind and grows with sponsorship — amounts land on this
-            page as sponsors confirm. Entry is free either way.
+            Compete for a $1,000 prize pool. The focus is building and shipping the best
+            marketing site, with awards across five categories. Entry is free.
           </p>
           <div className="hk-cats">
             {CATEGORIES.map((c) => (
@@ -641,29 +613,6 @@ export default async function Page({ params }) {
           </ul>
         </section>
 
-        <section className="section" id="benefits">
-          <p className="kicker">What you get for entering</p>
-          <h2>Six things on the table.</h2>
-          <p className="section-lede">
-            Most hackathons pay out to the top three and everyone else goes home with a
-            wristband. Here the floor is worth showing up for — the awards sit on top of it.
-          </p>
-          <div className="hk-cats">
-            {BENEFITS.map((b) => (
-              <div key={b.title} className="hk-cat">
-                <b.icon className="icon" size={18} strokeWidth={1.75} aria-hidden="true" />
-                <h3>{b.title}</h3>
-                <p>{b.copy}</p>
-              </div>
-            ))}
-          </div>
-          <p className="hk-note">
-            The listing and the certifications live on{" "}
-            <a href="/programs/zero-to-launch/hackathon/results">the results page</a>,
-            published Sunday, straight after the awards.
-          </p>
-        </section>
-
         <section className="section" id="rules">
           <p className="kicker">The rules</p>
           <h2>Eleven of them. All of them short.</h2>
@@ -687,7 +636,7 @@ export default async function Page({ params }) {
           </p>
           <div className="cta-row">
             <a className="btn btn-solid" href="/dashboard">
-              Register for the hackathon
+              Register your team
             </a>
             <a className="btn btn-ghost" href="/programs/zero-to-launch/hackathon/submit">
               What the form asks for
@@ -736,8 +685,8 @@ export default async function Page({ params }) {
             </a>
           </div>
           <p className="hk-note">
-            Sponsorship closes {EVENT.sponsorDeadline} so prize amounts can go on this page
-            before we push registration.{" "}
+            Sponsorship closes {EVENT.sponsorDeadline}. Help support the $1,000 prize pool
+            and the builders launching their projects.{" "}
             <a href="/dashboard/requests">Start a sponsorship request</a>.
           </p>
         </section>
@@ -751,7 +700,7 @@ export default async function Page({ params }) {
                 <Gauge className="icon" size={18} strokeWidth={1.75} aria-hidden="true" />
                 Judges
               </h3>
-              <p className="hk-role-when">Sunday, roughly 1:00–4:30 PM · 3–5 seats</p>
+              <p className="hk-role-when">Sunday, noon–2:00 PM · 3–5 seats</p>
               <p>
                 Founders and operators who have launched something and can tell a real number
                 from a vanity one. Score against published criteria, ask hard questions in the
@@ -838,10 +787,10 @@ export default async function Page({ params }) {
         </section>
 
         <section className="section hk-close">
-          <h2>Bring the thing you never launched.</h2>
+          <h2>Bring a teammate. Leave with a live site.</h2>
           <div className="cta-row">
             <a className="btn btn-solid" href="/dashboard">
-              Register for the hackathon
+              Register your team
             </a>
             <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
               Join the Discord

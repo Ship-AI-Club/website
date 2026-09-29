@@ -56,8 +56,6 @@ export default async function Page() {
                 <tr>
                   <th>Project</th>
                   <th>Team</th>
-                  <th>Category</th>
-                  <th>Track</th>
                   <th>Status</th>
                   <th>Live</th>
                   <th className="ac-num">Judges</th>
@@ -72,8 +70,6 @@ export default async function Page() {
                       <strong>{submission.project || "Untitled project"}</strong>
                     </td>
                     <td>{submission.team_name || "Unnamed team"}</td>
-                    <td>{submission.category || "—"}</td>
-                    <td>{submission.track || "—"}</td>
                     <td>
                       <span className={`ac-pill ${statusClass(submission.status)}`}>{submission.status || "unknown"}</span>
                     </td>
@@ -116,16 +112,12 @@ export default async function Page() {
                 <dd>{submission.summary || "—"}</dd>
               </div>
               <div>
-                <dt>Launch</dt>
+                <dt>What they shipped</dt>
                 <dd>{submission.launch || "—"}</dd>
               </div>
               <div>
                 <dt>Receipts</dt>
                 <dd>{submission.receipts || "—"}</dd>
-              </div>
-              <div>
-                <dt>Growth</dt>
-                <dd>{submission.growth || "—"}</dd>
               </div>
               <div>
                 <dt>Repository</dt>

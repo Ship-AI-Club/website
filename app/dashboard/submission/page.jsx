@@ -2,7 +2,7 @@ import { AlertTriangle, CheckCircle2 } from "lucide-react";
 
 import { requireOnboarded } from "../../../lib/auth";
 import { EVENT } from "../../../lib/hackathon";
-import { CATEGORIES } from "../../../lib/results";
+import { SUBMISSION_CHECKS } from "../../../lib/submissions";
 import { submissionsOpen } from "../../../lib/settings";
 import { judgesFor, submissionForTeam, teamFor } from "../../../lib/store";
 import SubmissionForm from "./submission-form";
@@ -11,13 +11,6 @@ export const metadata = {
   title: "Your Submission — Ship AI",
   robots: { index: false, follow: false },
 };
-
-const CHECKS = [
-  "Open your live URL in a private window. If it doesn't load for a stranger, it doesn't count.",
-  "Have your analytics or dashboard open in a tab for the pitch. Judges will ask.",
-  "Pick one category. Entering everything reads as not knowing what you built.",
-  "Five minutes plus three of questions, live product on screen. Time it once.",
-];
 
 export default async function Page() {
   const user = await requireOnboarded("/dashboard/submission");
@@ -59,8 +52,8 @@ export default async function Page() {
         <p className="ac-kicker">{team.name}</p>
         <h1>Your submission</h1>
         <p>
-          One entry per team, filed here. It takes about ten minutes if you have your numbers
-          ready — so read this before Saturday rather than at 11:50 on Sunday.
+          Submit your live marketing site and evidence of what you shipped.
+          Judging focuses on design, craft, and receipts.
         </p>
       </div>
 
@@ -87,7 +80,6 @@ export default async function Page() {
 
         <SubmissionForm
           submission={submission}
-          categories={CATEGORIES.filter((c) => !c.voted)}
           deadline={EVENT.deadline}
           open={open}
         />
@@ -113,7 +105,7 @@ export default async function Page() {
       <section className="ac-card">
         <h3>Before you file</h3>
         <ul className="ac-list">
-          {CHECKS.map((c) => (
+          {SUBMISSION_CHECKS.map((c) => (
             <li key={c}>
               <CheckCircle2 size={15} strokeWidth={1.75} aria-hidden="true" />
               <span>{c}</span>
@@ -121,8 +113,8 @@ export default async function Page() {
           ))}
         </ul>
         <p className="ac-fine">
-          The full rules and the scoring rubric are on{" "}
-          <a href="/programs/zero-to-launch/hackathon#rules">the hackathon page</a>.
+          See the focus and event details on{" "}
+          <a href="/programs/zero-to-launch/hackathon#focus">the hackathon page</a>.
         </p>
       </section>
     </>

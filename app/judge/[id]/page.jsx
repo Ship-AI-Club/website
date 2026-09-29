@@ -34,10 +34,9 @@ export default async function Page({ params }) {
   const conflict = submission.members.some((m) => m.id === user.id);
 
   const sections = [
-    ["What it does", submission.summary],
-    ["What they launched this weekend", submission.launch],
+    ["What the site is for", submission.summary],
+    ["What they shipped", submission.launch],
     ["Receipts", submission.receipts],
-    ["Growth engine", submission.growth],
   ].filter(([, value]) => value);
 
   return (
@@ -57,7 +56,6 @@ export default async function Page({ params }) {
       <div className="ac-head">
         <p className="ac-kicker">
           {submission.team_name}
-          {submission.category ? ` · ${submission.category}` : ""}
         </p>
         <h1>{submission.project || "Untitled"}</h1>
         <p>{submission.members.map((m) => m.name || m.email).join(", ")}</p>
@@ -86,7 +84,7 @@ export default async function Page({ params }) {
               target="_blank"
               rel="noreferrer"
             >
-              Open the product
+              Open the site
               <ExternalLink
                 size={13}
                 strokeWidth={1.75}

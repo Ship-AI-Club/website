@@ -124,10 +124,6 @@ export default async function Page({ params }) {
         </div>
         <dl className="ac-dl">
           <div>
-            <dt>Track</dt>
-            <dd>{registration ? display(registration.track, "Not selected") : "Not registered"}</dd>
-          </div>
-          <div>
             <dt>Product</dt>
             <dd>{registration ? display(registration.product, "Not provided") : "Not registered"}</dd>
           </div>

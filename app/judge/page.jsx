@@ -22,9 +22,8 @@ export default async function Page() {
         <p className="ac-kicker">Sunday · {EVENT.venue}</p>
         <h1>Your queue</h1>
         <p>
-          Five minutes each plus three of questions, live product on screen. Score against the
-          four published criteria — the same four the teams have been able to read since
-          August.
+          Review the live marketing site and the work shipped during the weekend.
+          Score design, craft, and receipts equally, from 0 to 10.
         </p>
       </div>
 
@@ -36,7 +35,6 @@ export default async function Page() {
         <ul className="ac-list">
           {RUBRIC.map((c) => (
             <li key={c.key}>
-              <strong className="ac-mono">{c.pct}%</strong>
               <strong>{c.name}</strong>
               <span>{c.copy}</span>
             </li>
@@ -70,7 +68,6 @@ export default async function Page() {
               <thead>
                 <tr>
                   <th>Project</th>
-                  <th>Category</th>
                   <th className="ac-num">Your score</th>
                   <th>Status</th>
                   <th />
@@ -83,7 +80,6 @@ export default async function Page() {
                       <strong>{entry.project || "Untitled"}</strong>
                       <span className="ac-sub">{entry.team_name}</span>
                     </td>
-                    <td>{entry.category || "—"}</td>
                     <td className="ac-num">
                       {entry.total === null ? "—" : entry.total.toFixed(1)}
                     </td>

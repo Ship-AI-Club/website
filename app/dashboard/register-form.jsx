@@ -3,12 +3,9 @@
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 
-import { TRACKS } from "../../lib/accounts";
 import { registerAction } from "./actions";
 
-/* Registering is four questions, three of them optional. The bar to
-   entering has to stay at "turn up with something to launch" — rule
-   03 — so this form must never feel like an application. */
+// Registration captures the project idea and practical attendance needs.
 
 function Submit({ label }) {
   const { pending } = useFormStatus();
@@ -33,32 +30,18 @@ export default function RegisterForm({ registration, user }) {
       {state.ok && <p className="ac-ok">{state.ok}</p>}
 
       <div className="ac-field">
-        <label className="ac-label" htmlFor="track">
-          Which track?
-        </label>
-        <select id="track" name="track" defaultValue={registration?.track || "undecided"}>
-          {TRACKS.map((t) => (
-            <option key={t.id} value={t.id}>
-              {t.label}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="ac-field">
         <label className="ac-label" htmlFor="product">
           What are you bringing? <span className="ac-opt">optional</span>
         </label>
         <p className="ac-hint">
-          A sentence is plenty. &quot;Nothing yet&quot; is a real answer — the build window
-          opens in August and plenty of people start there.
+          A sentence about the site or product you want to build. Coming without an idea is fine.
         </p>
         <textarea
           id="product"
           name="product"
           rows={3}
           defaultValue={registration?.product || ""}
-          placeholder="A scheduling tool for tattoo studios. Built, never launched."
+          placeholder="A marketing site for a scheduling tool for tattoo studios."
         />
       </div>
 

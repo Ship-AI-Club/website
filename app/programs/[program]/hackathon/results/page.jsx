@@ -171,7 +171,7 @@ export default async function Page({ params }) {
                 </li>
               ))}
             </ul>
-            <h2 className="rs-subhead">The categories being judged</h2>
+            <h2 className="rs-subhead">Awards</h2>
             <div className="hk-cats">
               {CATEGORIES.map((c) => (
                 <div key={c.name} className={c.wide ? "hk-cat hk-cat-wide" : "hk-cat"}>

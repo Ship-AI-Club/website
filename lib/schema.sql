@@ -214,10 +214,9 @@ create table if not exists judge_assignments (
   primary key (submission_id, judge_id)
 );
 
-/* One scorecard per judge per submission. Columns match the four
-   published criteria in lib/accounts.js — 40/30/20/10 — and the
-   weighting lives in code, not here, so the rubric stays readable in
-   one place. Each axis is 0–10; a null axis means "not scored yet". */
+/* One scorecard per judge per submission. Current criteria are design,
+   craft, and receipts, weighted equally in lib/accounts.js. Legacy
+   shipped/growth columns are retained for history. Null means unscored. */
 create table if not exists scores (
   submission_id uuid not null references submissions(id) on delete cascade,
   judge_id      uuid not null references users(id) on delete cascade,
@@ -562,3 +561,7 @@ alter table broadcasts add column if not exists body       text not null;
 alter table broadcasts add column if not exists recipients int not null default 0;
 alter table broadcasts add column if not exists sent_by    uuid references users(id) on delete set null;
 alter table broadcasts add column if not exists sent_at    timestamptz not null default now();
+
+/* Marketing site rubric: an additive change preserves previous score data. */
+alter table scores add column if not exists design smallint
+  check (design between 0 and 10);

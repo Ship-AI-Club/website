@@ -209,10 +209,6 @@ export default async function Page({ searchParams }) {
               order, so tell us if that changes.
             </p>
             <dl className="ac-dl">
-              <div>
-                <dt>Track</dt>
-                <dd>{registration.track === "undecided" ? "Not decided yet" : registration.track.toUpperCase()}</dd>
-              </div>
               {registration.product && (
                 <div>
                   <dt>What you&apos;re bringing</dt>

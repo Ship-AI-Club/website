@@ -36,7 +36,7 @@ export default async function Page() {
         <p className="ac-kicker">Admin / judging</p>
         <h1>Scores</h1>
         <p>
-          Ordered by weighted average, ties broken by crowd votes. Spread is the gap between
+          Ordered by average score, ties broken by crowd votes. Spread is the gap between
           the highest and lowest judge — anything wide is flagged, because a mean can hide two
           judges who disagreed completely. Cards shows returned against assigned, since an
           average of one card isn&apos;t comparable to an average of three.

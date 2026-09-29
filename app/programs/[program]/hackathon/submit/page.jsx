@@ -3,19 +3,14 @@ import { AlertTriangle, ArrowRight, CheckCircle2 } from "lucide-react";
 import { JsonLd } from "../../../../../components/article";
 import { PROGRAMS, programBySlug } from "../../../../../lib/programs";
 
-const DISCORD = "https://discord.gg/kZSJMNveYM";
-const DEADLINE = "12:00 PM MST, Sunday October 18, 2026";
+import { DISCORD, EVENT } from "../../../../../lib/hackathon";
+import { SUBMISSION_CHECKS, SUBMISSION_FIELDS } from "../../../../../lib/submissions";
 
-/* Submissions used to be public GitHub issues. They're filed from a
-   Ship AI account now — the same nine fields, but attached to a team,
-   editable until the deadline, and readable by the judges assigned to
-   it. This page stays public and indexed because the requirements are
-   worth reading in September; the form itself is behind sign-in. */
 const SUBMIT_URL = "/dashboard/submission";
 
-const TITLE = "Submit Your Project — Zero to Launch";
+const TITLE = `Submit Your Marketing Site — ${EVENT.name}`;
 const DESCRIPTION =
-  "Submission requirements and deadline for Zero to Launch, the Ship AI hackathon. One submission per team, due 12:00 PM MST Sunday October 18, 2026.";
+  `Submit your live marketing site to the ${EVENT.name}. Judged on design, craft, and receipts. One submission per team, due ${EVENT.deadline}.`;
 
 export const metadata = {
   title: `${TITLE} — Ship AI`,
@@ -24,47 +19,6 @@ export const metadata = {
   openGraph: { title: TITLE, description: DESCRIPTION, images: [{ url: "/og-image.jpg", width: 1200, height: 630 }] },
   robots: { index: true, follow: true },
 };
-
-const FIELDS = [
-  {
-    name: "Project name",
-    copy: "What it's called.",
-  },
-  {
-    name: "Team",
-    copy: "One to four people, one team per person. Created once from your account — whoever starts it gets an invite code to send round, and every member can edit the entry.",
-  },
-  {
-    name: "Track and category",
-    copy: "B2C or B2B, and which of the four categories you're entering. One per team — win one and you're out of the running for the others.",
-  },
-  {
-    name: "Live URL",
-    required: true,
-    copy: "Publicly reachable, working, not behind a login. The one field with no substitute: an entry without a live URL cannot place.",
-  },
-  {
-    name: "What it does",
-    copy: "Two or three sentences. What it is and who it's for.",
-  },
-  {
-    name: "What you launched this weekend",
-    copy: "The launch itself — where, to whom, when. Link the post, the listing, the email, the thread.",
-  },
-  {
-    name: "Receipts",
-    required: true,
-    copy: "Numbers with evidence you can put on screen Sunday: visitors, signups, revenue, replies, conversion. Screenshots are fine. Small and true beats big and vague, and zero is a real answer if you can say what you learned.",
-  },
-  {
-    name: "Growth engine",
-    copy: "The one channel you'd run again next month. How it works, what it produced, and why it repeats without a hero effort.",
-  },
-  {
-    name: "Repo",
-    copy: "Optional. Open source is welcome but not required — you keep 100% of your IP.",
-  },
-];
 
 export function generateStaticParams() {
   return PROGRAMS.filter((program) => program.hasHackathon).map((program) => ({
@@ -98,8 +52,8 @@ export default async function Page({ params }) {
         <nav>
           <a href="/programs">Programs</a>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
-          <a href="/programs/zero-to-launch/hackathon#rules">Rules</a>
-          <a href="/programs/zero-to-launch/hackathon#prizes">Prizes</a>
+          <a href="/programs/zero-to-launch/hackathon#focus">What to build</a>
+          <a href="/programs/zero-to-launch/hackathon#judges">Judges</a>
         </nav>
         <div className="nav-ctas">
           <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
@@ -112,17 +66,18 @@ export default async function Page({ params }) {
       </header>
 
       <main className="hk-submit-page">
-        <p className="kicker">Zero to Launch</p>
-        <h1>Submit your project</h1>
+        <p className="kicker">{EVENT.name}</p>
+        <h1>Submit your marketing site</h1>
 
         <p className="hk-deadline">
           <AlertTriangle size={16} strokeWidth={1.75} aria-hidden="true" />
-          Deadline: <strong>{DEADLINE}</strong>. No late submissions.
+          <span>Deadline: <strong>{EVENT.deadline}</strong>. No late submissions.</span>
         </p>
 
         <p className="article-lede">
-          One submission per team, filed from your Ship AI account. Ten minutes if your numbers
-          are ready — so read this before Saturday, not at 11:50 on Sunday.
+          Build and ship the best marketing site. One submission per team, judged on design,
+          craft, and receipts: the pages, features, and improvements you shipped.
+          Each criterion is scored from 0 to 10 and weighted equally.
         </p>
 
         <div className="cta-row hk-submit-cta">
@@ -130,12 +85,12 @@ export default async function Page({ params }) {
             Open your submission
           </a>
           <a className="btn btn-ghost" href="/programs/zero-to-launch/hackathon/results">
-            Past results
+            Results
           </a>
         </div>
         <p className="hk-note">
           You&apos;ll need an account — an email address and a six-digit code, no password.
-          Draft the entry whenever you like; any team member can edit it up to the deadline.
+          Create or join a team of one to four people. Save a draft whenever you like; any team member can edit it up to the deadline.
           Stuck? Post in{" "}
           <a href={DISCORD} target="_blank" rel="noreferrer">the Discord</a> before the
           deadline, not after.
@@ -143,7 +98,7 @@ export default async function Page({ params }) {
 
         <h2 className="hk-subhead">What the form asks for</h2>
         <ol className="hk-fields">
-          {FIELDS.map((f) => (
+          {SUBMISSION_FIELDS.map((f) => (
             <li key={f.name}>
               <p className="hk-field-name">
                 {f.name}
@@ -156,26 +111,13 @@ export default async function Page({ params }) {
 
         <h2 className="hk-subhead">Before you hit submit</h2>
         <ul className="hk-check">
-          <li>
-            <CheckCircle2 size={16} strokeWidth={1.75} aria-hidden="true" />
-            Open your live URL in a private window. If it doesn&apos;t load for a stranger,
-            it doesn&apos;t count.
-          </li>
-          <li>
-            <CheckCircle2 size={16} strokeWidth={1.75} aria-hidden="true" />
-            Have your analytics or dashboard open in a tab for the pitch. Judges will ask.
-          </li>
-          <li>
-            <CheckCircle2 size={16} strokeWidth={1.75} aria-hidden="true" />
-            Pick one category. Entering everything reads as not knowing what you built.
-          </li>
-          <li>
-            <CheckCircle2 size={16} strokeWidth={1.75} aria-hidden="true" />
-            Five minutes plus three of questions, live product on screen. Time it once.
-          </li>
+          {SUBMISSION_CHECKS.map((check) => (
+            <li key={check}>
+              <CheckCircle2 size={16} strokeWidth={1.75} aria-hidden="true" />
+              {check}
+            </li>
+          ))}
         </ul>
-
-        <p className="rule-line">Receipts required.</p>
 
         <div className="cta-row hk-submit-cta">
           <a className="btn btn-solid" href={SUBMIT_URL}>

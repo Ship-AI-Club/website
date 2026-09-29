@@ -9,7 +9,7 @@ import { saveScoreAction } from "./actions";
 /* ------------------------------------------------------------------
    The scorecard.
 
-   Four axes, 0–10 each, weighted 40/30/20/10 — the same four criteria
+   Three axes, 0–10 each, weighted equally — the same three criteria
    published on /programs/zero-to-launch/hackathon, in the same order, with the same words.
    That's the point: a team can read exactly what they'll be scored on
    months before anybody scores them.
@@ -121,7 +121,6 @@ export default function Scorecard({ submissionId, card, filed }) {
         {RUBRIC.map((c) => (
           <div key={c.key} className="ac-axis">
             <div className="ac-axis-head">
-              <span className="ac-axis-pct">{c.pct}%</span>
               <span className="ac-axis-name">{c.name}</span>
               <span className="ac-axis-value">
                 {values[c.key] === null ? <em>not scored</em> : `${values[c.key]} / ${SCORE_MAX}`}
@@ -136,7 +135,7 @@ export default function Scorecard({ submissionId, card, filed }) {
 
       <div className="ac-total">
         <b>{total === null ? "—" : total.toFixed(1)}</b>
-        <span>weighted total, out of {SCORE_MAX}</span>
+        <span>average, out of {SCORE_MAX}</span>
       </div>
 
       <div className="ac-field">

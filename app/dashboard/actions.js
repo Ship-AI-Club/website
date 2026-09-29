@@ -13,7 +13,6 @@ import {
   MAX_TEAM_SIZE,
   REQUESTABLE_ROLES,
   SPONSOR_CHOICE_IDS,
-  TRACK_IDS,
   VOLUNTEER_JOB_IDS,
   pickIds,
   roleLabel,
@@ -21,7 +20,7 @@ import {
   slugify,
   text,
 } from "../../lib/accounts";
-import { CATEGORIES } from "../../lib/results";
+import { readSubmission, missingSubmissionFields } from "../../lib/submissions";
 import { EVENT } from "../../lib/hackathon";
 import { submissionsOpen, getSetting } from "../../lib/settings";
 import { teamFor, submissionForTeam } from "../../lib/store";
@@ -42,8 +41,6 @@ import { adminNotice, roleRequestReceivedEmail, submissionReceiptEmail } from ".
        participant, which the rules say anyone can be. Sponsor, mentor
        and judge are requests, and an admin decides them.
 ------------------------------------------------------------------ */
-
-const CATEGORY_NAMES = CATEGORIES.filter((c) => !c.voted).map((c) => c.name);
 
 /* No I/O/0/1 — an invite code gets read out loud across a room. */
 const CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -112,14 +109,10 @@ export async function registerAction(prev, formData) {
     return { error: "Registration is closed. Ask in the Discord — there may still be room." };
   }
 
-  const trackRaw = text(formData.get("track"), 20);
-  const track = TRACK_IDS.includes(trackRaw) ? trackRaw : "undecided";
-
   await sql`
-    insert into registrations (user_id, track, product)
-    values (${user.id}, ${track}, ${text(formData.get("product"), LIMITS.summary)})
+    insert into registrations (user_id, product)
+    values (${user.id}, ${text(formData.get("product"), LIMITS.summary)})
     on conflict (user_id) do update set
-      track = excluded.track,
       product = excluded.product,
       withdrawn_at = null,
       registered_at = coalesce(registrations.registered_at, now())`;
@@ -141,7 +134,7 @@ export async function registerAction(prev, formData) {
     insert into user_roles (user_id, role) values (${user.id}, 'participant')
     on conflict do nothing`;
 
-  await audit(user.id, "register", user.id, { track });
+  await audit(user.id, "register", user.id);
   refresh();
   return { ok: "You're registered. Next: form a team, or go solo." };
 }
@@ -150,7 +143,7 @@ export async function registerAction(prev, formData) {
  * The two practical questions asked of everyone who'll be in the
  * room, competing or not. Judges, mentors and sponsors get this on
  * its own rather than the whole registration form — they aren't
- * entering, and asking them which track they're on would be noise.
+ * entering, so they don't need a product description.
  */
 export async function saveAttendanceAction(prev, formData) {
   const user = await requireOnboarded("/dashboard");
@@ -318,33 +311,6 @@ export async function regenerateInviteAction() {
 
 /* ---------- the submission ---------- */
 
-/** Reads the form into the submission shape, validating as it goes. */
-function readSubmission(formData) {
-  const category = text(formData.get("category"), 80);
-  const track = text(formData.get("track"), 20);
-  return {
-    project: text(formData.get("project"), LIMITS.project),
-    track: TRACK_IDS.includes(track) ? track : "",
-    category: CATEGORY_NAMES.includes(category) ? category : "",
-    live_url: safeUrl(formData.get("live_url")),
-    repo_url: safeUrl(formData.get("repo_url")),
-    summary: text(formData.get("summary"), LIMITS.summary),
-    launch: text(formData.get("launch"), LIMITS.launch),
-    receipts: text(formData.get("receipts"), LIMITS.receipts),
-    growth: text(formData.get("growth"), LIMITS.growth),
-  };
-}
-
-/** The four things rule 04 and the submission page say are required. */
-function missingFields(entry) {
-  const missing = [];
-  if (!entry.project) missing.push("a project name");
-  if (!entry.category) missing.push("a category");
-  if (!entry.live_url) missing.push("a live URL");
-  if (!entry.receipts) missing.push("receipts");
-  return missing;
-}
-
 export async function saveSubmissionAction(prev, formData) {
   const user = await requireOnboarded("/dashboard/submission");
   const team = await teamFor(user.id);
@@ -357,34 +323,32 @@ export async function saveSubmissionAction(prev, formData) {
   const entry = readSubmission(formData);
   const finalize = String(formData.get("intent")) === "submit";
 
-  if (finalize) {
-    const missing = missingFields(entry);
+  const existing = await submissionForTeam(team.id);
+  if (finalize || existing?.status === "submitted") {
+    const missing = missingSubmissionFields(entry);
     if (missing.length) {
       return { ...entry, error: `Still needs ${missing.join(", ")}.` };
     }
   }
 
-  const existing = await submissionForTeam(team.id);
   const status = finalize ? "submitted" : existing?.status ?? "draft";
 
   await sql`
     insert into submissions
-      (team_id, project, track, category, live_url, repo_url, summary, launch, receipts, growth,
+      (team_id, project, category, live_url, repo_url, summary, launch, receipts,
        status, submitted_at)
     values
-      (${team.id}, ${entry.project}, ${entry.track}, ${entry.category}, ${entry.live_url},
-       ${entry.repo_url}, ${entry.summary}, ${entry.launch}, ${entry.receipts}, ${entry.growth},
+      (${team.id}, ${entry.project}, ${entry.category}, ${entry.live_url},
+       ${entry.repo_url}, ${entry.summary}, ${entry.launch}, ${entry.receipts},
        ${status}, ${finalize ? new Date().toISOString() : null})
     on conflict (team_id) do update set
       project = excluded.project,
-      track = excluded.track,
       category = excluded.category,
       live_url = excluded.live_url,
       repo_url = excluded.repo_url,
       summary = excluded.summary,
       launch = excluded.launch,
       receipts = excluded.receipts,
-      growth = excluded.growth,
       status = ${status},
       submitted_at = coalesce(submissions.submitted_at, excluded.submitted_at),
       updated_at = now()`;

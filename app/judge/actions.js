@@ -64,13 +64,12 @@ export async function saveScoreAction(prev, formData) {
   }
 
   await sql`
-    insert into scores (submission_id, judge_id, shipped, receipts, growth, craft, notes, submitted_at)
-    values (${submissionId}, ${judge.id}, ${card.shipped}, ${card.receipts}, ${card.growth},
+    insert into scores (submission_id, judge_id, design, receipts, craft, notes, submitted_at)
+    values (${submissionId}, ${judge.id}, ${card.design}, ${card.receipts},
             ${card.craft}, ${notes}, ${finalize ? new Date().toISOString() : null})
     on conflict (submission_id, judge_id) do update set
-      shipped = excluded.shipped,
+      design = excluded.design,
       receipts = excluded.receipts,
-      growth = excluded.growth,
       craft = excluded.craft,
       notes = excluded.notes,
       submitted_at = ${finalize ? new Date().toISOString() : null},

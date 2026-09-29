@@ -21,17 +21,48 @@ export default async function HackathonSponsors({ compact = false }) {
   const groups = await publicSponsors();
   if (!groups.length) return null;
 
+  if (compact) {
+    return (
+      <section className="section hk-sponsors hk-sponsors-compact" aria-labelledby="sponsors-title">
+        <h2 id="sponsors-title">Backed by</h2>
+        <ul className="hk-sponsor-grid">
+          {groups.flatMap(({ tier, sponsors }) => sponsors.map((sponsor) => {
+            const name = sponsor.org || sponsor.credit_name;
+            const brand = (
+              <>
+                <span className="hk-sponsor-art">
+                  {sponsor.logo_url && <img src={sponsor.logo_url} alt="" loading="lazy" />}
+                </span>
+                <span>{name}</span>
+              </>
+            );
+            return (
+              <li key={`${tier.id}-${name}`} className={`hk-sponsor-tier hk-sponsor-entry is-${tier.id}`}>
+                <p className="hk-sponsor-tier-name">{tier.name}{tier.sub ? ` · ${tier.sub}` : ""}</p>
+                {sponsor.website ? (
+                  <a className="hk-sponsor-brand" href={sponsor.website} target="_blank" rel="noreferrer">{brand}</a>
+                ) : (
+                  <span className="hk-sponsor-brand">{brand}</span>
+                )}
+              </li>
+            );
+          }))}
+        </ul>
+      </section>
+    );
+  }
+
   return (
-    <section className={`section hk-sponsors${compact ? " hk-sponsors-compact" : ""}`} aria-labelledby="sponsors-title">
-      {!compact && <p className="kicker">Backed by</p>}
-      <h2 id="sponsors-title">{compact ? "Backed by" : "Who's behind it."}</h2>
-      {!compact && <p className="section-lede">
+    <section className="section hk-sponsors" aria-labelledby="sponsors-title">
+      <p className="kicker">Backed by</p>
+      <h2 id="sponsors-title">Who&apos;s behind it.</h2>
+      <p className="section-lede">
         Ship AI is free and stays free because of them — and most of them give more than
         money. The rooms we meet in, the food, the prize pool, platform credits, mentors in
         Saturday&apos;s rotations, judges on Sunday&apos;s panel, and introductions that
         outlast the weekend. All of it is{" "}
         <a href="/programs/zero-to-launch/hackathon/sponsor">priced in the open</a>.
-      </p>}
+      </p>
 
       {groups.map(({ tier, sponsors }) => (
         <div key={tier.id} className={`hk-sponsor-tier is-${tier.id}`}>

@@ -1424,33 +1424,83 @@ h3 .icon {
 
 .hk-judge-list {
   list-style: none;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
 }
 
 .hk-judge {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   min-width: 0;
   overflow-wrap: anywhere;
 }
 
 .hk-simple .hk-sponsors-compact {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.75rem;
-  align-items: start;
+  gap: 2.25rem;
+  text-align: center;
 }
 
 .hk-simple .hk-sponsors-compact h2 {
-  grid-column: 1 / -1;
-  margin-bottom: 0;
+  max-width: none;
+  margin: 0;
+}
+
+.hk-sponsor-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2rem;
+  list-style: none;
+}
+
+.hk-sponsor-entry {
+  min-width: 0;
+}
+
+.hk-sponsor-brand {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  color: var(--dim);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.hk-sponsor-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 4.5rem;
+}
+
+.hk-sponsor-art img {
+  width: auto;
+  height: var(--mark, 2.2rem);
+  max-width: 100%;
+  max-height: min(var(--mark, 2.2rem), 4.5rem);
+  object-fit: contain;
+  filter: brightness(0);
+}
+
+@media (max-width: 900px) {
+  .hk-judge-list {
+    grid-template-columns: 1fr;
+  }
+
+  .hk-sponsor-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 1.25rem;
+  }
 }
 
 @media (max-width: 640px) {
   .hk-focus-grid,
   .hk-weekend-grid,
   .hk-benefit-list,
-  .hk-judge-list,
-  .hk-simple .hk-sponsors-compact {
+  .hk-judge-list {
     grid-template-columns: 1fr;
   }
 }
@@ -2039,18 +2089,34 @@ h3 .icon {
 
 /* closer */
 
-.hk-close {
+.hk-simple .hk-close {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding-block: 4rem;
   text-align: center;
 }
 
-.hk-close h2 {
+.hk-simple .hk-close h2 {
   max-width: none;
-  margin-bottom: 2rem;
+  margin: 0;
+  text-wrap: balance;
 }
 
-.hk-close .cta-row {
+.hk-close .section-lede {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-wrap: balance;
+}
+
+.hk-simple .hk-close .cta-row {
   justify-content: center;
-  margin-bottom: 2.5rem;
+  margin: 0.5rem 0 0;
+}
+
+.hk-close .hk-note {
+  margin: 0;
 }
 
 /* ---------- /programs/zero-to-launch/hackathon/submit ---------- */

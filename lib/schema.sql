@@ -565,3 +565,12 @@ alter table broadcasts add column if not exists sent_at    timestamptz not null 
 /* Marketing site rubric: an additive change preserves previous score data. */
 alter table scores add column if not exists design smallint
   check (design between 0 and 10);
+
+create table if not exists mentee_ai_assessments (
+  id uuid primary key default gen_random_uuid(),
+  mentee_name text not null, venture text not null default '', email text not null default '',
+  session_date date, program text not null default 'Venture Café Phoenix',
+  scores jsonb not null default '{}'::jsonb, notes jsonb not null default '{}'::jsonb,
+  next_steps text not null default '', created_by uuid,
+  created_at timestamptz not null default now(), updated_at timestamptz not null default now()
+);

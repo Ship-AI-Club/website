@@ -50,6 +50,7 @@ export default async function AdminLayout({ children }) {
         { href: "/admin/submissions", label: "Submissions" },
         { href: "/admin/scores", label: "Leaderboard" },
         { href: "/admin/sponsors", label: "Sponsors" },
+        { href: "/admin/mentees", label: "Mentee AI assessments" },
         { href: "/admin/email", label: "Email", count: unread },
       ],
     },

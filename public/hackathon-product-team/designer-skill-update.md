@@ -1,0 +1,5 @@
+# Product Designer skill update
+
+Load the exact profile in roles/designer.md and all files under skills/yc-interface-craft/. Read SKILL.md and its reference guidance. Verify all seven hashes in designer-skill-manifest.json. Add the skill to the existing Ship AI Product Designer and its reusable template; do not duplicate the bot. Preserve the other useful licensed skills. The template must contain the actual skill files or a documented, verified full-file installation bootstrap using the stable public skill ZIP. Never claim references are packaged when only links or the main Markdown are present.
+
+For substantial new design exploration, show five comparable directions, recommend one, and wait for owner selection before final implementation. Preserve approved directions for small fixes. Keep templates business-agnostic and free of client work, memories, live connections, credentials, routines and workspace IDs. Stage the updated template card for publication and report the skill files, hashes and any platform limitation honestly.

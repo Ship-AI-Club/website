@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useToastActionState } from "../../../components/toast-provider";
+
+import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
 import { roleLabel } from "../../../lib/accounts";
@@ -20,7 +22,7 @@ function Submit({ label, busy }) {
 }
 
 export function CreateInviteForm({ roles, origin }) {
-  const [state, action] = useActionState(createInviteAction, {});
+  const [state, action] = useToastActionState(createInviteAction, {});
   const [picked, setPicked] = useState(new Set());
 
   const toggle = (id, on) =>
@@ -33,14 +35,9 @@ export function CreateInviteForm({ roles, origin }) {
 
   return (
     <form action={action} className="ac-form">
-      {state.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state.ok && (
-        <div className="ac-ok">
-          <p>{state.ok}</p>
+
+      {state.code && (
+        <div className="ac-note">
           {state.code && (
             <p className="ac-mono" style={{ marginTop: ".4rem", wordBreak: "break-all" }}>
               {origin}/invite/{state.code}
@@ -127,7 +124,7 @@ export function CreateInviteForm({ roles, origin }) {
 }
 
 export function RevokeInviteForm({ id }) {
-  const [state, action] = useActionState(revokeInviteAction, {});
+  const [state, action] = useToastActionState(revokeInviteAction, {});
   return (
     <>
       <form action={action} className="ac-inline-form">
@@ -136,7 +133,7 @@ export function RevokeInviteForm({ id }) {
           Revoke
         </button>
       </form>
-      {state.ok && <span className="ac-fine"> {state.ok}</span>}
+
     </>
   );
 }

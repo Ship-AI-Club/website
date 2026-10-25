@@ -54,6 +54,17 @@ const SPONSORS = [
     sort: 3,
   },
   {
+    org: "Bell Boi",
+    tier: "gold",
+    amount: 5000,
+    website: "https://bellboi.ai/",
+    logo_url: "https://nhns5q7vlweke0ar.public.blob.vercel-storage.com/sponsors/bell-boi-2ogpPd9ReXIXh7s0vqYH430wT5e7r7.svg",
+    items: "Gold sponsorship.",
+    credit_name: "Bell Boi",
+    wordmark: true,
+    sort: 5,
+  },
+  {
     org: "CEI Gateway",
     tier: "silver",
     amount: 2500,

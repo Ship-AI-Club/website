@@ -1,32 +1,22 @@
+import { safeNext } from "../../../lib/nav";
 import { NextResponse } from "next/server";
 
-import { verifyLoginToken } from "../../../lib/auth";
-import { redeemPendingInvite } from "../../../lib/invites";
-
-/* The magic-link half of sign-in. The email carries a 32-byte token;
-   this exchanges it for a session and sends the browser on.
-
-   A route handler rather than a page because it has to write the
-   session cookie, and Next only allows that from an action or a
-   handler — never during a render. */
+/* Email security scanners follow links before the recipient opens them.
+   GET (and Next's automatic HEAD) must never consume a login code.
+   Keep existing email links working by sending them to a confirmation
+   form; only its server action exchanges the token for a session. */
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET(request) {
-  const token = new URL(request.url).searchParams.get("token");
-  const result = await verifyLoginToken(token);
-
-  if (result.error) {
-    const url = new URL("/login", request.url);
-    url.searchParams.set("error", result.error);
-    return NextResponse.redirect(url);
-  }
-
-  /* Same as the code path: an invite link followed by a magic
-     link should still grant what it promised. */
-  await redeemPendingInvite(result.user);
-
-  const destination = result.user.onboarded_at ? "/dashboard" : "/onboarding";
-  return NextResponse.redirect(new URL(destination, request.url));
+  const params = new URL(request.url).searchParams;
+  const url = new URL("/auth/confirm", request.url);
+  url.searchParams.set("token", (params.get("token") || "").slice(0, 200));
+  url.searchParams.set("next", safeNext(params.get("next")));
+  const response = NextResponse.redirect(url);
+  response.headers.set("Cache-Control", "private, no-store");
+  response.headers.set("Referrer-Policy", "no-referrer");
+  response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  return response;
 }

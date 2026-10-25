@@ -7,7 +7,7 @@ import { LIMITS, isEmail, text } from "../../../lib/accounts";
 import { sql } from "../../../lib/db";
 import { send } from "../../../lib/email";
 import { BROADCAST_SEGMENTS, CHECKIN_DAYS, broadcastRecipients } from "../../../lib/ops";
-import { SETTINGS, setSetting } from "../../../lib/settings";
+import { SETTINGS, setSetting, pastDeadline } from "../../../lib/settings";
 
 async function audit(actorId, action, target, meta = {}) {
   try {
@@ -37,6 +37,7 @@ export async function setOpsSettingAction(prevState, formData) {
   if (!["true", "false"].includes(String(formData.get("value")))) {
     return { error: "Setting value must be true or false." };
   }
+  if (key === "submissions_open" && value && pastDeadline()) return { error: "The submission deadline has passed. Extend the deadline before reopening submissions." };
 
   await setSetting(key, value);
   refreshOps();

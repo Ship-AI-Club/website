@@ -1,0 +1,30 @@
+{
+  "version": "1.2.0",
+  "templates": [
+    {
+      "file": "ship-ai-agency-templates.zip",
+      "bytes": 40703984,
+      "sha256": "805e3be536046bd99e2346b6f585ffa2f4e35af27139ff47aa9f821f48518658"
+    },
+    {
+      "file": "client-website.zip",
+      "bytes": 12645558,
+      "sha256": "b3716160560fa7cb3551e77bba53ea3abd3a46662f7d9b84197df33c4e125112"
+    },
+    {
+      "file": "social-graphics.zip",
+      "bytes": 6631921,
+      "sha256": "0e02026d26748b066b360901a01a9d60c0d114dfdbc6e6b87c3a6c07d696734f"
+    },
+    {
+      "file": "short-video.zip",
+      "bytes": 16337341,
+      "sha256": "f887afddc0643c565918e2a505098e6fd085ebcd4546764af3f5f00a498e34ae"
+    },
+    {
+      "file": "campaign-approval-workflow.zip",
+      "bytes": 20686856,
+      "sha256": "8b4e04669b14885495bc7900c0bbd0851d6d5c76381489afced7cffee1345e89"
+    }
+  ]
+}

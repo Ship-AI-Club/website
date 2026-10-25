@@ -2,23 +2,11 @@
 
 "use client";
 
-import { useActionState } from "react";
+import { useToastActionState } from "../../components/toast-provider";
+
 import { useFormStatus } from "react-dom";
 
 import { issueCertificatesAction, revokeCertificateAction } from "./actions";
-
-function Feedback({ state }) {
-  return (
-    <>
-      {state?.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state?.ok && <p className="ac-ok">{state.ok}</p>}
-    </>
-  );
-}
 
 function IssueButton() {
   const { pending } = useFormStatus();
@@ -30,11 +18,10 @@ function IssueButton() {
 }
 
 export function IssueCertificatesForm() {
-  const [state, action] = useActionState(issueCertificatesAction, {});
+  const [state, action] = useToastActionState(issueCertificatesAction, {});
 
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <p className="ac-hint">
         Issues a credential for every submitted team. Existing credentials get their award wording updated. Email is sent only for new credentials.
       </p>
@@ -59,11 +46,10 @@ function RevokeButton() {
 }
 
 export function RevokeCertificateForm({ certificateId }) {
-  const [state, action] = useActionState(revokeCertificateAction, {});
+  const [state, action] = useToastActionState(revokeCertificateAction, {});
 
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <input type="hidden" name="certificate_id" value={certificateId} />
       <div className="ac-actions">
         <RevokeButton />

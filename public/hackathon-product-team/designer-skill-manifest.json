@@ -1,0 +1,37 @@
+{
+  "name": "YC Interface Craft",
+  "source": "User-provided yc-interface-craft.zip",
+  "snapshotDate": "2026-10-16",
+  "archiveSha256": "ff6fc8935ee1313f54b13bb0901826305d3fcbd46e109aa382d3a64ce1ec408b",
+  "files": [
+    {
+      "file": "yc-interface-craft/SKILL.md",
+      "sha256": "8cf5e799a359faf9c63f466622e55571cd3067c67126879e95775565aac9944e"
+    },
+    {
+      "file": "yc-interface-craft/agents/openai.yaml",
+      "sha256": "6097e47d53640867b64aa4fe9617aca3db9157149eabbd27485dc271fb3b2e85"
+    },
+    {
+      "file": "yc-interface-craft/references/company-index.json",
+      "sha256": "4c239ff4cdb3af706eb4b7cb700bd3162fbf64bf732453504f1657bbfead6eb6"
+    },
+    {
+      "file": "yc-interface-craft/references/direction-workshop.md",
+      "sha256": "dbe414216e26b2429ca10f5725d7021b4c36b1e4ed07e93dabd52e6dac4aa45f"
+    },
+    {
+      "file": "yc-interface-craft/references/motion-and-quality.md",
+      "sha256": "d92a49dadf7d29bdc285a64dc9c77d86f1f3e00d39ae7cfc8670bdaff1302b3a"
+    },
+    {
+      "file": "yc-interface-craft/references/research-and-examples.md",
+      "sha256": "7bf70bb40a363551161416764909b1ff7fbf7f7a2bfb597525569854d7200a1d"
+    },
+    {
+      "file": "yc-interface-craft/references/system-and-surfaces.md",
+      "sha256": "355c2a9265d30e941b48976fc25ae5da7ee1e6d07769e0e92e2d53705aade804"
+    }
+  ],
+  "behavior": "Five comparable directions for substantial new visual exploration; owner selection before final implementation; small approved-direction fixes proceed directly. No implied YC endorsement."
+}

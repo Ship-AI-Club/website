@@ -1,0 +1,109 @@
+{
+  "kind": "Actual native libfx generation audit; not simulated",
+  "time": "2026-10-02T04:46:17.460Z",
+  "model": "openai/gpt-4.1-nano",
+  "backend": "native",
+  "version": "0.0.12",
+  "limits": "Each example: max 3 model POSTs, 512 output tokens/call, 40 seconds overall, only fixed read_brief tool.",
+  "scope": "Standalone adapter generation only; no HTTP authorization assertions, database calls, sends, writes or external actions. Credential read in memory only.",
+  "results": [
+    {
+      "deck": "program:day-zero:first-threads",
+      "task": "meeting-notes",
+      "skill": "meeting-notes",
+      "files": [
+        "SKILL.md",
+        "references/evidence-check.md"
+      ],
+      "prompt": "Apply the extract meeting decisions guide to the supplied classroom example. Produce the most useful draft, plan or review for this task in under 180 words. Use only supplied facts; identify missing evidence.",
+      "modelCalls": 2,
+      "events": [
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        }
+      ],
+      "stopReason": "end_turn",
+      "output": "The team agreed that Alex will draft the room-measuring checklist, and Sam will review it. There is no specified deadline for this task. The primary focus is to ensure the checklist aligns with the furniture measuring process. The team decided to emphasize \"Request a quote\" as the main call-to-action, reinforcing the process from measurement to quote. Missing evidence includes: a deadline for the checklist draft, confirmation of the checklist contents, and details on how the review will be conducted. Additionally, there's no information on how the checklist performance or customer decision process will be verified. To improve clarity, setting a deadline and defining review criteria will be beneficial. Confirming the checklist content relevant to the furniture fitting process is essential. Overall, the decision aims to streamline the quote request process but needs further specifics to ensure execution.",
+      "elapsedMs": 3423
+    },
+    {
+      "deck": "program:the-first-build:agentic-engineering",
+      "task": "engineering-review",
+      "skill": "engineering-review",
+      "files": [
+        "SKILL.md",
+        "references/evidence-check.md"
+      ],
+      "prompt": "Apply the plan checks for a feature guide to the supplied classroom example. Produce the most useful draft, plan or review for this task in under 180 words. Use only supplied facts; identify missing evidence.",
+      "modelCalls": 2,
+      "events": [
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        }
+      ],
+      "stopReason": "end_turn",
+      "output": "The feature involves adding a saved room-measurement checklist to a website, with constraints that only the owner can access it. Missing evidence includes proof of user authentication, access control, and error handling for empty measurements. The current status shows the feature is not implemented and no test or browser evidence exists. A review plan should verify that only authorized owners can read or modify checklists and that empty measurements prompt clear errors. Additional evidence on existing authentication mechanisms and error messaging would strengthen the review. Confirmation of the feature's implementation and testing status is needed to assess progress and security compliance fully.",
+      "elapsedMs": 2180
+    },
+    {
+      "deck": "program:growth-loops:compound-the-loop",
+      "task": "growth-experiment",
+      "skill": "growth-experiment",
+      "files": [
+        "SKILL.md",
+        "references/evidence-check.md"
+      ],
+      "prompt": "Apply the plan a bounded growth experiment guide to the supplied classroom example. Produce the most useful draft, plan or review for this task in under 180 words. Use only supplied facts; identify missing evidence.",
+      "modelCalls": 2,
+      "events": [
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        }
+      ],
+      "stopReason": "end_turn",
+      "output": "This experiment tests if adding a simple room-measuring checklist increases the quote rate. The measure will be the ratio of quotes to inquiries, with a baseline of 25%. The change involves placing the checklist beside the quote request form. The observation window is two weeks, tracking inquiry-to-quote conversion. A guardrail ensures the form remains functional and compliant; it must not contain unsupported claims, and delivery capacity remains unverified. The stop rule mandates reviewing if form functionality or message clarity is compromised. Missing evidence includes current inquiry-to-quote conversion rates beyond baseline, precise delivery constraints, and customer feedback. Human review should verify if the checklist simplifies inquiry qualification without introducing unsupported promises or reducing form usability.",
+      "elapsedMs": 3382
+    },
+    {
+      "deck": "workshop:company-knowledge-engine",
+      "task": "workshop-company-knowledge-engine",
+      "skill": "workshop-company-knowledge-engine",
+      "files": [
+        "SKILL.md",
+        "references/review-checklist.md"
+      ],
+      "prompt": "Answer the supplied questions using only the FAQ; cite the FAQ section and say when evidence is missing.",
+      "modelCalls": 2,
+      "events": [
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        }
+      ],
+      "stopReason": "end_turn",
+      "output": "1. To prepare for a quote, you need to provide room dimensions and a description of the furniture (FAQ: \"measurements\").  \n2. Refunds must be routed to a person, as no refund policy is supplied (FAQ: \"refunds\").  \n3. The FAQ does not support revealing private account details; such an action cannot be provided.  \n\nEvidence is complete; the FAQ sections answered as requested.",
+      "elapsedMs": 1727
+    }
+  ],
+  "initialGrowthReview": "Earlier output completed but proposed unsupported numeric targets. Preserved in separate growth refinement history; final growth run uses an explicit hypothetical experiment contract.",
+  "refinementTime": "2026-10-02T04:47:31.666Z"
+}

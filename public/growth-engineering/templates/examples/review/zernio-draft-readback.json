@@ -1,0 +1,33 @@
+{
+  "verifiedAt": "2026-10-14T22:40:42.326459+00:00",
+  "posts": [
+    {
+      "item": "social-v1",
+      "postId": "6ad004bc57d231cb31778197",
+      "status": "draft",
+      "account": "Ship AI X @shipaiclub",
+      "accountId": "6ac1ebeb8fa178626bfe4351",
+      "profileId": "6ab2e280323569f4bb17e0db",
+      "content": "Workshop example: Desert Shine is a fictional housecleaning client. Our Grok Bot team turned one website into this branded graphic. More sunshine. Less housework.\n\nExplore the demo: https://www.shipai.club/growth-engineering/desert-shine",
+      "approvalHash": "b385bbc19a5b2619907d827ecd40f54e01f08d146508e524b00433d0f36d0d52",
+      "mediaSha256": [
+        "c741c20f0e46de3b38916602a0df2af4d4435ca0d668962622247593f14e9630"
+      ]
+    },
+    {
+      "item": "video-v1",
+      "postId": "6ad004e86f5f2b73c754864c",
+      "status": "draft",
+      "account": "Ship AI X @shipaiclub",
+      "accountId": "6ac1ebeb8fa178626bfe4351",
+      "profileId": "6ab2e280323569f4bb17e0db",
+      "content": "Workshop example: a 15-second ad for Desert Shine, our fictional housecleaning client. Built by our AI marketing team from the same website and positioning.\n\nSee the demo: https://www.shipai.club/growth-engineering/desert-shine",
+      "approvalHash": "b385bbc19a5b2619907d827ecd40f54e01f08d146508e524b00433d0f36d0d52",
+      "mediaSha256": [
+        "96f90610cc525826f228e919ba5968a7d3f3409a973eed2c1c61aed1a415bc4b"
+      ]
+    }
+  ],
+  "scheduled": false,
+  "published": false
+}

@@ -29,10 +29,10 @@ export default async function HackathonRoster() {
   const more = Math.max(roster.length - visibleRoster.length, 0);
 
   return (
-    <section className="section hk-roster-section" id="teams" aria-labelledby="hk-roster-heading">
+    <section className="section hk-roster-section" id="builders" aria-labelledby="hk-roster-heading">
       <div className="hk-roster-head">
         <h2 className="hk-roster-heading" id="hk-roster-heading">
-          Teams &amp; builders
+          Builders
         </h2>
       </div>
 

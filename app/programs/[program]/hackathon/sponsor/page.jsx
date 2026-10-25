@@ -1,3 +1,4 @@
+import MobileNav from "../../../../../components/mobile-nav";
 import { notFound } from "next/navigation";
 import {
   ArrowRight,
@@ -57,7 +58,7 @@ export const metadata = {
     description: DESCRIPTION,
     url: "https://www.shipai.club/programs/zero-to-launch/hackathon/sponsor",
     siteName: "Ship AI",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }],
   },
 };
 
@@ -90,7 +91,7 @@ export default async function Page({ params }) {
         <a className="btn btn-solid nav-cta" href="/dashboard/requests">
           Talk to us
         </a>
-      </header>
+      <MobileNav /></header>
 
       <main id="top" className="sp-page">
         <section className="section sp-hero">

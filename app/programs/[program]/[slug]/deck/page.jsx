@@ -1,6 +1,8 @@
+import {loadFxShowcaseConfig} from "../../../../../lib/fx-showcase-config";
 import { notFound } from "next/navigation";
 import { Slide } from "../../../../../components/deck";
 import { deckFor } from "../../../../../lib/decks";
+import { growthDeckForTrack } from "../../../../../lib/growth-engineering-deck";
 import { PROGRAMS, programBySlug, sessionBySlug } from "../../../../../lib/programs";
 import DeckControls from "./deck-controls";
 
@@ -25,29 +27,37 @@ export async function generateMetadata({ params }) {
     title: `${title} — Ship AI`,
     description: `The ${program.name} session ${w.n} presentation. ${w.copy}`.slice(0, 300),
     alternates: { canonical: url },
-    openGraph: { title, description: w.copy.slice(0, 200), url, siteName: "Ship AI", images: [{ url: "/og-image.jpg", width: 1200, height: 630 }] },
+    openGraph: { title, description: w.copy.slice(0, 200), url, siteName: "Ship AI", images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }] },
   };
 }
 
-export default async function Page({ params }) {
+export default async function Page({ params, searchParams }) {
   const { program: programSlug, slug } = await params;
   const program = programBySlug(programSlug);
   const w = sessionBySlug(program, slug);
-  const slides = program && w && deckFor(program.slug, slug);
+  const original = program && w && deckFor(program.slug, slug);
+  const isGrowth = programSlug === 'zero-to-launch' && slug === 'growth-engineering';
+  const track = isGrowth ? (await searchParams)?.track : null;
+  const selectedTrack = ['grok-bot','engineer'].includes(track) ? track : null;
+  const slides = original ? isGrowth ? growthDeckForTrack(selectedTrack) : [...original] : null;
   if (!program || !w || !slides) notFound();
+  if(!['marketing-site','growth-engineering'].includes(slug)) {
+    const config=await loadFxShowcaseConfig(`program:${programSlug}:${slug}`);
+    if(config){const first=slides.findIndex(s=>s.kind==='terminal');slides.splice(first>=0?first+1:Math.min(5,slides.length),0,{kind:'skill-showcase',config});}
+  }
   const programHref = `/programs/${program.slug}`;
 
   return (
-    <div className="dk-page">
+    <div className="dk-page" data-growth-track={isGrowth ? selectedTrack || 'portal' : undefined}>
       <header className="dk-bar">
-        <a href={`${programHref}/${w.slug}`} className="dk-bar-back">← {w.eventTitle}</a>
-        <span className="dk-bar-hint">Arrows or space to advance · F for fullscreen · ⌘P to save as PDF</span>
+        <a href={isGrowth && selectedTrack ? `${programHref}/${w.slug}/deck` : `${programHref}/${w.slug}`} className="dk-bar-back">← {isGrowth && selectedTrack ? 'Choose a path' : w.eventTitle}</a>
+        <span className="dk-bar-hint">{isGrowth && !selectedTrack ? 'Choose a card to open its presentation' : `${isGrowth ? selectedTrack === 'grok-bot' ? 'Grok Bot · ' : 'Engineer · ' : ''}Arrows or space to advance · F for fullscreen · ⌘P to save as PDF`}</span>
         <a href={programHref} className="dk-bar-all">Sessions</a>
       </header>
       <div className="dk-track" data-lenis-prevent tabIndex={-1}>
         {slides.map((s, i) => <Slide key={i} slide={s} workshop={w} program={program} index={i} total={slides.length} />)}
       </div>
-      <DeckControls total={slides.length} />
+      {slides.length > 1 && <DeckControls key={selectedTrack || 'default'} total={slides.length} />}
     </div>
   );
 }

@@ -1,0 +1,42 @@
+.ht-directory-head { display:flex; align-items:flex-end; justify-content:space-between; gap:1.5rem; margin-bottom:1.7rem; }
+.ht-directory-head .eyebrow { margin-bottom:.6rem; }
+.ht-directory-head h2 { margin-bottom:0; }
+.ht-directory-count { color:var(--faint); font-size:.85rem; white-space:nowrap; }
+.ht-team-grid { list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+.ht-team-grid > li { min-width:0; display:flex; }
+.ht-team-card { display:flex; flex-direction:column; width:100%; min-width:0; padding:1.4rem; border:1px solid var(--hairline); border-radius:10px; background:var(--surface); color:var(--ink); transition:border-color 150ms ease; }
+.ht-team-card:hover { border-color:var(--accent); }
+.ht-team-card:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+.ht-team-top { display:flex; align-items:center; justify-content:space-between; gap:.7rem; margin-bottom:1.1rem; }
+.ht-team-mark { display:grid; place-items:center; width:2.6rem; height:2.6rem; flex:none; color:var(--accent); background:rgba(var(--accent-rgb),.06); border-radius:7px; font-size:1.2rem; font-weight:600; overflow:hidden; }
+.ht-team-mark img { width:100%; height:100%; object-fit:contain; }
+.ht-status { display:inline-flex; align-items:center; padding:.25rem .5rem; border:1px solid var(--hairline); border-radius:20px; font-size:.68rem; color:var(--faint); white-space:nowrap; }
+.ht-status.is-submitted { color:var(--accent); border-color:rgba(var(--accent-rgb),.22); background:rgba(var(--accent-rgb),.04); }
+.ht-team-card h3 { font-size:1.15rem; letter-spacing:-.025em; line-height:1.3; overflow-wrap:anywhere; }
+.ht-team-project { margin:.5rem 0 1.5rem; color:var(--dim); font-size:.85rem; line-height:1.6; overflow-wrap:anywhere; }
+.ht-team-bottom { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding-top:.9rem; margin-top:auto; border-top:1px solid var(--hairline); font-size:.75rem; color:var(--faint); }
+.ht-team-bottom > span { display:inline-flex; align-items:center; gap:.35rem; }
+.ht-team-bottom .ht-view-team { color:var(--accent); }
+.ht-detail { max-width:66rem; margin:0 auto; padding:3rem clamp(1.25rem,5vw,4rem) 5rem; }
+.ht-back { display:inline-flex; align-items:center; gap:.4rem; color:var(--accent); font-size:.85rem; margin-bottom:2.5rem; }
+.ht-detail-header { padding-bottom:2rem; border-bottom:1px solid var(--hairline); }
+.ht-detail-title { display:flex; align-items:center; gap:1rem; margin:1rem 0; }
+.ht-detail-title .ht-team-mark { width:3.5rem; height:3.5rem; font-size:1.7rem; }
+.ht-detail h1 { font-size:clamp(2rem,5vw,3.3rem); letter-spacing:-.045em; overflow-wrap:anywhere; line-height:1.12; }
+.ht-detail-tagline { color:var(--dim); max-width:45rem; line-height:1.65; }
+.ht-detail-section { padding:2rem 0; border-bottom:1px solid var(--hairline); }
+.ht-detail-section h2 { font-size:1.5rem; letter-spacing:-.025em; margin:.8rem 0; overflow-wrap:anywhere; }
+.ht-detail-section h3 { font-size:1rem; margin:1.75rem 0 .6rem; }
+.ht-detail-copy { color:var(--dim); line-height:1.75; white-space:pre-line; overflow-wrap:anywhere; }
+.ht-project-links { display:flex; flex-wrap:wrap; align-items:center; gap:.7rem; margin:1.5rem 0; }
+.ht-project-links a { display:inline-flex; align-items:center; gap:.4rem; }
+.ht-member-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; list-style:none; padding:0; margin:1.25rem 0 0; }
+.ht-member-list li { display:flex; align-items:center; gap:.8rem; min-width:0; }
+.ht-member-avatar { display:grid; place-items:center; width:2.8rem; height:2.8rem; flex:none; border-radius:50%; background:rgba(var(--fg-rgb),.05); overflow:hidden; }
+.ht-member-avatar img { width:100%; height:100%; object-fit:cover; }
+.ht-member-list strong { font-size:.95rem; overflow-wrap:anywhere; }
+.ht-member-list p { color:var(--faint); font-size:.8rem; margin-top:.3rem; line-height:1.5; overflow-wrap:anywhere; }
+.ht-detail-count { color:var(--faint); font-size:.85rem; }
+@media (max-width:950px) { .ht-team-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:600px) { .ht-directory-head { align-items:flex-start; flex-direction:column; gap:.7rem; } .ht-team-grid,.ht-member-list { grid-template-columns:1fr; } .ht-team-card { padding:1.2rem; } .ht-detail-title { align-items:flex-start; gap:.8rem; } }
+@media (prefers-reduced-motion:reduce) { .ht-team-card { transition:none; } }

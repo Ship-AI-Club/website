@@ -1,0 +1,3 @@
+# Start your project
+
+Help me turn my business or idea into a useful website. Ask me the questions you need, research what I am unsure about, and guide me through positioning, productizing the site, and design/build. Keep everything in one shared brief and coordinate the specialists for me. Adapt the work to my customers, offering and buying context. Use the included Next.js starter and skills when appropriate. Show me the important choices and working preview for feedback. Once I approve the site, help me bring in the marketing team. Keep deployment and external sends for a separate decision.

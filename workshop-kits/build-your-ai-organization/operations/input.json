@@ -1,0 +1,23 @@
+{
+  "report_date": "2027-02-19 (synthetic fixture)",
+  "requests": [
+    {
+      "id": "R-1",
+      "kind": "office-move",
+      "due_date": "2027-02-26",
+      "owner": "Operations"
+    },
+    {
+      "id": "R-2",
+      "kind": "invoice",
+      "due_date": null,
+      "owner": "Finance"
+    },
+    {
+      "id": "R-3",
+      "kind": "office-move",
+      "duplicate_of": "R-1",
+      "owner": "Operations"
+    }
+  ]
+}

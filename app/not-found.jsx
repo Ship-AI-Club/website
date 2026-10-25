@@ -1,3 +1,4 @@
+import MobileNav from "../components/mobile-nav";
 /* Every /programs/zero-to-launch/hackathon/certificate/<id> that was never issued lands here,
    so this page is the verification failure path for a public
    credential — it should say the id isn't real, not show an unbranded
@@ -23,7 +24,7 @@ export default function NotFound() {
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
           <a href="/programs/zero-to-launch/hackathon/results">Results</a>
         </nav>
-      </header>
+      <MobileNav /></header>
 
       <main className="hk-submit-page">
         <p className="kicker">404</p>

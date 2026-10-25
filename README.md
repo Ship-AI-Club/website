@@ -60,6 +60,10 @@ database dump hands over no live sessions. Sessions are opaque 32-byte tokens in
 cookie, 30 days, revocable per device from `/dashboard/profile`. Requests are throttled per
 address and per IP.
 
+Email links open a confirmation form before signing in. Loading or scanning a link never
+uses its code; the recipient must press **Continue signing in** to exchange the token for
+a session. The token is claimed atomically so a double submission cannot reuse it.
+
 **Roles.** What you say at onboarding (`users.interests`) and what you are (`user_roles`) are
 different facts. Registering grants `participant` outright, because rule 03 says anyone can
 compete. `sponsor`, `mentor` and `judge` are requested from `/dashboard/requests` — one open
@@ -199,3 +203,87 @@ Environment (all set on the Vercel project, all three environments):
 Run `vercel env pull .env.local` to work on it locally.
 
 Deployed on Vercel (`v0-ship-ai-landing-page` project → shipai.club).
+
+### Workshop Assessment And Email List
+
+`/workshops/assessment` asks for experience, role, business focus, an optional short goal,
+then email and consent to save the recommendation. `/api/workshop-assessment` validates
+and captures the email/profile before calling AI SDK through AI Gateway. The email is
+not included in the model prompt. Only public workshop slugs may be recommended;
+prices and links come from the site catalogue, not model output.
+
+Production uses `AI_GATEWAY_API_KEY` (shared from desic's exp-onboarding project).
+`WORKSHOP_ASSESSMENT_MODEL` optionally overrides the verified default Gateway model.
+The default model is `openai/gpt-6.1-sol`; each request has a 30-second model timeout,
+650 output-token cap, and no automatic model retries. Database-backed atomic daily
+caps are 2 new attempts per email, 8 per IP hash, and 100 across the site. Failed attempts
+count toward these caps. Repeating a completed request ID returns the saved result
+without spending more credits. These are request caps, not a dollar-denominated budget.
+
+`workshop_assessments` stores email, profile, status and result. Its unguessable share
+URLs expose only the recommendation, never the email or original answers, and are
+noindex. The two isolated assessment tables are initialized idempotently on first use
+and also included in `lib/schema.sql`. No assessment subscribes someone to a newsletter.
+
+`/admin/email-list` requires admin access and groups existing accounts, waitlists and
+assessment records into one contact per email. It supports search, source filters,
+50-contact pagination and a protected CSV export (up to 10,000 matching contacts).
+Assessment records are labeled unverified and purpose-limited. The export escapes
+spreadsheet formula prefixes. Broadcast segments are unchanged.
+
+Verification: `node --test tests/workshop-assessment.test.mjs`. The live assessment,
+email gate, saved-result reuse, private share page and unauthenticated admin protection
+were checked after deployment. The admin list/filter/export and atomic concurrent
+quota behavior were exercised against the local test database.
+
+### Workshop Covers And Facilitators
+
+Admins can manage every public workshop at `/admin/workshops`. Select a workshop, upload a wide PNG/JPEG/WebP cover (under 3 MB), and choose confirmed facilitators from public Ship AI accounts. Save updates the detail page and link-preview metadata. The generated default cover uses the workshop title, schedule/capacity, and confirmed facilitator photos. Uploaded covers are used as supplied; choose the default branded cover to refresh names/photos automatically. Unassigned faculty are shown as to be announced.
+
+Settings persist in `workshop_media`; its idempotent table definition is included in `lib/schema.sql`. The authenticated admin page initializes this additive table when first opened. Public pages fall back to branded images and the scheduled workshop's existing facilitator assignments if the database is unavailable. `/api/workshops/[slug]/og` serves each workshop's share image; versioned metadata URLs refresh when settings are saved. The site's original general Ship AI OG image remains unchanged.
+
+## Program assessment
+
+The programs directory includes a three-question assessment (`components/program-assessment.jsx`).
+`POST /api/program-assessment` validates the profile, recommends only registered programs,
+and requires a live product before recommending Growth Loops. It does not collect email or
+store profile answers. AI sees the selected answers and optional goal.
+
+AI uses `AI_GATEWAY_API_KEY` and the existing database-backed daily assessment caps
+(8 per IP, 100 total for programs). Set `PROGRAM_ASSESSMENT_MODEL` to override the model;
+otherwise it uses `WORKSHOP_ASSESSMENT_MODEL` or the existing default. Missing configuration,
+spending limits, invalid model output, or service failures return a clearly labeled guided
+recommendation. Limit storage has a four-second deadline and model requests a twenty-second
+deadline, so the guided match remains available during outages.
+
+Verify matching and output validation with `node --test tests/program-assessment.test.mjs`.
+
+### Hackathon team membership
+
+`/admin` → **Multiple teams per person** controls whether members can create or join
+additional teams for the current hackathon. It is enabled by default for the October
+2026 Ship AI AZ GTM Hackathon. Each team still has at most four members and one
+submission. Disabling it preserves existing memberships and blocks additional teams.
+
+The setting is stored as `hackathon:<EVENT.id>:multiple_teams_allowed`. Teams carry
+`hackathon_id`; existing teams migrate to `zero-to-launch-2026`. Give future events
+an explicit `EVENT.id` and set `EVENT.allowMultipleTeams` to their desired default
+(omitting it means one team per person). Membership checks only count teams in the
+same hackathon. Creation and joining use transactions that lock the user and, for
+joining, the destination team before checking the policy and capacity.
+
+The dashboard lists every team and entry. Team and submission pages accept `?team=<id>`;
+every mutation checks the authenticated member or owner against that selected team.
+Run `npm run migrate` before deploying this feature to remove the previous global
+one-team index and add hackathon IDs. When production credentials are sensitive,
+set the build-only `APPLY_TEAM_MEMBERSHIP_MIGRATION=1` on the initial Vercel deploy;
+the prebuild migration runs inside Vercel, preserves existing teams, and explicitly
+enables multiple memberships for the current event. Later builds omit the flag so
+an admin's subsequent choice is preserved.
+
+Verification: `node --experimental-vm-modules --test tests/auth.test.mjs tests/scoring.test.mjs tests/submissions.test.mjs`.
+The eight PostgreSQL integration cases in `tests/team-membership.test.mjs` cover
+migration preservation, multiple memberships, the toggle, event isolation,
+concurrency limits, selected-team operations, authorization, and separate entries.
+They require a dedicated local `TEAM_TEST_DATABASE_URL` plus the `pg` module
+(`TEAM_TEST_PG_PATH` may point to an existing installation); see the test header.

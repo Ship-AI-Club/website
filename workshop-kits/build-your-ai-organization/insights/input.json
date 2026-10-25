@@ -1,0 +1,17 @@
+[
+  {
+    "week": "W1",
+    "received": 20,
+    "reviewed": 12
+  },
+  {
+    "week": "W2",
+    "received": 25,
+    "reviewed": 15
+  },
+  {
+    "week": "W3",
+    "received": 0,
+    "reviewed": 0
+  }
+]

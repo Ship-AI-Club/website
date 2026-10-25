@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useToastActionState } from "../../../components/toast-provider";
+
+import { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 
 import { sendBroadcastAction } from "./actions";
@@ -18,7 +20,7 @@ function ConfirmButton() {
 }
 
 export default function BroadcastForm({ segments, recipientCounts, day }) {
-  const [state, action] = useActionState(sendBroadcastAction, {});
+  const [state, action] = useToastActionState(sendBroadcastAction, {});
   const [segment, setSegment] = useState(segments[0]?.id || "");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
@@ -48,13 +50,6 @@ export default function BroadcastForm({ segments, recipientCounts, day }) {
   return (
     <form action={action} onSubmit={submit} className="ac-form is-tight">
       <input type="hidden" name="day" value={day} />
-
-      {state.ok && <p className="ac-ok">{state.ok}</p>}
-      {state.error && review && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
 
       {!review ? (
         <>

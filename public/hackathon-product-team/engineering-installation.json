@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-17",
+  "requiredPlugins": [
+    {
+      "name": "pstack",
+      "catalogId": "9717366",
+      "publisher": "Cursor",
+      "roles": [
+        "pm",
+        "research",
+        "designer",
+        "frontend",
+        "backend"
+      ],
+      "firstUseSkill": "setup-pstack",
+      "verificationSkill": "create-verification-skill",
+      "verifiedCapabilities": "54 skills in native Installed UI"
+    },
+    {
+      "name": "ship-ai-product-team",
+      "catalogId": "76892592",
+      "publisher": "Ship AI",
+      "roles": [
+        "pm",
+        "research",
+        "designer",
+        "frontend",
+        "backend"
+      ],
+      "firstUseSkill": "ship-ai-setup",
+      "verifiedCapabilities": "47 skills. Cursor UI installed; Grok native plugin search and full files confirmed.",
+      "publicListingStatus": "Submitted for vendor review; public recipient installability is under test.",
+      "repository": "https://github.com/Ship-AI-Club/ship-ai-product-team",
+      "sourceCommit": "b6231d3"
+    }
+  ],
+  "capabilities": [
+    {
+      "name": "Cursor Cloud delegation",
+      "role": "frontend",
+      "requestedModel": "Saved Sonnet 5.5 Medium or Opus 5.5 Medium choice",
+      "verification": "Actual selector/tool result and run record; respect team policy."
+    },
+    {
+      "name": "GitHub connection",
+      "when": "Only when the chosen repository uses GitHub",
+      "verification": "Check installed connector and repository access. Do not infer an exportable marketplace plugin ID."
+    }
+  ],
+  "installationRules": [
+    "Include PStack in the actual native template Integrations export.",
+    "Recipients may need to install included plugins and complete their own login.",
+    "Private connectors, custom MCP setup, files and credentials do not travel with a template.",
+    "Check installed, enabled and tool-ready states separately. Do not claim setup from a prompt.",
+    "Use only required plugins. Cursor SDK or similarly named plugins do not prove Cloud delegation.",
+    "Install PStack first, then Ship AI.",
+    "Load the full pinned plugin source and references. Do not rely on short native card copies.",
+    "Do not claim public recipient installability merely because the owner account has the plugin."
+  ],
+  "documentation": [
+    "https://x.ai/bot/guides/templates-for-grok-bot",
+    "https://x.ai/bot/guides/grok-bot-101",
+    "https://x.ai/bot/marketplace/bots/dr-eggbot-v2",
+    "https://cursor.com/help/grok-bot/connect-plugins",
+    "https://cursor.com/docs/grok-bot/teams"
+  ]
+}

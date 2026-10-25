@@ -1,6 +1,8 @@
 import { hasDb, sql } from "../../../lib/db";
 import { FIELD_LIMITS, isEmail, normalizeEmail } from "../../../lib/waitlist";
 import { PROGRAMS } from "../../../lib/programs";
+import { AI_ORGANIZATION_EVENT } from "../../../lib/ai-organization-event";
+import { UPCOMING_WORKSHOPS } from "../../../lib/workshops";
 
 /* Public POST — no account, no session. The only thing standing
    between this and a bot is the honeypot and the per-IP hourly cap,
@@ -17,9 +19,9 @@ export const dynamic = "force-dynamic";
    a script doesn't get to fill the table. Mirrors lib/auth.js. */
 const MAX_PER_IP_HOUR = 12;
 
-/* Only programs that are actually waiting on dates take signups —
+/* Programs awaiting dates and events awaiting registration take signups —
    otherwise the endpoint is an open write keyed by any string. */
-const OPEN_SLUGS = PROGRAMS.filter((p) => !p.startISO).map((p) => p.slug);
+const OPEN_SLUGS = [...PROGRAMS.filter((p) => !p.startISO).map((p) => p.slug), ...UPCOMING_WORKSHOPS.map((w) => w.slug), AI_ORGANIZATION_EVENT.slug];
 
 function clientIp(request) {
   const forwarded = request.headers.get("x-forwarded-for");

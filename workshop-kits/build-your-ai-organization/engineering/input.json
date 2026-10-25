@@ -1,0 +1,14 @@
+[
+  {
+    "id": "I-1",
+    "status": "new"
+  },
+  {
+    "id": "I-2",
+    "status": "reviewed"
+  },
+  {
+    "id": "I-3",
+    "status": "new"
+  }
+]

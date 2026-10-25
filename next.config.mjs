@@ -5,6 +5,41 @@ const nextConfig = {
      matters, including Vercel, so the default stays ".next". */
   distDir: process.env.NEXT_DIST_DIR || ".next",
 
+  experimental: { serverActions: { bodySizeLimit: "4mb" } },
+
+  serverExternalPackages: ["libfx"],
+
+  outputFileTracingIncludes: {
+    "/api/workshops/*/materials/*": ["./workshop-kits/build-your-ai-organization/**/*", "./workshop-kits/vibe-coding-gtm/**/*"],
+    "/api/workshops/*/og": ["./public/logo-mark.png", "./public/workshop-art/website-marketing-instructors.png", "./public/fonts/workshop-geist-*.ttf"],
+    "/api/fx-deck": ["./public/marketing-resources/library/copywriting/**/*.md", "./public/marketing-resources/library/copy-editing/**/*.md", "./public/marketing-resources/library/cro/**/*.md"],
+    "/api/fx-showcase": ["./content/skills/**/*.md", "./content/program-skills/**/*.md", "./content/workshop-skills/**/*.md", "./public/marketing-resources/library/seo-audit/**/*.md", "./public/marketing-resources/library/programmatic-seo/**/*.md", "./public/marketing-resources/library/copywriting/**/*.md", "./public/marketing-resources/library/copy-editing/**/*.md", "./public/marketing-resources/library/cro/**/*.md"],
+  },
+
+  async headers() {
+    return [
+      {
+        source: "/growth-engineering/desert-shine/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
+        source: "/:path*",
+        headers: [
+          // Keep our slide previews frameable by this origin only.
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+        ],
+      },
+    ];
+  },
+
+  async rewrites() {
+    return [
+      { source: "/growth-engineering/desert-shine", destination: "/growth-engineering/desert-shine/index.html" },
+      { source: "/growth-engineering/desert-shine/quote", destination: "/growth-engineering/desert-shine/quote/index.html" },
+    ];
+  },
+
   async redirects() {
     return [
       // /socratic-night was an indexed SEO page for a format we retired in

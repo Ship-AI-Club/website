@@ -20,10 +20,12 @@ import {
   slugify,
   text,
 } from "../../lib/accounts";
-import { readSubmission, missingSubmissionFields } from "../../lib/submissions";
+import { readSubmission, missingSubmissionFields, invalidSubmissionUrls } from "../../lib/submissions";
+import { ensureSubmissionPitch } from "../../lib/submission-pitch-store";
 import { EVENT } from "../../lib/hackathon";
 import { submissionsOpen, getSetting } from "../../lib/settings";
 import { teamFor, submissionForTeam } from "../../lib/store";
+import { createTeamMembership, joinTeamMembership, SINGLE_TEAM_ERROR } from "../../lib/team-membership";
 import { adminNotice, roleRequestReceivedEmail, submissionReceiptEmail } from "../../lib/email";
 
 /* ------------------------------------------------------------------
@@ -31,11 +33,9 @@ import { adminNotice, roleRequestReceivedEmail, submissionReceiptEmail } from ".
 
    Two rules run through all of it:
 
-     · authority is re-derived on the server for every call. A form
-       field never says who you are or what team you're on — the
-       session does, and the query is scoped to it. Passing someone
-       else's team id into leaveTeamAction does nothing, because the
-       delete is written against `user_id = <you>`.
+     · authority is re-derived on the server for every call. The form
+       selects a team; the session and membership query decide whether
+       the caller can act on it.
 
      · nothing here grants a role. Registering makes you a
        participant, which the rules say anyone can be. Sponsor, mentor
@@ -173,10 +173,6 @@ export async function createTeamAction(prev, formData) {
   const name = text(formData.get("name"), LIMITS.team);
   if (!name) return { error: "Give the team a name. It goes on the certificate." };
 
-  if (await teamFor(user.id)) {
-    return { error: "You're already on a team. Leave it first — one team per person." };
-  }
-
   /* Slugs are public (they show up in admin URLs and exports) and the
      column is unique, so a clash walks forward rather than 500s. */
   const base = slugify(name) || "team";
@@ -190,23 +186,18 @@ export async function createTeamAction(prev, formData) {
   let team = null;
   for (let attempt = 0; attempt < 6 && !team; attempt += 1) {
     try {
-      team = one(await sql`
-        insert into teams (name, slug, invite_code, created_by)
-        values (${name}, ${slug}, ${inviteCode()}, ${user.id})
-        returning *`);
+      team = await createTeamMembership({ userId: user.id, name, slug, inviteCode: inviteCode() });
+      if (!team) return { error: SINGLE_TEAM_ERROR };
     } catch (error) {
-      // invite_code is unique; a collision is rare and worth one retry
-      if (attempt === 5) throw error;
+      // Retry unique slug/invite collisions; other failures need attention.
+      if (error.code !== "23505" || attempt === 5) throw error;
+      slug = `${base}-${inviteCode().toLowerCase()}`;
     }
   }
 
-  await sql`
-    insert into team_members (team_id, user_id, is_owner)
-    values (${team.id}, ${user.id}, true)`;
-
   await audit(user.id, "create-team", team.id, { name });
   refresh();
-  redirect("/dashboard/team");
+  redirect(`/dashboard/team?team=${team.id}`);
 }
 
 export async function joinTeamAction(prev, formData) {
@@ -215,26 +206,17 @@ export async function joinTeamAction(prev, formData) {
   const code = text(formData.get("code"), 16).toUpperCase().replace(/[^A-Z0-9]/g, "");
   if (!code) return { error: "Enter the invite code your teammate sent you." };
 
-  if (await teamFor(user.id)) {
-    return { error: "You're already on a team. Leave it first — one team per person." };
-  }
-
-  const team = one(await sql`select * from teams where invite_code = ${code}`);
+  const team = await joinTeamMembership({ userId: user.id, code });
   if (!team) return { error: "No team with that code. Check it with whoever sent it." };
 
-  const [{ n }] = await sql`
-    select count(*)::int as n from team_members where team_id = ${team.id}`;
-  if (n >= MAX_TEAM_SIZE) {
+  if (team.result === "single_team") return { error: SINGLE_TEAM_ERROR };
+  if (team.result === "full") {
     return { error: `That team is full — ${MAX_TEAM_SIZE} is the cap.` };
   }
 
-  await sql`
-    insert into team_members (team_id, user_id) values (${team.id}, ${user.id})
-    on conflict do nothing`;
-
   await audit(user.id, "join-team", team.id, { name: team.name });
   refresh();
-  return { ok: `You're on ${team.name}.` };
+  redirect(`/dashboard/team?team=${team.id}`);
 }
 
 export async function updateTeamAction(prev, formData) {
@@ -242,12 +224,15 @@ export async function updateTeamAction(prev, formData) {
   const name = text(formData.get("name"), LIMITS.team);
   if (!name) return { error: "The team needs a name." };
 
-  /* Scoped to a team this user owns — the id never comes from the
-     form, so passing someone else's simply matches no rows. */
+  const teamId = text(formData.get("team_id"), 40);
+  if (!teamId) return { error: "Select a team first." };
+
+  /* The selected team must be owned by this authenticated user. */
   const rows = await sql`
     update teams set name = ${name}, tagline = ${text(formData.get("tagline"), 160)}
-     where id = (select team_id from team_members
-                  where user_id = ${user.id} and is_owner = true)
+     where id::text = ${teamId} and hackathon_id = ${EVENT.id}
+       and exists (select 1 from team_members where team_id = teams.id
+                    and user_id = ${user.id} and is_owner = true)
     returning id`;
   if (!rows.length) return { error: "Only the person who made the team can change this." };
 
@@ -256,12 +241,14 @@ export async function updateTeamAction(prev, formData) {
   return { ok: "Saved." };
 }
 
-export async function leaveTeamAction() {
+export async function leaveTeamAction(formData) {
   const user = await requireUser("/dashboard/team");
-  const team = await teamFor(user.id);
+  const teamId = text(formData.get("team_id"), 40);
+  if (!teamId) return;
+  const team = await teamFor(user.id, teamId);
   if (!team) return;
 
-  await sql`delete from team_members where user_id = ${user.id}`;
+  await sql`delete from team_members where user_id = ${user.id} and team_id = ${team.id}`;
 
   /* An empty team is a dead row that still holds its name and slug.
      Delete it — and its draft submission with it, by cascade. */
@@ -274,24 +261,30 @@ export async function leaveTeamAction() {
     await sql`
       update team_members set is_owner = true
        where team_id = ${team.id}
+         and not exists (select 1 from team_members where team_id = ${team.id} and is_owner = true)
          and user_id = (select user_id from team_members
                          where team_id = ${team.id} order by joined_at limit 1)`;
   }
 
   await audit(user.id, "leave-team", team.id);
   refresh();
+  redirect("/dashboard/team");
 }
 
 export async function removeMemberAction(prev, formData) {
   const user = await requireUser("/dashboard/team");
   const memberId = text(formData.get("member_id"), 40);
   if (memberId === user.id) return { error: "Use “Leave team” to remove yourself." };
+  const teamId = text(formData.get("team_id"), 40);
+  if (!teamId) return { error: "Select a team first." };
 
   const rows = await sql`
-    delete from team_members
+    delete from team_members target
      where user_id = ${memberId}
-       and team_id = (select team_id from team_members
-                       where user_id = ${user.id} and is_owner = true)
+       and team_id::text = ${teamId}
+       and exists (select 1 from team_members owner join teams t on t.id = owner.team_id
+                    where owner.team_id = target.team_id and owner.user_id = ${user.id}
+                      and owner.is_owner = true and t.hackathon_id = ${EVENT.id})
     returning team_id`;
   if (!rows.length) return { error: "Only the team owner can remove someone." };
 
@@ -300,12 +293,15 @@ export async function removeMemberAction(prev, formData) {
   return { ok: "Removed." };
 }
 
-export async function regenerateInviteAction() {
+export async function regenerateInviteAction(formData) {
   const user = await requireUser("/dashboard/team");
+  const teamId = text(formData.get("team_id"), 40);
+  if (!teamId) return;
   await sql`
     update teams set invite_code = ${inviteCode()}
-     where id = (select team_id from team_members
-                  where user_id = ${user.id} and is_owner = true)`;
+     where id::text = ${teamId} and hackathon_id = ${EVENT.id}
+       and exists (select 1 from team_members where team_id = teams.id
+                    and user_id = ${user.id} and is_owner = true)`;
   refresh();
 }
 
@@ -313,14 +309,20 @@ export async function regenerateInviteAction() {
 
 export async function saveSubmissionAction(prev, formData) {
   const user = await requireOnboarded("/dashboard/submission");
-  const team = await teamFor(user.id);
-  if (!team) return { error: "Form a team first — solo teams of one are fine." };
+  const teamId = text(formData.get("team_id"), 40);
+  if (!teamId) return { error: "Select a team first — solo teams of one are fine." };
+  const team = await teamFor(user.id, teamId);
+  if (!team) return { error: "You can only edit a submission for a team you belong to." };
 
   if (!(await submissionsOpen())) {
     return { error: `Submissions closed at ${EVENT.deadline}. No late submissions.` };
   }
 
   const entry = readSubmission(formData);
+  const invalidUrls = invalidSubmissionUrls(formData);
+  if (invalidUrls.length) {
+    return { ...entry, error: `Check ${invalidUrls.map(field => field.name.toLowerCase()).join(" and ")}. Use a complete public http or https address.` };
+  }
   const finalize = String(formData.get("intent")) === "submit";
 
   const existing = await submissionForTeam(team.id);
@@ -333,14 +335,17 @@ export async function saveSubmissionAction(prev, formData) {
 
   const status = finalize ? "submitted" : existing?.status ?? "draft";
 
-  await sql`
+  let saved;
+  try {
+    await ensureSubmissionPitch();
+    [saved] = await sql`
     insert into submissions
       (team_id, project, category, live_url, repo_url, summary, launch, receipts,
-       status, submitted_at)
+       pitch, status, submitted_at)
     values
       (${team.id}, ${entry.project}, ${entry.category}, ${entry.live_url},
        ${entry.repo_url}, ${entry.summary}, ${entry.launch}, ${entry.receipts},
-       ${status}, ${finalize ? new Date().toISOString() : null})
+       ${JSON.stringify(entry.pitch)}::jsonb, ${status}, ${finalize ? new Date().toISOString() : null})
     on conflict (team_id) do update set
       project = excluded.project,
       category = excluded.category,
@@ -349,9 +354,18 @@ export async function saveSubmissionAction(prev, formData) {
       summary = excluded.summary,
       launch = excluded.launch,
       receipts = excluded.receipts,
-      status = ${status},
+      pitch = submissions.pitch || excluded.pitch,
+      status = case when submissions.status = 'submitted' then 'submitted' else excluded.status end,
       submitted_at = coalesce(submissions.submitted_at, excluded.submitted_at),
-      updated_at = now()`;
+      updated_at = now()
+    where submissions.status <> 'submitted'
+       or (${Boolean(entry.project && entry.live_url && entry.receipts)}::boolean)
+    returning status, submitted_at, updated_at`;
+  } catch (error) {
+    console.error("submission: save failed", error);
+    return { error: "Your entry could not be saved. Your answers are still here. Try saving again." };
+  }
+  if (!saved) return { error: "A teammate submitted this entry. Add a project name, live site URL, and receipts before saving changes." };
 
   refresh();
   revalidatePath("/dashboard/submission");
@@ -378,10 +392,10 @@ export async function saveSubmissionAction(prev, formData) {
       cta: { href: "https://www.shipai.club/admin/submissions", label: "Open the admin" },
       replyTo: team.members.find((m) => m.is_owner)?.email ?? team.members[0]?.email,
     });
-    return { ok: "Submitted. You can keep editing until the deadline." };
+    return { status: saved.status, ok: "Submitted. You can keep editing until the deadline." };
   }
 
-  return { ok: finalize ? "Updated." : "Draft saved." };
+  return { status: saved.status, ok: saved.status === "submitted" ? "Submission updated." : "Draft saved. Submit your project when it is ready." };
 }
 
 /* ---------- role requests: the gated contact form ---------- */

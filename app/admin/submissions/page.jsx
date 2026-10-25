@@ -5,6 +5,7 @@ import { Award, ExternalLink, FileText } from "lucide-react";
 import { requireAdmin } from "../../../lib/auth";
 import { allSubmissions } from "../../../lib/store";
 import { AwardForm } from "../award-form";
+import { PITCH_FIELDS, customPitchDeckUrl } from "../../../lib/submissions";
 
 export const metadata = {
   title: "Submissions — Ship AI",
@@ -107,6 +108,8 @@ export default async function Page() {
             </div>
             <p className="ac-fine">{submission.team_name || "Unnamed team"}</p>
             <dl className="ac-dl">
+              {customPitchDeckUrl(submission.pitch) && <div><dt>Team&apos;s pitch deck</dt><dd><a href={customPitchDeckUrl(submission.pitch)} target="_blank" rel="noreferrer">Open deck <ExternalLink size={13} aria-hidden="true"/></a></dd></div>}
+              {PITCH_FIELDS.filter(field => submission.pitch?.[field.key]).map(field => <div key={field.key}><dt>{field.name}</dt><dd>{submission.pitch[field.key]}</dd></div>)}
               <div>
                 <dt>Summary</dt>
                 <dd>{submission.summary || "—"}</dd>

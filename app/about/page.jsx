@@ -1,3 +1,4 @@
+import MobileNav from "../../components/mobile-nav";
 import {
   BadgeCheck,
   Gem,
@@ -13,7 +14,7 @@ import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 
 const TITLE = "About — Ship AI";
 const DESCRIPTION =
-  "Ship AI is a free, community-run AI education project in Phoenix — community-run, craft over hype. Our values, and the host who runs it.";
+  "Ship AI runs hands-on AI workshops and programs in Phoenix. Expert guidance, practical projects, and a community of builders. Our values and host.";
 
 export const metadata = {
   title: TITLE,
@@ -24,7 +25,7 @@ export const metadata = {
     description: DESCRIPTION,
     url: "https://www.shipai.club/about",
     siteName: "Ship AI",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }],
   },
 };
 
@@ -51,9 +52,9 @@ const SOCIALS = [
 
 const values = [
   {
-    title: "Free and Open",
+    title: "Learn by Building",
     icon: GraduationCap,
-    copy: "Every session is free and public — you pay by teaching the room what you know.",
+    copy: "Focused workshops pair expert guidance with time to work on your own project. Bring a question, build something useful, and share what you learn.",
   },
   {
     title: "Demos Over Memos",
@@ -101,6 +102,7 @@ export default function Page() {
           <span>Ship AI</span>
         </a>
         <nav>
+          <a href="/workshops">Workshops</a>
           <a href="/programs">Programs</a>
           <a href="/about">About</a>
           <a href="/dashboard">Account</a>
@@ -108,15 +110,16 @@ export default function Page() {
         <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
           Join the Discord
         </a>
-      </header>
+      <MobileNav /></header>
 
       <main>
         <section className="section">
           <p className="kicker">About</p>
           <h1>What we're about.</h1>
           <p className="section-lede">
-            Ship AI is community-run: the best AI education isn't behind a paywall or on a
-            stage, it's builders showing each other the work in the open, for free.
+            Ship AI brings Phoenix builders together for practical AI education. Our paid
+            workshops give you focused time, expert guidance, and feedback on your project.
+            Learn the tools, develop your judgment, and ship work you can use.
           </p>
           <div className="values">
             {values.map((v) => (
@@ -173,6 +176,7 @@ export default function Page() {
           <span>Ship AI</span>
         </div>
         <nav>
+          <a href="/workshops">Workshops</a>
           <a href="/programs">Programs</a>
           <a href="/about">About</a>
         </nav>

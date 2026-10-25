@@ -4,7 +4,7 @@ import "../account.css";
 import { AccountHeader, AccountFooter } from "../../components/account-chrome";
 import { currentUser } from "../../lib/auth";
 import { hasDb } from "../../lib/db";
-import { safeNext } from "../../lib/nav";
+import { safeNext, afterSignIn } from "../../lib/nav";
 import LoginForm from "./login-form";
 
 export const dynamic = "force-dynamic";
@@ -21,7 +21,8 @@ export default async function Page({ searchParams }) {
   const next = safeNext(params?.next);
 
   const user = await currentUser();
-  if (user) redirect(user.onboarded_at ? next : `/onboarding?next=${encodeURIComponent(next)}`);
+  if (user) redirect(afterSignIn(user, next));
+  const workshop = next === "/workshops/vibe-coding-gtm/checkout";
 
   return (
     <>
@@ -29,10 +30,9 @@ export default async function Page({ searchParams }) {
 
       <main className="ac-page">
         <p className="ac-kicker">Ship AI account</p>
-        <h1>Sign in</h1>
+        <h1>{workshop ? "Register for the workshop" : "Sign in"}</h1>
         <p className="ac-lede">
-          One account for the whole program — hackathon registration, teams, project
-          submission, judging, and your certification afterwards.
+          {workshop ? "Create or sign into your Ship AI account with your email. Then continue to secure Stripe Checkout to reserve your workshop seat." : "One account for workshops, programs, teams, projects, and certifications."}
         </p>
 
         {/* An expired or reused magic link lands back here with a

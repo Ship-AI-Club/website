@@ -23,9 +23,15 @@ export default async function Page() {
         <h1>Your queue</h1>
         <p>
           Review the live marketing site and the work shipped during the weekend.
-          Score design, craft, and receipts equally, from 0 to 10.
+          Score design, craft, and receipts equally, from 1 to 5.
         </p>
       </div>
+
+      <section className="ac-card">
+        <h2>Review every submitted project</h2>
+        <p className="ac-fine">The shared presentation order is ready for all judges. No assignments needed.</p>
+        <a className="btn btn-solid" href="/judge/presentations">Open presentation order</a>
+      </section>
 
       <section className="ac-card">
         <div className="ac-card-head">

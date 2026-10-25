@@ -2,6 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 
+function moveToSlide(el, target) {
+  // The illustrated deck supplies its own entrance motion. An immediate snap
+  // also avoids interrupted smooth scrolling across its interactive sections.
+  const instant = el.querySelector('.dk-marketing-slide') || el.closest('.wm-deck') || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.scrollTo({ top:(target - 1) * el.clientHeight, behavior:instant?'instant':'smooth' });
+}
+
 /* ------------------------------------------------------------------
    Deck runtime: navigation, progress, and the cue for entrance motion.
 
@@ -45,7 +52,8 @@ export default function DeckControls({ total }) {
     const at = () => Math.round(el.scrollTop / el.clientHeight) + 1;
     const go = (n) => {
       const target = Math.min(Math.max(n, 1), total);
-      el.scrollTo({ top: (target - 1) * el.clientHeight, behavior: "smooth" });
+      moveToSlide(el, target);
+      setCurrent(target);
     };
 
     /* Fragments: a walkthrough slide advances through its own stages
@@ -89,6 +97,7 @@ export default function DeckControls({ total }) {
 
     const onKey = (e) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (document.querySelector("dialog[open]") || e.target.closest?.("button, a, input, textarea, select, [contenteditable=true], [data-deck-input], summary")) return;
       switch (e.key) {
         case "ArrowRight":
         case "ArrowDown":
@@ -113,18 +122,14 @@ export default function DeckControls({ total }) {
       }
     };
 
-    let queued = false;
-    const onScroll = () => {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(() => { queued = false; setCurrent(at()); });
-    };
+    const onScroll = () => setCurrent(Math.min(Math.max(at(), 1), total));
     const onFull = () => setFull(Boolean(document.fullscreenElement));
 
     window.addEventListener("keydown", onKey);
     el.addEventListener("scroll", onScroll, { passive: true });
     el.addEventListener("click", onRailClick);
     document.addEventListener("fullscreenchange", onFull);
+    onScroll();
     return () => {
       window.removeEventListener("keydown", onKey);
       el.removeEventListener("scroll", onScroll);
@@ -152,7 +157,8 @@ export default function DeckControls({ total }) {
     const el = track.current;
     if (!el) return;
     const target = Math.min(Math.max(n, 1), total);
-    el.scrollTo({ top: (target - 1) * el.clientHeight, behavior: "smooth" });
+    moveToSlide(el, target);
+    setCurrent(target);
   };
 
   return (

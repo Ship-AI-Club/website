@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
    different facts, and only an admin turns one into the other. */
 
 export default async function JudgeLayout({ children }) {
-  const user = await requireRole("judge", "/judge");
+  const user = await requireRole("judge", "/judge/presentations");
 
   const [counts] = await sql`
     select
@@ -26,7 +26,10 @@ export default async function JudgeLayout({ children }) {
   const sections = [
     {
       title: null,
-      items: [{ href: "/judge", label: "Your queue", count: counts.outstanding }],
+      items: [
+        { href: "/judge/presentations", label: "Presentation order" },
+        { href: "/judge", label: "Your queue", count: counts.outstanding },
+      ],
     },
     {
       title: "Elsewhere",

@@ -1,7 +1,13 @@
 import { publicJudges } from "../lib/stats";
+import { OPENING_JUDGES } from "../lib/hackathon-opening";
 
 export default async function HackathonJudges() {
-  const judges = await publicJudges();
+  const profiles = await publicJudges();
+  const announced = OPENING_JUDGES
+    .filter(({ name }) => name === "Dan Kite")
+    .filter(({ name }) => !profiles.some((judge) => judge.name.trim().toLowerCase() === name.toLowerCase()))
+    .map(({ name, photo }) => ({ id: `opening-${name}`, name, avatar_url: photo }));
+  const judges = [...profiles, ...announced];
   if (!judges.length) return null;
 
   return (

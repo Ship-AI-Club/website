@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache";
 
 import { requireRole } from "../../lib/auth";
 import { sql, one } from "../../lib/db";
-import { LIMITS, RUBRIC, SCORE_MAX, text } from "../../lib/accounts";
+import { LIMITS, RUBRIC, SCORE_MIN, SCORE_MAX, text } from "../../lib/accounts";
+import { EVENT } from "../../lib/hackathon";
 
 /* ------------------------------------------------------------------
    Scoring.
@@ -23,7 +24,7 @@ function axis(formData, key) {
   const raw = formData.get(key);
   if (raw === null || raw === "") return null;
   const n = Number(raw);
-  if (!Number.isInteger(n) || n < 0 || n > SCORE_MAX) return null;
+  if (!Number.isInteger(n) || n < SCORE_MIN || n > SCORE_MAX) return null;
   return n;
 }
 
@@ -83,4 +84,40 @@ export async function saveScoreAction(prev, formData) {
     notes,
     ok: finalize ? `Card filed for ${assignment.project || "that entry"}.` : "Draft saved.",
   };
+}
+
+// The shared lineup is open to the whole judging panel immediately. Create
+// coverage when a judge saves, so these cards also appear in existing reports.
+export async function savePresentationScoreAction(prev, formData) {
+  const judge = await requireRole("judge", "/judge/presentations");
+  const submissionId = text(formData.get("submission_id"), 40);
+  if (!/^[0-9a-f-]{36}$/i.test(submissionId)) return { error: "Choose a submitted project." };
+
+  const eligible = one(await sql`
+    select s.id,
+           exists (select 1 from team_members tm
+                    where tm.team_id = s.team_id and tm.user_id = ${judge.id}) as conflict
+      from submissions s join teams t on t.id = s.team_id
+     where s.id = ${submissionId} and s.status = 'submitted' and t.hackathon_id = ${EVENT.id}`);
+  if (!eligible) return { error: "That project is no longer submitted. Refresh the lineup." };
+  if (eligible.conflict) return { error: "You cannot score your own team's project." };
+
+  await sql`
+    insert into judge_assignments (submission_id, judge_id)
+    values (${submissionId}, ${judge.id}) on conflict do nothing`;
+
+  const advance = formData.get("intent") === "next";
+  if (advance) formData.set("intent", "submit");
+  const result = await saveScoreAction(prev, formData);
+  if (result.ok && advance) {
+    const [next] = await sql`
+      select later.id from submissions later join teams t on t.id = later.team_id
+      join submissions current on current.id = ${submissionId}
+       where later.status = 'submitted' and t.hackathon_id = ${EVENT.id}
+         and (coalesce(later.submitted_at, 'infinity'::timestamptz), later.created_at, later.id)
+           > (coalesce(current.submitted_at, 'infinity'::timestamptz), current.created_at, current.id)
+       order by later.submitted_at asc nulls last, later.created_at, later.id limit 1`;
+    if (next) return { ...result, nextUrl: `/judge/presentations?team=${next.id}` };
+  }
+  return result;
 }

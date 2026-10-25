@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useToastActionState } from "../../components/toast-provider";
+
 import { useFormStatus } from "react-dom";
 
 import { saveAttendanceAction } from "./actions";
@@ -20,16 +21,10 @@ function Submit() {
 }
 
 export default function AttendanceForm({ user }) {
-  const [state, action] = useActionState(saveAttendanceAction, {});
+  const [state, action] = useToastActionState(saveAttendanceAction, {});
 
   return (
     <form action={action} className="ac-form is-tight">
-      {state.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state.ok && <p className="ac-ok">{state.ok}</p>}
 
       <div className="ac-row">
         <div className="ac-field">

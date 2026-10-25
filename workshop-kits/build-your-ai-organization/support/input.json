@@ -1,0 +1,12 @@
+{
+  "id": "T-22",
+  "customer_id": "C-04",
+  "message": "Cancel tomorrow\u2019s discovery appointment and refund me",
+  "knowledge": [
+    {
+      "id": "KB-1",
+      "text": "Rescheduling requests go to the account owner"
+    }
+  ],
+  "operator_owner": "Support operator"
+}

@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useToastActionState } from "../../components/toast-provider";
+
 import { useFormStatus } from "react-dom";
 
 import { registerAction } from "./actions";
@@ -17,17 +18,11 @@ function Submit({ label }) {
 }
 
 export default function RegisterForm({ registration, user }) {
-  const [state, action] = useActionState(registerAction, {});
+  const [state, action] = useToastActionState(registerAction, {});
   const editing = Boolean(registration);
 
   return (
     <form action={action} className="ac-form is-tight">
-      {state.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state.ok && <p className="ac-ok">{state.ok}</p>}
 
       <div className="ac-field">
         <label className="ac-label" htmlFor="product">

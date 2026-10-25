@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useToastActionState } from "../../../components/toast-provider";
+
 import { useFormStatus } from "react-dom";
 
 import {
@@ -27,23 +28,10 @@ function Submit({ label, busy, ghost }) {
   );
 }
 
-function Feedback({ state }) {
-  if (state.error) {
-    return (
-      <p className="ac-error" role="alert">
-        {state.error}
-      </p>
-    );
-  }
-  if (state.ok) return <p className="ac-ok">{state.ok}</p>;
-  return null;
-}
-
 export function CreateTeamForm() {
-  const [state, action] = useActionState(createTeamAction, {});
+  const [state, action] = useToastActionState(createTeamAction, {});
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <div className="ac-field">
         <label className="ac-label" htmlFor="team-name">
           Team name
@@ -62,10 +50,9 @@ export function CreateTeamForm() {
 }
 
 export function JoinTeamForm() {
-  const [state, action] = useActionState(joinTeamAction, {});
+  const [state, action] = useToastActionState(joinTeamAction, {});
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <div className="ac-field">
         <label className="ac-label" htmlFor="team-code">
           Invite code
@@ -90,11 +77,11 @@ export function JoinTeamForm() {
   );
 }
 
-export function TeamDetailsForm({ name, tagline }) {
-  const [state, action] = useActionState(updateTeamAction, {});
+export function TeamDetailsForm({ teamId, name, tagline }) {
+  const [state, action] = useToastActionState(updateTeamAction, {});
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
+      <input type="hidden" name="team_id" value={teamId} />
       <div className="ac-field">
         <label className="ac-label" htmlFor="rename">
           Team name
@@ -122,21 +109,18 @@ export function TeamDetailsForm({ name, tagline }) {
   );
 }
 
-export function RemoveMemberForm({ memberId, label }) {
-  const [state, action] = useActionState(removeMemberAction, {});
+export function RemoveMemberForm({ teamId, memberId, label }) {
+  const [state, action] = useToastActionState(removeMemberAction, {});
   return (
     <>
       <form action={action} className="ac-inline-form">
+        <input type="hidden" name="team_id" value={teamId} />
         <input type="hidden" name="member_id" value={memberId} />
         <button type="submit" className="ac-btn-link ac-btn-danger">
           {label}
         </button>
       </form>
-      {state.error && (
-        <span className="ac-fine" style={{ color: "var(--bad)" }}>
-          {state.error}
-        </span>
-      )}
+
     </>
   );
 }

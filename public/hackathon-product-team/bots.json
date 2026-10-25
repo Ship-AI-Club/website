@@ -1,0 +1,29 @@
+{
+  "status": "Published",
+  "checkedAt": "2026-10-16",
+  "bots": {
+    "pm": {
+      "templateUrl": "https://x.ai/bot/FHjnqwhzYBipTDGJN7H0A",
+      "status": "Published"
+    },
+    "research": {
+      "templateUrl": "https://x.ai/bot/NeqnbjtxAOaPoooKiOuuC",
+      "status": "Published"
+    },
+    "designer": {
+      "templateUrl": "https://x.ai/bot/0Ieeg8_nVlrnIzloGXvLt",
+      "status": "Published"
+    },
+    "frontend": {
+      "templateUrl": "https://x.ai/bot/kgHKczsUVBmEnhBlRADnq",
+      "modelLabel": "Cursor Cloud \u00b7 Sonnet 5.5 or Opus 5.5 \u00b7 Medium",
+      "status": "Published"
+    },
+    "backend": {
+      "templateUrl": "https://x.ai/bot/HKxSmbiVwD3HdGyRgBwAN",
+      "modelLabel": "App default \u00b7 verify availability in your account",
+      "status": "Published"
+    }
+  },
+  "templateNote": "Portable PM-led workshop templates. Public cards may contain condensed guidance; the full source skills and Next.js starter are in the kit."
+}

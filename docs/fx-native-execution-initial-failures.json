@@ -1,0 +1,215 @@
+{
+  "kind": "Actual native libfx generation audit; not simulated",
+  "time": "2026-10-02T04:44:33.073Z",
+  "model": "openai/gpt-4.1-nano",
+  "backend": "native",
+  "version": "0.0.12",
+  "limits": "Each example: max 3 model POSTs, 512 output tokens/call, 40 seconds overall, only fixed read_brief tool.",
+  "scope": "Standalone adapter generation only; no HTTP authorization assertions, database calls, sends, writes or external actions. Credential read in memory only.",
+  "results": [
+    {
+      "deck": "program:day-zero:first-threads",
+      "task": "meeting-notes",
+      "skill": "meeting-notes",
+      "files": [
+        "SKILL.md",
+        "references/evidence-check.md"
+      ],
+      "prompt": "Apply the extract meeting decisions guide to the supplied classroom example. Produce the most useful draft, plan or review for this task in under 180 words. Use only supplied facts; identify missing evidence.",
+      "modelCalls": 3,
+      "events": [
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        }
+      ],
+      "stopReason": "end_turn",
+      "output": "Based on the evidence, the team aims to develop a room-measuring checklist, with Alex as the owner. The checklist draft is complete, but room dimensions are missing, blocking the next review step. No specific deadline has been set. The team plans to review the checklist once dimensions are received. The main action remains requesting quotes, but the missing measurements limit progress. Additional verification is needed on the process for collecting room data and confirming client permissions. No evidence of completed measures, customer testimonials, or pricing details is available. Missing evidence also includes the current status of the measurement checklist integration, and the human review process relies on future incoming data.",
+      "elapsedMs": 3555
+    },
+    {
+      "deck": "program:the-first-build:agentic-engineering",
+      "task": "engineering-review",
+      "modelCalls": 5,
+      "events": [
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        }
+      ],
+      "output": "",
+      "error": "HostStreamFailed",
+      "elapsedMs": 3267
+    },
+    {
+      "deck": "program:growth-loops:compound-the-loop",
+      "task": "growth-experiment",
+      "modelCalls": 5,
+      "events": [
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        }
+      ],
+      "output": "",
+      "error": "HostStreamFailed",
+      "elapsedMs": 8247
+    },
+    {
+      "deck": "workshop:company-knowledge-engine",
+      "task": "workshop-company-knowledge-engine",
+      "skill": "workshop-company-knowledge-engine",
+      "files": [
+        "SKILL.md",
+        "references/review-checklist.md"
+      ],
+      "prompt": "Answer the supplied questions using only the FAQ; cite the FAQ section and say when evidence is missing.",
+      "modelCalls": 2,
+      "events": [
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_start",
+          "name": "read_brief"
+        },
+        {
+          "type": "tool_end",
+          "name": "read_brief"
+        }
+      ],
+      "stopReason": "end_turn",
+      "output": "According to the FAQ, a quote requires room dimensions and a description of the furniture (Section: measurements). The makers install the furniture (Section: installation). No specific pricing list is provided; a person must create the quote (Section: pricing). Refund questions should be directed to a person, as no refund policy is supplied (Section: refunds). Evidence for customer proof or prices is missing, and the customer proof and performance results are not verified.",
+      "elapsedMs": 2310
+    }
+  ]
+}

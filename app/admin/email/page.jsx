@@ -3,6 +3,7 @@ import { AlertTriangle, Inbox, Send } from "lucide-react";
 import { requireAdmin } from "../../../lib/auth";
 import { sql } from "../../../lib/db";
 import { INBOX_ADDRESSES, inboundReadConfigured } from "../../../lib/inbound";
+import { canFetchInboundBody, INBOUND_RETENTION_DAYS } from "../../../lib/inbound-retention.js";
 import { webhookConfigured } from "../../../lib/webhook";
 import { mailConfigured, FROM, INBOX } from "../../../lib/email";
 import { ArchiveForm, BackfillForm, ReadForm, ReplyForm } from "./email-forms";
@@ -68,7 +69,9 @@ export default async function Page() {
   ]);
 
   const counts = stats[0];
-  const missingBodies = inbound.filter((m) => !m.has_body).length;
+  const now = Date.now();
+  const missingBodies = inbound.filter((m) => !m.has_body && canFetchInboundBody(m.received_at, now)).length;
+  const expiredBodies = inbound.filter((m) => !m.has_body && !canFetchInboundBody(m.received_at, now)).length;
 
   return (
     <>
@@ -167,6 +170,13 @@ export default async function Page() {
             <BackfillForm />
           </>
         )}
+        {expiredBodies > 0 && (
+          <p className="ac-fine">
+            {expiredBodies} older message{expiredBodies === 1 ? " has" : "s have"} no saved body.
+            Resend keeps email content for {INBOUND_RETENTION_DAYS} days, so these bodies can
+            no longer be retrieved. Sender, subject, and attachment details are preserved.
+          </p>
+        )}
 
         {inbound.length === 0 ? (
           <div className="ac-empty">
@@ -202,7 +212,9 @@ export default async function Page() {
                   <dd>
                     {mail.has_body
                       ? mail.body_text || "(no plain-text part)"
-                      : "Body not fetched."}
+                      : canFetchInboundBody(mail.received_at, now)
+                        ? "Body not fetched."
+                        : "Body unavailable — the provider's retention window has expired."}
                   </dd>
                 </div>
                 {Array.isArray(mail.attachments) && mail.attachments.length > 0 && (

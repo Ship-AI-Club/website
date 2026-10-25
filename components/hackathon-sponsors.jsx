@@ -57,7 +57,7 @@ export default async function HackathonSponsors({ compact = false }) {
       <p className="kicker">Backed by</p>
       <h2 id="sponsors-title">Who&apos;s behind it.</h2>
       <p className="section-lede">
-        Ship AI is free and stays free because of them — and most of them give more than
+        These partners support our community programs — and most of them give more than
         money. The rooms we meet in, the food, the prize pool, platform credits, mentors in
         Saturday&apos;s rotations, judges on Sunday&apos;s panel, and introductions that
         outlast the weekend. All of it is{" "}

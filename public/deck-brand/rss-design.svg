@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" role="img" aria-label="A stethoscope examines a website as a rising chart points to a premium price tag">
+<defs><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="#dfe5f4" stroke-width="1"/></pattern><linearGradient id="rise" x1="0" x2="1"><stop stop-color="#219be9"/><stop offset="1" stop-color="#8a30fb"/></linearGradient></defs>
+<rect width="800" height="400" rx="16" fill="#eff3ff"/><rect width="800" height="400" rx="16" fill="url(#grid)"/><path d="M510-50q-5 265 340 230" fill="none" stroke="#fff" stroke-width="45" opacity=".65"/>
+<g stroke="#182a42" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+<rect x="219" y="70" width="374" height="261" rx="18" fill="#cfdbf0" stroke="none" transform="translate(8 8)"/><rect x="210" y="65" width="374" height="261" rx="18" fill="white"/><path d="M210 109h374" fill="none" stroke-width="2"/>
+<circle cx="233" cy="87" r="6" fill="#00b7ed" stroke="none"/><circle cx="255" cy="87" r="6" fill="#a14cff" stroke="none"/><circle cx="277" cy="87" r="5" fill="white" stroke-width="2"/>
+<path d="M323 135h136" stroke-width="8"/><path d="M323 154h94" stroke="#dbe2ef" stroke-width="7"/><rect x="482" y="130" width="76" height="28" rx="9" fill="none" stroke-width="2" stroke-dasharray="5 4"/>
+<path d="M258 252h48l15-37 21 59 15-42 22 23h23" fill="none" stroke="#a5b7d6" stroke-width="4"/>
+<path d="M399 255q31 0 55-23l56-43 54-40 53-24" fill="none" stroke="url(#rise)" stroke-width="5"/><path d="m600 115 18 10-19 10" fill="none" stroke="#8132ec" stroke-width="4"/>
+<g fill="#4b60f0" stroke="none"><rect x="450" y="230" width="9" height="9"/><rect x="505" y="187" width="9" height="9"/><rect x="558" y="147" width="9" height="9"/></g>
+<path d="M102 32q-37 73 18 100 54-29 30-104" fill="none" stroke-width="8"/><circle cx="103" cy="30" r="8" fill="white" stroke-width="3"/><circle cx="150" cy="26" r="8" fill="white" stroke-width="3"/><path d="M120 133v129q0 69 70 59 62-9 59-70" fill="none" stroke-width="10"/>
+<circle cx="254" cy="248" r="31" fill="white"/><circle cx="254" cy="248" r="22" fill="#d7e5fa" stroke-width="2"/><circle cx="254" cy="248" r="7" fill="#172840" stroke="none"/>
+<g transform="rotate(34 554 87)"><rect x="521" y="69" width="66" height="32" rx="13" fill="#eee3ff" stroke-width="3"/><rect x="543" y="69" width="22" height="32" fill="#c5b1ef" stroke-width="2"/><g stroke-width="2"><path d="M550 79h1m6 0h1m-8 9h1m6 0h1"/></g></g>
+<g transform="rotate(-12 682 117)"><path d="m639 86-23 34 21 34h91V86z" fill="#d3def2" stroke="none" transform="translate(6 7)"/><path d="m632 80-23 34 21 34h91V80z" fill="white"/><circle cx="628" cy="114" r="5" fill="white" stroke-width="2"/><text x="650" y="126" fill="#182a42" stroke="none" font-family="Arial,sans-serif" font-weight="700" font-size="32">$$$</text></g>
+<g transform="rotate(9 665 303)"><rect x="624" y="259" width="93" height="106" rx="12" fill="#d4dff3" stroke="none" transform="translate(5 5)"/><rect x="619" y="254" width="93" height="106" rx="12" fill="white"/><text x="632" y="291" fill="#315ae1" stroke="none" font-family="Arial,sans-serif" font-weight="700" font-size="25">Rx</text><path d="M635 309h56m-56 17h44" stroke="#dbe2ef" stroke-width="6"/></g>
+<path d="m353 207-3-10m17 12 7-9m-33 16-7-7" stroke="#9146fa" stroke-width="2"/>
+</g></svg>

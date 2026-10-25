@@ -1,0 +1,134 @@
+{
+  "bundleId": "desert-shine-redesign-2026-10-14",
+  "version": "v4",
+  "versionCreatedAt": "2026-10-14T22:24:35.158Z",
+  "canonicalSources": [
+    "clients/desert-shine/brand.json",
+    "clients/desert-shine/content.json"
+  ],
+  "mode": "DRAFT_HANDOFF_PREPARED",
+  "business": "Client: Desert Shine \u2014 prepared by our agency",
+  "websiteBrief": {
+    "name": "Desert Shine",
+    "type": "Residential housecleaning company",
+    "audience": "Phoenix homeowners",
+    "tagline": "More sunshine. Less housework.",
+    "cta": {
+      "label": "Request a cleaning quote",
+      "href": "/quote"
+    },
+    "services": [
+      "Regular Cleaning: Recurring upkeep so the house stays easy to live in: kitchen counters and appliances wiped down, bathrooms cleaned, floors vacuumed and mopped, surfaces dusted.",
+      "Deep Cleaning: A top-to-bottom reset for built-up dust and grime: baseboards, door frames, fixtures and the corners regular upkeep skips. A good first visit or seasonal refresh.",
+      "Move-Out Cleaning: Empty-home cleaning to get a property ready for handoff, whether you're moving out, moving in or preparing a home for the next owner."
+    ],
+    "serviceArea": "Phoenix, AZ",
+    "pages": [
+      "/ (home: hero, services, FAQ, CTA)",
+      "/quote (Request a cleaning quote form)"
+    ],
+    "screenshots": [
+      "media/site-snapshot.png",
+      "media/site-quote.png"
+    ],
+    "unset": "prices, testimonials, licenses, insurance, discounts, contact details \u2014 intentionally not claimed"
+  },
+  "items": [
+    {
+      "id": "social-v1",
+      "text": "Workshop example: Desert Shine is a fictional housecleaning client. Our Grok Bot team turned one website into this branded graphic. More sunshine. Less housework.\n\nExplore the demo: https://www.shipai.club/growth-engineering/desert-shine",
+      "alt": "Desert Shine social graphic. A bright, tidy living room with a white sectional sofa and light wood floors sits above a navy panel reading: Regular cleaning, Phoenix homeowners. More sunshine. Less housework. Recurring upkeep so the house stays easy to live in. Button: Request a cleaning quote. Desert Shine sun logo.",
+      "media": [
+        "media/social-v1.png"
+      ],
+      "deliveryMedia": [
+        "media/social-v1.png"
+      ],
+      "sourceCreativeId": "social-v1"
+    },
+    {
+      "id": "video-v1",
+      "text": "Workshop example: a 15-second ad for Desert Shine, our fictional housecleaning client. Built by our AI marketing team from the same website and positioning.\n\nSee the demo: https://www.shipai.club/growth-engineering/desert-shine",
+      "alt": "15-second vertical video for Desert Shine, silent with on-screen text. A Pueblo-style stucco home under a bright blue sky as a yellow sun mark rises: More sunshine. A bright, tidy living room: Less housework. Three quick scenes label the services Regular, Deep and Move-out with line icons. A calm open-plan room: A little more room for life. A navy end card with the Desert Shine logo and a yellow button: Request a cleaning quote.",
+      "media": [
+        "media/video-v1.mp4"
+      ],
+      "deliveryMedia": [
+        "media/video-v1.mp4"
+      ],
+      "videoSpec": {
+        "width": 1080,
+        "height": 1920,
+        "durationSec": 15
+      },
+      "burnedInCaptions": [
+        "More sunshine.",
+        "Less housework.",
+        "Regular \u00b7 Deep \u00b7 Move-out",
+        "A little more room for life.",
+        "More sunshine.",
+        "Less housework."
+      ],
+      "sourceCreativeId": "video-v1"
+    }
+  ],
+  "mediaHashes": {
+    "media/social-v1.png": "c741c20f0e46de3b38916602a0df2af4d4435ca0d668962622247593f14e9630",
+    "media/video-v1.mp4": "96f90610cc525826f228e919ba5968a7d3f3409a973eed2c1c61aed1a415bc4b",
+    "media/site-snapshot.png": "4ad9f405a8295afff6c0d2c9d59f2afd536507160944798804e8f6e6b5dbfb6a",
+    "media/site-quote.png": "415c82b80052cdfa46188db8183ad6e2d36b6e31d2669c1ae304c22af0c6445b"
+  },
+  "destinations": [
+    {
+      "platform": "twitter",
+      "profileId": "6ab2e280323569f4bb17e0db",
+      "profileName": "Default",
+      "zernioAccountId": "6ac1ebeb8fa178626bfe4351",
+      "accountName": "Ship AI",
+      "username": "shipaiclub",
+      "client": "desert-shine",
+      "demoDestination": true
+    }
+  ],
+  "requireDeliveryMedia": true,
+  "idempotencyKeys": {
+    "social-v1": "5b79d7a8-274b-4cee-8374-4085b85494d9",
+    "video-v1": "142686e9-497e-400d-90d0-91b4426efde4"
+  },
+  "scheduledTime": null,
+  "approval": {
+    "hash": "b385bbc19a5b2619907d827ecd40f54e01f08d146508e524b00433d0f36d0d52",
+    "approvedBy": "Santos",
+    "approvedAt": "2026-10-14T22:39:53.991415+00:00",
+    "reply": "Approve two Zernio drafts",
+    "action": "Upload selected media and create two drafts on Ship AI X @shipaiclub; no scheduling or publishing.",
+    "cleanupInstruction": "Delete the two test drafts after readback verification."
+  },
+  "approvalHashExpected": "b385bbc19a5b2619907d827ecd40f54e01f08d146508e524b00433d0f36d0d52",
+  "destinationStatus": "VERIFIED active Ship AI X account; user-selected workshop exception for this run only.",
+  "clientDemoDisclosure": "Desert Shine is fictional. Workshop preface is included in each X post. This exception is not in the reusable templates.",
+  "websiteUrl": "https://www.shipai.club/growth-engineering/desert-shine",
+  "creativeApprovals": {
+    "client": "desert-shine",
+    "recordedAt": "2026-10-14T22:10:22.661826+00:00",
+    "userResponse": "Approve static and video direction",
+    "static": {
+      "id": "social-v1",
+      "sha256": "c741c20f0e46de3b38916602a0df2af4d4435ca0d668962622247593f14e9630",
+      "status": "approved"
+    },
+    "videoConcept": {
+      "title": "Make room for your weekend",
+      "sequence": "sunlit home -> cleaning services -> quote CTA",
+      "status": "approved for rendering"
+    },
+    "finalVideoApproval": {
+      "approvedBy": "Santos",
+      "reply": "Approve rendered video",
+      "date": "2026-10-14",
+      "sha256": "96f90610cc525826f228e919ba5968a7d3f3409a973eed2c1c61aed1a415bc4b"
+    },
+    "zernioHandoffApproval": null,
+    "captionApproval": null
+  }
+}

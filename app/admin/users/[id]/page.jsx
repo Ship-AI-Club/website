@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { requireAdmin } from "../../../../lib/auth";
 import { roleLabel } from "../../../../lib/accounts";
-import { registrationFor, teamFor, userById } from "../../../../lib/store";
+import { registrationFor, teamsFor, userById } from "../../../../lib/store";
 import { GrantRoleForm, RevokeRoleForm } from "../../role-form";
 
 export const metadata = {
@@ -56,7 +56,7 @@ export default async function Page({ params }) {
   const user = await userById(id);
   if (!user) notFound();
 
-  const [registration, team] = await Promise.all([registrationFor(user.id), teamFor(user.id)]);
+  const [registration, teams] = await Promise.all([registrationFor(user.id), teamsFor(user.id)]);
   const roles = rolesFor(user);
   const profile = [
     ["Account ID", user.id],
@@ -117,7 +117,7 @@ export default async function Page({ params }) {
 
       <section className="ac-card">
         <div className="ac-card-head">
-          <h2>Registration and team</h2>
+          <h2>Registration and teams</h2>
           <span className={`ac-pill ${registration ? "is-ok" : "is-off"}`}>
             {registration ? "Registered" : "Not registered"}
           </span>
@@ -129,14 +129,14 @@ export default async function Page({ params }) {
           </div>
           <div>
             <dt>Team</dt>
-            <dd>{team ? display(team.name, "Unnamed team") : "No team"}</dd>
+            <dd>{teams.length ? teams.map((team) => display(team.name, "Unnamed team")).join(", ") : "No team"}</dd>
           </div>
           <div>
             <dt>Team members</dt>
             <dd>
-              {team
-                ? team.members?.map((member) => member.name || member.email).filter(Boolean).join(", ") || "No members listed"
-                : "No team"}
+              {teams.length ? teams.map((team) => (
+                <p key={team.id}><strong>{team.name}:</strong> {team.members.map((member) => member.name || member.email).join(", ")}</p>
+              )) : "No team"}
             </dd>
           </div>
         </dl>

@@ -1,3 +1,4 @@
+import MobileNav from "../../../../components/mobile-nav";
 import { notFound } from "next/navigation";
 import {
   ArrowLeft,
@@ -104,7 +105,7 @@ export async function generateMetadata({ params }) {
     title: `${title} — Ship AI`,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: "Ship AI", images: [{ url: "/og-image.jpg", width: 1200, height: 630 }] },
+    openGraph: { title, description, url, siteName: "Ship AI", images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }] },
   };
 }
 
@@ -160,7 +161,7 @@ export default async function Page({ params }) {
             <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Get notified</a>
           )}
         </div>
-      </header>
+      <MobileNav /></header>
 
       <main className="hk-ws">
         <p className="hk-ws-crumb">
@@ -191,7 +192,8 @@ export default async function Page({ params }) {
                 {/* preload=none: a session page must not pull the whole
                     file until somebody presses play. crossOrigin lets the
                     captions track load from the blob origin. */}
-                <video src={w.media.recording} controls preload="none" poster={w.media.photos?.[0]} crossOrigin="anonymous">
+                {w.media.recordingTitle && <h3>{w.media.recordingTitle}</h3>}
+                <video src={w.media.recording} aria-label={w.media.recordingTitle || `${w.eventTitle} recording`} controls preload="none" poster={w.media.poster || w.media.photos?.[0]} crossOrigin="anonymous">
                   {w.media.captions && <track kind="captions" src={w.media.captions} srcLang="en" label="English" />}
                 </video>
               </div>

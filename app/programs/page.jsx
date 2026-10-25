@@ -1,20 +1,13 @@
-import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
+import MobileNav from "../../components/mobile-nav";
+import { ArrowRight, BookOpen, MapPin } from "lucide-react";
+import ProgramAssessment from "../../components/program-assessment";
+import ProgramExplorer from "../../components/program-explorer";
+import "./programs.css";
 import { JsonLd } from "../../components/article";
 import { PROGRAMS, programVenueNames } from "../../lib/programs";
 import { DISCORD } from "../../lib/hackathon";
 
 const SITE = "https://www.shipai.club";
-
-const STATUS_LABELS = {
-  running: "Running now",
-  upcoming: "Upcoming",
-  tbd: "Dates TBD",
-  past: "Past program",
-};
-
-function venueNames(program) {
-  return programVenueNames(program);
-}
 
 const LIST_SCHEMA = {
   "@context": "https://schema.org",
@@ -30,7 +23,7 @@ const LIST_SCHEMA = {
       url: `${SITE}/programs/${program.slug}`,
       numberOfCredits: program.sessions.length,
       provider: { "@type": "Organization", name: "Ship AI", url: SITE },
-      isAccessibleForFree: true,
+      ...(program.status === "running" ? { isAccessibleForFree: true } : {}),
       ...(program.startISO ? { startDate: program.startISO } : {}),
       ...(program.endISO ? { endDate: program.endISO } : {}),
     },
@@ -39,14 +32,14 @@ const LIST_SCHEMA = {
 
 export const metadata = {
   title: "Programs — Ship AI",
-  description: "Multi-session Ship AI programs for builders in Phoenix, free and open to all.",
+  description: "Multi-session Ship AI programs for builders in Phoenix. Learn the tools, build real projects, and develop practical AI skills.",
   alternates: { canonical: "https://www.shipai.club/programs" },
   openGraph: {
     title: "Programs — Ship AI",
-    description: "Multi-session Ship AI programs for builders, free and open to all.",
+    description: "Multi-session Ship AI programs for builders in Phoenix. Learn by building.",
     url: "https://www.shipai.club/programs",
     siteName: "Ship AI",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }],
   },
 };
 
@@ -60,59 +53,63 @@ export default function Page() {
           <span>Ship AI</span>
         </a>
         <nav>
-          <a href="/programs">Programs</a>
+          <a href="/workshops">Workshops</a>
+          <a href="/programs" aria-current="page">Programs</a>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
         </nav>
         <div className="nav-ctas">
           <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
           <a className="btn btn-solid" href="/dashboard">Register</a>
         </div>
-      </header>
+      <MobileNav /></header>
 
-      <main className="hk-wsi">
-        <p className="kicker">Ship AI programs</p>
-        <h1>Learn in public. Ship something real.</h1>
-        <p className="article-lede">
-          Free sessions for builders in Phoenix — drop into one, follow the full series, or take the
-          published materials and run it on your own schedule.
-        </p>
-
-        <ol className="hk-ws-list">
-          {PROGRAMS.map((program) => {
-            const venues = venueNames(program);
-            const status = STATUS_LABELS[program.status];
-            /* "Dates TBD Dates TBD" — the chip and the status say the same
-               thing for an unscheduled program, so only one of them runs. */
-            const dates = program.datesLabel && program.datesLabel !== status ? program.datesLabel : null;
-            return (
-              <li key={program.slug}>
+      <main className="programs-page">
+        <section className="programs-hero" aria-labelledby="programs-title">
+          <div className="programs-intro">
+            <p className="programs-eyebrow">Ship AI / Programs</p>
+            <h1 id="programs-title">From first prompt<br />to <span>real progress.</span></h1>
+            <p className="programs-lede">Learn in public. Ship something real. Hands-on programs that help you use AI, build a product, and take it further.</p>
+            <a className="programs-primary" href="#explore-programs">Find your program <ArrowRight size={18} aria-hidden="true" /></a>
+            <div className="programs-hero-meta"><span><MapPin size={15} aria-hidden="true" /> Built together in Phoenix</span><span><BookOpen size={15} aria-hidden="true" /> Published session materials</span></div>
+          </div>
+          <div className="programs-path">
+            <p className="programs-eyebrow">A path from learning to shipping</p>
+            <ol>
+              {PROGRAMS.map((program, i) => <li key={program.slug}>
                 <a href={`/programs/${program.slug}`}>
-                  <div className="hk-ws-head">
-                    <span className={`hk-ws-act${program.startISO ? "" : " is-tbd"}`}>{status}</span>
-                    {dates && <span className="hk-ws-date">{dates}</span>}
-                    <span className="hk-ws-venue">{venues.join(" & ")}</span>
-                  </div>
-                  <h3>{program.name}</h3>
-                  <p className="hk-ws-sub">{program.headline}</p>
-                  <p className="hk-ws-copy">{program.tagline}</p>
-                  <p className="hk-ws-take">
-                    <CalendarDays size={13} strokeWidth={1.75} aria-hidden="true" /> {program.sessions.length} sessions
-                    <span> · </span><MapPin size={13} strokeWidth={1.75} aria-hidden="true" /> Phoenix
-                  </p>
-                  <span className="hk-ws-more">View the program <ArrowRight size={14} strokeWidth={1.75} aria-hidden="true" /></span>
+                  <span className="programs-path-number">0{i + 1}</span>
+                  <div><span className="programs-path-stage">{["Learn the tools", "Build the product", "Take it to market", "Keep people coming back"][i]}</span><strong>{program.name}</strong></div>
+                  <ArrowRight size={18} aria-hidden="true" />
                 </a>
-              </li>
-            );
-          })}
-        </ol>
+              </li>)}
+            </ol>
+            <p className="programs-path-note">Start where you are. You don’t need to take every program.</p>
+          </div>
+        </section>
+
+        <ProgramAssessment programs={PROGRAMS.map(program => ({
+          slug: program.slug, name: program.name, sessions: program.sessions.length, datesLabel: program.datesLabel,
+        }))} />
+
+        <ProgramExplorer programs={PROGRAMS.map(program => ({
+          slug: program.slug, name: program.name, status: program.status,
+          datesLabel: program.datesLabel,
+          sessions: program.sessions.length, venues: programVenueNames(program),
+        }))} />
+
+        <aside className="programs-help">
+          <div><p className="programs-eyebrow">Build with the community</p><h2>A little guidance goes a long way.</h2><p>Find your next session, ask a question, or share what you’re building with Ship AI.</p></div>
+          <a className="programs-primary" href={DISCORD} target="_blank" rel="noreferrer">Join us on Discord <ArrowRight size={18} aria-hidden="true" /></a>
+        </aside>
       </main>
 
-      <footer className="footer">
+      <footer className="footer programs-footer">
         <div className="brand">
           <img src="/logo-mark.png" alt="" width={22} height={22} />
           <span>Ship AI</span>
         </div>
-        <nav><a href="/">Home</a><a href="/programs">Programs</a><a href="/programs/zero-to-launch/hackathon">Hackathon</a></nav>
+        <nav><a href="/">Home</a><a href="/workshops">Workshops</a>
+          <a href="/programs">Programs</a><a href="/programs/zero-to-launch/hackathon">Hackathon</a></nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>
     </>

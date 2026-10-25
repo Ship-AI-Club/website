@@ -1,3 +1,4 @@
+import MobileNav from "../../../../../components/mobile-nav";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, Download, Package, Presentation, Target } from "lucide-react";
 import { siDiscord, siGithub } from "simple-icons";
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }) {
     title: `${title} — Ship AI`,
     description: g.lede.slice(0, 300),
     alternates: { canonical: url },
-    openGraph: { title, description: g.lede.slice(0, 200), url, siteName: "Ship AI", images: [{ url: "/og-image.jpg", width: 1200, height: 630 }] },
+    openGraph: { title, description: g.lede.slice(0, 200), url, siteName: "Ship AI", images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }] },
   };
 }
 
@@ -63,7 +64,7 @@ export default async function Page({ params }) {
         <a href="/" className="brand"><img src="/logo-mark.png" alt="" width={26} height={26} /><span>Ship AI</span></a>
         <nav><a href="/programs">Programs</a><a href={programHref}>Sessions</a>{manifest && <a href={`${programHref}/skills`}>Skills</a>}{program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}</nav>
         <div className="nav-ctas">{program.hasHackathon ? <><a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a><a className="btn btn-solid" href="/dashboard">Register</a></> : <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Get notified</a>}</div>
-      </header>
+      <MobileNav /></header>
 
       <main className="hk-ws gd">
         <p className="hk-ws-crumb"><a href={`${programHref}/${w.slug}`}><ArrowLeft size={13} strokeWidth={1.75} aria-hidden="true" />{w.eventTitle}</a></p>

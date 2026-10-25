@@ -1,0 +1,30 @@
+[
+  {
+    "id": "social",
+    "name": "Social Media Manager",
+    "color": "#308674",
+    "job": "Coordinate marketing, copy and approved handoffs.",
+    "href": "https://x.ai/bot/5rgMPM-0FpH1ZflzjNDk1"
+  },
+  {
+    "id": "performance",
+    "name": "Performance Marketer",
+    "color": "#8a72ba",
+    "job": "Research ad ideas and analyze real campaign results.",
+    "href": "https://x.ai/bot/WQpbnRwh4H-DArkEBQCK5"
+  },
+  {
+    "id": "static",
+    "name": "Content Creator \u00b7 Design",
+    "color": "#4970c7",
+    "job": "Create and refine imagery and static creative.",
+    "href": "https://x.ai/bot/js3Rh17IRwiUhXlkySUg5"
+  },
+  {
+    "id": "video",
+    "name": "Content Creator \u00b7 Video",
+    "color": "#bc7851",
+    "job": "Storyboard, render and refine video.",
+    "href": "https://x.ai/bot/Td8xsp1w2slejHsx62m0y"
+  }
+]

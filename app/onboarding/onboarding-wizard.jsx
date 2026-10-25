@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useToastActionState } from "../../components/toast-provider";
+
+import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 
@@ -113,7 +115,7 @@ export default function OnboardingWizard({ user, next }) {
     return "identity";
   };
 
-  const [state, action] = useActionState(saveStepAction, { step: resume(), next });
+  const [state, action] = useToastActionState(saveStepAction, { step: resume(), next });
 
   const step = state.step ?? "identity";
   const [name, setName] = useState(state.name ?? user.name ?? "");
@@ -188,12 +190,6 @@ export default function OnboardingWizard({ user, next }) {
       <form action={action} className="ac-form">
         <input type="hidden" name="step" value={step} />
         <input type="hidden" name="next" value={next} />
-
-        {state.error && (
-          <p className="ac-error" role="alert">
-            {state.error}
-          </p>
-        )}
 
         {/* ---------- 1. identity ---------- */}
 

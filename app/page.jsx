@@ -1,3 +1,4 @@
+import MobileNav from "../components/mobile-nav";
 import {
   ArrowRight,
   CalendarDays,
@@ -5,27 +6,33 @@ import {
   Rocket,
   Ticket,
 } from "lucide-react";
-import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
+import SiteFooter from "../components/site-footer";
 import { getUpcomingEvents } from "../lib/meetup";
 import { JsonLd } from "../components/article";
 import { PROGRAMS, programVenueNames } from "../lib/programs";
 import { EVENT } from "../lib/hackathon";
+import { VIBE_GTM } from "../lib/vibe-gtm-workshop";
+import "./workshops/vibe-coding-gtm/workshop.css";
+import WorkshopInstructors from "../components/workshop-instructors";
+import WorkshopArt from "../components/workshop-art";
+import "./workshops/catalogue.css";
+import { UPCOMING_WORKSHOPS } from "../lib/workshops";
 
 export const metadata = {
-  title: "Ship AI — Free AI Programs in Phoenix",
+  title: "Ship AI — Hands-on AI Workshops in Phoenix",
   description:
-    "Free AI programs, workshops and demo nights for builders in Phoenix. Community-run, craft over hype.",
+    "Hands-on AI workshops and programs in Phoenix. Build real projects with expert guidance, thoughtful design, and a community of builders.",
   alternates: { canonical: "https://www.shipai.club" },
   openGraph: {
     /* Share sheets strip a leading site name from og:title (it duplicates
        siteName), so the title has to stand on its own — lead with the
        thesis, not the brand. */
-    title: "Practical AI, Taught Free — Ship AI Phoenix",
+    title: "Practical AI, Built Together — Ship AI Phoenix",
     description:
-      "Community-run, craft over hype. Free and in person, in Phoenix.",
+      "Hands-on workshops, expert guidance, and real projects. In person, in Phoenix.",
     url: "https://www.shipai.club",
     siteName: "Ship AI",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }],
   },
 };
 
@@ -34,22 +41,6 @@ const MEETUP = "https://www.meetup.com/shipai/";
 const LUMA = "https://luma.com/shipai";
 const GITHUB = "https://github.com/Ship-AI-Club";
 const X_URL = "https://x.com/shipaiclub";
-
-// simple-icons brand glyphs, rendered monochrome (currentColor) to stay on-brand
-function BrandGlyph({ icon, size = 18 }) {
-  return (
-    <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true">
-      <path d={icon.path} />
-    </svg>
-  );
-}
-
-const SOCIALS = [
-  { href: DISCORD, label: "Discord", glyph: <BrandGlyph icon={siDiscord} /> },
-  { href: MEETUP, label: "Meetup", glyph: <BrandGlyph icon={siMeetup} /> },
-  { href: X_URL, label: "X", glyph: <BrandGlyph icon={siX} /> },
-  { href: GITHUB, label: "GitHub", glyph: <BrandGlyph icon={siGithub} /> },
-];
 
 /* Hero facts are org-level and derived from the registry, so adding a
    program or a session updates the line instead of dating it. */
@@ -73,7 +64,7 @@ const ORG_SCHEMA = {
   url: "https://www.shipai.club",
   logo: "https://www.shipai.club/logo-icon.png",
   description:
-    "Free, public AI education in Phoenix, Arizona. A community-run space for open sessions, workshops, and knowledge-sharing where builders show their work. Demos over memos.",
+    "Hands-on AI education in Phoenix, Arizona. Paid workshops, practical programs, and a community where builders learn together and ship real work.",
   sameAs: [DISCORD, MEETUP, LUMA, GITHUB],
   areaServed: ["Phoenix, AZ"],
 };
@@ -114,6 +105,7 @@ export default async function Page() {
           <span>Ship AI</span>
         </a>
         <nav>
+          <a href="/workshops">Workshops</a>
           <a href="/programs">Programs</a>
           <a href="/about">About</a>
           <a href="/dashboard">Account</a>
@@ -121,7 +113,7 @@ export default async function Page() {
         <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
           Join the Discord
         </a>
-      </header>
+      <MobileNav /></header>
 
       <main id="top">
         <section className="hero">
@@ -141,11 +133,11 @@ export default async function Page() {
           <div className="hero-head">
             <h1 className="hero-h1 reveal" style={{ "--d": "80ms" }}>
               <span className="sr-only">Ship AI: </span>
-              Practical AI, <span className="hero-mark">Taught Free</span>
+              Practical AI, <span className="hero-mark">Built Together</span>
             </h1>
             <p className="hero-lede reveal" style={{ "--d": "160ms" }}>
-              Free workshops in Phoenix on the AI tools and workflows builders use day to day.
-              Every deck, guide and skill is yours to keep.
+              Hands-on workshops in Phoenix for turning AI tools into real business results.
+              Build your project with expert guidance, sharpen your taste, and leave with work you can use.
             </p>
           </div>
           <div className="hero-grid">
@@ -153,9 +145,9 @@ export default async function Page() {
               {/* Two buttons, not three. RSVP is the front door; the hackathon
                   is how one of the programs ends and has its own strip below. */}
               <div className="cta-row reveal" style={{ "--d": "240ms" }}>
-                <a className="btn btn-solid btn-lg" href={MEETUP} target="_blank" rel="noreferrer">
-                  <svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true"><path d={siMeetup.path} /></svg>
-                  RSVP on Meetup
+                <a className="btn btn-solid btn-lg" href="/workshops">
+                  <Ticket size={16} aria-hidden="true" />
+                  Explore workshops
                 </a>
                 <a className="btn btn-ghost btn-lg" href="/programs">
                   Explore programs
@@ -166,7 +158,7 @@ export default async function Page() {
                 <div><dt>Programs</dt><dd>{PROGRAMS.length}</dd></div>
                 <div><dt>Sessions</dt><dd>{SESSION_COUNT}</dd></div>
                 <div><dt>Venues</dt><dd>{PROGRAM_VENUES.length}</dd></div>
-                <div><dt>To attend</dt><dd>$0</dd></div>
+                <div><dt>Format</dt><dd>Hands-on</dd></div>
               </dl>
             </div>
 
@@ -183,6 +175,7 @@ export default async function Page() {
                   <p className="hero-card-date">{nextEvent.date}</p>
                   <p className="hero-card-time">{nextEvent.time} · Phoenix, AZ</p>
                   <h2 className="hero-card-title">{nextEvent.title}</h2>
+                  {nextEvent.title === VIBE_GTM.name && <p className="vg-seat-limit">Only {VIBE_GTM.capacity} seats · Small-group workshop</p>}
                   <p className="hero-card-venue">
                     <MapPin size={14} strokeWidth={1.75} aria-hidden="true" />
                     {nextEvent.place}
@@ -202,11 +195,24 @@ export default async function Page() {
                 </>
               )}
               <p className="hero-card-foot">
-                <span>Free and open to all</span>
+                <span>See event details for tickets</span>
                 <a href={MEETUP} target="_blank" rel="noreferrer">Full calendar</a>
               </p>
             </aside>
           </div>
+        </section>
+
+        <section id="workshops" className="section" aria-labelledby="workshops-title">
+          <p className="kicker">Workshops</p>
+          <h2 id="workshops-title">Make progress in the room.</h2>
+          <p className="section-lede">Focused, paid workshops with expert guidance and time to build. Bring your project and work through the decisions that move it forward.</p>
+          <p className="section-lede">Blueprints come preloaded with skills and best practices, designed to eliminate 80% of the friction. Recordings and workshop materials are emailed to participants afterward.</p>
+          <div className="vg-home-feature vg-section-feature">
+            <div><p className="vg-seat-limit">Limited to {VIBE_GTM.capacity} seats</p><p className="kicker">October 10 · 9 AM–1 PM MST</p><h3>{VIBE_GTM.name}</h3><WorkshopInstructors compact /><p>{VIBE_GTM.description}</p><p>{VIBE_GTM.venue}</p></div>
+            <a className="btn btn-solid" href={VIBE_GTM.path}>View workshop &amp; tickets <ArrowRight size={16} aria-hidden="true" /></a>
+          </div>
+          <div className="vg-home-coming">{UPCOMING_WORKSHOPS.slice(0, 4).map((workshop) => <article key={workshop.slug}><a className="wc-art-link" href={`/workshops/${workshop.slug}`} aria-label={`Explore ${workshop.name}`}><WorkshopArt slug={workshop.slug} /></a><div className="wc-home-card-body"><p className="kicker">Date TBD · ${workshop.price.toLocaleString("en-US")}</p><h3><a href={`/workshops/${workshop.slug}`}>{workshop.name}</a></h3><p>{workshop.promise}</p><a href={`/workshops/${workshop.slug}`}>Explore workshop <ArrowRight size={14} aria-hidden="true" /></a></div></article>)}</div>
+          <a className="btn btn-ghost" href="/workshops">Explore workshops <ArrowRight size={16} aria-hidden="true" /></a>
         </section>
 
         <section className="sponsor-strip reveal" style={{ "--d": "620ms" }} aria-label="Community partners">
@@ -238,7 +244,7 @@ export default async function Page() {
             </div>
           </div>
           <p className="strip-cta">
-            Workuity is our venue sponsor. Seeking corporate sponsors to keep the programs free and public.{" "}
+            Workuity is our venue sponsor. Partner with us to support practical AI education and builder programs.{" "}
             <a href="/programs/zero-to-launch/hackathon/sponsor">See what&apos;s fundable</a>
           </p>
         </section>
@@ -270,7 +276,7 @@ export default async function Page() {
                   <p className="hk-promo-meta">
                     <span><CalendarDays size={13} strokeWidth={1.75} aria-hidden="true" />{program.datesLabel || "Dates TBD"}</span>
                     <span><MapPin size={13} strokeWidth={1.75} aria-hidden="true" />{venueNames.join(" & ")}</span>
-                    <span><Ticket size={13} strokeWidth={1.75} aria-hidden="true" />Free · {program.sessions.length} sessions</span>
+                    <span><Ticket size={13} strokeWidth={1.75} aria-hidden="true" />{program.sessions.length} sessions</span>
                   </p>
                 </div>
                 <div className="hk-promo-cta">
@@ -292,24 +298,7 @@ export default async function Page() {
 
       </main>
 
-      <footer className="footer">
-        <div className="brand">
-          <img src="/logo-mark.png" alt="" width={22} height={22} />
-          <span>Ship AI</span>
-        </div>
-        <nav>
-          <a href="/programs">Programs</a>
-          <a href="/about">About</a>
-        </nav>
-        <div className="socials">
-          {SOCIALS.map((s) => (
-            <a key={s.label} href={s.href} target="_blank" rel="noreferrer" aria-label={s.label} title={s.label}>
-              {s.glyph}
-            </a>
-          ))}
-        </div>
-        <p className="fine">© 2026 Ship AI</p>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

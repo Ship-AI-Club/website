@@ -1,0 +1,166 @@
+/* The marketing deck's paper, cobalt, Geist, frame, and type scale carry forward. */
+.ge-slide .mk-content { gap:1.4cqw; }
+.ge-label { font:1cqw/1.4 var(--font-geist-mono),monospace; color:var(--accent); display:block; }
+.ge-slide h4 { font-size:2.6cqw; line-height:1.1; letter-spacing:-.04em; }
+.ge-slide p { line-height:1.45; }
+.ge-slide .mk-lead { line-height:1.45; }
+.ge-opening,.ge-brief,.ge-paths,.ge-task,.ge-approval,.ge-measure,.ge-rehearsal { display:grid; grid-template-columns:1fr 1fr; gap:3cqw; align-items:center; }
+.ge-brand { background:#edf2ff; border:1px solid var(--hairline); border-radius:.7cqw; padding:1.8cqw; display:flex; flex-direction:column; align-items:center; gap:1.1cqw; }
+.ge-brand img { width:18cqw; height:18cqw; }
+.ge-brand strong { font-size:2.4cqw; letter-spacing:-.04em; }
+.ge-opening h4 { font-size:4.5cqw; margin:1cqw 0; }
+.ge-opening p { font-size:1.75cqw; margin-bottom:1.4cqw; }
+.ge-opening a { font-size:1.1cqw; color:var(--accent); }
+.ge-brief { align-items:stretch; }
+.ge-brief > div { background:#edf2ff; padding:2.3cqw; border-radius:.6cqw; }
+.ge-brief h4 { font-size:3.8cqw; margin:1.2cqw 0; }
+.ge-brief p { font-size:1.4cqw; }
+.ge-cta { display:inline-block; margin-top:1.5cqw; background:var(--accent); color:white; padding:.7cqw 1cqw; font-size:1.2cqw; border-radius:.3cqw; }
+.ge-brief dl { display:flex; flex-direction:column; justify-content:center; }
+.ge-brief dl > div { padding:1cqw 0; border-bottom:1px solid var(--hairline); }
+.ge-brief dt { font-size:1.1cqw; color:var(--faint); margin-bottom:.3cqw; }
+.ge-brief dd { font-size:1.6cqw; line-height:1.35; }
+.ge-journey { display:grid; grid-template-columns:repeat(4,1fr); gap:2.4cqw; }
+.ge-journey > div { position:relative; padding:2cqw 0; border-top:2px solid var(--accent); }
+.ge-journey > div > span { font:1.5cqw var(--font-geist-mono),monospace; color:var(--accent); }
+.ge-journey h4 { margin:2cqw 0 .8cqw; }
+.ge-journey p { font-size:1.3cqw; color:var(--dim); }
+.ge-journey b { position:absolute; right:-2cqw; top:5cqw; font-size:2cqw; color:var(--accent); }
+.ge-paths { align-items:stretch; gap:0; }
+.ge-paths > div { padding:2.5cqw; }
+.ge-paths > div:first-child { background:#edf2ff; border-left:3px solid var(--accent); }
+.ge-paths > div:last-child { border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); }
+.ge-paths h4 { font-size:3.3cqw; margin:1.5cqw 0 1cqw; }
+.ge-paths p { font-size:1.6cqw; max-width:32ch; }
+.ge-paths strong { display:block; margin-top:1.5cqw; font-size:1.2cqw; color:var(--accent); }
+.ge-team { display:grid; grid-template-columns:repeat(3,1fr); gap:2.5cqw; }
+.ge-team > div { border-top:2px solid var(--accent); padding-top:1.2cqw; }
+.ge-team h4 { margin:1.5cqw 0 1cqw; }
+.ge-team strong { font-size:1.2cqw; color:var(--accent); }
+.ge-team p { font-size:1.45cqw; margin-top:.6cqw; color:var(--dim); }
+.ge-steps { display:flex; flex-direction:column; gap:1.5cqw; }
+.ge-steps > div { display:flex; gap:1.4cqw; border-top:1px solid var(--hairline); padding-top:1.2cqw; }
+.ge-steps > div > span { font:1.3cqw var(--font-geist-mono),monospace; color:var(--accent); padding-top:.25cqw; }
+.ge-steps h4 { font-size:2.2cqw; }
+.ge-steps p { font-size:1.5cqw; color:var(--dim); margin-top:.55cqw; }
+.ge-task-note { border-left:2px solid var(--accent); padding:1.4cqw 0 1.4cqw 2cqw; }
+.ge-task-note h4 { font-size:3.1cqw; margin:1cqw 0; }
+.ge-task-note p { font-size:1.4cqw; color:var(--dim); }
+.ge-prompt-tools { display:flex; gap:.8cqw; align-items:center; margin-top:.4cqw; }
+.ge-slide button,.ge-dialog button { background:var(--accent); color:white; border:1px solid var(--accent); border-radius:.3cqw; padding:.6cqw 1cqw; font:500 1.15cqw/1.4 var(--font-geist-sans),sans-serif; cursor:pointer; min-height:38px; }
+.ge-slide button:disabled { opacity:.55; cursor:default; }
+.ge-slide button:focus-visible,.ge-slide a:focus-visible,.ge-dialog button:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
+.ge-slide button.ge-secondary { color:var(--ink); background:transparent; border-color:var(--edge); }
+.ge-prompt-tools > a,.ge-sources a { color:var(--accent); font-size:1cqw; text-decoration:underline; text-underline-offset:3px; }
+.ge-prompt-tools > a { margin-left:auto; }
+.ge-sources { display:flex; gap:1.5cqw; }
+.ge-approval { align-items:stretch; }
+.ge-review-copy { border:1px solid var(--hairline); padding:1.7cqw; background:white; }
+.ge-review-copy label { display:block; font-size:1.3cqw; margin:.9cqw 0 .5cqw; }
+.ge-review-copy textarea { width:100%; height:7cqw; padding:.8cqw; font:1.35cqw/1.4 var(--font-geist-sans),sans-serif; color:var(--ink); background:var(--bg); border:1px solid var(--edge); resize:vertical; }
+.ge-review-copy p { font-size:1.1cqw; margin-top:.7cqw; }
+.ge-review-copy small,.ge-review-state small { font-size:1cqw; color:var(--dim); display:block; margin-top:.8cqw; }
+.ge-review-state { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; }
+.ge-review-state > strong { font-size:3.5cqw; line-height:1.1; letter-spacing:-.04em; margin:.7cqw 0; }
+.ge-review-state p { font-size:1.4cqw; margin-bottom:1.2cqw; }
+.ge-stack { display:grid; grid-template-columns:1fr 1fr; column-gap:3cqw; }
+.ge-stack a { display:flex; align-items:center; gap:1.5cqw; justify-content:space-between; padding:1.25cqw 0; border-top:1px solid var(--hairline); text-decoration:none; }
+.ge-stack strong { font-size:2cqw; letter-spacing:-.04em; white-space:nowrap; }
+.ge-stack strong span { color:var(--accent); font-size:1.4cqw; }
+.ge-stack a > span { font-size:1.2cqw; color:var(--dim); max-width:23ch; }
+.ge-app { border:1px solid var(--edge); border-radius:.5cqw; overflow:hidden; background:white; }
+.ge-app-header { display:flex; justify-content:space-between; background:#edf2ff; border-bottom:1px solid var(--hairline); padding:.8cqw 1.5cqw; font:1cqw var(--font-geist-mono),monospace; color:var(--accent); }
+.ge-app-body { display:grid; grid-template-columns:1.4fr 1fr; gap:3cqw; padding:1.5cqw 2cqw; }
+.ge-app-body h4 { margin:.5cqw 0; }
+.ge-app-body p { font-size:1.2cqw; color:var(--dim); }
+.ge-app-row { display:flex; justify-content:space-between; gap:1cqw; font-size:1.1cqw; padding:.8cqw 0; border-bottom:1px solid var(--hairline); }
+.ge-app-row strong { font-weight:500; color:var(--accent); }
+.ge-app-body aside { border-left:1px solid var(--hairline); padding-left:2cqw; }
+.ge-app-body aside p { font-size:1.65cqw; line-height:1.65; margin:.8cqw 0; color:var(--ink); }
+.ge-app-body aside small { font-size:1cqw; color:var(--dim); }
+.ge-measure > div + div { border-left:1px solid var(--hairline); padding-left:3cqw; }
+.ge-measure h4 { font-size:3.5cqw; margin:1cqw 0; }
+.ge-measure p { font-size:1.5cqw; margin-top:.8cqw; }
+.ge-measure small { font-size:1.1cqw; color:var(--dim); display:block; margin-top:1cqw; }
+.ge-rehearsal-links { border-left:1px solid var(--hairline); padding-left:3cqw; }
+.ge-rehearsal-links a { display:block; color:var(--accent); font-size:1.4cqw; margin:1cqw 0; }
+.ge-rehearsal-links p { font-size:1.3cqw; color:var(--dim); }
+.ge-dialog { position:fixed; inset:0; margin:auto; width:min(850px,92vw); max-height:88dvh; padding:28px; border:1px solid var(--edge); border-radius:10px; background:var(--bg); color:var(--ink); box-shadow:0 20px 80px #0003; }
+.ge-dialog::backdrop { background:#0d0f1480; }
+.ge-dialog-head { display:flex; justify-content:space-between; gap:20px; align-items:center; }
+.ge-dialog h2 { font-size:28px; line-height:1.15; letter-spacing:-.03em; }
+.ge-dialog p { font-size:14px; margin:12px 0; }
+.ge-dialog textarea { width:100%; height:40vh; min-height:180px; background:white; color:var(--ink); padding:18px; font:16px/1.6 var(--font-geist-sans),sans-serif; resize:vertical; border:1px solid var(--edge); margin-bottom:14px; }
+.ge-dialog button { font-size:14px; padding:10px 16px; border-radius:4px; }
+@media screen and (max-width:900px) {
+ .ge-slide .mk-content { gap:22px; }
+ .ge-label { font-size:11px; }
+ .ge-slide h4 { font-size:28px; }
+ .ge-opening,.ge-brief,.ge-paths,.ge-task,.ge-approval,.ge-measure,.ge-rehearsal { grid-template-columns:1fr; gap:24px; }
+ .ge-brand { padding:22px; gap:16px; border-radius:8px; }
+ .ge-brand img { width:180px; height:180px; }
+ .ge-brand strong { font-size:26px; }
+ .ge-opening h4,.ge-brief h4 { font-size:40px; margin:14px 0; }
+ .ge-opening p,.ge-brief p,.ge-paths p,.ge-task-note p,.ge-steps p,.ge-review-state p,.ge-measure p { font-size:16px; }
+ .ge-opening a { font-size:13px; }
+ .ge-brief > div { padding:22px; }
+ .ge-cta { margin-top:18px; padding:12px; font-size:14px; }
+ .ge-brief dl > div { padding:12px 0; }
+ .ge-brief dt { font-size:12px; margin-bottom:4px; }
+ .ge-brief dd { font-size:17px; }
+ .ge-journey { grid-template-columns:1fr 1fr; gap:20px; }
+ .ge-journey > div { padding:18px 0; }
+ .ge-journey > div > span { font-size:16px; }
+ .ge-journey h4 { margin:18px 0 8px; font-size:26px; }
+ .ge-journey p { font-size:14px; }
+ .ge-journey b { display:none; }
+ .ge-paths > div { padding:22px; }
+ .ge-paths h4 { font-size:32px; margin:18px 0 12px; }
+ .ge-paths strong { font-size:13px; margin-top:18px; }
+ .ge-team { grid-template-columns:1fr; gap:22px; }
+ .ge-team > div { padding-top:16px; }
+ .ge-team h4 { margin:16px 0 10px; }
+ .ge-team strong { font-size:14px; }
+ .ge-team p { font-size:16px; margin-top:8px; }
+ .ge-steps { gap:18px; }
+ .ge-steps > div { gap:14px; padding-top:16px; }
+ .ge-steps > div > span { font-size:14px; padding-top:5px; }
+ .ge-steps h4 { font-size:23px; }
+ .ge-steps p { margin-top:8px; }
+ .ge-task-note { padding:4px 0 4px 18px; }
+ .ge-task-note h4 { font-size:30px; margin:12px 0; }
+ .ge-prompt-tools { flex-wrap:wrap; gap:10px; margin-top:4px; }
+ .ge-slide button { font-size:14px; padding:10px 14px; min-height:44px; border-radius:4px; }
+ .ge-prompt-tools > a,.ge-sources a { font-size:13px; }
+ .ge-prompt-tools > a { margin:6px 0 0; flex-basis:100%; }
+ .ge-sources { gap:16px; flex-wrap:wrap; }
+ .ge-review-copy { padding:18px; }
+ .ge-review-copy label { font-size:15px; margin:12px 0 8px; }
+ .ge-review-copy textarea { height:135px; padding:12px; font-size:16px; }
+ .ge-review-copy p,.ge-review-copy small,.ge-review-state small { font-size:12px; margin-top:12px; }
+ .ge-review-state > strong { font-size:38px; margin:10px 0; }
+ .ge-review-state p { margin-bottom:16px; }
+ .ge-stack { grid-template-columns:1fr; }
+ .ge-stack a { gap:16px; padding:18px 0; }
+ .ge-stack strong { font-size:24px; }
+ .ge-stack strong span { font-size:16px; }
+ .ge-stack a > span { font-size:14px; }
+ .ge-app { border-radius:6px; }
+ .ge-app-header { gap:15px; padding:14px; font-size:11px; }
+ .ge-app-body { grid-template-columns:1fr; gap:22px; padding:18px; }
+ .ge-app-body h4 { margin:10px 0; }
+ .ge-app-body p { font-size:14px; }
+ .ge-app-row { font-size:12px; padding:12px 0; gap:10px; }
+ .ge-app-body aside { border-left:0; border-top:1px solid var(--hairline); padding:18px 0 0; }
+ .ge-app-body aside p { font-size:20px; margin:12px 0; }
+ .ge-app-body aside small { font-size:12px; }
+ .ge-measure > div + div,.ge-rehearsal-links { border-left:0; border-top:1px solid var(--hairline); padding:22px 0 0; }
+ .ge-measure h4 { font-size:34px; margin:12px 0; }
+ .ge-measure p { margin-top:12px; }
+ .ge-measure small { font-size:13px; margin-top:14px; }
+ .ge-rehearsal-links a { font-size:16px; margin:16px 0; }
+ .ge-rehearsal-links p { font-size:14px; }
+ .ge-dialog { padding:20px; }
+ .ge-dialog h2 { font-size:23px; }
+}
+@media print { .ge-prompt-tools,.ge-sources,.ge-dialog { display:none; } .ge-review-copy textarea { resize:none; } }

@@ -1,3 +1,4 @@
+import MobileNav from "../../../components/mobile-nav";
 import { notFound } from "next/navigation";
 import {
   ArrowRight,
@@ -42,7 +43,7 @@ export async function generateMetadata({ params }) {
     title,
     description: program.description,
     alternates: { canonical: url },
-    openGraph: { title, description: program.description, url, siteName: "Ship AI", images: [{ url: "/og-image.jpg", width: 1200, height: 630 }] },
+    openGraph: { title, description: program.description, url, siteName: "Ship AI", images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }] },
   };
 }
 
@@ -136,7 +137,7 @@ export default async function Page({ params }) {
             <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Get notified</a>
           )}
         </div>
-      </header>
+      <MobileNav /></header>
 
       <main className="hk-wsi">
         <p className="kicker">{program.name}</p>
@@ -154,7 +155,7 @@ export default async function Page({ params }) {
           </div>
           <div className="hk-fact">
             <p className="hk-fact-label"><Ticket size={14} strokeWidth={1.75} aria-hidden="true" />Cost</p>
-            <p className="hk-fact-value">Free, and open to all</p>
+            <p className="hk-fact-value">{program.status === "running" ? "See session registration" : "Announced with registration"}</p>
           </div>
           {program.hasHackathon && (
             <div className="hk-fact">

@@ -32,6 +32,7 @@ export default async function AdminLayout({ children }) {
     {
       title: "On the day",
       items: [
+        { href: "/judge/presentations", label: "Presentation order" },
         { href: "/admin/ops", label: "Run of show" },
         { href: "/admin/ops/checkin", label: "Check-in" },
         { href: "/admin/ops/broadcast", label: "Broadcast" },
@@ -44,6 +45,7 @@ export default async function AdminLayout({ children }) {
         { href: "/admin", label: "Overview" },
         { href: "/admin/requests", label: "Requests", count: requests.length },
         { href: "/admin/users", label: "Users" },
+        { href: "/admin/workshops", label: "Workshops" },
         { href: "/admin/invites", label: "Invites" },
         { href: "/admin/waitlist", label: "Waitlist", count: waiting },
         { href: "/admin/assignments", label: "Assignments" },
@@ -52,6 +54,7 @@ export default async function AdminLayout({ children }) {
         { href: "/admin/sponsors", label: "Sponsors" },
         { href: "/admin/mentees", label: "Mentee AI assessments" },
         { href: "/admin/email", label: "Email", count: unread },
+        { href: "/admin/email-list", label: "Email List" },
       ],
     },
     {

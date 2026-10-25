@@ -18,7 +18,7 @@ import { FIELD_LIMITS } from "../../../lib/waitlist";
 
 const EMPTY = { name: "", company: "", email: "", goal: "", notes: "", website: "" };
 
-export default function WaitlistForm({ program, programName, discord }) {
+export default function WaitlistForm({ program, programName, discord, compact = false }) {
   const [fields, setFields] = useState(EMPTY);
   const [status, setStatus] = useState("idle"); // idle | sending | added | already
   const [error, setError] = useState("");
@@ -52,6 +52,42 @@ export default function WaitlistForm({ program, programName, discord }) {
       setError(err?.message || "That didn't go through. Try again in a moment.");
     }
   }
+
+  const companyField = (<div className="ik-field">
+        <label className="ik-label" htmlFor="wl-company">
+          Company
+        </label>
+        <p className="ik-hint" id="wl-company-hint">
+          {compact ? "Your business or team, if relevant." : <>Where you work, if the work is part of why you&apos;re coming. Skip it if you&apos;re here as yourself.</>}
+        </p>
+        <input
+          id="wl-company"
+          type="text"
+          autoComplete="organization"
+          maxLength={FIELD_LIMITS.company}
+          value={fields.company}
+          onChange={set("company")}
+          disabled={sending}
+          aria-describedby="wl-company-hint"
+        />
+      </div>);
+  const notesField = (<div className="ik-field">
+        <label className="ik-label" htmlFor="wl-notes">
+          Anything else we should know?
+        </label>
+        <p className="ik-hint" id="wl-notes-hint">
+          {compact ? "Scheduling preferences, accessibility needs, or a question for us." : <>Evenings that never work, an accessibility need, a question you want answered on the night. Or nothing.</>}
+        </p>
+        <textarea
+          id="wl-notes"
+          rows={3}
+          maxLength={FIELD_LIMITS.notes}
+          value={fields.notes}
+          onChange={set("notes")}
+          disabled={sending}
+          aria-describedby="wl-notes-hint"
+        />
+      </div>);
 
   if (status === "added" || status === "already") {
     return (
@@ -92,7 +128,7 @@ export default function WaitlistForm({ program, programName, discord }) {
           Name <span className="ik-req">Required</span>
         </label>
         <p className="ik-hint" id="wl-name-hint">
-          Whatever you go by in a room full of builders.
+          {compact ? "What should we call you?" : "Whatever you go by in a room full of builders."}
         </p>
         <input
           id="wl-name"
@@ -112,7 +148,7 @@ export default function WaitlistForm({ program, programName, discord }) {
           Email <span className="ik-req">Required</span>
         </label>
         <p className="ik-hint" id="wl-email-hint">
-          Where the dates go, and the only thing it gets used for. Never published, never a list.
+          {compact ? "For the schedule and registration details." : "Where the dates go, and the only thing it gets used for. Never published, never a list."}
         </p>
         <input
           id="wl-email"
@@ -127,34 +163,18 @@ export default function WaitlistForm({ program, programName, discord }) {
         />
       </div>
 
-      <div className="ik-field">
-        <label className="ik-label" htmlFor="wl-company">
-          Company
-        </label>
-        <p className="ik-hint" id="wl-company-hint">
-          Where you work, if the work is part of why you&apos;re coming. Skip it if you&apos;re
-          here as yourself.
-        </p>
-        <input
-          id="wl-company"
-          type="text"
-          autoComplete="organization"
-          maxLength={FIELD_LIMITS.company}
-          value={fields.company}
-          onChange={set("company")}
-          disabled={sending}
-          aria-describedby="wl-company-hint"
-        />
-      </div>
+      {!compact && companyField}
 
       <div className="ik-field">
         <label className="ik-label" htmlFor="wl-goal">
           What do you want working by the end? <span className="ik-req">Required</span>
         </label>
         <p className="ik-hint" id="wl-goal-hint">
+          {compact ? "One practical outcome is plenty. Still figuring it out? That’s fine too." : <>
           Name the thing, not the skill. &ldquo;A site that answers my customers without
           me&rdquo; tells us what to build on screen; &ldquo;learn AI&rdquo; doesn&apos;t. One
           line is plenty, and &ldquo;no idea yet&rdquo; is an honest answer we can work with.
+          </>}
         </p>
         <textarea
           id="wl-goal"
@@ -164,29 +184,12 @@ export default function WaitlistForm({ program, programName, discord }) {
           onChange={set("goal")}
           disabled={sending}
           aria-describedby="wl-goal-hint"
-          placeholder="A support agent that handles the twenty questions I answer every week."
+          placeholder={compact ? "What would you like to build or improve?" : "A support agent that handles the twenty questions I answer every week."}
           required
         />
       </div>
 
-      <div className="ik-field">
-        <label className="ik-label" htmlFor="wl-notes">
-          Anything else we should know?
-        </label>
-        <p className="ik-hint" id="wl-notes-hint">
-          Evenings that never work, an accessibility need, a question you want answered on the
-          night. Or nothing.
-        </p>
-        <textarea
-          id="wl-notes"
-          rows={3}
-          maxLength={FIELD_LIMITS.notes}
-          value={fields.notes}
-          onChange={set("notes")}
-          disabled={sending}
-          aria-describedby="wl-notes-hint"
-        />
-      </div>
+      {compact ? <details className="wl-optional"><summary>Add context (optional)</summary>{companyField}{notesField}</details> : notesField}
 
       {/* honeypot — hidden from people, irresistible to bots */}
       <div className="ik-hp" aria-hidden="true">
@@ -214,7 +217,7 @@ export default function WaitlistForm({ program, programName, discord }) {
           </a>
         )}
         <p className="ik-status" role="status" aria-live="polite">
-          {sending ? "Sending…" : "Free, like every Ship AI session. One email when the next dates land."}
+          {sending ? "Sending…" : "One email when the next dates and registration details land."}
         </p>
       </div>
 

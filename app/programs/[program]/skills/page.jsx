@@ -1,3 +1,4 @@
+import MobileNav from "../../../../components/mobile-nav";
 import { notFound } from "next/navigation";
 import { BookOpen, Download, FileCode2, Package, Presentation, Terminal } from "lucide-react";
 import { siDiscord, siGithub } from "simple-icons";
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }) {
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: "Ship AI", images: [{ url: "/og-image.jpg", width: 1200, height: 630 }] },
+    openGraph: { title, description, url, siteName: "Ship AI", images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }] },
   };
 }
 
@@ -62,7 +63,7 @@ export default async function Page({ params }) {
         <a href="/" className="brand"><img src="/logo-mark.png" alt="" width={26} height={26} /><span>Ship AI</span></a>
         <nav><a href="/programs">Programs</a><a href={programHref}>Sessions</a>{program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}</nav>
         <div className="nav-ctas">{program.hasHackathon ? <><a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a><a className="btn btn-solid" href="/dashboard">Register</a></> : <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Get notified</a>}</div>
-      </header>
+      <MobileNav /></header>
 
       <main className="sk">
         <p className="kicker">{program.name} · {program.datesLabel || "Dates TBD"}</p>
@@ -112,7 +113,7 @@ export default async function Page({ params }) {
           <div className="hk-faq-item"><h3>Do I have to attend to use these?</h3><p>No. They&apos;re published so anyone can run the process, now or years from now.</p></div>
           <div className="hk-faq-item"><h3>Do they only work in Claude Code?</h3><p>No. They&apos;re markdown with frontmatter — anything that reads a skills directory runs them.</p></div>
           <div className="hk-faq-item"><h3>Can I change them?</h3><p>Yes, and you should. They&apos;re opinionated on purpose — edit them to fit your product and workflow.</p></div>
-          <div className="hk-faq-item"><h3>What&apos;s the catch?</h3><p>None. Ship AI is a free community meetup in Phoenix.</p></div>
+          <div className="hk-faq-item"><h3>What&apos;s the catch?</h3><p>These published skill files are free to download. Ship AI also runs hands-on workshops and programs in Phoenix.</p></div>
         </div>
 
         <div className="hk-discord"><svg viewBox="0 0 24 24" width={22} height={22} fill="currentColor" aria-hidden="true"><path d={siDiscord.path} /></svg><div><h3>Ran one and it did something odd?</h3><p>Say so in Discord. These files improve on what people hit running them for real.</p></div><a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a></div>

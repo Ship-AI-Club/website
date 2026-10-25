@@ -1,0 +1,53 @@
+{
+  "_status": "TEST COMPLETED \u2014 draft created, verified, then deleted. Do not resend.",
+  "_client": "User-selected Ship AI workshop demonstration; Desert Shine is fictional.",
+  "_bundle": "desert-shine-redesign-2026-10-14@v4",
+  "_item": "social-v1",
+  "_approvalHash": "b385bbc19a5b2619907d827ecd40f54e01f08d146508e524b00433d0f36d0d52",
+  "_approved": true,
+  "_destinationStatus": "VERIFIED active Ship AI X account; user-selected workshop exception for this run only.",
+  "_localMedia": [
+    {
+      "path": "media/social-v1.png",
+      "sha256": "c741c20f0e46de3b38916602a0df2af4d4435ca0d668962622247593f14e9630",
+      "uploadAs": "<PRESIGNED_PUBLIC_URL_social-v1.png>"
+    }
+  ],
+  "_docs": "https://docs.zernio.com/ (isDraft true; omit scheduledFor and publishNow; media must be public HTTPS URLs via POST /v1/media/presign). Re-check before any real send.",
+  "method": "POST",
+  "url": "https://zernio.com/api/v1/posts",
+  "headers": {
+    "Authorization": "Bearer <ZERNIO_API_KEY from env/secret store at send time \u2014 never pasted in chat>",
+    "Content-Type": "application/json",
+    "Idempotency-Key": "5b79d7a8-274b-4cee-8374-4085b85494d9"
+  },
+  "body": {
+    "isDraft": true,
+    "content": "Workshop example: Desert Shine is a fictional housecleaning client. Our Grok Bot team turned one website into this branded graphic. More sunshine. Less housework.\n\nExplore the demo: https://www.shipai.club/growth-engineering/desert-shine",
+    "mediaItems": [
+      {
+        "type": "image",
+        "url": "<PRESIGNED_PUBLIC_URL_social-v1.png>"
+      }
+    ],
+    "platforms": [
+      {
+        "platform": "twitter",
+        "accountId": "6ac1ebeb8fa178626bfe4351"
+      }
+    ],
+    "metadata": {
+      "client": "desert-shine",
+      "approvalHash": "b385bbc19a5b2619907d827ecd40f54e01f08d146508e524b00433d0f36d0d52",
+      "bundleVersion": "v4",
+      "item": "social-v1"
+    }
+  },
+  "_omitted_on_purpose": [
+    "scheduledFor",
+    "publishNow",
+    "queuedFromProfile"
+  ],
+  "_remoteDraftId": "6ad004bc57d231cb31778197",
+  "_deletedAt": "2026-10-14T22:40:58.829550+00:00"
+}

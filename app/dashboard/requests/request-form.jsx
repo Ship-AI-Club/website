@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useToastActionState } from "../../../components/toast-provider";
+
+import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
 import {
@@ -67,7 +69,7 @@ function Submit({ label }) {
 }
 
 export function RequestForm({ available, sponsorTier }) {
-  const [state, action] = useActionState(requestRoleAction, {});
+  const [state, action] = useToastActionState(requestRoleAction, {});
   const [role, setRole] = useState(available[0] ?? REQUESTABLE_ROLES[0]);
   /* Held in state for the same reason the role is: the form reset
      after a rejected submit clears the DOM, and losing what somebody
@@ -86,12 +88,6 @@ export function RequestForm({ available, sponsorTier }) {
 
   return (
     <form action={action} className="ac-form">
-      {state.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state.ok && <p className="ac-ok">{state.ok}</p>}
 
       {available.length > 1 && (
         <fieldset className="ac-choices is-row">
@@ -221,7 +217,7 @@ export function RequestForm({ available, sponsorTier }) {
 }
 
 export function WithdrawForm({ id }) {
-  const [state, action] = useActionState(withdrawRequestAction, {});
+  const [state, action] = useToastActionState(withdrawRequestAction, {});
   return (
     <>
       <form action={action} className="ac-inline-form">
@@ -230,7 +226,7 @@ export function WithdrawForm({ id }) {
           Withdraw
         </button>
       </form>
-      {state.error && <span className="ac-fine">{state.error}</span>}
+
     </>
   );
 }

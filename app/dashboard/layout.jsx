@@ -50,6 +50,7 @@ export default async function DashboardLayout({ children }) {
       title: null,
       items: [
         { href: "/dashboard", label: "Overview" },
+        { href: "/workshops/materials", label: "Workshop materials" },
         ...(showsCompeting
           ? [
               { href: "/dashboard/team", label: "Your team" },
@@ -79,8 +80,8 @@ export default async function DashboardLayout({ children }) {
   ];
 
   const staff = [
-    ...(hasRole(user, "judge")
-      ? [{ href: "/judge", label: "Judging", count: counts.to_score }]
+    ...(hasRole(user, "judge") || isAdmin(user)
+      ? [{ href: "/judge/presentations", label: "Judging", count: counts.to_score }]
       : []),
     ...(isAdmin(user) ? [{ href: "/admin", label: "Admin", count: counts.requests }] : []),
   ];

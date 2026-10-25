@@ -3,7 +3,7 @@
 import { BarChart3, BadgeCheck } from "lucide-react";
 
 import { requireAdmin } from "../../../lib/auth";
-import { RUBRIC } from "../../../lib/accounts";
+import { RUBRIC, SCORE_MAX } from "../../../lib/accounts";
 import { allCertificates, leaderboard } from "../../../lib/store";
 import { EDITION, certPath, credentialName } from "../../../lib/results";
 import { IssueCertificatesForm, RevokeCertificateForm } from "../certificate-form";
@@ -80,7 +80,7 @@ export default async function Page() {
                           {scoreValue(value)}
                           <span
                             className="ac-bar"
-                            style={{ "--pct": `${((value ?? 0) / 10) * 100}%` }}
+                            style={{ "--pct": `${((value ?? 0) / SCORE_MAX) * 100}%` }}
                           >
                             <i />
                           </span>

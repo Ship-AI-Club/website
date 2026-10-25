@@ -1,3 +1,4 @@
+import MobileNav from "../../../../../components/mobile-nav";
 import { notFound } from "next/navigation";
 import { AlertTriangle, ArrowRight, CheckCircle2 } from "lucide-react";
 import { JsonLd } from "../../../../../components/article";
@@ -5,6 +6,7 @@ import { PROGRAMS, programBySlug } from "../../../../../lib/programs";
 
 import { DISCORD, EVENT } from "../../../../../lib/hackathon";
 import { SUBMISSION_CHECKS, SUBMISSION_FIELDS } from "../../../../../lib/submissions";
+import { PITCH_PATH, PITCH_STEPS } from "../../../../../lib/hackathon-pitch";
 
 const SUBMIT_URL = "/dashboard/submission";
 
@@ -16,7 +18,7 @@ export const metadata = {
   title: `${TITLE} — Ship AI`,
   description: DESCRIPTION,
   alternates: { canonical: "https://www.shipai.club/programs/zero-to-launch/hackathon/submit" },
-  openGraph: { title: TITLE, description: DESCRIPTION, images: [{ url: "/og-image.jpg", width: 1200, height: 630 }] },
+  openGraph: { title: TITLE, description: DESCRIPTION, images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }] },
   robots: { index: true, follow: true },
 };
 
@@ -63,7 +65,7 @@ export default async function Page({ params }) {
             Register
           </a>
         </div>
-      </header>
+      <MobileNav /></header>
 
       <main className="hk-submit-page">
         <p className="kicker">{EVENT.name}</p>
@@ -77,15 +79,15 @@ export default async function Page({ params }) {
         <p className="article-lede">
           Build and ship the best marketing site. One submission per team, judged on design,
           craft, and receipts: the pages, features, and improvements you shipped.
-          Each criterion is scored from 0 to 10 and weighted equally.
+          Each criterion is scored from 1 to 5 and weighted equally.
         </p>
 
         <div className="cta-row hk-submit-cta">
           <a className="btn btn-solid" href={SUBMIT_URL}>
             Open your submission
           </a>
-          <a className="btn btn-ghost" href="/programs/zero-to-launch/hackathon/results">
-            Results
+          <a className="btn btn-ghost" href={PITCH_PATH}>
+            Five-minute pitch reference
           </a>
         </div>
         <p className="hk-note">
@@ -108,6 +110,15 @@ export default async function Page({ params }) {
             </li>
           ))}
         </ol>
+
+        <h2 className="hk-subhead">Your five-minute pitch</h2>
+        <p>Use your own deck or our optional four-slide generator. You can submit your project without a deck and prepare it later. If you have slides already, add an optional viewable link in your submission.</p>
+        <p>To generate a draft, answer three optional pitch prompts or prefill suggestions and branding from your website. Review and save your answers, then open the deck with speaker notes and a live site link. Either way, plan for five minutes:</p>
+        <ol className="hk-fields">
+          {PITCH_STEPS.map(step => <li key={step.id}><p className="hk-field-name">{step.title} <span className="hk-field-req">{step.window}</span></p><p>{step.prompt}</p></li>)}
+        </ol>
+        <p><a href={PITCH_PATH}>Open the pitch reference and speaker notes →</a></p>
+        <p><a href={`${PITCH_PATH}/demo?view=all`}>Review all four slides of the demo pitch →</a></p>
 
         <h2 className="hk-subhead">Before you hit submit</h2>
         <ul className="hk-check">

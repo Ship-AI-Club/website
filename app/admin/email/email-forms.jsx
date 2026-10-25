@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useToastActionState } from "../../../components/toast-provider";
+
+import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
 import { archiveAction, backfillAction, markReadAction, replyAction } from "./actions";
@@ -8,18 +10,6 @@ import { archiveAction, backfillAction, markReadAction, replyAction } from "./ac
 /* The write half of /admin/email. Reply is the one that matters:
    inbound mail arrives as a webhook rather than in a mailbox, so
    without this there is nowhere to answer it from. */
-
-function Feedback({ state }) {
-  if (state.error) {
-    return (
-      <p className="ac-error" role="alert">
-        {state.error}
-      </p>
-    );
-  }
-  if (state.ok) return <p className="ac-ok">{state.ok}</p>;
-  return null;
-}
 
 function Submit({ label, busy, ghost, small = true }) {
   const { pending } = useFormStatus();
@@ -35,7 +25,7 @@ function Submit({ label, busy, ghost, small = true }) {
 }
 
 export function ReplyForm({ id, to, subject }) {
-  const [state, action] = useActionState(replyAction, {});
+  const [state, action] = useToastActionState(replyAction, {});
   const [open, setOpen] = useState(false);
 
   if (!open) {
@@ -50,7 +40,6 @@ export function ReplyForm({ id, to, subject }) {
 
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <input type="hidden" name="inbound_id" value={id} />
 
       <div className="ac-field">
@@ -75,7 +64,7 @@ export function ReplyForm({ id, to, subject }) {
 }
 
 export function ReadForm({ id, unread }) {
-  const [, action] = useActionState(markReadAction, {});
+  const [, action] = useToastActionState(markReadAction, {});
   return (
     <form action={action} className="ac-inline-form">
       <input type="hidden" name="inbound_id" value={id} />
@@ -88,7 +77,7 @@ export function ReadForm({ id, unread }) {
 }
 
 export function ArchiveForm({ id }) {
-  const [, action] = useActionState(archiveAction, {});
+  const [, action] = useToastActionState(archiveAction, {});
   return (
     <form action={action} className="ac-inline-form">
       <input type="hidden" name="inbound_id" value={id} />
@@ -100,10 +89,9 @@ export function ArchiveForm({ id }) {
 }
 
 export function BackfillForm() {
-  const [state, action] = useActionState(backfillAction, {});
+  const [state, action] = useToastActionState(backfillAction, {});
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <div className="ac-actions">
         <Submit label="Retry missing bodies" busy="Fetching…" ghost />
       </div>

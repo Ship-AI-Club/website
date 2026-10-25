@@ -1,0 +1,53 @@
+{
+  "_status": "TEST COMPLETED \u2014 draft created, verified, then deleted. Do not resend.",
+  "_client": "User-selected Ship AI workshop demonstration; Desert Shine is fictional.",
+  "_bundle": "desert-shine-redesign-2026-10-14@v4",
+  "_item": "video-v1",
+  "_approvalHash": "b385bbc19a5b2619907d827ecd40f54e01f08d146508e524b00433d0f36d0d52",
+  "_approved": true,
+  "_destinationStatus": "VERIFIED active Ship AI X account; user-selected workshop exception for this run only.",
+  "_localMedia": [
+    {
+      "path": "media/video-v1.mp4",
+      "sha256": "96f90610cc525826f228e919ba5968a7d3f3409a973eed2c1c61aed1a415bc4b",
+      "uploadAs": "<PRESIGNED_PUBLIC_URL_video-v1.mp4>"
+    }
+  ],
+  "_docs": "https://docs.zernio.com/ (isDraft true; omit scheduledFor and publishNow; media must be public HTTPS URLs via POST /v1/media/presign). Re-check before any real send.",
+  "method": "POST",
+  "url": "https://zernio.com/api/v1/posts",
+  "headers": {
+    "Authorization": "Bearer <ZERNIO_API_KEY from env/secret store at send time \u2014 never pasted in chat>",
+    "Content-Type": "application/json",
+    "Idempotency-Key": "142686e9-497e-400d-90d0-91b4426efde4"
+  },
+  "body": {
+    "isDraft": true,
+    "content": "Workshop example: a 15-second ad for Desert Shine, our fictional housecleaning client. Built by our AI marketing team from the same website and positioning.\n\nSee the demo: https://www.shipai.club/growth-engineering/desert-shine",
+    "mediaItems": [
+      {
+        "type": "video",
+        "url": "<PRESIGNED_PUBLIC_URL_video-v1.mp4>"
+      }
+    ],
+    "platforms": [
+      {
+        "platform": "twitter",
+        "accountId": "6ac1ebeb8fa178626bfe4351"
+      }
+    ],
+    "metadata": {
+      "client": "desert-shine",
+      "approvalHash": "b385bbc19a5b2619907d827ecd40f54e01f08d146508e524b00433d0f36d0d52",
+      "bundleVersion": "v4",
+      "item": "video-v1"
+    }
+  },
+  "_omitted_on_purpose": [
+    "scheduledFor",
+    "publishNow",
+    "queuedFromProfile"
+  ],
+  "_remoteDraftId": "6ad004e86f5f2b73c754864c",
+  "_deletedAt": "2026-10-14T22:40:59.978588+00:00"
+}

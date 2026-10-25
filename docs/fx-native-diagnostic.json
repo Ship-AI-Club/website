@@ -1,0 +1,20 @@
+{
+  "kind": "Actual native libfx generation audit; not simulated",
+  "time": "2026-10-02T04:43:57.035Z",
+  "model": "openai/gpt-4.1-nano",
+  "backend": "native",
+  "version": "0.0.12",
+  "limits": "Each example: max 3 model POSTs, 512 output tokens/call, 40 seconds overall, only fixed read_brief tool.",
+  "scope": "Standalone adapter generation only; no HTTP authorization assertions, database calls, sends, writes or external actions. Credential read in memory only.",
+  "results": [
+    {
+      "deck": "program:day-zero:first-threads",
+      "task": "meeting-notes",
+      "modelCalls": 2,
+      "events": [],
+      "output": "",
+      "error": "HostStreamFailed",
+      "elapsedMs": 72
+    }
+  ]
+}

@@ -158,6 +158,7 @@ create table if not exists registrations (
 
 create table if not exists teams (
   id          uuid primary key default gen_random_uuid(),
+  hackathon_id text not null default 'zero-to-launch-2026',
   name        text not null,
   slug        text not null unique,
   invite_code text not null unique,
@@ -175,10 +176,10 @@ create table if not exists team_members (
   joined_at timestamptz not null default now(),
   primary key (team_id, user_id)
 );
-/* Rule 01: teams of 1–4, one team per person. The cap is enforced
-   app-side (it's a count, not a constraint); the identity is enforced
-   here, because two teams claiming the same builder breaks scoring. */
-create unique index if not exists team_members_one_per_person on team_members (user_id);
+/* Membership policy and the four-person cap are checked inside locked
+   transactions in lib/team-membership.js. The primary key still prevents
+   someone from joining the same team twice. */
+create index if not exists team_members_user_idx on team_members (user_id);
 
 create table if not exists submissions (
   id           uuid primary key default gen_random_uuid(),
@@ -192,6 +193,7 @@ create table if not exists submissions (
   receipts     text not null default '',
   growth       text not null default '',
   repo_url     text not null default '',
+  pitch        jsonb not null default '{}'::jsonb,
   status       text not null default 'draft',
   /* Filled in on Sunday, by an admin, after the judges are done.
      `award` is a category name from lib/results.js CATEGORIES;
@@ -203,6 +205,7 @@ create table if not exists submissions (
   updated_at   timestamptz not null default now()
 );
 create index if not exists submissions_status_idx on submissions (status, submitted_at desc);
+alter table submissions add column if not exists pitch jsonb not null default '{}'::jsonb;
 
 /* ---------- judging ---------- */
 
@@ -519,6 +522,9 @@ alter table sponsorships add column if not exists wordmark  boolean not null def
 alter table sponsorships alter column user_id drop not null;
 
 alter table teams add column if not exists tagline   text not null default '';
+alter table teams add column if not exists hackathon_id text not null default 'zero-to-launch-2026';
+create index if not exists teams_hackathon_idx on teams (hackathon_id);
+drop index if exists team_members_one_per_person;
 alter table teams add column if not exists logo_path text not null default '';
 alter table teams add column if not exists logo_url  text not null default '';
 
@@ -565,6 +571,54 @@ alter table broadcasts add column if not exists sent_at    timestamptz not null 
 /* Marketing site rubric: an additive change preserves previous score data. */
 alter table scores add column if not exists design smallint
   check (design between 0 and 10);
+
+/* Workshop inventory is independent from hackathon registrations.
+   A held seat is released only after Stripe confirms expiry/cancellation. */
+create table if not exists workshop_bookings (
+  id uuid primary key default gen_random_uuid(),
+  workshop text not null,
+  user_id uuid not null references users(id),
+  seat integer not null check (seat between 1 and 10),
+  status text not null default 'pending' check (status in ('pending','paid','expired','refunded')),
+  checkout_session_id text unique,
+  payment_intent_id text unique,
+  checkout_url text,
+  amount integer not null,
+  amount_paid integer,
+  currency text not null default 'usd',
+  expires_at timestamptz not null,
+  created_at timestamptz not null default now(),
+  paid_at timestamptz,
+  refunded_at timestamptz
+);
+create unique index if not exists workshop_booking_active_seat
+  on workshop_bookings(workshop,seat) where status in ('pending','paid');
+create unique index if not exists workshop_booking_active_user
+  on workshop_bookings(workshop,user_id) where status in ('pending','paid');
+create table if not exists workshop_inventory (
+  workshop text primary key
+);
+insert into workshop_inventory (workshop) values ('vibe-coding-gtm-2026-10-07') on conflict do nothing;
+
+-- Email-gated workshop assessments and atomic daily Gateway request caps.
+create table if not exists workshop_assessments (
+  id uuid primary key, email text not null, answers jsonb not null,
+  ip_hash text not null, share_token text unique not null,
+  status text not null default 'pending', result jsonb,
+  created_at timestamptz not null default now()
+);
+create table if not exists workshop_assessment_limits (
+  bucket text not null, day date not null default current_date,
+  requests integer not null default 1, primary key (bucket, day)
+);
+
+-- Workshop images and confirmed facilitators managed by admins.
+create table if not exists workshop_media (
+  slug text primary key,
+  cover_url text not null default '',
+  facilitator_ids uuid[] not null default '{}',
+  updated_at timestamptz not null default now()
+);
 
 create table if not exists mentee_ai_assessments (
   id uuid primary key default gen_random_uuid(),

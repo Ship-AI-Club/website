@@ -1,10 +1,12 @@
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
+import { notFound } from "next/navigation";
+import TeamPicker from "../../../components/team-picker";
 
 import { requireOnboarded } from "../../../lib/auth";
 import { EVENT } from "../../../lib/hackathon";
 import { SUBMISSION_CHECKS } from "../../../lib/submissions";
 import { submissionsOpen } from "../../../lib/settings";
-import { judgesFor, submissionForTeam, teamFor } from "../../../lib/store";
+import { judgesFor, submissionForTeam, teamsFor } from "../../../lib/store";
 import SubmissionForm from "./submission-form";
 
 export const metadata = {
@@ -12,9 +14,12 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function Page() {
+export default async function Page({ searchParams }) {
   const user = await requireOnboarded("/dashboard/submission");
-  const team = await teamFor(user.id);
+  const params = await searchParams;
+  const teams = await teamsFor(user.id);
+  const team = params?.team ? teams.find((t) => t.id === params.team) : teams[0];
+  if (params?.team && !team) notFound();
 
   if (!team) {
     return (
@@ -52,10 +57,12 @@ export default async function Page() {
         <p className="ac-kicker">{team.name}</p>
         <h1>Your submission</h1>
         <p>
-          Submit your live marketing site and evidence of what you shipped.
-          Judging focuses on design, craft, and receipts.
+          Add your live site and what you shipped. Save a draft, submit when ready,
+          and prepare your five-minute pitch with your own deck or our optional generator.
         </p>
       </div>
+
+      <TeamPicker teams={teams} selectedId={team.id} href="/dashboard/submission" />
 
       <p className={open ? "ac-note" : "ac-error"}>
         <AlertTriangle
@@ -70,7 +77,7 @@ export default async function Page() {
 
       <section className="ac-card">
         <div className="ac-card-head">
-          <h2>The entry</h2>
+          <h2>Your entry</h2>
           {submission && (
             <span className={`ac-pill ${submission.status === "submitted" ? "is-ok" : "is-warn"}`}>
               {submission.status === "submitted" ? "Submitted" : "Draft"}
@@ -79,6 +86,8 @@ export default async function Page() {
         </div>
 
         <SubmissionForm
+          key={team.id}
+          teamId={team.id}
           submission={submission}
           deadline={EVENT.deadline}
           open={open}

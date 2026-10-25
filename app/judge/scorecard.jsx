@@ -1,15 +1,17 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useToastActionState } from "../../components/toast-provider";
+
+import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
-import { RUBRIC, SCORE_MAX, weightedScore } from "../../lib/accounts";
+import { RUBRIC, SCORE_MIN, SCORE_MAX, weightedScore } from "../../lib/accounts";
 import { saveScoreAction } from "./actions";
 
 /* ------------------------------------------------------------------
    The scorecard.
 
-   Three axes, 0–10 each, weighted equally — the same three criteria
+   Three axes, 1–5 each, weighted equally — the same three criteria
    published on /programs/zero-to-launch/hackathon, in the same order, with the same words.
    That's the point: a team can read exactly what they'll be scored on
    months before anybody scores them.
@@ -19,15 +21,20 @@ import { saveScoreAction } from "./actions";
    Nothing is trusted from here.
 ------------------------------------------------------------------ */
 
-function Buttons({ filed }) {
+function Buttons({ filed, hasNext }) {
   const { pending } = useFormStatus();
   return (
     <div className="ac-actions">
+      {hasNext && (
+        <button type="submit" name="intent" value="next" className="btn btn-solid" disabled={pending}>
+          {pending ? "Saving…" : "Save & next team"}
+        </button>
+      )}
       <button
         type="submit"
         name="intent"
         value="submit"
-        className="btn btn-solid"
+        className={`btn ${hasNext ? "btn-ghost" : "btn-solid"}`}
         disabled={pending}
       >
         {pending ? "Saving…" : filed ? "Update the card" : "File the card"}
@@ -72,9 +79,9 @@ function Scale({ name, value, onChange }) {
           keyboard thinks it's on 6 is its own small trap. */}
       <fieldset className="ac-scale" key={`${name}-${value}`}>
         <legend className="ac-hint" style={{ marginBottom: ".2rem" }}>
-          0 is nothing, 10 is the best you&apos;d expect to see.
+          1 is the lowest score; 5 is the strongest.
         </legend>
-        {Array.from({ length: SCORE_MAX + 1 }, (_, n) => (
+        {Array.from({ length: SCORE_MAX - SCORE_MIN + 1 }, (_, i) => i + SCORE_MIN).map(n => (
           <label key={n} className={value === n ? "is-on" : undefined}>
             <input
               type="radio"
@@ -91,8 +98,8 @@ function Scale({ name, value, onChange }) {
   );
 }
 
-export default function Scorecard({ submissionId, card, filed }) {
-  const [state, action] = useActionState(saveScoreAction, {});
+export default function Scorecard({ submissionId, card, filed, saveAction = saveScoreAction, hasNext = false }) {
+  const [state, action] = useToastActionState(saveAction, {});
   const [values, setValues] = useState(() =>
     Object.fromEntries(RUBRIC.map((c) => [c.key, card?.[c.key] ?? null])),
   );
@@ -109,13 +116,6 @@ export default function Scorecard({ submissionId, card, filed }) {
   return (
     <form action={action} className="ac-form">
       <input type="hidden" name="submission_id" value={submissionId} />
-
-      {state.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state.ok && <p className="ac-ok">{state.ok}</p>}
 
       <div>
         {RUBRIC.map((c) => (
@@ -155,7 +155,7 @@ export default function Scorecard({ submissionId, card, filed }) {
         />
       </div>
 
-      <Buttons filed={filed} />
+      <Buttons filed={filed} hasNext={hasNext} />
       <p className="ac-fine">
         A filed card can still be changed until the awards. Only complete cards count toward
         an entry&apos;s average.

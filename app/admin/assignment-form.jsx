@@ -2,7 +2,8 @@
 
 "use client";
 
-import { useActionState } from "react";
+import { useToastActionState } from "../../components/toast-provider";
+
 import { useFormStatus } from "react-dom";
 
 import {
@@ -13,19 +14,6 @@ import {
   unassignJudgeAction,
   unassignMentorAction,
 } from "./actions";
-
-function Feedback({ state }) {
-  return (
-    <>
-      {state?.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state?.ok && <p className="ac-ok">{state.ok}</p>}
-    </>
-  );
-}
 
 function Submit({ label, pendingLabel = "Saving…", danger = false }) {
   const { pending } = useFormStatus();
@@ -41,11 +29,10 @@ function Submit({ label, pendingLabel = "Saving…", danger = false }) {
 }
 
 export function AutoAssignJudgesForm() {
-  const [state, action] = useActionState(autoAssignJudgesAction, {});
+  const [state, action] = useToastActionState(autoAssignJudgesAction, {});
 
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <div className="ac-field">
         <label className="ac-label" htmlFor="per_entry">
           Judges per entry
@@ -61,11 +48,10 @@ export function AutoAssignJudgesForm() {
 }
 
 export function NotifyJudgesForm() {
-  const [state, action] = useActionState(notifyJudgesAction, {});
+  const [state, action] = useToastActionState(notifyJudgesAction, {});
 
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <p className="ac-hint">Email every judge with their current assignment count.</p>
       <div className="ac-actions">
         <Submit label="Notify judges" pendingLabel="Sending…" />
@@ -75,11 +61,10 @@ export function NotifyJudgesForm() {
 }
 
 export function AssignJudgeForm({ submissionId, judges }) {
-  const [state, action] = useActionState(assignJudgeAction, {});
+  const [state, action] = useToastActionState(assignJudgeAction, {});
 
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <input type="hidden" name="submission_id" value={submissionId} />
       <div className="ac-field">
         <label className="ac-label" htmlFor={`judge-${submissionId}`}>
@@ -102,11 +87,10 @@ export function AssignJudgeForm({ submissionId, judges }) {
 }
 
 export function UnassignJudgeForm({ submissionId, judgeId }) {
-  const [state, action] = useActionState(unassignJudgeAction, {});
+  const [state, action] = useToastActionState(unassignJudgeAction, {});
 
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <input type="hidden" name="submission_id" value={submissionId} />
       <input type="hidden" name="judge_id" value={judgeId} />
       <div className="ac-actions">
@@ -117,11 +101,10 @@ export function UnassignJudgeForm({ submissionId, judgeId }) {
 }
 
 export function AssignMentorForm({ teamId, mentors }) {
-  const [state, action] = useActionState(assignMentorAction, {});
+  const [state, action] = useToastActionState(assignMentorAction, {});
 
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <input type="hidden" name="team_id" value={teamId} />
       <div className="ac-field">
         <label className="ac-label" htmlFor={`mentor-${teamId}`}>
@@ -150,11 +133,10 @@ export function AssignMentorForm({ teamId, mentors }) {
 }
 
 export function UnassignMentorForm({ teamId, mentorId }) {
-  const [state, action] = useActionState(unassignMentorAction, {});
+  const [state, action] = useToastActionState(unassignMentorAction, {});
 
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <input type="hidden" name="team_id" value={teamId} />
       <input type="hidden" name="mentor_id" value={mentorId} />
       <div className="ac-actions">

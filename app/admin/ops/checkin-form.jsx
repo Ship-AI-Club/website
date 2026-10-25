@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState, useMemo, useState } from "react";
+import { useToastActionState } from "../../../components/toast-provider";
+
+import { useMemo, useState } from "react";
 import { useFormStatus } from "react-dom";
 
 import { toggleCheckinAction } from "./actions";
@@ -83,7 +85,7 @@ function AttendeeRow({ attendee, day, action }) {
 }
 
 export default function CheckinForm({ day, roster }) {
-  const [state, action] = useActionState(toggleCheckinAction, {});
+  const [state, action] = useToastActionState(toggleCheckinAction, {});
   const [query, setQuery] = useState("");
   const normalizedQuery = query.trim().toLowerCase();
   const visibleRoster = useMemo(
@@ -96,16 +98,6 @@ export default function CheckinForm({ day, roster }) {
 
   return (
     <div className="ac-form is-tight">
-      {state.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state.ok && (
-        <p className="ac-ok" role="status">
-          {state.ok}
-        </p>
-      )}
 
       <div className="ac-field">
         <label className="ac-label" htmlFor="checkin-search">

@@ -1,0 +1,15 @@
+{
+  "id": "O-17",
+  "owner": "Account owner",
+  "source_refs": [
+    "meeting-note-1",
+    "offer-1"
+  ],
+  "notes": [
+    "24 staff",
+    "Lee is operations lead",
+    "Three offices next quarter",
+    "Needs one intake view"
+  ],
+  "approved_offer": "Workflow discovery session"
+}

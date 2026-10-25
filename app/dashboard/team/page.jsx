@@ -1,8 +1,11 @@
 import { Users } from "lucide-react";
+import { notFound } from "next/navigation";
+import TeamPicker from "../../../components/team-picker";
+import { getSetting } from "../../../lib/settings";
 
 import { requireOnboarded } from "../../../lib/auth";
 import { MAX_TEAM_SIZE } from "../../../lib/accounts";
-import { mentorsForTeam, submissionForTeam, teamFor } from "../../../lib/store";
+import { mentorsForTeam, submissionForTeam, teamsFor } from "../../../lib/store";
 import { leaveTeamAction, regenerateInviteAction } from "../actions";
 import ImageUpload from "../../../components/image-upload";
 import {
@@ -17,13 +20,31 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-/* Teams of 1–4, one team per person — rule 01. The whole page is
-   either "you have one" or "make or join one"; there is no third
-   state, because the unique index on team_members won't allow one. */
+function TeamOptions() {
+  return (
+    <div className="ac-cards">
+      <section className="ac-card">
+        <h2>Start a team</h2>
+        <p>You&apos;ll get an invite code to send to up to three other people.</p>
+        <CreateTeamForm />
+      </section>
+      <section className="ac-card">
+        <h2>Join a team</h2>
+        <p>Someone already made the team? Take their code.</p>
+        <JoinTeamForm />
+      </section>
+    </div>
+  );
+}
 
-export default async function Page() {
+export default async function Page({ searchParams }) {
   const user = await requireOnboarded("/dashboard/team");
-  const team = await teamFor(user.id);
+  const params = await searchParams;
+  const [teams, multipleAllowed] = await Promise.all([
+    teamsFor(user.id), getSetting("multiple_teams_allowed"),
+  ]);
+  const team = params?.team ? teams.find((t) => t.id === params.team) : teams[0];
+  if (params?.team && !team) notFound();
 
   if (!team) {
     return (
@@ -32,25 +53,14 @@ export default async function Page() {
           <p className="ac-kicker">Teams of 1–4</p>
           <h1>Your team</h1>
           <p>
-            One team per person. Solo entries compete on exactly the same footing, so going
+            {multipleAllowed ? "You can be on multiple teams. " : "One team per person. "}
+            Solo entries compete on exactly the same footing, so going
             alone costs you nothing — and Saturday morning has a 60-second pitch round and a team
             formation block if you&apos;d rather not.
           </p>
         </div>
 
-        <div className="ac-cards">
-          <section className="ac-card">
-            <h2>Start a team</h2>
-            <p>You&apos;ll get an invite code to send to up to three other people.</p>
-            <CreateTeamForm />
-          </section>
-
-          <section className="ac-card">
-            <h2>Join one</h2>
-            <p>Someone already made the team? Take their code.</p>
-            <JoinTeamForm />
-          </section>
-        </div>
+        <TeamOptions />
       </>
     );
   }
@@ -60,8 +70,7 @@ export default async function Page() {
     mentorsForTeam(team.id),
   ]);
 
-  const owner = team.members.find((m) => m.is_owner);
-  const isOwner = owner?.id === user.id;
+  const isOwner = team.members.some((m) => m.is_owner && m.id === user.id);
   const spaces = MAX_TEAM_SIZE - team.members.length;
 
   return (
@@ -78,6 +87,9 @@ export default async function Page() {
         </p>
       </div>
 
+      <TeamPicker teams={teams} selectedId={team.id} href="/dashboard/team" />
+      {multipleAllowed && <p className="ac-note">You can create or join additional teams below. Each team has its own submission.</p>}
+
       <section className="ac-card">
         <div className="ac-card-head">
           <Users size={18} strokeWidth={1.75} aria-hidden="true" />
@@ -91,7 +103,7 @@ export default async function Page() {
               <span className="ac-list-end">
                 {m.is_owner && <span className="ac-pill">owner</span>}
                 {isOwner && m.id !== user.id && (
-                  <RemoveMemberForm memberId={m.id} label="Remove" />
+                  <RemoveMemberForm key={`${team.id}-${m.id}`} teamId={team.id} memberId={m.id} label="Remove" />
                 )}
               </span>
             </li>
@@ -110,6 +122,7 @@ export default async function Page() {
             <code>{team.invite_code}</code>
             {isOwner && (
               <form action={regenerateInviteAction} className="ac-inline-form">
+                <input type="hidden" name="team_id" value={team.id} />
                 <button type="submit" className="ac-btn-link">
                   Regenerate
                 </button>
@@ -145,7 +158,7 @@ export default async function Page() {
               ? `${submission.project || "Untitled"} — ${submission.status === "submitted" ? "submitted" : "still a draft"}.`
               : "Nothing started. One submission per team, and any member can edit it."}
           </p>
-          <a className="btn btn-ghost ac-btn-sm" href="/dashboard/submission">
+          <a className="btn btn-ghost ac-btn-sm" href={`/dashboard/submission?team=${team.id}`}>
             {submission ? "Open it" : "Start it"}
           </a>
         </section>
@@ -153,7 +166,7 @@ export default async function Page() {
         {isOwner && (
           <section className="ac-card">
             <h3>Team details</h3>
-            <TeamDetailsForm name={team.name} tagline={team.tagline} />
+            <TeamDetailsForm key={team.id} teamId={team.id} name={team.name} tagline={team.tagline} />
           </section>
         )}
       </div>
@@ -165,6 +178,7 @@ export default async function Page() {
           Any member can set it.
         </p>
         <ImageUpload
+          key={team.id}
           kind="team-logo"
           ownerId={team.id}
           currentUrl={team.logo_url}
@@ -177,15 +191,17 @@ export default async function Page() {
       <section className="ac-card">
         <h3>Leave this team</h3>
         <p>
-          You&apos;ll be free to join another or start your own. If you&apos;re the last one
-          out, the team and its draft submission go with you.
+          This removes you from {team.name}. Your other memberships stay in place.
+          If you&apos;re the last one out, the team and its submission are deleted.
         </p>
         <form action={leaveTeamAction}>
+          <input type="hidden" name="team_id" value={team.id} />
           <button type="submit" className="btn btn-ghost ac-btn-sm">
             Leave {team.name}
           </button>
         </form>
       </section>
+      {multipleAllowed && <TeamOptions />}
     </>
   );
 }

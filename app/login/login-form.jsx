@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useToastActionState } from "../../components/toast-provider";
+
+import { useEffect, useRef } from "react";
 import { useFormStatus } from "react-dom";
 import { ArrowRight, Mail } from "lucide-react";
 
@@ -25,7 +27,7 @@ function Submit({ children, ...rest }) {
 }
 
 export default function LoginForm({ next }) {
-  const [state, action] = useActionState(signInAction, { step: "email", email: "", next });
+  const [state, action] = useToastActionState(signInAction, { step: "email", email: "", next });
   const codeRef = useRef(null);
 
   /* Land the cursor in the code box the moment the step flips —
@@ -38,12 +40,6 @@ export default function LoginForm({ next }) {
   return (
     <form action={action} className="ac-form is-tight">
       <input type="hidden" name="next" value={state.next || next} />
-
-      {state.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
 
       {state.step === "code" ? (
         <>

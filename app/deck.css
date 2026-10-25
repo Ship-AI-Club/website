@@ -2868,7 +2868,7 @@ a.dk-news-src:hover {
   .dk-motion .dk-quote p {
     opacity: 1;
     transform: none;
-    animation: none;
+    animation: none !important;
   }
 
   .dk-globe-nodes .dk-node,
@@ -2882,7 +2882,7 @@ a.dk-news-src:hover {
   .dk-trail i,
   .dk-sail-ring,
   .dk-eng-node {
-    animation: none;
+    animation: none !important;
   }
 
   .dk-bolt-glow {
@@ -2898,7 +2898,7 @@ a.dk-news-src:hover {
   .dk-motion .dk-frag-detail {
     opacity: 1;
     transform: none;
-    transition: none;
+    transition: none !important;
   }
 
   .dk-motion .dk-frag-detail {
@@ -2912,13 +2912,13 @@ a.dk-news-src:hover {
 
   .dk-ray,
   .dk-ray-g {
-    animation: none;
+    animation: none !important;
     opacity: 1;
     stroke-dashoffset: 0;
   }
 
   .dk-chart-line {
-    animation: none;
+    animation: none !important;
     stroke-dashoffset: 0;
   }
 }
@@ -2994,3 +2994,80 @@ a.dk-news-src:hover {
     line-height: 1.4;
   }
 }
+
+/* Portrait program reading mode. Projector composition remains 16:9 above
+   700px; workshop and interactive marketing/showcase slides own their layout. */
+@media screen and (max-width: 700px) {
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) { align-items: stretch; padding: 8px 8px 58px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-frame {
+    width: 100%; height: 100%; aspect-ratio: auto;
+    overflow: auto; overscroll-behavior: contain; touch-action: pan-x pan-y;
+    padding: 22px 18px; --dk-gap: 22px; --dk-inset: 12px; --dk-gutter: 22px;
+  }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-body {
+    flex: none; min-height: 100%; justify-content: flex-start;
+    padding-bottom: 0; font-size: 14px; line-height: 1.5;
+  }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-body > * { flex-shrink: 0; margin-block: 0; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-body :is(p, li, a, span, code, pre, th, td, figcaption, strong, em) {
+    font-size: 14px; overflow-wrap: anywhere;
+  }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-body :is(h2, h3, .dk-h, .dk-act-name, .dk-thanks-h, .dk-big) {
+    font-size: 28px; line-height: 1.12; max-width: 100%;
+  }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-title h2 { font-size: 42px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-body :is(.dk-item-t, .dk-col-h, .dk-walk-t, .dk-flow-t, .dk-time-t) {
+    font-size: 17px; line-height: 1.25;
+  }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-body :is(.dk-metric-v, .dk-chart-peak, .dk-walk-n) { font-size: 32px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-body :is(.dk-bignum-v, .dk-break-clock) { font-size: 64px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-body :is(.dk-note, .dk-title-sub, .dk-end-c, .dk-thanks-c, .dk-thanks-why) {
+    max-width: 100%; line-height: 1.5;
+  }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) :is(.dk-title, .dk-statement, .dk-quote, .dk-end, .dk-thanks) { width: 100%; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) :is(.dk-split, .dk-items.is-two, .dk-walk, .dk-prism-slide-inner,
+    .dk-gallery-head, .dk-shot, .dk-news, .dk-run.is-side, .dk-thanks, .dk-end,
+    .dk-thanks-proofs, .dk-loop, .dk-cohorts, .dk-chart) {
+    grid-template-columns: minmax(0, 1fr); gap: 22px; max-width: 100%;
+  }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) :is(.dk-metrics, .dk-flow, .dk-time, .dk-sponsors, .dk-chart.is-wide .dk-chart-figs) {
+    grid-auto-flow: row; grid-auto-columns: auto; gap: 22px;
+  }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-agenda li { grid-template-columns: 32px minmax(0, 1fr); gap: 12px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-split-vs { writing-mode: horizontal-tb; padding: 8px; border: 0; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) :is(.dk-items, .dk-col ul, .dk-walk-rail, .dk-contact-rows, .dk-loop-steps) { gap: 16px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-flow li:not(:last-child)::after { display: none; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-walk-rail li { grid-template-columns: 8px minmax(0, 1fr); gap: 10px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-walk-dot { width: 8px; height: 8px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-contact-rows li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-loop-label { position: static; transform: none; width: auto; text-align: left; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-loop > svg { width: 140px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-matrix { display: block; overflow-x: auto; max-width: 100%; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-matrix :is(th, td) { min-width: 120px; padding: 10px 12px; overflow-wrap: normal; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) :is(.dk-curve, .dk-chart, .dk-cohorts) { overflow-x: auto; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) :is(.dk-curve, .dk-chart, .dk-cohorts) > svg {
+    width: 600px; min-width: 600px; height: auto; max-width: none;
+  }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-engine { max-height: none; min-width: 640px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-body:has(> .dk-engine) { overflow-x: auto; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-funnel li { grid-template-columns: 80px minmax(0, 1fr) 50px; gap: 8px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-funnel-band { height: 38px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-term { max-width: 100%; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-term-body { padding: 16px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-term-out { white-space: pre-wrap; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-gallery { grid-template-columns: minmax(0, 1fr); flex: none; gap: 16px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-gallery li { min-height: 240px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-gallery img { height: auto; min-height: 240px; object-fit: contain; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-chrome { font-size: 14px; gap: 12px; flex-wrap: wrap; margin-top: 22px; padding-top: 14px; }
+  .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-chrome > * { font-size: 14px; }
+}
+
+@media screen and (max-width:700px) {
+ .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-score li { grid-template-columns:minmax(0,1fr) 45px; gap:10px; }
+ .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-score-name { grid-column:1/-1; }
+ .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-loop-steps li { grid-template-columns:32px minmax(0,1fr); }
+ .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) :is(.dk-chart,.dk-curve,.dk-cohorts,.dk-engine) text { font-size:16px; }
+ .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-engine { min-width:800px; }
+}
+@media screen and (max-width:700px) { .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-contact-c { grid-column:1; } }
+@media screen and (max-width:700px) { .dk-slide:not(.dk-workshop-slide):not(.dk-skill-showcase-slide):not(.dk-marketing-slide) .dk-engine text { font-size:12px; } }

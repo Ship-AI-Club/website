@@ -1,3 +1,4 @@
+import MobileNav from "./mobile-nav";
 const DISCORD = "https://discord.gg/kZSJMNveYM";
 const MEETUP = "https://www.meetup.com/shipai/";
 
@@ -51,7 +52,7 @@ export function Article({ kicker, title, updated, children }) {
         <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
           Join the Discord
         </a>
-      </header>
+      <MobileNav /></header>
       <main className="article">
         <p className="kicker">{kicker}</p>
         <h1>{title}</h1>

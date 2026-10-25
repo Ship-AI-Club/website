@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "instructions": "Match the exact archive filename and URL before checking its SHA256. Each archive has its own hash. The YC Interface Craft hash must never be used for the full team kit or starter.",
+  "archives": [
+    {
+      "file": "ship-ai-product-team.zip",
+      "url": "https://www.shipai.club/hackathon-product-team/ship-ai-product-team.zip",
+      "bytes": 1885222,
+      "sha256": "e2782d25d4f778f1a6720e9b76432c46a2dfd5c2adeecf9bf784cc4202f3c30b"
+    },
+    {
+      "file": "business-site-starter.zip",
+      "url": "https://www.shipai.club/hackathon-product-team/business-site-starter.zip",
+      "bytes": 712099,
+      "sha256": "13343c1ac78bf43e2db472338ddaa98c49cb445f9cf1c4a1a654753ed1ee94cd"
+    },
+    {
+      "file": "yc-interface-craft.zip",
+      "url": "https://www.shipai.club/hackathon-product-team/yc-interface-craft.zip",
+      "bytes": 42678,
+      "sha256": "ff6fc8935ee1313f54b13bb0901826305d3fcbd46e109aa382d3a64ce1ec408b"
+    },
+    {
+      "file": "product-designer-update.zip",
+      "url": "https://www.shipai.club/hackathon-product-team/product-designer-update.zip",
+      "bytes": 56935,
+      "sha256": "276d3dceb014c3304850e356a67e72f80b4d2fc3c4de56613f831f94bf3db759"
+    }
+  ],
+  "designerFilesManifest": "https://www.shipai.club/hackathon-product-team/designer-skill-manifest.json"
+}

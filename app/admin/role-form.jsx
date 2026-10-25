@@ -2,7 +2,8 @@
 
 "use client";
 
-import { useActionState } from "react";
+import { useToastActionState } from "../../components/toast-provider";
+
 import { useFormStatus } from "react-dom";
 
 import { ROLE_IDS, roleLabel } from "../../lib/accounts";
@@ -22,26 +23,12 @@ function Submit({ label, pendingLabel, ghost = false }) {
   );
 }
 
-function Feedback({ state }) {
-  return (
-    <>
-      {state.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state.ok && <p className="ac-ok">{state.ok}</p>}
-    </>
-  );
-}
-
 export function GrantRoleForm({ userId }) {
-  const [state, action] = useActionState(grantRoleAction, {});
+  const [state, action] = useToastActionState(grantRoleAction, {});
   const selectId = `grant-role-${userId}`;
 
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <input type="hidden" name="user_id" value={userId} />
 
       <div className="ac-field">
@@ -66,12 +53,11 @@ export function GrantRoleForm({ userId }) {
 }
 
 export function RevokeRoleForm({ userId, role }) {
-  const [state, action] = useActionState(revokeRoleAction, {});
+  const [state, action] = useToastActionState(revokeRoleAction, {});
   const label = `Remove ${roleLabel(role)}`;
 
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <input type="hidden" name="user_id" value={userId} />
       <input type="hidden" name="role" value={role} />
       <Submit label={label} pendingLabel={`Removing ${roleLabel(role)}…`} ghost />

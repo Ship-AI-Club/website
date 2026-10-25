@@ -1,3 +1,11 @@
+import FxDeckShowcase from "./fx-deck-showcase";
+import "../app/workshop-materials.css";
+import MarketingSiteSlide from "./marketing-site-slide";
+import GrowthEngineeringSlide from "./growth-engineering-slide";
+import "../app/marketing-site-deck.css";
+import "../app/growth-engineering-deck.css";
+import "../app/growth-template-library.css";
+import "../app/marketing-team-cards.css";
 import { sessionDateLabel } from "../lib/programs";
 import { ArrowUpRight, Play } from "lucide-react";
 import { Bolt, Chart, Cohorts, Curve, Dome, Engine, Flow, Funnel, Globe, Loop, Mark, Matrix, Net, Prism, QR, Sail, Scorecard, Timeline } from "./deck-art";
@@ -86,6 +94,12 @@ function Column({ col, tone }) {
 export function Slide({ slide, workshop, program, index, total }) {
   const body = (() => {
     switch (slide.kind) {
+      case "skill-showcase":
+        return <div className="mk-slide"><header><p className="mk-label">Try the reusable skill</p><h3>Run one useful example.</h3><p className="mk-lead">Use the prepared task and inspect the draft against the source facts.</p></header><FxDeckShowcase config={slide.config}/></div>;
+      case "marketing":
+        return <MarketingSiteSlide slide={slide} />;
+      case "growth":
+        return <GrowthEngineeringSlide slide={slide} />;
       case "title":
         return (
           <div className="dk-title">
@@ -632,7 +646,7 @@ export function Slide({ slide, workshop, program, index, total }) {
                 <p className="dk-eyebrow">{slide.eyebrow || "Next"}</p>
                 <h3>{slide.next}</h3>
                 <p className="dk-end-c">{slide.c}</p>
-                <p className="dk-end-foot">shipai.club · Free, always</p>
+                <p className="dk-end-foot">shipai.club · Free program sessions</p>
               </Stagger>
             </div>
             <QR code={codes[slide.qr || "discord"]} label={slide.qrLabel || "Join the Discord"} />
@@ -646,7 +660,7 @@ export function Slide({ slide, workshop, program, index, total }) {
 
   return (
     <section
-      className={`dk-slide dk-${slide.kind}-slide`}
+      className={`dk-slide dk-${slide.kind}-slide${slide.kind === 'growth' ? ' dk-marketing-slide' : ''}`}
       id={`slide-${index + 1}`}
       data-frags={slide.kind === "walk" ? slide.steps.length : undefined}
     >

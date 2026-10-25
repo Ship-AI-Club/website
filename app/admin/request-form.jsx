@@ -2,7 +2,8 @@
 
 "use client";
 
-import { useActionState } from "react";
+import { useToastActionState } from "../../components/toast-provider";
+
 import { useFormStatus } from "react-dom";
 
 import { decideRequestAction } from "./actions";
@@ -25,16 +26,10 @@ function Submit({ decision, label, pendingLabel }) {
 }
 
 export default function RequestForm({ requestId }) {
-  const [state, action] = useActionState(decideRequestAction, {});
+  const [state, action] = useToastActionState(decideRequestAction, {});
 
   return (
     <form action={action} className="ac-form is-tight">
-      {state.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state.ok && <p className="ac-ok">{state.ok}</p>}
 
       <input type="hidden" name="request_id" value={requestId} />
 

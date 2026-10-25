@@ -10,7 +10,7 @@ import {
   pruneExpired,
 } from "../../lib/auth";
 import { isEmail, normalizeEmail, text } from "../../lib/accounts";
-import { safeNext } from "../../lib/nav";
+import { safeNext, afterSignIn } from "../../lib/nav";
 import { redeemPendingInvite } from "../../lib/invites";
 
 /* ------------------------------------------------------------------
@@ -40,7 +40,7 @@ export async function signInAction(prev, formData) {
   }
 
   if (intent === "send") {
-    const result = await requestLoginCode(email);
+    const result = await requestLoginCode(email, next);
     if (result.error) return { step: "email", email, next, error: result.error };
 
     /* Housekeeping rides along with the one action that's already
@@ -69,7 +69,7 @@ export async function signInAction(prev, formData) {
      action rather than a render, because granting a role is a write. */
   await redeemPendingInvite(result.user);
 
-  redirect(result.user.onboarded_at ? next : `/onboarding?next=${encodeURIComponent(next)}`);
+  redirect(afterSignIn(result.user, next));
 }
 
 export async function signOutAction() {

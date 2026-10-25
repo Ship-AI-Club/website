@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useToastActionState } from "../../../components/toast-provider";
+
+import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
 import {
@@ -27,7 +29,7 @@ function Submit() {
 }
 
 export default function ProfileForm({ user }) {
-  const [state, action] = useActionState(updateProfileAction, {});
+  const [state, action] = useToastActionState(updateProfileAction, {});
   const [interests, setInterests] = useState(() => new Set(user.interests ?? []));
   const [goals, setGoals] = useState(() => new Set(user.goals ?? []));
 
@@ -48,12 +50,6 @@ export default function ProfileForm({ user }) {
 
   return (
     <form action={action} className="ac-form">
-      {state.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state.ok && <p className="ac-ok">{state.ok}</p>}
 
       <ImageUpload
         kind="avatar"

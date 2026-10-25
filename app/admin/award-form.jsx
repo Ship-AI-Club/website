@@ -2,7 +2,8 @@
 
 "use client";
 
-import { useActionState } from "react";
+import { useToastActionState } from "../../components/toast-provider";
+
 import { useFormStatus } from "react-dom";
 
 import { CATEGORIES } from "../../lib/results";
@@ -20,7 +21,7 @@ function Submit() {
 }
 
 export function AwardForm({ submissionId, award, crowd }) {
-  const [state, action] = useActionState(setAwardAction, {});
+  const [state, action] = useToastActionState(setAwardAction, {});
 
   /* React 19 resets an uncontrolled form after a form action, back to
      the defaults it mounted with — so without this key the select
@@ -29,12 +30,7 @@ export function AwardForm({ submissionId, award, crowd }) {
      server's values remounts the fields when those values change. */
   return (
     <form key={`${award ?? ""}|${crowd ? 1 : 0}`} action={action} className="ac-form is-tight">
-      {state.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state.ok && <p className="ac-ok">{state.ok}</p>}
+
       <input type="hidden" name="submission_id" value={submissionId} />
       <div className="ac-row">
         <div className="ac-field">

@@ -1,7 +1,9 @@
 "use client";
 
+import { useToastActionState } from "../../../components/toast-provider";
+
 import { Check, Save } from "lucide-react";
-import { useActionState } from "react";
+
 import { useFormStatus } from "react-dom";
 
 import { setOpsSettingAction } from "./actions";
@@ -17,14 +19,13 @@ function Submit({ children, icon: Icon = Save }) {
 }
 
 export default function SettingsForm({ settingKey, value }) {
-  const [state, action] = useActionState(setOpsSettingAction, {});
+  const [state, action] = useToastActionState(setOpsSettingAction, {});
 
   return (
     <form action={action} className="ac-form is-tight">
       <input type="hidden" name="key" value={settingKey} />
       <input type="hidden" name="value" value={value ? "false" : "true"} />
-      {state.error && <p className="ac-error" role="alert">{state.error}</p>}
-      {state.ok && <p className="ac-ok">{state.ok}</p>}
+
       <Submit icon={value ? Save : Check}>{value ? "Turn off" : "Turn on"}</Submit>
     </form>
   );

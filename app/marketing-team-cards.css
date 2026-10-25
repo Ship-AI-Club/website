@@ -1,0 +1,50 @@
+/* Rounded bot portraits adapt the user's Grok Bot card reference to Ship AI. */
+.ai-team { display:flex; flex-direction:column; gap:1.1cqw; }
+.ai-team-cards { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:1.2cqw; }
+.ai-team-card { display:flex; flex-direction:column; overflow:hidden; border:1px solid var(--hairline); border-radius:1.5cqw; background:#fff; text-align:center; }
+.ai-team-art { position:relative; height:9cqw; display:flex; align-items:center; justify-content:center; background:radial-gradient(ellipse at 50% 0%,#edf5ff,#b9d5ff); }
+.ai-team-card-violet .ai-team-art { background:radial-gradient(ellipse at 50% 0%,#f4efff,#d7c9fa); }
+.ai-team-card-mint .ai-team-art { background:radial-gradient(ellipse at 50% 0%,#edfaf5,#b8e2d2); }
+.ai-team-card-sand .ai-team-art { background:radial-gradient(ellipse at 50% 0%,#fff9e7,#eddda5); }
+.ai-team-avatar { width:6.3cqw; height:6.3cqw; color:#448af3; }
+.ai-team-avatar-violet { color:#8264d9; }
+.ai-team-avatar-mint { color:#258b70; }
+.ai-team-avatar-sand { color:#a47d22; }
+.ai-team-art > span { position:absolute; bottom:.65cqw; right:1cqw; color:#273d62; font:500 .85cqw/1.2 var(--font-geist-sans),sans-serif; }
+.ai-team-copy { display:flex; flex:1; flex-direction:column; align-items:center; padding:1.1cqw 1.1cqw 1.25cqw; }
+.mk-slide .ai-team-copy h4 { display:flex; align-items:center; justify-content:center; min-height:3.6cqw; font-size:1.6cqw; line-height:1.12; letter-spacing:-.045em; }
+.mk-slide .ai-team-credit { margin:.4cqw 0 1.1cqw; font-size:1.05cqw; line-height:1.3; color:var(--dim); }
+.ai-team-copy > strong { font-size:1.15cqw; line-height:1.35; font-weight:600; }
+.mk-slide .ai-team-description { font-size:1.1cqw; line-height:1.45; color:var(--dim); margin:.55cqw 0 1.1cqw; max-width:29ch; min-height:5cqw; }
+.ai-team-copy > a { display:flex; align-items:center; justify-content:center; gap:1cqw; width:100%; min-height:2.8cqw; margin-top:auto; border-radius:5cqw; padding:.65cqw 1cqw; color:white; background:#101010; text-decoration:none; font-size:1.1cqw; line-height:1.2; }
+.ai-team-copy > a:hover { background:var(--accent); }
+.ai-team-copy > a:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
+.ai-team-flow { display:flex; align-items:center; justify-content:center; gap:1.5cqw; font-size:1.15cqw; color:var(--dim); }
+.ai-team-flow b { color:var(--accent); font-weight:400; }
+.ai-team-tools { display:flex; align-items:center; gap:.8cqw; }
+.ai-team-tools > button { color:white; background:var(--accent); border:1px solid var(--accent); border-radius:.3cqw; padding:.6cqw 1cqw; font:500 1.1cqw/1.4 var(--font-geist-sans),sans-serif; cursor:pointer; min-height:38px; }
+.ai-team-tools > button.ai-team-secondary { color:var(--ink); background:transparent; border-color:var(--edge); }
+.ai-team-tools > a { margin-left:auto; color:var(--accent); font-size:1cqw; text-underline-offset:3px; }
+.ai-team-tools button:focus-visible,.ai-team-tools a:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
+@media screen and (max-width:900px) {
+ .ai-team { gap:22px; }
+ .ai-team-cards { grid-template-columns:1fr; gap:20px; }
+ .ai-team-card { border-radius:22px; }
+ .ai-team-art { height:160px; }
+ .ai-team-avatar { width:110px; height:110px; }
+ .ai-team-art > span { bottom:12px; right:18px; font-size:12px; }
+ .ai-team-copy { padding:22px 24px 24px; }
+ .mk-slide .ai-team-copy h4 { min-height:0; font-size:29px; }
+ .mk-slide .ai-team-credit { font-size:14px; margin:8px 0 20px; }
+ .ai-team-copy > strong { font-size:16px; }
+ .mk-slide .ai-team-description { font-size:16px; margin:10px 0 22px; min-height:0; }
+ .ai-team-copy > a { font-size:15px; min-height:46px; border-radius:40px; padding:12px 16px; gap:20px; }
+ .ai-team-flow { flex-wrap:wrap; gap:8px 12px; font-size:13px; }
+ .ai-team-tools { flex-wrap:wrap; gap:10px; }
+ .ai-team-tools > button { min-height:44px; padding:10px 14px; font-size:14px; border-radius:4px; }
+ .ai-team-tools > a { margin:6px 0 0; font-size:13px; flex-basis:100%; }
+}
+
+.ai-team-card-peach .ai-team-art { background:radial-gradient(ellipse at 50% 0%,#fff3e8,#f4c3a1); }
+.ai-team-avatar-peach { color:#c97742; }
+.ai-team-flow a { color:var(--accent); text-underline-offset:3px; }

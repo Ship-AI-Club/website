@@ -1,3 +1,4 @@
+import MobileNav from "./mobile-nav";
 import { signOutAction } from "../app/login/actions";
 import { DISCORD } from "../lib/hackathon";
 
@@ -37,7 +38,7 @@ export function AccountHeader({ user, links = [] }) {
           Sign in
         </a>
       )}
-    </header>
+    <MobileNav extraLinks={links}>{user && <form action={signOutAction}><button type="submit" className="btn btn-ghost">Sign Out</button></form>}</MobileNav></header>
   );
 }
 

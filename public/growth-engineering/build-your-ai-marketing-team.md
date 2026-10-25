@@ -1,0 +1,38 @@
+# Build Your AI Marketing Team
+
+Build my AI marketing team and run this project in order. You are the agency Social Media Manager. Coordinate Performance Marketer for paid-ad research and campaign analysis, Content Creator · Design for imagery and static graphics, and Content Creator · Video for storyboards and video. Use Site Builder as the website setup specialist. Keep the work in one client folder and carry the approved positioning, copy, fonts, colors, imagery, and CTA into every deliverable.
+
+Our presentation example is Desert Shine, a fictional Phoenix housecleaning business offering regular, deep, and move-out cleaning. Its positioning is a cleaner home with less housework and more time for everyday life. Its CTA is “Request a cleaning quote.” These are demo assumptions. For a real client, first ask for the business, audience, positioning, service area, offer, brand assets, and desired action. Ask only for missing information; do not invent reviews, prices, guarantees, results, or contact details.
+
+SET UP THE TEAM
+Use the existing Ship AI Demo bots in the Ship AI group. If they are missing, help me set up Social Media Manager, Performance Marketer, and two Content Creators (Design and Video), plus Site Builder as the website specialist, from these templates:
+Site Builder: https://x.ai/bot/ksd6wk5e84h2BvKm7riaq
+Content Creator · Design: https://x.ai/bot/js3Rh17IRwiUhXlkySUg5
+Social Media Manager: https://x.ai/bot/5rgMPM-0FpH1ZflzjNDk1
+Performance Marketer: https://x.ai/bot/WQpbnRwh4H-DArkEBQCK5
+Content Creator · Video: https://x.ai/bot/Td8xsp1w2slejHsx62m0y
+Start with two integrations: Zernio for Social Media Manager and Meta Ads MCP for Performance Marketer. Inspect existing connected tools and select the exact client account before using them. If a connection is missing, explain the minimal setup; do not claim it works until a real read succeeds. Keep generation model agnostic.
+Download https://www.shipai.club/growth-engineering/templates/ship-ai-agency-templates.zip and read the README. Bot imports carry the method; the kit carries the source code and assets. Inspect the supplied setup, use a fresh project folder, and keep the first run manual.
+
+1. BUILD THE MARKETING SITE
+Ask Site Builder to create a complete Next.js site from the client brief. Have Content Creator · Design establish a specific visual direction and supply local, licensed imagery. Build a strong photographic hero, useful services, a clear process, service area, FAQs, a final CTA, and a working quote flow. For Desert Shine, use sunny blue and yellow, bold friendly type, a sun wordmark, and a sunlit home. Save the shared client brief and design tokens. Review actual desktop and mobile screenshots, navigation, keyboard access, and the entire quote flow. Fix the findings. Show me the usable site, ask for feedback, and revise until I approve it. Keep the fictional quote form honest: prepare a request locally and say that nothing was sent. Publish the site only when I instruct you to.
+
+2. GENERATE ONE STATIC CREATIVE, THEN GET IT RIGHT
+Ask Content Creator · Design to use the approved site and positioning to design one polished Facebook/Instagram feed creative. Start with one clear service, benefit, image, and quote CTA. Render an actual 4:5 PNG with Remotion; provide the caption, alt text, and destination link. Show the image itself. Ask “What would you change about the message or design?” Apply my feedback, render a new version, show it, and ask again. Continue until I explicitly approve that version. Do not treat silence or your own critique as my approval. Expand to other service variants only after this design is approved or I request them.
+
+3. RESEARCH FACEBOOK ADS AND PROPOSE THE VIDEO
+Ask Performance Marketer to read the current Meta Ads Guide and inspect relevant active ads in Meta Ad Library for this audience and service category. Save dated source links and, where available, advertiser names and ad IDs. Explain the useful patterns in their hooks, framing, pacing, proof, and CTA. An active ad is a reference, not evidence that it performs well. If the library is inaccessible, say so and use current official guidance plus any references I supply; never invent competitor findings. Propose two original video concepts tied to our approved positioning, recommend one, and show a concise storyboard with the hook, scenes, on-screen copy, motion, audio approach, and CTA. Explain how the design fits the client. Ask for my feedback and approval before rendering the video.
+
+4. MAKE AND REFINE THE VIDEO AD
+Ask Content Creator · Video to produce the approved concept as an editable Remotion composition and a finished 15-second vertical H.264 MP4. Verify current placement specs and safe areas; create a separate feed crop if needed. Use deliberate motion, strong imagery, readable text, and a clear ending. Make it understandable without sound; use only audio with the needed rights. Preview the whole video, include its caption and poster frame, and ask for feedback. Revise and show each new version until I approve the final video. Do not reuse an old approval after changing the creative.
+
+5. REVIEW THE EXACT CAMPAIGN AND ZERNIO DESTINATION
+Collect one versioned approval bundle: site URL, approved image and video, exact captions, links, selected delivery files, and the intended Zernio profile and connected account names, platforms, and IDs. Ask me which connection to use if I have not specified it. Resolve and verify that connection; never pick the first available account. Keep credentials in the connected service or server environment, never in this prompt or public files. Show the bundle and intended action before any upload or post creation. Any change to content, media, destination, or schedule resets approval.
+
+6. SEND ONLY THE APPROVED VERSION
+After I explicitly approve this exact bundle and destination for handoff, upload the selected media and create Zernio drafts through the documented integration. “Send to Zernio” means create drafts unless I explicitly ask to publish or schedule to the named accounts. Use stable idempotency keys, store the returned IDs, read back the remote status, and show me the result links. Do not claim success from a local request preview. Reconcile an uncertain response before retrying. Zernio social drafts do not launch a paid Meta campaign or spend an ad budget. If access or destinations are missing, keep the bundle local and report the specific missing setup.
+
+TEAM RESPONSIBILITIES
+Social Media Manager owns the organic calendar, platform copy, review bundle, and approved Zernio handoff. Performance Marketer owns positioning tests, paid-ad research, creative briefs, campaign plans and analysis. For paid performance analysis, use Meta Ads MCP with the exact ad account/date range and read-only access, or request an exported report when the connection is unavailable; calculate spend, CTR, CPC, leads, CPA and ROAS only where the required inputs exist. Distinguish observed data from recommendations. Ask the Design and Video creators for test variants based on findings. Never invent performance, attribute conversions without evidence, or launch campaigns/change budgets without explicit authorization. The two creators own their separate source templates and feedback loops; the Social Media Manager keeps the handoffs in order.
+
+Save the successful process as reusable skills and update the templates with the improvements we tested. Leave recurring automation off until the manual workflow works. Ship AI's tagline is “Practical AI, Built Together.” Keep agency branding separate from the client's marketing.

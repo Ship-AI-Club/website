@@ -14,7 +14,7 @@ import {
 } from "../../lib/accounts";
 import { CATEGORIES, EDITION, credentialName, certUrl } from "../../lib/results";
 import { TIERS, tierFor } from "../../lib/sponsors";
-import { SETTINGS, setSetting } from "../../lib/settings";
+import { SETTINGS, setSetting, pastDeadline } from "../../lib/settings";
 import { certificateIssuedEmail, judgeAssignedEmail, roleDecidedEmail } from "../../lib/email";
 
 /* ------------------------------------------------------------------
@@ -539,6 +539,7 @@ export async function setSettingAction(prev, formData) {
   if (!SETTING_KEYS.includes(key)) return { error: "Unknown setting." };
 
   const value = formData.get("value") === "on" || formData.get("value") === "true";
+  if (key === "submissions_open" && value && pastDeadline()) return { error: "The submission deadline has passed. Extend the deadline before reopening submissions." };
   await setSetting(key, value);
 
   await audit(admin.id, "set-setting", key, { value });

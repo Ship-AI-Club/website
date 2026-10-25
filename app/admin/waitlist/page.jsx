@@ -4,6 +4,8 @@ import { ClipboardList, Users } from "lucide-react";
 
 import { requireAdmin } from "../../../lib/auth";
 import { programBySlug } from "../../../lib/programs";
+import { AI_ORGANIZATION_EVENT } from "../../../lib/ai-organization-event";
+import { workshopBySlug } from "../../../lib/workshops";
 import { waitlistCounts, waitlistEntries } from "../../../lib/store";
 
 export const metadata = {
@@ -14,7 +16,7 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 function programName(slug) {
-  return programBySlug(slug)?.name || slug;
+  return programBySlug(slug)?.name || workshopBySlug(slug)?.name || (slug === AI_ORGANIZATION_EVENT.slug ? AI_ORGANIZATION_EVENT.name : slug);
 }
 
 function formatDate(value) {
@@ -47,7 +49,7 @@ export default async function Page() {
         <p className="ac-kicker">Admin / demand</p>
         <h1>Waitlist</h1>
         <p>
-          Everyone who asked to hear when an unscheduled program gets dates, and what they said
+          Everyone who asked to hear when an unscheduled program or workshop gets dates, and what they said
           they want working by the end of it. Read the goals before you set the curriculum.
         </p>
       </div>
@@ -76,7 +78,7 @@ export default async function Page() {
           <div className="ac-empty">
             <strong>Nobody on the list yet</strong>
             <p>
-              The form is on every program page that has no dates on it. Signups land here the
+              The form is on unscheduled program and workshop pages. Signups land here the
               moment somebody fills it in.
             </p>
           </div>

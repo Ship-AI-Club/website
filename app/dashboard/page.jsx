@@ -7,7 +7,10 @@ import {
   Users,
 } from "lucide-react";
 
-import { requireOnboarded, hasRole } from "../../lib/auth";
+import { requireUser, hasRole } from "../../lib/auth";
+import { redirect } from 'next/navigation';
+import { workshopMaterialAccess } from '../../lib/workshop-material-access';
+import WorkshopDashboardCard from '../../components/workshop-dashboard-card';
 import { sql } from "../../lib/db";
 import { EVENT, WORKSHOPS, DISCORD } from "../../lib/hackathon";
 import { allSettings } from "../../lib/settings";
@@ -19,7 +22,7 @@ import {
   requestsForUser,
   sponsorshipsFor,
   submissionForTeam,
-  teamFor,
+  teamsFor,
   voteFor,
 } from "../../lib/store";
 import { getUpcomingEvents } from "../../lib/meetup";
@@ -52,12 +55,21 @@ function daysUntil(date, now = new Date()) {
 
 export default async function Page({ searchParams }) {
   const params = await searchParams;
-  const user = await requireOnboarded("/dashboard");
+  const user = await requireUser("/dashboard");
+  const workshopAccess = await workshopMaterialAccess('vibe-coding-gtm');
+  // A workshop ticket does not require the hackathon's onboarding questions.
+  if (!user.onboarded_at) {
+    if (!workshopAccess.allowed) redirect('/onboarding?next=%2Fdashboard');
+    return <>
+      <div className="ac-head"><p className="ac-kicker">Your workshop</p><h1>{user.name ? `Hey, ${user.name.split(' ')[0]}.` : 'Your dashboard.'}</h1><p>Your slides, prompts, and workshop guide are ready.</p></div>
+      <WorkshopDashboardCard access={workshopAccess} />
+    </>;
+  }
 
-  const [registration, team, certificates, requests, settings, sponsorships, vote] =
+  const [registration, teams, certificates, requests, settings, sponsorships, vote] =
     await Promise.all([
       registrationFor(user.id),
-      teamFor(user.id),
+      teamsFor(user.id),
       certificatesFor(user.id),
       requestsForUser(user.id),
       allSettings(),
@@ -65,7 +77,9 @@ export default async function Page({ searchParams }) {
       voteFor(user.id),
     ]);
 
-  const submission = team ? await submissionForTeam(team.id) : null;
+  const entries = await Promise.all(teams.map(async (team) => ({ team, submission: await submissionForTeam(team.id) })));
+  const team = teams[0];
+  const submission = entries[0]?.submission;
 
   /* Crew — judges, mentors, sponsors — are in the room but not
      entering, so the whole competing half of this page is noise to
@@ -118,6 +132,8 @@ export default async function Page({ searchParams }) {
             : "Everything you need for the program lives here."}
         </p>
       </div>
+
+      {workshopAccess.allowed ? <WorkshopDashboardCard access={workshopAccess} /> : <p><a href="/workshops/materials">Your workshop materials ↗</a></p>}
 
       {params?.invite && (
         String(params.invite).startsWith("granted:") ? (
@@ -218,10 +234,10 @@ export default async function Page({ searchParams }) {
             </dl>
             <div className="ac-actions">
               <a className="btn btn-ghost ac-btn-sm" href="/dashboard/team">
-                {team ? "Your team" : "Form a team"}
+                {teams.length > 1 ? "Your teams" : team ? "Your team" : "Form a team"}
               </a>
               <a className="btn btn-ghost ac-btn-sm" href="/dashboard/submission">
-                {submission ? "Your submission" : "Start a submission"}
+                {teams.length > 1 ? "Your submissions" : submission ? "Your submission" : "Start a submission"}
               </a>
               <form action={withdrawRegistrationAction} className="ac-inline-form">
                 <button type="submit" className="ac-btn-link ac-btn-danger">
@@ -243,81 +259,52 @@ export default async function Page({ searchParams }) {
       </section>
       )}
 
-      {/* ---------- team and submission, side by side ---------- */}
+      {/* ---------- teams and submissions ---------- */}
 
       {showsCompeting && (
-      <div className="ac-cards">
-        <section className="ac-card">
-          <div className="ac-card-head">
-            <Users size={18} strokeWidth={1.75} aria-hidden="true" />
-            <h3>Your team</h3>
-          </div>
-          {team ? (
-            <>
-              <p>
-                <strong style={{ color: "var(--ink)" }}>{team.name}</strong> —{" "}
-                {team.members.length} of 4.
-              </p>
-              <p className="ac-fine">
-                {team.members.map((m) => m.name || m.email).join(", ")}
-              </p>
-              <a className="btn btn-ghost ac-btn-sm" href="/dashboard/team">
-                Manage team
-              </a>
-            </>
-          ) : (
-            <>
-              <p>
-                One team per person, up to four people. Solo is fine and competes on the same
-                footing — Saturday morning has a team formation block if you&apos;d rather not.
-              </p>
-              <a className="btn btn-ghost ac-btn-sm" href="/dashboard/team">
-                Create or join a team
-              </a>
-            </>
-          )}
-        </section>
-
-        <section className="ac-card">
-          <div className="ac-card-head">
-            <CalendarDays size={18} strokeWidth={1.75} aria-hidden="true" />
-            <h3>Your submission</h3>
-            {submission && (
-              <span className={`ac-pill ${submission.status === "submitted" ? "is-ok" : "is-warn"}`}>
-                {submission.status === "submitted" ? "Submitted" : "Draft"}
-              </span>
+        <div className="ac-cards">
+          <section className="ac-card">
+            <div className="ac-card-head">
+              <Users size={18} strokeWidth={1.75} aria-hidden="true" />
+              <h3>{teams.length > 1 ? "Your teams" : "Your team"}</h3>
+            </div>
+            {teams.length ? teams.map((team) => (
+              <div key={team.id}>
+                <p><strong style={{ color: "var(--ink)" }}>{team.name}</strong> — {team.members.length} of 4.</p>
+                <p className="ac-fine">{team.members.map((m) => m.name || m.email).join(", ")}</p>
+                <a className="btn btn-ghost ac-btn-sm" href={`/dashboard/team?team=${team.id}`}>Manage {team.name}</a>
+              </div>
+            )) : <p>Teams of up to four people. Solo entries compete on the same footing.</p>}
+            {(!teams.length || settings.multiple_teams_allowed) && (
+              <p><a className="ac-btn-link" href="/dashboard/team">Create or join {teams.length ? "another team" : "a team"}</a></p>
             )}
-          </div>
-          {submission ? (
-            <>
-              <p>
-                <strong style={{ color: "var(--ink)" }}>
-                  {submission.project || "Untitled"}
-                </strong>
-                {submission.category ? ` — ${submission.category}` : ""}
-              </p>
-              <p className="ac-fine">
-                {settings.submissions_open
-                  ? `Editable until ${EVENT.deadline}.`
-                  : "Submissions are closed."}
-              </p>
-              <a className="btn btn-ghost ac-btn-sm" href="/dashboard/submission">
-                {settings.submissions_open ? "Edit submission" : "View submission"}
-              </a>
-            </>
-          ) : (
-            <>
-              <p>
-                Due {EVENT.deadline}. A live URL and receipts are the two fields with no
-                substitute. Start it early — you can keep editing right up to the deadline.
-              </p>
-              <a className="btn btn-ghost ac-btn-sm" href="/dashboard/submission">
-                Start your submission
-              </a>
-            </>
-          )}
-        </section>
-      </div>
+          </section>
+
+          <section className="ac-card">
+            <div className="ac-card-head">
+              <CalendarDays size={18} strokeWidth={1.75} aria-hidden="true" />
+              <h3>{teams.length > 1 ? "Your submissions" : "Your submission"}</h3>
+            </div>
+            {entries.length ? entries.map(({ team, submission }) => (
+              <div key={team.id}>
+                <p><strong style={{ color: "var(--ink)" }}>{submission?.project || team.name}</strong>{" "}
+                  <span className={`ac-pill ${submission?.status === "submitted" ? "is-ok" : "is-warn"}`}>
+                    {submission?.status === "submitted" ? "Submitted" : submission ? "Draft" : "Not started"}
+                  </span>
+                </p>
+                <p className="ac-fine">{team.name} · {settings.submissions_open ? `Editable until ${EVENT.deadline}.` : "Submissions are closed."}</p>
+                <a className="btn btn-ghost ac-btn-sm" href={`/dashboard/submission?team=${team.id}`}>
+                  {settings.submissions_open ? submission ? "Edit submission" : "Start submission" : "View submission"}
+                </a>
+              </div>
+            )) : (
+              <>
+                <p>Due {EVENT.deadline}. Create or join a team first, then submit your live site and receipts.</p>
+                <a className="btn btn-ghost ac-btn-sm" href="/dashboard/team">Create or join a team</a>
+              </>
+            )}
+          </section>
+        </div>
       )}
 
       {/* ---------- unfinished role requests ---------- */}

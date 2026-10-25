@@ -1,0 +1,65 @@
+.ge-template-list { display:flex; flex-direction:column; }
+.ge-template-list > div { display:grid; grid-template-columns:17cqw 1fr 16cqw; align-items:center; gap:1.4cqw; border-top:1px solid var(--hairline); padding:1.05cqw 0; }
+.ge-template-list h4 { font-size:2cqw; }
+.ge-template-list p { font-size:1.15cqw; color:var(--dim); margin-top:.35cqw; }
+.ge-template-links { display:flex; align-items:center; justify-content:flex-end; gap:.8cqw; }
+.ge-template-links > a { color:var(--accent); font-size:1.1cqw; white-space:nowrap; }
+.ge-template-links button { font-size:1cqw; padding:.45cqw .6cqw; min-height:36px; }
+.ge-template-kit { display:flex; justify-content:space-between; gap:2cqw; align-items:center; border-top:2px solid var(--accent); padding-top:1.3cqw; margin-top:.6cqw; }
+.ge-template-kit strong { font-size:1.4cqw; }
+.ge-template-kit p { font-size:1.1cqw; color:var(--dim); margin-top:.4cqw; }
+.ge-template-kit a { color:var(--accent); }
+.ge-template-kit > a { font-size:1.2cqw; }
+.ge-template-actions { display:flex; align-items:center; gap:1cqw; }
+.ge-template-download { color:var(--accent); font-weight:600; font-size:1.3cqw; text-decoration:underline; text-underline-offset:3px; }
+.ge-template-dialog { width:min(1120px,94vw); }
+.ge-template-media { display:flex; justify-content:center; align-items:center; min-height:200px; height:49vh; margin:14px 0; background:var(--surface); border:1px solid var(--hairline); }
+.ge-template-media img,.ge-template-media video { width:100%; height:100%; object-fit:contain; }
+.ge-template-media iframe { width:100%; height:100%; border:0; }
+.ge-template-command { display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; }
+.ge-template-command > span { width:100%; font-size:13px; color:var(--faint); }
+.ge-dialog .ge-template-command textarea { height:56px; min-height:56px; max-height:120px; padding:10px 12px; margin:0; font-size:15px; }
+.ge-template-command a { font-size:14px; color:var(--accent); }
+.ge-bot-template { display:inline-block; margin-top:1cqw; font-size:1.15cqw; color:var(--accent); text-decoration:underline; text-underline-offset:3px; }
+.ge-brand strong { max-width:18ch; text-align:center; }
+.ge-portal-brand { display:flex; align-items:center; gap:1.2cqw; margin-bottom:1.4cqw; }
+.ge-portal-brand img { width:4cqw; height:4cqw; }
+.ge-portal-brand p { font-size:1.6cqw; font-weight:500; letter-spacing:-.025em; }
+.ge-portal-cards { display:grid; grid-template-columns:1.15fr 1fr; gap:1.5cqw; }
+.ge-portal-card { display:flex; flex-direction:column; align-items:flex-start; min-height:24cqw; padding:2.3cqw; border:1px solid var(--edge); background:white; color:var(--ink); text-decoration:none; border-radius:.6cqw; }
+.ge-portal-card:hover { border-color:var(--accent); }
+.ge-portal-card h4 { font-size:3.7cqw; margin:1.8cqw 0 .5cqw; }
+.ge-portal-card > strong { font-size:1.65cqw; font-weight:500; }
+.ge-portal-card > p { font-size:1.45cqw; margin:1.2cqw 0 2cqw; max-width:39ch; flex:1; }
+.ge-portal-card .ge-portal-cta { width:100%; display:flex; justify-content:space-between; gap:1cqw; border-top:1px solid var(--edge); padding-top:1.2cqw; font-size:1.35cqw; font-weight:600; color:var(--accent); }
+.ge-portal-primary { background:var(--accent); border-color:var(--accent); color:white; }
+.ge-portal-primary .ge-label { color:#ffffffc9; }
+.ge-portal-primary .ge-portal-cta { color:white; border-color:#ffffff59; }
+@media screen and (max-width:900px) {
+ .ge-template-list > div { grid-template-columns:1fr; gap:10px; padding:18px 0; }
+ .ge-template-list h4 { font-size:25px; }
+ .ge-template-list p { font-size:15px; margin-top:6px; }
+ .ge-template-links { justify-content:flex-start; gap:16px; }
+ .ge-template-links > a { font-size:14px; }
+ .ge-template-links button { font-size:14px; padding:10px 14px; min-height:44px; }
+ .ge-template-kit { flex-direction:column; align-items:flex-start; gap:18px; padding-top:18px; margin-top:12px; }
+ .ge-template-kit strong { font-size:18px; }
+ .ge-template-kit p { font-size:14px; margin-top:8px; }
+ .ge-template-kit > a { font-size:15px; }
+ .ge-template-actions { flex-wrap:wrap; gap:14px; }
+ .ge-template-download { font-size:15px; }
+ .ge-template-dialog { padding:18px; }
+ .ge-template-media { height:40vh; min-height:160px; }
+ .ge-template-command { gap:10px; }
+ .ge-bot-template { margin-top:14px; font-size:14px; }
+ .ge-portal-brand { gap:14px; margin-bottom:20px; }
+ .ge-portal-brand img { width:46px; height:46px; }
+ .ge-portal-brand p { font-size:17px; max-width:20ch; }
+ .ge-portal-cards { grid-template-columns:1fr; gap:18px; }
+ .ge-portal-card { min-height:0; padding:24px; border-radius:8px; }
+ .ge-portal-card h4 { font-size:36px; margin:22px 0 8px; }
+ .ge-portal-card > strong { font-size:19px; }
+ .ge-portal-card > p { font-size:16px; margin:16px 0 24px; }
+ .ge-portal-card .ge-portal-cta { font-size:15px; padding-top:18px; gap:14px; }
+}
+@media print { .ge-template-actions button,.ge-template-links button,.ge-template-dialog { display:none; } }

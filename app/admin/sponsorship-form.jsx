@@ -2,24 +2,12 @@
 
 "use client";
 
-import { useActionState } from "react";
+import { useToastActionState } from "../../components/toast-provider";
+
 import { useFormStatus } from "react-dom";
 
 import { TIERS } from "../../lib/sponsors";
 import { deleteSponsorshipAction, saveSponsorshipAction } from "./actions";
-
-function Feedback({ state }) {
-  return (
-    <>
-      {state?.error && (
-        <p className="ac-error" role="alert">
-          {state.error}
-        </p>
-      )}
-      {state?.ok && <p className="ac-ok">{state.ok}</p>}
-    </>
-  );
-}
 
 function SaveButton({ editing }) {
   const { pending } = useFormStatus();
@@ -40,7 +28,7 @@ function DeleteButton() {
 }
 
 export function SponsorshipForm({ sponsorship = null, users = [] }) {
-  const [state, action] = useActionState(saveSponsorshipAction, {});
+  const [state, action] = useToastActionState(saveSponsorshipAction, {});
   const editing = Boolean(sponsorship);
   const idPrefix = sponsorship?.id || "new";
 
@@ -55,7 +43,6 @@ export function SponsorshipForm({ sponsorship = null, users = [] }) {
 
   return (
     <form key={key} action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       {editing && <input type="hidden" name="sponsorship_id" value={sponsorship.id} />}
       {editing ? (
         <input type="hidden" name="user_id" value={sponsorship.user_id} />
@@ -144,11 +131,10 @@ export function SponsorshipForm({ sponsorship = null, users = [] }) {
 }
 
 export function DeleteSponsorshipForm({ sponsorshipId }) {
-  const [state, action] = useActionState(deleteSponsorshipAction, {});
+  const [state, action] = useToastActionState(deleteSponsorshipAction, {});
 
   return (
     <form action={action} className="ac-form is-tight">
-      <Feedback state={state} />
       <input type="hidden" name="sponsorship_id" value={sponsorshipId} />
       <div className="ac-actions">
         <DeleteButton />

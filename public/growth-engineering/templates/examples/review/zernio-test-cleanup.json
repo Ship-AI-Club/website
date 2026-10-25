@@ -1,0 +1,26 @@
+{
+  "test": "approved media -> upload -> create drafts -> readback -> delete -> GET 404",
+  "status": "PASS",
+  "posts": [
+    {
+      "item": "social-v1",
+      "postId": "6ad004bc57d231cb31778197",
+      "status": "DELETED",
+      "readbackAfterDelete": "HTTP 404",
+      "account": "Ship AI X @shipaiclub",
+      "deletedAt": "2026-10-14T22:40:58.829550+00:00"
+    },
+    {
+      "item": "video-v1",
+      "postId": "6ad004e86f5f2b73c754864c",
+      "status": "DELETED",
+      "readbackAfterDelete": "HTTP 404",
+      "account": "Ship AI X @shipaiclub",
+      "deletedAt": "2026-10-14T22:40:59.978588+00:00"
+    }
+  ],
+  "scheduled": false,
+  "published": false,
+  "scope": "Exactly the two workshop test drafts, no other posts changed.",
+  "connection": "Existing local Zernio connection; Grok Bot connection remains separate setup."
+}

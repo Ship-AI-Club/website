@@ -1,0 +1,696 @@
+{
+  "programs": [
+    {
+      "deck": "program:day-zero:first-threads",
+      "skills": [
+        {
+          "id": "skill-writer",
+          "source": "local",
+          "file": "content/skills/skill-writer/SKILL.md"
+        },
+        {
+          "id": "brand-voice",
+          "source": "local",
+          "file": "content/skills/brand-voice/SKILL.md"
+        },
+        {
+          "id": "meeting-notes",
+          "source": "program",
+          "file": "content/program-skills/meeting-notes/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "cat SKILL.md",
+        "/skill-creator",
+        "/meeting-notes"
+      ]
+    },
+    {
+      "deck": "program:day-zero:coworking-with-ai",
+      "skills": [
+        {
+          "id": "content-calendar",
+          "source": "local",
+          "file": "content/skills/content-calendar/SKILL.md"
+        },
+        {
+          "id": "weekly-report",
+          "source": "local",
+          "file": "content/skills/weekly-report/SKILL.md"
+        },
+        {
+          "id": "icp-builder",
+          "source": "local",
+          "file": "content/skills/icp-builder/SKILL.md"
+        },
+        {
+          "id": "outbound-sequence",
+          "source": "local",
+          "file": "content/skills/outbound-sequence/SKILL.md"
+        },
+        {
+          "id": "social-post",
+          "source": "local",
+          "file": "content/skills/social-post/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "/content-calendar",
+        "/weekly-report",
+        "/icp-builder  →  /outbound-sequence"
+      ]
+    },
+    {
+      "deck": "program:day-zero:first-deploy",
+      "skills": [
+        {
+          "id": "site-structure",
+          "source": "local",
+          "file": "content/skills/site-structure/SKILL.md"
+        },
+        {
+          "id": "landing-copy",
+          "source": "local",
+          "file": "content/skills/landing-copy/SKILL.md"
+        },
+        {
+          "id": "site-scaffold",
+          "source": "local",
+          "file": "content/skills/site-scaffold/SKILL.md"
+        },
+        {
+          "id": "content-map",
+          "source": "local",
+          "file": "content/skills/content-map/SKILL.md"
+        },
+        {
+          "id": "programmatic-pages",
+          "source": "local",
+          "file": "content/skills/programmatic-pages/SKILL.md"
+        },
+        {
+          "id": "og-image",
+          "source": "local",
+          "file": "content/skills/og-image/SKILL.md"
+        },
+        {
+          "id": "perf-pass",
+          "source": "local",
+          "file": "content/skills/perf-pass/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "npm i -g @anthropic-ai/claude-code  &&  claude",
+        "/site-scaffold  →  /landing-copy  →  /og-image",
+        "/content-map  →  /programmatic-pages  →  deploy"
+      ]
+    },
+    {
+      "deck": "program:day-zero:agentic-workflows",
+      "skills": [
+        {
+          "id": "support-agent",
+          "source": "local",
+          "file": "content/skills/support-agent/SKILL.md"
+        },
+        {
+          "id": "scheduled-workflow",
+          "source": "local",
+          "file": "content/skills/scheduled-workflow/SKILL.md"
+        },
+        {
+          "id": "content-repurpose",
+          "source": "local",
+          "file": "content/skills/content-repurpose/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "git fetch  &&  git switch night-shift",
+        "/support-agent",
+        "/scheduled-workflow"
+      ]
+    },
+    {
+      "deck": "program:the-first-build:vibe-coding-foundations",
+      "skills": [
+        {
+          "id": "build-brief",
+          "source": "program",
+          "file": "content/program-skills/build-brief/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "Ask the agent: map this project before you edit it",
+        "git status  →  git diff  →  npm run build  →  git commit"
+      ]
+    },
+    {
+      "deck": "program:the-first-build:full-stack-building-blocks",
+      "skills": [
+        {
+          "id": "feature-contract",
+          "source": "program",
+          "file": "content/program-skills/feature-contract/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "POST /api/ideas  { \\\"title\\\": \\\"Repair notes\\\" }",
+        "create  →  inspect row  →  update  →  delete",
+        "git push  →  checks  →  deploy  →  inspect logs"
+      ]
+    },
+    {
+      "deck": "program:the-first-build:agentic-engineering",
+      "skills": [
+        {
+          "id": "engineering-review",
+          "source": "program",
+          "file": "content/program-skills/engineering-review/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "Create project instructions from this repository",
+        "typecheck  →  lint  →  test  →  build  →  browser",
+        "review diff  →  verify live path  →  commit"
+      ]
+    },
+    {
+      "deck": "program:the-first-build:first-build-hackathon",
+      "skills": [
+        {
+          "id": "demo-review",
+          "source": "program",
+          "file": "content/program-skills/demo-review/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "write brief  →  name risk  →  create checkpoint",
+        "slice 1  →  check  →  browser  →  commit",
+        "deploy freeze  →  final run  →  tag release"
+      ]
+    },
+    {
+      "deck": "program:zero-to-launch:gtm-engineering",
+      "skills": [
+        {
+          "id": "ask-santos",
+          "source": "local",
+          "file": "content/skills/ask-santos/SKILL.md"
+        },
+        {
+          "id": "gtm-map",
+          "source": "local",
+          "file": "content/skills/gtm-map/SKILL.md"
+        },
+        {
+          "id": "funnel-audit",
+          "source": "local",
+          "file": "content/skills/funnel-audit/SKILL.md"
+        }
+      ],
+      "terminalCommands": []
+    },
+    {
+      "deck": "program:zero-to-launch:b2c-ggbucks-case-study",
+      "skills": [
+        {
+          "id": "channel-plan",
+          "source": "local",
+          "file": "content/skills/channel-plan/SKILL.md"
+        },
+        {
+          "id": "paid-test",
+          "source": "local",
+          "file": "content/skills/paid-test/SKILL.md"
+        },
+        {
+          "id": "community-plan",
+          "source": "local",
+          "file": "content/skills/community-plan/SKILL.md"
+        },
+        {
+          "id": "analytics-wire",
+          "source": "local",
+          "file": "content/skills/analytics-wire/SKILL.md"
+        },
+        {
+          "id": "bi-agent",
+          "source": "local",
+          "file": "content/skills/bi-agent/SKILL.md"
+        },
+        {
+          "id": "seo-audit",
+          "source": "upstream",
+          "file": "public/marketing-resources/library/seo-audit/SKILL.md"
+        },
+        {
+          "id": "programmatic-seo",
+          "source": "upstream",
+          "file": "public/marketing-resources/library/programmatic-seo/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "/seo-audit  →  /programmatic-seo",
+        "/channel-plan"
+      ]
+    },
+    {
+      "deck": "program:zero-to-launch:b2b-pipeline-sales",
+      "skills": [
+        {
+          "id": "icp-builder",
+          "source": "local",
+          "file": "content/skills/icp-builder/SKILL.md"
+        },
+        {
+          "id": "outbound-sequence",
+          "source": "local",
+          "file": "content/skills/outbound-sequence/SKILL.md"
+        },
+        {
+          "id": "funnel-metrics",
+          "source": "local",
+          "file": "content/skills/funnel-metrics/SKILL.md"
+        },
+        {
+          "id": "bi-agent",
+          "source": "local",
+          "file": "content/skills/bi-agent/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "/icp-builder",
+        "/outbound-sequence  →  /funnel-metrics"
+      ]
+    },
+    {
+      "deck": "program:zero-to-launch:positioning-and-pitch",
+      "skills": [
+        {
+          "id": "positioning-brief",
+          "source": "local",
+          "file": "content/skills/positioning-brief/SKILL.md"
+        },
+        {
+          "id": "pitch-doctor",
+          "source": "local",
+          "file": "content/skills/pitch-doctor/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "/positioning-brief",
+        "/pitch-doctor"
+      ]
+    },
+    {
+      "deck": "program:zero-to-launch:marketing-site",
+      "skills": [
+        {
+          "id": "site-structure",
+          "source": "local",
+          "file": "content/skills/site-structure/SKILL.md"
+        },
+        {
+          "id": "landing-copy",
+          "source": "local",
+          "file": "content/skills/landing-copy/SKILL.md"
+        },
+        {
+          "id": "site-scaffold",
+          "source": "local",
+          "file": "content/skills/site-scaffold/SKILL.md"
+        },
+        {
+          "id": "og-image",
+          "source": "local",
+          "file": "content/skills/og-image/SKILL.md"
+        },
+        {
+          "id": "perf-pass",
+          "source": "local",
+          "file": "content/skills/perf-pass/SKILL.md"
+        },
+        {
+          "id": "content-map",
+          "source": "local",
+          "file": "content/skills/content-map/SKILL.md"
+        },
+        {
+          "id": "programmatic-pages",
+          "source": "local",
+          "file": "content/skills/programmatic-pages/SKILL.md"
+        },
+        {
+          "id": "article-draft",
+          "source": "local",
+          "file": "content/skills/article-draft/SKILL.md"
+        },
+        {
+          "id": "social-audit",
+          "source": "local",
+          "file": "content/skills/social-audit/SKILL.md"
+        },
+        {
+          "id": "social-profile",
+          "source": "local",
+          "file": "content/skills/social-profile/SKILL.md"
+        },
+        {
+          "id": "copywriting",
+          "source": "upstream",
+          "file": "public/marketing-resources/library/copywriting/SKILL.md"
+        },
+        {
+          "id": "copy-editing",
+          "source": "upstream",
+          "file": "public/marketing-resources/library/copy-editing/SKILL.md"
+        },
+        {
+          "id": "cro",
+          "source": "upstream",
+          "file": "public/marketing-resources/library/cro/SKILL.md"
+        }
+      ],
+      "terminalCommands": []
+    },
+    {
+      "deck": "program:zero-to-launch:growth-engineering",
+      "skills": [
+        {
+          "id": "social-automation",
+          "source": "local",
+          "file": "content/skills/social-automation/SKILL.md"
+        },
+        {
+          "id": "social-post",
+          "source": "local",
+          "file": "content/skills/social-post/SKILL.md"
+        },
+        {
+          "id": "content-repurpose",
+          "source": "local",
+          "file": "content/skills/content-repurpose/SKILL.md"
+        },
+        {
+          "id": "ship-announcement",
+          "source": "local",
+          "file": "content/skills/ship-announcement/SKILL.md"
+        },
+        {
+          "id": "paid-basics",
+          "source": "local",
+          "file": "content/skills/paid-basics/SKILL.md"
+        },
+        {
+          "id": "paid-test",
+          "source": "local",
+          "file": "content/skills/paid-test/SKILL.md"
+        },
+        {
+          "id": "unit-economics",
+          "source": "local",
+          "file": "content/skills/unit-economics/SKILL.md"
+        },
+        {
+          "id": "pricing-model",
+          "source": "local",
+          "file": "content/skills/pricing-model/SKILL.md"
+        },
+        {
+          "id": "launch-checklist",
+          "source": "local",
+          "file": "content/skills/launch-checklist/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "/social-automation  →  /unit-economics  →  /paid-basics"
+      ]
+    },
+    {
+      "deck": "program:growth-loops:measure-what-matters",
+      "skills": [
+        {
+          "id": "measurement-contract",
+          "source": "program",
+          "file": "content/program-skills/measurement-contract/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "complete journey  →  inspect payload  →  find user",
+        "save taxonomy  →  validation log  →  scorecard"
+      ]
+    },
+    {
+      "deck": "program:growth-loops:activation",
+      "skills": [
+        {
+          "id": "activation-plan",
+          "source": "program",
+          "file": "content/program-skills/activation-plan/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "compare first-7-day behaviors  →  week-4 return",
+        "baseline  →  ship change  →  replay events"
+      ]
+    },
+    {
+      "deck": "program:growth-loops:engagement",
+      "skills": [
+        {
+          "id": "engagement-plan",
+          "source": "program",
+          "file": "content/program-skills/engagement-plan/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "define active = eligible account + core action + window",
+        "retained cohort  vs  slipping cohort",
+        "ship next-value path  →  inspect eligible journey"
+      ]
+    },
+    {
+      "deck": "program:growth-loops:retention",
+      "skills": [
+        {
+          "id": "retention-plan",
+          "source": "program",
+          "file": "content/program-skills/retention-plan/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "define  →  cohort  →  segment  →  triangulate"
+      ]
+    },
+    {
+      "deck": "program:growth-loops:churn-and-reengagement",
+      "skills": [
+        {
+          "id": "churn-review",
+          "source": "program",
+          "file": "content/program-skills/churn-review/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "classify last 20 losses by evidence",
+        "build risk cohort  →  trigger  →  holdout  →  verify exits"
+      ]
+    },
+    {
+      "deck": "program:growth-loops:compound-the-loop",
+      "skills": [
+        {
+          "id": "growth-experiment",
+          "source": "program",
+          "file": "content/program-skills/growth-experiment/SKILL.md"
+        }
+      ],
+      "terminalCommands": [
+        "model input  →  value  →  output  →  re-entry",
+        "launch  →  replay turn  →  inspect events  →  decide"
+      ]
+    }
+  ],
+  "workshops": [
+    {
+      "deck": "workshop:your-first-agent",
+      "skills": [
+        {
+          "id": "workshop-your-first-agent",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/your-first-agent/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:build-your-first-agentic-workflow",
+      "skills": [
+        {
+          "id": "workshop-build-your-first-agentic-workflow",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/build-your-first-agentic-workflow/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:agentic-engineering",
+      "skills": [
+        {
+          "id": "workshop-agentic-engineering",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/agentic-engineering/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:ai-prototype-to-production",
+      "skills": [
+        {
+          "id": "workshop-ai-prototype-to-production",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/ai-prototype-to-production/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:build-your-ai-software-factory",
+      "skills": [
+        {
+          "id": "workshop-build-your-ai-software-factory",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/build-your-ai-software-factory/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:build-your-brand",
+      "skills": [
+        {
+          "id": "workshop-build-your-brand",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/build-your-brand/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:vibe-coding-gtm",
+      "skills": [
+        {
+          "id": "workshop-vibe-coding-gtm",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/vibe-coding-gtm/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:ai-lead-magnets",
+      "skills": [
+        {
+          "id": "workshop-ai-lead-magnets",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/ai-lead-magnets/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:creatives-agentic-workflow",
+      "skills": [
+        {
+          "id": "workshop-creatives-agentic-workflow",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/creatives-agentic-workflow/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:automate-social-media",
+      "skills": [
+        {
+          "id": "workshop-automate-social-media",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/automate-social-media/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:agentic-lead-generation",
+      "skills": [
+        {
+          "id": "workshop-agentic-lead-generation",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/agentic-lead-generation/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:ai-lead-qualification",
+      "skills": [
+        {
+          "id": "workshop-ai-lead-qualification",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/ai-lead-qualification/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:ai-sales-gtm-team",
+      "skills": [
+        {
+          "id": "workshop-ai-sales-gtm-team",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/ai-sales-gtm-team/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:company-knowledge-engine",
+      "skills": [
+        {
+          "id": "workshop-company-knowledge-engine",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/company-knowledge-engine/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:ai-customer-support-team",
+      "skills": [
+        {
+          "id": "workshop-ai-customer-support-team",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/ai-customer-support-team/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:ai-business-intelligence-team",
+      "skills": [
+        {
+          "id": "workshop-ai-business-intelligence-team",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/ai-business-intelligence-team/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:ai-client-delivery-system",
+      "skills": [
+        {
+          "id": "workshop-ai-client-delivery-system",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/ai-client-delivery-system/SKILL.md"
+        }
+      ]
+    },
+    {
+      "deck": "workshop:build-your-ai-organization",
+      "skills": [
+        {
+          "id": "workshop-build-your-ai-organization",
+          "source": "First-party Ship AI exercise",
+          "file": "content/workshop-skills/build-your-ai-organization/SKILL.md"
+        }
+      ]
+    }
+  ]
+}

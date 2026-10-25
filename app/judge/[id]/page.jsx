@@ -5,6 +5,7 @@ import { requireRole } from "../../../lib/auth";
 import { sql, one } from "../../../lib/db";
 import { scoreCard, submissionById } from "../../../lib/store";
 import Scorecard from "../scorecard";
+import { PITCH_FIELDS, customPitchDeckUrl } from "../../../lib/submissions";
 
 export const dynamic = "force-dynamic";
 
@@ -32,9 +33,11 @@ export default async function Page({ params }) {
   const card = await scoreCard(id, user.id);
 
   const conflict = submission.members.some((m) => m.id === user.id);
+  const deckUrl = customPitchDeckUrl(submission.pitch);
 
   const sections = [
     ["What the site is for", submission.summary],
+    ...PITCH_FIELDS.map(field => [field.name, submission.pitch?.[field.key]]),
     ["What they shipped", submission.launch],
     ["Receipts", submission.receipts],
   ].filter(([, value]) => value);
@@ -102,6 +105,7 @@ export default async function Page({ params }) {
                 Repo
               </a>
             )}
+            {deckUrl && <a className="btn btn-ghost ac-btn-sm" href={deckUrl} target="_blank" rel="noreferrer">Open team&apos;s deck <ExternalLink size={13} aria-hidden="true"/></a>}
           </div>
         )}
 

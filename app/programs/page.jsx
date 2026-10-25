@@ -6,6 +6,7 @@ import "./programs.css";
 import { JsonLd } from "../../components/article";
 import { PROGRAMS, programVenueNames } from "../../lib/programs";
 import { DISCORD } from "../../lib/hackathon";
+import { Lockup } from "../../components/seal";
 
 const SITE = "https://www.shipai.club";
 
@@ -39,7 +40,7 @@ export const metadata = {
     description: "Multi-session Ship AI programs for builders in Phoenix. Learn by building.",
     url: "https://www.shipai.club/programs",
     siteName: "Ship AI",
-    images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }],
+    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
   },
 };
 
@@ -48,10 +49,7 @@ export default function Page() {
     <>
       <JsonLd data={LIST_SCHEMA} />
       <header className="nav">
-        <a href="/" className="brand">
-          <img src="/logo-mark.png" alt="" width={26} height={26} />
-          <span>Ship AI</span>
-        </a>
+        <Lockup />
         <nav>
           <a href="/workshops">Workshops</a>
           <a href="/programs" aria-current="page">Programs</a>
@@ -104,10 +102,7 @@ export default function Page() {
       </main>
 
       <footer className="footer programs-footer">
-        <div className="brand">
-          <img src="/logo-mark.png" alt="" width={22} height={22} />
-          <span>Ship AI</span>
-        </div>
+        <Lockup compact />
         <nav><a href="/">Home</a><a href="/workshops">Workshops</a>
           <a href="/programs">Programs</a><a href="/programs/zero-to-launch/hackathon">Hackathon</a></nav>
         <p className="fine">© 2026 Ship AI</p>

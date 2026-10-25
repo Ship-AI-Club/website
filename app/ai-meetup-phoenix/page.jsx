@@ -10,7 +10,7 @@ export const metadata = {
   title: `${TITLE} — Ship AI`,
   description: DESCRIPTION,
   alternates: { canonical: "https://www.shipai.club/ai-meetup-phoenix" },
-  openGraph: { title: TITLE, description: DESCRIPTION, images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }] },
+  openGraph: { title: TITLE, description: DESCRIPTION, images: [{ url: "/og-community.png", width: 1200, height: 630 }] },
 };
 
 const FAQS = [

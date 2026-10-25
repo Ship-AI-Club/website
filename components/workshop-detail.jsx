@@ -3,9 +3,10 @@ import { titleCase } from "../lib/title-case";
 import { ArrowLeft, ArrowRight, Check, Plus, Layers, Users, Video } from "lucide-react";
 import WorkshopArt from "./workshop-art";
 import { workshopMedia, workshopOgPath } from "../lib/workshop-media";
+import { Lockup } from "./seal";
 
 export function WorkshopNav() {
-  return <header className="nav"><a href="/" className="brand"><img src="/logo-mark.png" alt="" width={26} height={26} /><span>Ship AI</span></a><nav><a href="/workshops">Workshops</a><a href="/programs">Programs</a><a href="/about">About</a></nav><a className="btn btn-solid nav-cta" href="/dashboard">Account</a><MobileNav /></header>;
+  return <header className="nav"><Lockup /><nav><a href="/workshops">Workshops</a><a href="/programs">Programs</a><a href="/about">About</a></nav><a className="btn btn-solid nav-cta" href="/dashboard">Account</a><MobileNav /></header>;
 }
 
 export async function WorkshopHero({ slug, heading, category, promise, description, chips, artLabel, href, cta, price, titleClassName, materialsHref }) {

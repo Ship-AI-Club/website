@@ -11,6 +11,7 @@ import {
   Zap,
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
+import { Lockup } from "../../components/seal";
 
 const TITLE = "About — Ship AI";
 const DESCRIPTION =
@@ -25,7 +26,7 @@ export const metadata = {
     description: DESCRIPTION,
     url: "https://www.shipai.club/about",
     siteName: "Ship AI",
-    images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }],
+    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
   },
 };
 
@@ -97,10 +98,7 @@ export default function Page() {
   return (
     <>
       <header className="nav">
-        <a href="/" className="brand">
-          <img src="/logo-mark.png" alt="" width={26} height={26} />
-          <span>Ship AI</span>
-        </a>
+        <Lockup />
         <nav>
           <a href="/workshops">Workshops</a>
           <a href="/programs">Programs</a>
@@ -171,10 +169,7 @@ export default function Page() {
       </main>
 
       <footer className="footer">
-        <div className="brand">
-          <img src="/logo-mark.png" alt="" width={22} height={22} />
-          <span>Ship AI</span>
-        </div>
+        <Lockup compact />
         <nav>
           <a href="/workshops">Workshops</a>
           <a href="/programs">Programs</a>

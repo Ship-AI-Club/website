@@ -1,28 +1,28 @@
 /* The marketing deck's paper, cobalt, Geist, frame, and type scale carry forward. */
 .ge-slide .mk-content { gap:1.4cqw; }
-.ge-label { font:1cqw/1.4 var(--font-geist-mono),monospace; color:var(--accent); display:block; }
+.ge-label { font:1cqw/1.4 var(--sap-font-mono); color:var(--accent); display:block; }
 .ge-slide h4 { font-size:2.6cqw; line-height:1.1; letter-spacing:-.04em; }
 .ge-slide p { line-height:1.45; }
 .ge-slide .mk-lead { line-height:1.45; }
 .ge-opening,.ge-brief,.ge-paths,.ge-task,.ge-approval,.ge-measure,.ge-rehearsal { display:grid; grid-template-columns:1fr 1fr; gap:3cqw; align-items:center; }
-.ge-brand { background:#edf2ff; border:1px solid var(--hairline); border-radius:.7cqw; padding:1.8cqw; display:flex; flex-direction:column; align-items:center; gap:1.1cqw; }
+.ge-brand { background:#edf2ff; border:1px solid var(--hairline); border-radius: 0; padding:1.8cqw; display:flex; flex-direction:column; align-items:center; gap:1.1cqw; }
 .ge-brand img { width:18cqw; height:18cqw; }
 .ge-brand strong { font-size:2.4cqw; letter-spacing:-.04em; }
 .ge-opening h4 { font-size:4.5cqw; margin:1cqw 0; }
 .ge-opening p { font-size:1.75cqw; margin-bottom:1.4cqw; }
 .ge-opening a { font-size:1.1cqw; color:var(--accent); }
 .ge-brief { align-items:stretch; }
-.ge-brief > div { background:#edf2ff; padding:2.3cqw; border-radius:.6cqw; }
+.ge-brief > div { background:#edf2ff; padding:2.3cqw; border-radius: 0; }
 .ge-brief h4 { font-size:3.8cqw; margin:1.2cqw 0; }
 .ge-brief p { font-size:1.4cqw; }
-.ge-cta { display:inline-block; margin-top:1.5cqw; background:var(--accent); color:white; padding:.7cqw 1cqw; font-size:1.2cqw; border-radius:.3cqw; }
+.ge-cta { display:inline-block; margin-top:1.5cqw; background:var(--accent); color:white; padding:.7cqw 1cqw; font-size:1.2cqw; border-radius: 0; }
 .ge-brief dl { display:flex; flex-direction:column; justify-content:center; }
 .ge-brief dl > div { padding:1cqw 0; border-bottom:1px solid var(--hairline); }
 .ge-brief dt { font-size:1.1cqw; color:var(--faint); margin-bottom:.3cqw; }
 .ge-brief dd { font-size:1.6cqw; line-height:1.35; }
 .ge-journey { display:grid; grid-template-columns:repeat(4,1fr); gap:2.4cqw; }
 .ge-journey > div { position:relative; padding:2cqw 0; border-top:2px solid var(--accent); }
-.ge-journey > div > span { font:1.5cqw var(--font-geist-mono),monospace; color:var(--accent); }
+.ge-journey > div > span { font:1.5cqw var(--sap-font-mono); color:var(--accent); }
 .ge-journey h4 { margin:2cqw 0 .8cqw; }
 .ge-journey p { font-size:1.3cqw; color:var(--dim); }
 .ge-journey b { position:absolute; right:-2cqw; top:5cqw; font-size:2cqw; color:var(--accent); }
@@ -40,14 +40,14 @@
 .ge-team p { font-size:1.45cqw; margin-top:.6cqw; color:var(--dim); }
 .ge-steps { display:flex; flex-direction:column; gap:1.5cqw; }
 .ge-steps > div { display:flex; gap:1.4cqw; border-top:1px solid var(--hairline); padding-top:1.2cqw; }
-.ge-steps > div > span { font:1.3cqw var(--font-geist-mono),monospace; color:var(--accent); padding-top:.25cqw; }
+.ge-steps > div > span { font:1.3cqw var(--sap-font-mono); color:var(--accent); padding-top:.25cqw; }
 .ge-steps h4 { font-size:2.2cqw; }
 .ge-steps p { font-size:1.5cqw; color:var(--dim); margin-top:.55cqw; }
 .ge-task-note { border-left:2px solid var(--accent); padding:1.4cqw 0 1.4cqw 2cqw; }
 .ge-task-note h4 { font-size:3.1cqw; margin:1cqw 0; }
 .ge-task-note p { font-size:1.4cqw; color:var(--dim); }
 .ge-prompt-tools { display:flex; gap:.8cqw; align-items:center; margin-top:.4cqw; }
-.ge-slide button,.ge-dialog button { background:var(--accent); color:white; border:1px solid var(--accent); border-radius:.3cqw; padding:.6cqw 1cqw; font:500 1.15cqw/1.4 var(--font-geist-sans),sans-serif; cursor:pointer; min-height:38px; }
+.ge-slide button,.ge-dialog button { background:var(--accent); color:white; border:1px solid var(--accent); border-radius: 0; padding:.6cqw 1cqw; font:500 1.15cqw/1.4 var(--sap-font-body); cursor:pointer; min-height:38px; }
 .ge-slide button:disabled { opacity:.55; cursor:default; }
 .ge-slide button:focus-visible,.ge-slide a:focus-visible,.ge-dialog button:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
 .ge-slide button.ge-secondary { color:var(--ink); background:transparent; border-color:var(--edge); }
@@ -57,7 +57,7 @@
 .ge-approval { align-items:stretch; }
 .ge-review-copy { border:1px solid var(--hairline); padding:1.7cqw; background:white; }
 .ge-review-copy label { display:block; font-size:1.3cqw; margin:.9cqw 0 .5cqw; }
-.ge-review-copy textarea { width:100%; height:7cqw; padding:.8cqw; font:1.35cqw/1.4 var(--font-geist-sans),sans-serif; color:var(--ink); background:var(--bg); border:1px solid var(--edge); resize:vertical; }
+.ge-review-copy textarea { width:100%; height:7cqw; padding:.8cqw; font:1.35cqw/1.4 var(--sap-font-body); color:var(--ink); background:var(--bg); border:1px solid var(--edge); resize:vertical; }
 .ge-review-copy p { font-size:1.1cqw; margin-top:.7cqw; }
 .ge-review-copy small,.ge-review-state small { font-size:1cqw; color:var(--dim); display:block; margin-top:.8cqw; }
 .ge-review-state { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; }
@@ -68,8 +68,8 @@
 .ge-stack strong { font-size:2cqw; letter-spacing:-.04em; white-space:nowrap; }
 .ge-stack strong span { color:var(--accent); font-size:1.4cqw; }
 .ge-stack a > span { font-size:1.2cqw; color:var(--dim); max-width:23ch; }
-.ge-app { border:1px solid var(--edge); border-radius:.5cqw; overflow:hidden; background:white; }
-.ge-app-header { display:flex; justify-content:space-between; background:#edf2ff; border-bottom:1px solid var(--hairline); padding:.8cqw 1.5cqw; font:1cqw var(--font-geist-mono),monospace; color:var(--accent); }
+.ge-app { border:1px solid var(--edge); border-radius: 0; overflow:hidden; background:white; }
+.ge-app-header { display:flex; justify-content:space-between; background:#edf2ff; border-bottom:1px solid var(--hairline); padding:.8cqw 1.5cqw; font:1cqw var(--sap-font-mono); color:var(--accent); }
 .ge-app-body { display:grid; grid-template-columns:1.4fr 1fr; gap:3cqw; padding:1.5cqw 2cqw; }
 .ge-app-body h4 { margin:.5cqw 0; }
 .ge-app-body p { font-size:1.2cqw; color:var(--dim); }
@@ -85,19 +85,19 @@
 .ge-rehearsal-links { border-left:1px solid var(--hairline); padding-left:3cqw; }
 .ge-rehearsal-links a { display:block; color:var(--accent); font-size:1.4cqw; margin:1cqw 0; }
 .ge-rehearsal-links p { font-size:1.3cqw; color:var(--dim); }
-.ge-dialog { position:fixed; inset:0; margin:auto; width:min(850px,92vw); max-height:88dvh; padding:28px; border:1px solid var(--edge); border-radius:10px; background:var(--bg); color:var(--ink); box-shadow:0 20px 80px #0003; }
+.ge-dialog { position:fixed; inset:0; margin:auto; width:min(850px,92vw); max-height:88dvh; padding:28px; border:1px solid var(--edge); border-radius: 0; background:var(--bg); color:var(--ink); box-shadow: none; }
 .ge-dialog::backdrop { background:#0d0f1480; }
 .ge-dialog-head { display:flex; justify-content:space-between; gap:20px; align-items:center; }
 .ge-dialog h2 { font-size:28px; line-height:1.15; letter-spacing:-.03em; }
 .ge-dialog p { font-size:14px; margin:12px 0; }
-.ge-dialog textarea { width:100%; height:40vh; min-height:180px; background:white; color:var(--ink); padding:18px; font:16px/1.6 var(--font-geist-sans),sans-serif; resize:vertical; border:1px solid var(--edge); margin-bottom:14px; }
-.ge-dialog button { font-size:14px; padding:10px 16px; border-radius:4px; }
+.ge-dialog textarea { width:100%; height:40vh; min-height:180px; background:white; color:var(--ink); padding:18px; font:16px/1.6 var(--sap-font-body); resize:vertical; border:1px solid var(--edge); margin-bottom:14px; }
+.ge-dialog button { font-size:14px; padding:10px 16px; border-radius: 0; }
 @media screen and (max-width:900px) {
  .ge-slide .mk-content { gap:22px; }
  .ge-label { font-size:11px; }
  .ge-slide h4 { font-size:28px; }
  .ge-opening,.ge-brief,.ge-paths,.ge-task,.ge-approval,.ge-measure,.ge-rehearsal { grid-template-columns:1fr; gap:24px; }
- .ge-brand { padding:22px; gap:16px; border-radius:8px; }
+ .ge-brand { padding:22px; gap:16px; border-radius: 0; }
  .ge-brand img { width:180px; height:180px; }
  .ge-brand strong { font-size:26px; }
  .ge-opening h4,.ge-brief h4 { font-size:40px; margin:14px 0; }
@@ -130,7 +130,7 @@
  .ge-task-note { padding:4px 0 4px 18px; }
  .ge-task-note h4 { font-size:30px; margin:12px 0; }
  .ge-prompt-tools { flex-wrap:wrap; gap:10px; margin-top:4px; }
- .ge-slide button { font-size:14px; padding:10px 14px; min-height:44px; border-radius:4px; }
+ .ge-slide button { font-size:14px; padding:10px 14px; min-height:44px; border-radius: 0; }
  .ge-prompt-tools > a,.ge-sources a { font-size:13px; }
  .ge-prompt-tools > a { margin:6px 0 0; flex-basis:100%; }
  .ge-sources { gap:16px; flex-wrap:wrap; }
@@ -145,7 +145,7 @@
  .ge-stack strong { font-size:24px; }
  .ge-stack strong span { font-size:16px; }
  .ge-stack a > span { font-size:14px; }
- .ge-app { border-radius:6px; }
+ .ge-app { border-radius: 0; }
  .ge-app-header { gap:15px; padding:14px; font-size:11px; }
  .ge-app-body { grid-template-columns:1fr; gap:22px; padding:18px; }
  .ge-app-body h4 { margin:10px 0; }

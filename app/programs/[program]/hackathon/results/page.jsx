@@ -18,6 +18,7 @@ import {
 import { publishedCertificates } from "../../../../../lib/store";
 import { getSetting } from "../../../../../lib/settings";
 import "../awards.css";
+import { Lockup } from "../../../../../components/seal";
 
 /* Results are published by flipping a switch in /admin on the Sunday,
    not by a deploy — see lib/settings.js. Until then this page renders
@@ -40,7 +41,7 @@ export const metadata = {
     description: DESCRIPTION,
     url: "https://www.shipai.club/programs/zero-to-launch/hackathon/results",
     siteName: "Ship AI",
-    images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }],
+    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
   },
   robots: { index: true, follow: true },
 };
@@ -115,10 +116,7 @@ export default async function Page({ params }) {
       />
 
       <header className="nav">
-        <a href="/" className="brand">
-          <img src="/logo-mark.png" alt="" width={26} height={26} />
-          <span>Ship AI</span>
-        </a>
+        <Lockup />
         <nav>
           <a href="/programs">Programs</a>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
@@ -294,10 +292,7 @@ export default async function Page({ params }) {
       </main>
 
       <footer className="footer">
-        <div className="brand">
-          <img src="/logo-mark.png" alt="" width={22} height={22} />
-          <span>Ship AI</span>
-        </div>
+        <Lockup compact />
         <nav>
           <a href="/">Home</a>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>

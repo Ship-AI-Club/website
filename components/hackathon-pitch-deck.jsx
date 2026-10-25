@@ -55,7 +55,7 @@ export default function HackathonPitchDeck({ deck, reference = false, demo = fal
         <button type="button" onClick={() => window.print()}>Print / PDF</button>
       </div>
     </header>
-    <main className="dk-track" ref={trackRef} data-lenis-prevent tabIndex={0} aria-label="Five-minute pitch deck">
+    <main className="dk-track" ref={trackRef} tabIndex={0} aria-label="Five-minute pitch deck">
       {deck.slides.map((item, index) => <section className="dk-slide dk-marketing-slide" id={`slide-${index + 1}`} key={item.id} aria-label={`Slide ${index + 1}: ${item.title}`}>
         <div className={`dk-frame hp-frame hp-${item.id}`}>
           <header className="hp-heading">
@@ -78,7 +78,7 @@ export default function HackathonPitchDeck({ deck, reference = false, demo = fal
         </div>
       </section>)}
     </main>
-    {notes && <aside className="hp-notes" id="pitch-notes" aria-label="Speaker notes" data-lenis-prevent>
+    {notes && <aside className="hp-notes" id="pitch-notes" aria-label="Speaker notes">
       <div><strong>{current + 1}. {slide.title}</strong><span>{slide.window}</span></div><p>{slide.cue}</p>
       {reference && <p>Use your own deck or generate an optional draft from <a href="/dashboard/submission">your submission answers</a>. You can also <a href={`${PITCH_PATH}/demo?view=all`}>see the complete demo pitch</a>. A deck is not required to submit your project.</p>}
       {!reference && !slide.answer && <p>This section still needs your answer. Add it in <a href={backHref}>your submission</a>, save, then reopen your pitch.</p>}

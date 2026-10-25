@@ -1,4 +1,5 @@
 import MobileNav from "../components/mobile-nav";
+import { Lockup } from "../components/seal";
 /* Every /programs/zero-to-launch/hackathon/certificate/<id> that was never issued lands here,
    so this page is the verification failure path for a public
    credential — it should say the id isn't real, not show an unbranded
@@ -15,10 +16,7 @@ export default function NotFound() {
   return (
     <>
       <header className="nav">
-        <a href="/" className="brand">
-          <img src="/logo-mark.png" alt="" width={26} height={26} />
-          <span>Ship AI</span>
-        </a>
+        <Lockup />
         <nav>
           <a href="/programs">Programs</a>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
@@ -48,10 +46,7 @@ export default function NotFound() {
       </main>
 
       <footer className="footer">
-        <div className="brand">
-          <img src="/logo-mark.png" alt="" width={22} height={22} />
-          <span>Ship AI</span>
-        </div>
+        <Lockup compact />
         <nav>
           <a href="/">Home</a>
           <a href="/programs">Programs</a>

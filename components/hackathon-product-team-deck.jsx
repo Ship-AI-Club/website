@@ -4,6 +4,7 @@ import {BREAKOUTS,HACKATHON_PATH} from '../lib/hackathon-opening';
 import {PRODUCT_TEAM,BOT_DIRECTORY,MARKETING_TEAM,workshopSetupPrompt} from '../lib/hackathon-product-team';
 import ProductTeamPrompt from './product-team-prompt';
 import botManifest from '../public/hackathon-product-team/bots.json';
+import {Seal} from './seal';
 import WorkshopCodingRoute from './workshop-coding-route';
 
 function RoleGlyph({id,color}){
@@ -70,7 +71,7 @@ export default function ProductTeamDeck({breakout=null}){
  const shown=breakout?slides.filter(x=>x.breakout===breakout):slides;
  return <div className="dk-page pt-deck pt-five-deck">
   <header className="dk-bar"><a href={`${HACKATHON_PATH}${breakout?'#decks':''}`}>{breakout?'← All breakouts':'← Hackathon'}</a><nav className="pt-breakout-nav" aria-label="Breakouts">{BREAKOUTS.map((item,i)=><a href={item.href} aria-current={breakout===item.number?'page':undefined} key={item.slug}>{item.number} · {['Position','Productize','Build','Market'][i]}</a>)}</nav><a href={BOT_DIRECTORY} target="_blank" rel="noopener noreferrer">All bot templates ↗</a></header>
-  <main className="dk-track" data-lenis-prevent tabIndex={-1}>{shown.map((slide,i)=><section className="dk-slide dk-marketing-slide pt-slide" id={`slide-${i+1}`} key={slide.id} aria-label={`Slide ${i+1}: ${slide.title}`}><div className={`dk-frame pt-frame pt-five-frame pt-five-kind-${slide.type}`}><div className="pt-body"><p className="pt-five-label">Breakout {slide.breakout} · {breakoutNames[slide.breakout-1]}</p><header className="pt-five-heading">{i===0?<h1>{slide.title}</h1>:<h2>{slide.title}</h2>}<p>{slide.lead}</p></header><Body slide={slide}/>{slide.note&&<p className="pt-five-note">{slide.note}</p>}</div><footer className="dk-chrome"><span className="pt-brand"><img src="/logo-mark.png" alt=""/>Ship AI</span><span className="dk-chrome-mid">Practical AI, Built Together.</span><span>{slides.filter(x=>x.breakout===slide.breakout).indexOf(slide)+1} / {slides.filter(x=>x.breakout===slide.breakout).length}</span></footer></div></section>)}</main>
+  <main className="dk-track" tabIndex={-1}>{shown.map((slide,i)=><section className="dk-slide dk-marketing-slide pt-slide" id={`slide-${i+1}`} key={slide.id} aria-label={`Slide ${i+1}: ${slide.title}`}><div className={`dk-frame pt-frame pt-five-frame pt-five-kind-${slide.type}`}><div className="pt-body"><p className="pt-five-label">Breakout {slide.breakout} · {breakoutNames[slide.breakout-1]}</p><header className="pt-five-heading">{i===0?<h1>{slide.title}</h1>:<h2>{slide.title}</h2>}<p>{slide.lead}</p></header><Body slide={slide}/>{slide.note&&<p className="pt-five-note">{slide.note}</p>}</div><footer className="dk-chrome"><span className="pt-brand"><Seal size={24} />Ship AI</span><span className="dk-chrome-mid">Practical AI, Built Together.</span><span>{slides.filter(x=>x.breakout===slide.breakout).indexOf(slide)+1} / {slides.filter(x=>x.breakout===slide.breakout).length}</span></footer></div></section>)}</main>
   <DeckControls total={shown.length}/>
  </div>;
 }

@@ -16,8 +16,6 @@
     "@neondatabase/serverless": "^1.1.0",
     "@vercel/blob": "^2.6.1",
     "ai": "^7.0.126",
-    "geist": "^1.7.2",
-    "lenis": "^1.3.25",
     "libfx": "0.0.12",
     "lucide-react": "^1.24.0",
     "next": "^15.3.3",

@@ -1,4 +1,5 @@
 import MobileNav from "./mobile-nav";
+import { Lockup } from "./seal";
 const DISCORD = "https://discord.gg/kZSJMNveYM";
 const MEETUP = "https://www.meetup.com/shipai/";
 
@@ -40,10 +41,7 @@ export function Article({ kicker, title, updated, children }) {
   return (
     <>
       <header className="nav">
-        <a href="/" className="brand">
-          <img src="/logo-mark.png" alt="" width={26} height={26} />
-          <span>Ship AI</span>
-        </a>
+        <Lockup />
         <nav>
           <a href="/programs">Programs</a>
           <a href="/about">About</a>
@@ -68,10 +66,7 @@ export function Article({ kicker, title, updated, children }) {
         </div>
       </main>
       <footer className="footer">
-        <div className="brand">
-          <img src="/logo-mark.png" alt="" width={22} height={22} />
-          <span>Ship AI</span>
-        </div>
+        <Lockup compact />
         <nav>
           <a href="/programs">Programs</a>
           <a href="/about">About</a>

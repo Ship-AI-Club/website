@@ -19,7 +19,7 @@
 
 .ik-nav-note {
   margin-left: auto;
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.78rem;
   letter-spacing: 0;
@@ -50,7 +50,7 @@
 }
 
 .ik-req {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.76rem;
   letter-spacing: -0.005em;
   color: var(--bg);
@@ -76,7 +76,7 @@
   color: var(--ink);
   background: var(--surface);
   border: 1px solid var(--edge);
-  border-radius: 8px;
+  border-radius: 0;
   padding: 0.75rem 0.9rem;
   transition: border-color 150ms ease, background 150ms ease;
 }
@@ -113,12 +113,12 @@
 }
 
 .ik-role {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.92rem;
   letter-spacing: -0.005em;
   color: var(--dim);
   border: 1px solid var(--hairline);
-  border-radius: 8px;
+  border-radius: 0;
   padding: 0.6rem 1.15rem;
   cursor: pointer;
   transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
@@ -156,7 +156,7 @@
   color: var(--dim);
   font-size: 0.92rem;
   border: 1px dashed rgba(var(--fg-rgb), 0.22);
-  border-radius: 10px;
+  border-radius: 0;
   background: var(--surface);
   transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
 }
@@ -197,7 +197,7 @@
   gap: 0.85rem;
   padding: 0.7rem 0.8rem;
   border: 1px solid var(--hairline);
-  border-radius: 8px;
+  border-radius: 0;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
@@ -208,7 +208,7 @@
   place-items: center;
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 6px;
+  border-radius: 0;
   overflow: hidden;
   color: var(--faint);
   background: rgba(var(--fg-rgb), 0.06);
@@ -233,7 +233,7 @@
 }
 
 .ik-file-size {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.75rem;
   color: var(--faint);
@@ -262,7 +262,7 @@
   color: var(--faint);
   background: none;
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: 0;
   cursor: pointer;
   transition: color 150ms ease, border-color 150ms ease;
 }
@@ -318,7 +318,7 @@
   font-size: 0.92rem;
   padding: 0.8rem 1rem;
   border: 1px solid rgba(194, 54, 29, 0.35);
-  border-radius: 8px;
+  border-radius: 0;
   background: rgba(194, 54, 29, 0.06);
 }
 
@@ -371,7 +371,7 @@
 }
 
 .ik-inbox-count {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.85rem;
   color: var(--faint);
@@ -396,7 +396,7 @@
 }
 
 .ik-tag {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.76rem;
   letter-spacing: -0.005em;
   color: var(--bg);
@@ -406,7 +406,7 @@
 }
 
 .ik-sub-when {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.75rem;
   color: var(--faint);
@@ -442,7 +442,7 @@
   font-size: 0.85rem;
   color: var(--dim);
   border: 1px solid var(--hairline);
-  border-radius: 8px;
+  border-radius: 0;
   transition: color 150ms ease, border-color 150ms ease;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
@@ -452,12 +452,12 @@
   width: 2rem;
   height: 2rem;
   object-fit: contain;
-  border-radius: 4px;
+  border-radius: 0;
   background: rgba(var(--fg-rgb), 0.06);
 }
 
 .ik-asset-kind {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.76rem;
   letter-spacing: -0.005em;
   color: var(--faint);

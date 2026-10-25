@@ -64,7 +64,7 @@ button.btn {
   border: 1px solid var(--hairline);
   padding: 1.6rem 1.5rem;
   margin-bottom: 2.5rem;
-  border-radius: var(--radius);
+  border-radius: 0;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
@@ -73,7 +73,7 @@ button.btn {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.88rem;
   color: var(--ink);
@@ -134,7 +134,7 @@ button.btn {
   width: 100%;
   border-collapse: collapse;
   border: 1px solid var(--hairline);
-  border-radius: var(--radius);
+  border-radius: 0;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
@@ -154,7 +154,7 @@ button.btn {
 }
 
 .rs-table th {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.78rem;
   font-weight: 400;
   letter-spacing: -0.005em;
@@ -198,7 +198,7 @@ button.btn {
 }
 
 .rs-place {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.8rem;
   color: var(--dim);
@@ -213,7 +213,7 @@ button.btn {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--sap-font-mono);
   font-size: 0.74rem;
   color: var(--faint-aa);
   white-space: nowrap;
@@ -333,7 +333,7 @@ button.btn {
   border-top: 1px solid var(--hairline);
   margin-top: 2.5rem;
   padding-top: 1.5rem;
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.8rem;
   color: var(--dim);
@@ -345,7 +345,7 @@ button.btn {
 }
 
 .cert-kind {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-weight: 500;
   font-size: 0.81rem;
   letter-spacing: -0.005em;
@@ -381,7 +381,7 @@ button.btn {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.85rem;
   color: var(--accent);
@@ -414,7 +414,7 @@ button.btn {
 }
 
 .cert-meta dt {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-weight: 500;
   font-size: 0.81rem;
   letter-spacing: -0.005em;
@@ -423,7 +423,7 @@ button.btn {
 }
 
 .cert-meta dd {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.82rem;
   color: var(--dim);
@@ -438,7 +438,7 @@ button.btn {
 }
 
 .cert-verify {
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--sap-font-mono);
   font-size: 0.76rem;
   color: var(--faint-aa);
   margin-top: 1.5rem;
@@ -459,7 +459,7 @@ button.btn {
 }
 
 .cert-preview {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.78rem;
   color: var(--bg);

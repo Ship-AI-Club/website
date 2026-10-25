@@ -19,6 +19,7 @@ import { deckFor } from "../../../lib/decks";
 import { guideFor } from "../../../lib/guides";
 import registry from "../../../lib/skills.generated.json";
 import { PROGRAMS, programBySlug, programVenueNames, sessionDateLabel, sessionNights, sessionScheduled, sessionVenues } from "../../../lib/programs";
+import { Lockup } from "../../../components/seal";
 import WaitlistForm from "./waitlist-form";
 import {
   DISCORD,
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }) {
     title,
     description: program.description,
     alternates: { canonical: url },
-    openGraph: { title, description: program.description, url, siteName: "Ship AI", images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }] },
+    openGraph: { title, description: program.description, url, siteName: "Ship AI", images: [{ url: "/og-community.png", width: 1200, height: 630 }] },
   };
 }
 
@@ -101,10 +102,7 @@ export default async function Page({ params }) {
       {schema && <JsonLd data={schema} />}
 
       <header className="nav">
-        <a href="/" className="brand">
-          <img src="/logo-mark.png" alt="" width={26} height={26} />
-          <span>Ship AI</span>
-        </a>
+        <Lockup />
         <nav>
           <a href="/programs">Programs</a>
           {program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}
@@ -291,7 +289,7 @@ export default async function Page({ params }) {
       </main>
 
       <footer className="footer">
-        <div className="brand"><img src="/logo-mark.png" alt="" width={22} height={22} /><span>Ship AI</span></div>
+        <Lockup compact />
         <nav><a href="/">Home</a><a href="/programs">Programs</a>{manifest && <a href={`/programs/${program.slug}/skills`}>Skills</a>}{program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}</nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

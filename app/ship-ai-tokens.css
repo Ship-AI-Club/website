@@ -1,0 +1,74 @@
+/* Ship AI design tokens. Generated from section 11 of SHIP-AI-PARTNERS-BRAND-SYSTEM.md; edit the guide, not this file.
+   Light by default; dark follows the system setting unless <html data-mode="light|dark"> is set. */
+:root{
+  /* Primitives */
+  --sap-sheet:#FBF9F3; --sap-paper:#F3EFE3; --sap-paper-deep:#EAE4D3; --sap-rule-light:#D6CFBC;
+  --sap-slate-green:#4B5B53; --sap-dither:#1C5544; --sap-banknote:#0D241E;
+  --sap-plate:#12302A; --sap-plate-raised:#1A3F35; --sap-night-plate:#14342C; --sap-rule-dark:#2A4A40; --sap-dither-dark:#3E7A65;
+  --sap-night-water:#0A1C1F; --sap-night-water-raised:#10282B;
+  --sap-bone:#ECE6D3; --sap-sage:#B7C0B1; --sap-star-dither:#9DB8AB; --sap-mint:#9DC7B2;
+  --sap-brass:#8C6A2A; --sap-brass-bright:#C9AD72; --sap-white:#FFFFFF;
+
+  /* Semantic, light mode */
+  --sap-bg:var(--sap-paper); --sap-bg-raised:var(--sap-sheet); --sap-bg-sunken:var(--sap-paper-deep);
+  --sap-text:var(--sap-banknote); --sap-text-muted:var(--sap-slate-green); --sap-rule:var(--sap-rule-light);
+  --sap-art:var(--sap-dither); --sap-accent:var(--sap-dither); --sap-fix:var(--sap-brass); --sap-shadow:rgba(0,0,0,.12);
+  --sap-input-border:#6B766F; --sap-danger:#A3341F; --sap-success:var(--sap-accent); --sap-overlay:rgba(13,36,30,.55);
+  --sap-band-bg:var(--sap-night-water); --sap-band-bg-raised:var(--sap-night-water-raised);
+  --sap-band-text:var(--sap-bone); --sap-band-text-muted:var(--sap-sage); --sap-band-art:var(--sap-star-dither); --sap-band-rule:rgba(236,230,211,.16);
+
+  /* Type */
+  --sap-font-display:"Besley",Georgia,serif;
+  --sap-font-body:"Libre Franklin",system-ui,sans-serif;
+  --sap-font-mono:"Fragment Mono",ui-monospace,monospace;
+  --sap-font-button:600 16px/1 "Libre Franklin",system-ui,sans-serif;
+  --sap-fs-display:clamp(40px,5.6vw,72px); --sap-lh-display:1.04;
+  --sap-fs-h2:clamp(30px,3.8vw,50px); --sap-lh-h2:1.08;
+  --sap-fs-price:42px; --sap-fs-figure:30px; --sap-fs-faq:20px;
+  --sap-fs-h3:18px; --sap-fs-lede:18px; --sap-fs-body:16px; --sap-fs-small:15px; --sap-fs-caption:14px;
+  --sap-fs-label:12.5px; --sap-fs-micro:11.5px;
+  --sap-track-display:-.022em; --sap-track-key:-.025em; --sap-track-h3:-.01em;
+  --sap-measure-lede:56ch; --sap-measure-long:70ch;
+
+  /* Space and layout */
+  --sap-space-1:4px; --sap-space-2:8px; --sap-space-3:12px; --sap-space-4:16px; --sap-space-5:20px; --sap-space-6:24px;
+  --sap-space-7:32px; --sap-space-8:40px; --sap-space-9:56px; --sap-space-10:64px; --sap-space-11:88px; --sap-space-12:112px;
+  --sap-container:1200px; --sap-gutter:32px; --sap-section-y:112px; --sap-header-h:64px;
+  /* Breakpoints (for media queries; custom properties can't be used in them): 1040px, 860px */
+
+  /* Shape, borders and shadows */
+  --sap-radius:0; --sap-notch:12px; --sap-notch-sm:10px; --sap-notch-card:18px;
+  --sap-border:1px solid var(--sap-rule); --sap-border-strong:1px solid var(--sap-text); --sap-border-fix:1.5px solid var(--sap-fix);
+  --sap-shadow-window:0 18px 50px var(--sap-shadow); --sap-shadow-offset:4px 4px 0 var(--sap-art);
+
+  /* Controls */
+  --sap-btn-h:54px; --sap-btn-h-sm:44px; --sap-btn-px:30px; --sap-btn-px-sm:20px;
+
+  /* Motion */
+  --sap-ease:cubic-bezier(.2,.7,.2,1);
+  --sap-dur-fast:150ms; --sap-dur-lock:220ms; --sap-dur-sight:450ms; --sap-stagger-sight:300ms;
+  --sap-dur-release:500ms; --sap-dur-reveal:600ms; --sap-frame:80ms;
+  --sap-lock-travel:7px; --sap-release-travel:12px;
+}
+
+/* Dark mode: banknote green, never black. Keep both blocks identical. */
+@media (prefers-color-scheme:dark){
+  :root:not([data-mode="light"]){
+    color-scheme:dark;
+    --sap-bg:var(--sap-banknote); --sap-bg-raised:var(--sap-plate); --sap-bg-sunken:var(--sap-plate-raised);
+    --sap-text:var(--sap-bone); --sap-text-muted:var(--sap-sage); --sap-rule:var(--sap-rule-dark);
+    --sap-art:var(--sap-dither-dark); --sap-accent:var(--sap-mint); --sap-fix:var(--sap-brass-bright); --sap-shadow:rgba(0,0,0,.34);
+    --sap-input-border:#8A968E; --sap-danger:#E9A08F; --sap-overlay:rgba(5,15,12,.7);
+    --sap-band-bg:var(--sap-night-plate); --sap-band-bg-raised:var(--sap-plate-raised);
+  }
+}
+:root[data-mode="dark"]{
+  color-scheme:dark;
+  --sap-bg:var(--sap-banknote); --sap-bg-raised:var(--sap-plate); --sap-bg-sunken:var(--sap-plate-raised);
+  --sap-text:var(--sap-bone); --sap-text-muted:var(--sap-sage); --sap-rule:var(--sap-rule-dark);
+  --sap-art:var(--sap-dither-dark); --sap-accent:var(--sap-mint); --sap-fix:var(--sap-brass-bright); --sap-shadow:rgba(0,0,0,.34);
+  --sap-input-border:#8A968E; --sap-danger:#E9A08F; --sap-overlay:rgba(5,15,12,.7);
+  --sap-band-bg:var(--sap-night-plate); --sap-band-bg-raised:var(--sap-plate-raised);
+}
+@media (max-width:860px){:root{--sap-gutter:20px;--sap-section-y:76px;--sap-fs-faq:17px}}
+@media (prefers-reduced-motion:reduce){:root{--sap-dur-lock:0ms;--sap-dur-sight:0ms;--sap-dur-release:0ms;--sap-dur-reveal:0ms;--sap-stagger-sight:0ms}}

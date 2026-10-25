@@ -47,7 +47,7 @@
   background: var(--hairline);
   border: 1px solid var(--hairline);
   margin-bottom: 1.5rem;
-  border-radius: var(--radius);
+  border-radius: 0;
   box-shadow: var(--shadow-sm);
   overflow: hidden;
 }
@@ -83,7 +83,7 @@
 }
 
 .sp-tier-sub {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.78rem;
   letter-spacing: -0.005em;
   color: var(--accent);
@@ -91,7 +91,7 @@
 }
 
 .sp-tier-price {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 1.05rem;
   color: var(--ink);
@@ -99,7 +99,7 @@
 }
 
 .sp-tier-slots {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.81rem;
   letter-spacing: -0.005em;
   color: var(--faint-aa);
@@ -139,7 +139,7 @@
   gap: 1px;
   background: var(--hairline);
   border: 1px solid var(--hairline);
-  border-radius: var(--radius);
+  border-radius: 0;
   box-shadow: var(--shadow-sm);
 }
 
@@ -173,7 +173,7 @@
 }
 
 .sp-item-price {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.78rem;
   color: var(--faint-aa);
@@ -239,7 +239,7 @@
   list-style: none;
   border: 1px solid var(--hairline);
   margin: 1.5rem 0;
-  border-radius: var(--radius);
+  border-radius: 0;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
@@ -257,7 +257,7 @@
 }
 
 .sp-ladder-amt {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.9rem;
   color: var(--ink);
@@ -287,7 +287,7 @@
 .sp-platforms {
   list-style: none;
   border: 1px solid var(--hairline);
-  border-radius: var(--radius);
+  border-radius: 0;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
@@ -304,7 +304,7 @@
 }
 
 .sp-plat-group {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.81rem;
   letter-spacing: -0.005em;
   color: var(--faint-aa);
@@ -327,7 +327,7 @@
   border: 1px solid var(--hairline);
   padding: 0.15rem 0.4rem;
   font-weight: 500;
-  border-radius: var(--radius);
+  border-radius: 0;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
@@ -338,7 +338,7 @@
   list-style: none;
   counter-reset: step;
   border: 1px solid var(--hairline);
-  border-radius: var(--radius);
+  border-radius: 0;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
@@ -354,7 +354,7 @@
 }
 
 .sp-step-n {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.8rem;
   color: var(--accent);
@@ -402,7 +402,7 @@
   border: 1px solid var(--hairline);
   padding: 1.4rem 1.5rem;
   margin-bottom: 2.25rem;
-  border-radius: var(--radius);
+  border-radius: 0;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
@@ -432,7 +432,7 @@
   border: 1px solid var(--hairline);
   padding: 2.5rem clamp(1.25rem, 4vw, 3rem);
   text-align: center;
-  border-radius: var(--radius);
+  border-radius: 0;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
@@ -460,7 +460,7 @@
 .sp-year {
   list-style: none;
   border: 1px solid var(--hairline);
-  border-radius: var(--radius);
+  border-radius: 0;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }

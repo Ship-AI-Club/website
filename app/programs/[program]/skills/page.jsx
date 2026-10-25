@@ -8,6 +8,7 @@ import { guideFor } from "../../../../lib/guides";
 import { PROGRAMS, programBySlug, sessionDateLabel } from "../../../../lib/programs";
 import { DISCORD } from "../../../../lib/hackathon";
 import registry from "../../../../lib/skills.generated.json";
+import { Lockup } from "../../../../components/seal";
 
 const SITE = "https://www.shipai.club";
 const byName = new Map(registry.skills.map((s) => [s.name, s]));
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }) {
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: "Ship AI", images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }] },
+    openGraph: { title, description, url, siteName: "Ship AI", images: [{ url: "/og-community.png", width: 1200, height: 630 }] },
   };
 }
 
@@ -60,7 +61,7 @@ export default async function Page({ params }) {
     <>
       <JsonLd data={schema} />
       <header className="nav">
-        <a href="/" className="brand"><img src="/logo-mark.png" alt="" width={26} height={26} /><span>Ship AI</span></a>
+        <Lockup />
         <nav><a href="/programs">Programs</a><a href={programHref}>Sessions</a>{program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}</nav>
         <div className="nav-ctas">{program.hasHackathon ? <><a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a><a className="btn btn-solid" href="/dashboard">Register</a></> : <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Get notified</a>}</div>
       <MobileNav /></header>
@@ -120,7 +121,7 @@ export default async function Page({ params }) {
       </main>
 
       <footer className="footer">
-        <div className="brand"><img src="/logo-mark.png" alt="" width={22} height={22} /><span>Ship AI</span></div>
+        <Lockup compact />
         <nav><a href="/">Home</a><a href="/programs">Programs</a><a href={programHref}>{program.name}</a>{program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}{program.templateRepo && <a href={program.templateRepo} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={14} height={14} fill="currentColor" aria-hidden="true"><path d={siGithub.path} /></svg></a>}</nav>
         <p className="fine">© 2026 Ship AI</p>
       </footer>

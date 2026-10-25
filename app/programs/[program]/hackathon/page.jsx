@@ -10,6 +10,7 @@ import { PROGRAMS, programBySlug } from "../../../../lib/programs";
 import { EVENT, DISCORD, HACKATHON_PRIZES, HACKATHON_MAX_PRIZE_VALUE } from "../../../../lib/hackathon";
 import { BREAKOUTS, OPENING_DECK, SATURDAY_AGENDA } from "../../../../lib/hackathon-opening";
 import "../../../../app/hackathon-opening.css";
+import { Lockup } from "../../../../components/seal";
 
 const FACTS = [
   { icon: Coins, label: "Prize pool", value: `Up to $${HACKATHON_MAX_PRIZE_VALUE.toLocaleString('en-US')} total value` },
@@ -64,13 +65,13 @@ export const metadata = {
     description: 'Build your AI organization and launch a useful site in Phoenix. Four guided breakouts connect positioning, product design, engineering and marketing.',
     url: "https://www.shipai.club/programs/zero-to-launch/hackathon",
     siteName: "Ship AI",
-    images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }],
+    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Zero to Launch Hackathon — Build Your AI Organization | Ship AI',
     description: 'Build your AI organization and launch a useful site in Phoenix. Four guided breakouts connect positioning, product design, engineering and marketing.',
-    images: ['/ship-ai-social.jpg'],
+    images: ['/og-community.png'],
   },
 };
 
@@ -91,10 +92,7 @@ export default async function Page({ params }) {
     <>
       <JsonLd data={EVENT_SCHEMA} />
       <header className="nav">
-        <a href="/" className="brand">
-          <img src="/logo-mark.png" alt="" width={26} height={26} />
-          <span>Ship AI</span>
-        </a>
+        <Lockup />
         <nav>
           <a href="#focus">What to build</a>
           <a href="#schedule">Weekend</a>
@@ -224,10 +222,7 @@ export default async function Page({ params }) {
       </main>
 
       <footer className="footer">
-        <div className="brand">
-          <img src="/logo-mark.png" alt="" width={22} height={22} />
-          <span>Ship AI</span>
-        </div>
+        <Lockup compact />
         <nav>
           <a href="/">Home</a>
           <a href="/programs/zero-to-launch">Workshops</a>

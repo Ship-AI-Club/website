@@ -27,7 +27,7 @@ export async function generateMetadata({ params }) {
     title: `${title} — Ship AI`,
     description: `The ${program.name} session ${w.n} presentation. ${w.copy}`.slice(0, 300),
     alternates: { canonical: url },
-    openGraph: { title, description: w.copy.slice(0, 200), url, siteName: "Ship AI", images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }] },
+    openGraph: { title, description: w.copy.slice(0, 200), url, siteName: "Ship AI", images: [{ url: "/og-community.png", width: 1200, height: 630 }] },
   };
 }
 
@@ -54,7 +54,7 @@ export default async function Page({ params, searchParams }) {
         <span className="dk-bar-hint">{isGrowth && !selectedTrack ? 'Choose a card to open its presentation' : `${isGrowth ? selectedTrack === 'grok-bot' ? 'Grok Bot · ' : 'Engineer · ' : ''}Arrows or space to advance · F for fullscreen · ⌘P to save as PDF`}</span>
         <a href={programHref} className="dk-bar-all">Sessions</a>
       </header>
-      <div className="dk-track" data-lenis-prevent tabIndex={-1}>
+      <div className="dk-track" tabIndex={-1}>
         {slides.map((s, i) => <Slide key={i} slide={s} workshop={w} program={program} index={i} total={slides.length} />)}
       </div>
       {slides.length > 1 && <DeckControls key={selectedTrack || 'default'} total={slides.length} />}

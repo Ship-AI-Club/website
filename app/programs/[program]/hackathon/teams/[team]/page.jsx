@@ -7,6 +7,7 @@ import { EVENT } from "../../../../../../lib/hackathon";
 import { safeUrl } from "../../../../../../lib/accounts";
 import { PITCH_FIELDS, customPitchDeckUrl, submissionPitchMode } from "../../../../../../lib/submissions";
 import "../../../../../../components/hackathon-teams.css";
+import { Lockup } from "../../../../../../components/seal";
 
 export const dynamic = "force-dynamic";
 
@@ -30,7 +31,7 @@ export default async function Page({ params }) {
   const logo = safeUrl(team.logo_url);
   return <>
     <header className="nav">
-      <Link href="/" className="brand"><img src="/logo-mark.png" alt="" width={26} height={26} /><span>Ship AI</span></Link>
+      <Lockup />
       <nav><Link href={HACKATHON_PATH}>Hackathon</Link><Link href={`${HACKATHON_PATH}#teams`}>All teams</Link></nav>
       <Link href="/dashboard" className="btn btn-ghost nav-cta">Your dashboard</Link><MobileNav />
     </header>

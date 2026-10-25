@@ -1,17 +1,17 @@
 .mx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:0 1rem}
-.mx-grid input[type="date"]{width:100%;font:inherit;font-size:.98rem;color:var(--ink);background:var(--surface);border:1px solid var(--edge);border-radius:8px;padding:.6rem .75rem}
+.mx-grid input[type="date"]{width:100%;font:inherit;font-size:.98rem;color:var(--ink);background:var(--surface);border:1px solid var(--edge);border-radius: 0;padding:.6rem .75rem}
 .mx-area-head{display:flex;width:100%;align-items:center;justify-content:space-between;gap:1rem;text-align:left;background:none;border:0;padding:0;font:inherit;color:var(--ink);cursor:pointer}
 .mx-area-head strong{display:block;font-size:1.05rem;font-weight:500;letter-spacing:-.01em}
 .mx-area-head small{display:block;font-size:.82rem;color:var(--faint);margin-top:.2rem}
 .mx-area-head em{flex:none;font-style:normal;text-align:right;font-size:.85rem;color:var(--accent);font-variant-numeric:tabular-nums}
-.mx-area-head:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+.mx-area-head:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius: 0}
 .mx-levels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.4rem;border:0;padding:0;margin:0}
 .mx-levels legend{margin-bottom:.4rem}
-.mx-levels label{position:relative;display:grid;gap:.3rem;align-content:start;padding:.65rem .7rem;border:1px solid var(--hairline);border-radius:8px;cursor:pointer;background:var(--surface)}
+.mx-levels label{position:relative;display:grid;gap:.3rem;align-content:start;padding:.65rem .7rem;border:1px solid var(--hairline);border-radius: 0;cursor:pointer;background:var(--surface)}
 .mx-levels input{position:absolute;opacity:0;pointer-events:none}
 .mx-levels strong{font-size:.78rem;font-weight:600;color:var(--dim)}
 .mx-levels span{font-size:.8rem;line-height:1.45;color:var(--dim)}
-.mx-levels label.is-on{border-color:var(--accent);background:#eff3ff}
+.mx-levels label.is-on{border-color:var(--accent);background:var(--sunken)}
 .mx-levels label.is-on strong{color:var(--accent)}
 .mx-levels label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
 .mx-clear{justify-self:start;font-size:.75rem}
@@ -19,7 +19,7 @@
 .mx-focus p{margin-top:.25rem;font-size:.88rem;color:var(--dim)}
 .mx-bars{display:grid;gap:.6rem;margin-top:.5rem}
 .mx-bars div{display:grid;grid-template-columns:11rem 1fr 6.5rem;gap:.8rem;align-items:center;font-size:.88rem}
-.mx-bars i{display:block;height:6px;border-radius:6px;background:#e8edf7;overflow:hidden}
+.mx-bars i{display:block;height:6px;border-radius: 0;background:var(--sunken);overflow:hidden}
 .mx-bars b{display:block;height:100%;background:var(--accent)}
 .mx-bars span{color:var(--faint);font-variant-numeric:tabular-nums;text-align:right}
 @media(max-width:720px){.mx-levels{grid-template-columns:1fr 1fr}.mx-bars div{grid-template-columns:1fr 5.5rem}.mx-bars i{grid-column:1/-1;grid-row:2}}

@@ -1,8 +1,31 @@
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import SmoothScroll from "./smooth-scroll";
+import localFont from "next/font/local";
 import { ToastProvider } from "../components/toast-provider";
+import { MODE_BOOT_SCRIPT } from "../lib/mode";
 import "./globals.css";
+
+const besley = localFont({
+  src: [
+    { path: "../public/fonts/besley-latin.woff2", weight: "400 900", style: "normal" },
+    { path: "../public/fonts/besley-italic-latin.woff2", weight: "400 900", style: "italic" },
+  ],
+  variable: "--font-besley",
+  display: "swap",
+  adjustFontFallback: "Times New Roman",
+});
+
+const franklin = localFont({
+  src: "../public/fonts/libre-franklin-latin.woff2",
+  weight: "100 900",
+  variable: "--font-libre-franklin",
+  display: "swap",
+});
+
+const fragment = localFont({
+  src: "../public/fonts/fragment-mono-latin.woff2",
+  weight: "400",
+  variable: "--font-fragment-mono",
+  display: "swap",
+});
 
 export const metadata = {
   metadataBase: new URL("https://www.shipai.club"),
@@ -15,25 +38,27 @@ export const metadata = {
       "Hands-on AI workshops, expert guidance, and real projects in Phoenix. Craft over hype.",
     url: "https://www.shipai.club",
     siteName: "Ship AI",
-    images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }],
+    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
   },
-  twitter: { card: "summary_large_image", images: [{ url: "/ship-ai-social.jpg", alt: "Ship AI" }] },
+  twitter: { card: "summary_large_image", images: [{ url: "/og-community.png", alt: "Ship AI Community: Practical AI, Built Together" }] },
 };
 
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#fbfbf9",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F3EFE3" },
+    { media: "(prefers-color-scheme: dark)", color: "#0D241E" },
+  ],
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
-    >
+    <html lang="en" className={`${besley.variable} ${franklin.variable} ${fragment.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: MODE_BOOT_SCRIPT }} />
+      </head>
       <body>
-        <SmoothScroll />
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>

@@ -12,6 +12,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
+import { Lockup } from "../../../../../components/seal";
 
 import { EVENT, DISCORD, MEETUP, GITHUB, X_URL } from "../../../../../lib/hackathon";
 import { PROGRAMS, programBySlug } from "../../../../../lib/programs";
@@ -58,7 +59,7 @@ export const metadata = {
     description: DESCRIPTION,
     url: "https://www.shipai.club/programs/zero-to-launch/hackathon/sponsor",
     siteName: "Ship AI",
-    images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }],
+    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
   },
 };
 
@@ -76,10 +77,7 @@ export default async function Page({ params }) {
   return (
     <>
       <header className="nav">
-        <a href="/" className="brand">
-          <img src="/logo-mark.png" alt="" width={26} height={26} />
-          <span>Ship AI</span>
-        </a>
+        <Lockup />
         <nav>
           <a href="/programs">Programs</a>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
@@ -333,10 +331,7 @@ export default async function Page({ params }) {
       </main>
 
       <footer className="footer">
-        <div className="brand">
-          <img src="/logo-mark.png" alt="" width={22} height={22} />
-          <span>Ship AI</span>
-        </div>
+        <Lockup compact />
         <nav>
           <a href="/">Home</a>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>

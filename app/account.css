@@ -97,7 +97,7 @@ button.btn:disabled {
 }
 
 .ac-whoami span {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.74rem;
   color: var(--faint);
@@ -110,7 +110,7 @@ button.btn:disabled {
 }
 
 .ac-menu-group {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.76rem;
   letter-spacing: -0.005em;
   color: var(--faint);
@@ -125,7 +125,7 @@ button.btn:disabled {
   font-size: 0.92rem;
   color: var(--dim);
   padding: 0.5rem 0.7rem;
-  border-radius: 7px;
+  border-radius: 0;
   border-left: 2px solid transparent;
   transition: color 150ms ease, background 150ms ease, border-color 150ms ease;
 }
@@ -138,12 +138,12 @@ button.btn:disabled {
 
 .ac-menu a .ac-count {
   margin-left: auto;
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.7rem;
   color: var(--bg);
   background: var(--accent);
-  border-radius: 20px;
+  border-radius: 0;
   padding: 0.05rem 0.42rem;
 }
 
@@ -172,7 +172,7 @@ button.btn:disabled {
 }
 
 .ac-kicker {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.81rem;
   letter-spacing: -0.005em;
   color: var(--accent);
@@ -219,7 +219,7 @@ button.btn:disabled {
 
 .ac-card {
   border: 1px solid var(--hairline);
-  border-radius: 12px;
+  border-radius: 0;
   padding: clamp(1.25rem, 3vw, 1.9rem);
   display: grid;
   gap: 1rem;
@@ -274,11 +274,11 @@ button.btn:disabled {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.76rem;
   letter-spacing: -0.005em;
   border: 1px solid var(--hairline);
-  border-radius: 20px;
+  border-radius: 0;
   padding: 0.2rem 0.6rem;
   color: var(--dim);
   white-space: nowrap;
@@ -331,18 +331,18 @@ button.btn:disabled {
 }
 
 .ac-req {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.74rem;
   letter-spacing: -0.005em;
   color: var(--bg);
   background: var(--accent);
   padding: 0.12rem 0.38rem;
-  border-radius: 3px;
+  border-radius: 0;
   font-weight: 500;
 }
 
 .ac-opt {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.74rem;
   letter-spacing: -0.005em;
   color: var(--faint);
@@ -369,7 +369,7 @@ button.btn:disabled {
   color: var(--ink);
   background: var(--surface);
   border: 1px solid var(--edge);
-  border-radius: 8px;
+  border-radius: 0;
   padding: 0.72rem 0.9rem;
   transition: border-color 150ms ease, background 150ms ease;
 }
@@ -431,7 +431,7 @@ button.btn:disabled {
   caret-color: var(--ink);
   -webkit-box-shadow: 0 0 0 100px var(--surface) inset;
   box-shadow: 0 0 0 100px var(--surface) inset;
-  border-radius: 8px;
+  border-radius: 0;
   border-color: var(--hairline);
   /* Safari animates the yellow in; a long delay never lets it start. */
   transition: background-color 100000s ease-in-out 0s;
@@ -440,8 +440,8 @@ button.btn:disabled {
 .ac-form input:-webkit-autofill:focus,
 .ac-form textarea:-webkit-autofill:focus {
   -webkit-text-fill-color: var(--ink);
-  -webkit-box-shadow: 0 0 0 100px #eef2fc inset;
-  box-shadow: 0 0 0 100px #eef2fc inset;
+  -webkit-box-shadow: none;
+  box-shadow: none;
   border-color: var(--accent);
 }
 
@@ -477,9 +477,9 @@ button.btn:disabled {
    full letter-space moves the centred content half of that to the
    right, which is exactly the offset being cancelled. */
 .ac-code {
-  font-family: var(--font-geist-mono), monospace !important;
+  font-family: var(--sap-font-mono) !important;
   font-size: 1.5rem !important;
-  letter-spacing: 0.38em;
+  letter-spacing: 0;
   text-align: center;
   color: var(--ink) !important;
   -webkit-text-fill-color: var(--ink);
@@ -488,7 +488,7 @@ button.btn:disabled {
 }
 
 .ac-code::placeholder {
-  letter-spacing: 0.38em;
+  letter-spacing: 0;
   color: var(--faint);
   -webkit-text-fill-color: var(--faint);
 }
@@ -500,7 +500,7 @@ button.btn:disabled {
 .ac-form input.ac-code:-webkit-autofill:focus {
   -webkit-text-fill-color: var(--ink);
   font-size: 1.5rem !important;
-  letter-spacing: 0.38em;
+  letter-spacing: 0;
 }
 
 /* ---------- the onboarding wizard ---------- */
@@ -523,7 +523,7 @@ button.btn:disabled {
   height: 1.6rem;
   border-radius: 50%;
   border: 1px solid var(--hairline);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   color: var(--faint);
@@ -553,7 +553,7 @@ button.btn:disabled {
   display: flex;
   align-items: stretch;
   border: 1px solid var(--hairline);
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
   transition: border-color 150ms ease, background 150ms ease;
   box-shadow: var(--shadow-sm);
@@ -568,7 +568,7 @@ button.btn:disabled {
   display: grid;
   place-items: center;
   padding: 0 0.2rem 0 0.9rem;
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   color: var(--faint);
 }
@@ -623,7 +623,7 @@ button.btn:disabled {
 .ac-avatar.is-logo {
   width: 7.5rem;
   height: 4rem;
-  border-radius: 6px;
+  border-radius: 0;
   background: rgba(var(--fg-rgb), 0.03);
 }
 
@@ -633,7 +633,7 @@ button.btn:disabled {
 }
 
 .ac-avatar b {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 1.1rem;
   font-weight: 500;
@@ -683,7 +683,7 @@ button.btn:disabled {
   align-items: flex-start;
   gap: 0.8rem;
   border: 1px solid var(--hairline);
-  border-radius: 10px;
+  border-radius: 0;
   padding: 0.85rem 1rem;
   cursor: pointer;
   transition: border-color 150ms ease, background 150ms ease;
@@ -739,7 +739,7 @@ button.btn:disabled {
   font-size: 0.9rem;
   color: var(--dim);
   border: 1px solid var(--hairline);
-  border-radius: 8px;
+  border-radius: 0;
   padding: 0.55rem 0.9rem;
   cursor: pointer;
   transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
@@ -769,7 +769,7 @@ button.btn:disabled {
 .ac-note {
   font-size: 0.9rem;
   line-height: 1.6;
-  border-radius: 8px;
+  border-radius: 0;
   padding: 0.7rem 0.9rem;
   border: 1px solid;
 }
@@ -794,7 +794,7 @@ button.btn:disabled {
 
 .ac-empty {
   border: 1px dashed var(--hairline);
-  border-radius: 12px;
+  border-radius: 0;
   padding: 2.25rem 1.5rem;
   text-align: center;
   color: var(--dim);
@@ -814,7 +814,7 @@ button.btn:disabled {
 .ac-table-wrap {
   overflow-x: auto;
   border: 1px solid var(--hairline);
-  border-radius: 12px;
+  border-radius: 0;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
@@ -828,7 +828,7 @@ button.btn:disabled {
 
 .ac-table th {
   text-align: left;
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.76rem;
   letter-spacing: -0.005em;
   color: var(--faint);
@@ -855,7 +855,7 @@ button.btn:disabled {
 }
 
 .ac-table .ac-num {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   text-align: right;
   white-space: nowrap;
@@ -888,7 +888,7 @@ button.btn:disabled {
 
 .ac-stat {
   border: 1px solid var(--hairline);
-  border-radius: 10px;
+  border-radius: 0;
   padding: 1.1rem 1.2rem;
   display: grid;
   gap: 0.2rem;
@@ -897,7 +897,7 @@ button.btn:disabled {
 }
 
 .ac-stat b {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 1.7rem;
   font-weight: 500;
@@ -906,7 +906,7 @@ button.btn:disabled {
 }
 
 .ac-stat span {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.76rem;
   letter-spacing: -0.005em;
   color: var(--faint);
@@ -934,7 +934,7 @@ button.btn:disabled {
 }
 
 .ac-axis-pct {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.78rem;
   color: var(--accent);
@@ -949,7 +949,7 @@ button.btn:disabled {
 
 .ac-axis-value {
   margin-left: auto;
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 1.1rem;
 }
@@ -985,12 +985,12 @@ button.btn:disabled {
   flex: 1 1 2rem;
   min-width: 2rem;
   text-align: center;
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 0.88rem;
   color: var(--dim);
   border: 1px solid var(--hairline);
-  border-radius: 6px;
+  border-radius: 0;
   padding: 0.5rem 0;
   cursor: pointer;
   transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
@@ -1026,12 +1026,12 @@ button.btn:disabled {
   gap: 0.8rem;
   border: 1px solid rgba(var(--accent-rgb), 0.4);
   background: rgba(var(--accent-rgb), 0.06);
-  border-radius: 10px;
+  border-radius: 0;
   padding: 1rem 1.25rem;
 }
 
 .ac-total b {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-variant-numeric: tabular-nums;
   font-size: 2rem;
   font-weight: 500;
@@ -1040,7 +1040,7 @@ button.btn:disabled {
 }
 
 .ac-total span {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.78rem;
   letter-spacing: -0.005em;
   color: var(--dim);
@@ -1052,7 +1052,7 @@ button.btn:disabled {
   display: block;
   height: 3px;
   background: rgba(var(--fg-rgb), 0.1);
-  border-radius: 2px;
+  border-radius: 0;
   overflow: hidden;
   margin-top: 0.3rem;
 }
@@ -1077,7 +1077,7 @@ button.btn:disabled {
 }
 
 .ac-dl dt {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--sap-font-body);
   font-size: 0.76rem;
   letter-spacing: -0.005em;
   color: var(--faint);
@@ -1124,9 +1124,9 @@ button.btn:disabled {
 }
 
 .ac-mono {
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--sap-font-mono);
   font-size: 0.82rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
 }
 
 .ac-copy-field {
@@ -1137,11 +1137,11 @@ button.btn:disabled {
 }
 
 .ac-copy-field code {
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--sap-font-mono);
   font-size: 0.92rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0;
   border: 1px solid var(--hairline);
-  border-radius: 8px;
+  border-radius: 0;
   padding: 0.55rem 0.9rem;
   color: var(--ink);
   background: rgba(var(--fg-rgb), 0.03);
@@ -1200,21 +1200,21 @@ button.btn:disabled {
 }
 
 /* Contact directory and assessment context. */
-.el-filter{display:flex;align-items:flex-end;gap:.8rem;flex-wrap:wrap;margin:1.5rem 0}.el-filter label{display:grid;gap:.4rem;font-size:.75rem}.el-filter input,.el-filter select{padding:.65rem .8rem;border:1px solid var(--hairline);border-radius:7px;background:white;font:inherit}.el-table td:first-child>a,.el-table td:first-child>span{display:block;margin-top:.4rem}.el-table td small{display:block;color:var(--faint);font-size:.65rem;margin-top:.4rem}.el-table .ac-pill{display:block;margin-bottom:.4rem;width:max-content}.el-activity{font-size:.75rem;max-width:26rem;padding:.5rem 0;border-bottom:1px solid var(--hairline)}.el-activity:last-child{border:0}.el-activity p{margin:.4rem 0;line-height:1.5}.el-pages{display:flex;gap:2rem;font-size:.8rem;margin:1.5rem 0}.el-pages a{color:var(--accent)}
+.el-filter{display:flex;align-items:flex-end;gap:.8rem;flex-wrap:wrap;margin:1.5rem 0}.el-filter label{display:grid;gap:.4rem;font-size:.75rem}.el-filter input,.el-filter select{padding:.65rem .8rem;border:1px solid var(--hairline);border-radius: 0;background:var(--surface);font:inherit}.el-table td:first-child>a,.el-table td:first-child>span{display:block;margin-top:.4rem}.el-table td small{display:block;color:var(--faint);font-size:.65rem;margin-top:.4rem}.el-table .ac-pill{display:block;margin-bottom:.4rem;width:max-content}.el-activity{font-size:.75rem;max-width:26rem;padding:.5rem 0;border-bottom:1px solid var(--hairline)}.el-activity:last-child{border:0}.el-activity p{margin:.4rem 0;line-height:1.5}.el-pages{display:flex;gap:2rem;font-size:.8rem;margin:1.5rem 0}.el-pages a{color:var(--accent)}
 
 .ac-workshop-materials .btn {min-height:44px;}
 @media(max-width:600px){.ac-workshop-materials .ac-actions .btn {width:100%;justify-content:center;}}
 @media(max-width:600px){.ac-shell ~ .footer nav {flex-wrap:wrap;justify-content:center;}}
-.ac-pitch-prompts { border-top: 1px solid var(--line, #d7dce5); padding-top: 1.5rem; }
+.ac-pitch-prompts { border-top: 1px solid var(--line, var(--hairline)); padding-top: 1.5rem; }
 .ac-pitch-choice { border: 0; border-top: 1px solid var(--hairline); padding: 1.5rem 0 0; min-width: 0; }
 .ac-pitch-choice legend { padding-right: .5rem; }
 .ac-pitch-choice > .ac-choices { margin-top: 1rem; }
 .ac-pitch-prompts summary { cursor: pointer; font-weight: 600; }
 .ac-pitch-fields { display: grid; gap: 1.5rem; margin-top: 1.5rem; }
-.ac-pitch-links { display: flex; flex-wrap: wrap; gap: .8rem 1.5rem; border-top: 1px solid var(--line, #d7dce5); padding-top: 1.5rem; }
+.ac-pitch-links { display: flex; flex-wrap: wrap; gap: .8rem 1.5rem; border-top: 1px solid var(--line, var(--hairline)); padding-top: 1.5rem; }
 .ac-pitch-links > a { color: var(--accent); font-size: .9rem; text-decoration: underline; text-underline-offset: .2em; }
 .ac-pitch-links > p { flex-basis: 100%; }
-.ac-website-prefill { border:1px solid var(--hairline); background:rgba(var(--accent-rgb),.035); border-radius:var(--radius-sm); padding:1.1rem; }
+.ac-website-prefill { border:1px solid var(--hairline); background:rgba(var(--accent-rgb),.035); border-radius: 0; padding:1.1rem; }
 .ac-prefill-heading { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
 .ac-prefill-heading strong { font-size:.9rem; }
 .ac-prefill-heading .btn { flex-shrink:0; }
@@ -1225,12 +1225,12 @@ button.btn:disabled {
 .ac-prefill-option > span { min-width:0; display:grid; gap:.5rem; }
 .ac-prefill-option strong { font-size:.85rem; }
 .ac-prefill-option > span > span { font-size:.9rem; line-height:1.55; white-space:pre-line; overflow-wrap:anywhere; }
-.ac-brand-review { display:grid; gap:1rem; border:1px solid var(--hairline); background:var(--surface); border-radius:var(--radius-sm); padding:1rem; }
+.ac-brand-review { display:grid; gap:1rem; border:1px solid var(--hairline); background:var(--surface); border-radius: 0; padding:1rem; }
 .ac-brand-select { display:flex; align-items:center; gap:.75rem; cursor:pointer; font-size:.9rem; }
 .ac-brand-select input { width:18px; height:18px; accent-color:var(--accent); }
 .ac-brand-assets { display:flex; align-items:center; gap:1rem; }
 .ac-brand-logo { width:100px; max-height:70px; object-fit:contain; }
-.ac-brand-image { width:160px; height:100px; object-fit:cover; border-radius:6px; }
+.ac-brand-image { width:160px; height:100px; object-fit:cover; border-radius: 0; }
 .ac-brand-colors { display:flex; gap:1rem; flex-wrap:wrap; }
 .ac-brand-colors label { display:flex; align-items:center; gap:.5rem; font-size:.8rem; }
 .ac-brand-colors input { width:38px; height:38px; padding:0; border:0; background:none; }

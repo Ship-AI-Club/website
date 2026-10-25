@@ -1,6 +1,7 @@
 import MobileNav from "./mobile-nav";
 import { signOutAction } from "../app/login/actions";
 import { DISCORD } from "../lib/hackathon";
+import { Lockup } from "./seal";
 
 /* ------------------------------------------------------------------
    The header and footer every account page wears.
@@ -14,10 +15,7 @@ import { DISCORD } from "../lib/hackathon";
 export function AccountHeader({ user, links = [] }) {
   return (
     <header className="nav">
-      <a href="/" className="brand">
-        <img src="/logo-mark.png" alt="" width={26} height={26} />
-        <span>Ship AI</span>
-      </a>
+      <Lockup />
       <nav>
         <a href="/programs">Programs</a>
         <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
@@ -45,10 +43,7 @@ export function AccountHeader({ user, links = [] }) {
 export function AccountFooter() {
   return (
     <footer className="footer">
-      <div className="brand">
-        <img src="/logo-mark.png" alt="" width={22} height={22} />
-        <span>Ship AI</span>
-      </div>
+      <Lockup compact />
       
       <nav>
         <a href="/">Home</a>

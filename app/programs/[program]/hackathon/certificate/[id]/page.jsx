@@ -19,6 +19,7 @@ import {
 import { certificateById } from "../../../../../../lib/store";
 import CertActions from "./cert-actions";
 import "../../awards.css";
+import { Lockup, Seal } from "../../../../../../components/seal";
 
 /* Certificates are issued from /admin after the awards, so this page
    is rendered on demand rather than built ahead: the credential has to
@@ -64,7 +65,7 @@ export async function generateMetadata({ params }) {
       /* a page-level openGraph replaces the root layout's wholesale,
          so the site card has to be restated or the credential shares
          as a text-only link */
-      images: [{ url: "/ship-ai-social.jpg", width: 1280, height: 730 }],
+      images: [{ url: "/og-community.png", width: 1200, height: 630 }],
     },
     robots: { index: true, follow: true },
   };
@@ -117,10 +118,7 @@ export default async function Page({ params }) {
       />
 
       <header className="nav">
-        <a href="/" className="brand">
-          <img src="/logo-mark.png" alt="" width={26} height={26} />
-          <span>Ship AI</span>
-        </a>
+        <Lockup />
         <nav>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
           <a href="/programs/zero-to-launch/hackathon/results">Results</a>
@@ -145,7 +143,7 @@ export default async function Page({ params }) {
         <div className="cert-plate">
           <span className="cert-keyline" aria-hidden="true" />
 
-          <img className="cert-seal" src="/logo-mark.png" alt="" width={42} height={42} />
+          <Seal className="cert-seal" size={42} />
 
           <p className="cert-kind">
             {won ? "Certificate of achievement" : "Certificate of launch"}
@@ -227,10 +225,7 @@ export default async function Page({ params }) {
       </main>
 
       <footer className="footer">
-        <div className="brand">
-          <img src="/logo-mark.png" alt="" width={22} height={22} />
-          <span>Ship AI</span>
-        </div>
+        <Lockup compact />
         <nav>
           <a href="/">Home</a>
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>

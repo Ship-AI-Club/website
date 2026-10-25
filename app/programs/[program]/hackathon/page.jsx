@@ -8,7 +8,7 @@ import { PROGRAMS, programBySlug } from "../../../../lib/programs";
 import { EVENT, DISCORD } from "../../../../lib/hackathon";
 
 const FACTS = [
-  { icon: Coins, label: "Prize pool", value: "$1,000" },
+  { icon: Coins, label: "Prizes", value: "Worth up to $5,150" },
   { icon: CalendarDays, label: "When", value: EVENT.dates },
   { icon: MapPin, label: "Where", value: `${EVENT.venue} · ${EVENT.city}` },
   { icon: Ticket, label: "Entry", value: "Free · teams of 1–4" },
@@ -18,6 +18,12 @@ const FOCUS = [
   { name: "Design", copy: "Make your site clear, useful, and easy to navigate." },
   { name: "Craft", copy: "Polish the details. Make it work well on every screen." },
   { name: "Receipts", copy: "Show the amount you shipped: live pages, working features, and a real URL." },
+];
+
+const PRIZES = [
+  "1st place: $200 plus a Workuity seat for each teammate (1 to 4 seats, worth $1,200 each)",
+  "2nd place: $100",
+  "3rd place: $50",
 ];
 
 const BENEFITS = [
@@ -132,6 +138,13 @@ export default async function Page({ params }) {
               </div>
             ))}
           </div>
+        </section>
+
+        <section className="section" id="prizes">
+          <h2>Prizes worth up to $5,150</h2>
+          <ul className="hk-benefit-list">
+            {PRIZES.map((prize) => <li key={prize}>{prize}</li>)}
+          </ul>
         </section>
 
         <section className="section" id="benefits">

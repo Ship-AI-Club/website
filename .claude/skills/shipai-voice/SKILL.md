@@ -7,7 +7,7 @@ description: Ship AI's tone of voice for any outward-facing copy — social post
 
 Ship AI is free, practical AI education in Phoenix — workshops on the tools and workflows builders use day to day, with every deck, guide and skill published free. The voice is a builder teaching builders: direct, concrete, allergic to hype.
 
-**Headline (Sep 2026):** "Practical AI, Taught Free." It replaced "Demos over memos" as the lead line because the sessions are now mostly educational, not live building. Lead with what people learn and take home; keep "ship" as the verb for what they do with it.
+**Tagline (locked, Oct 2026):** "Practical AI, Built Together." Santos wants this to remain the community tagline: it is the home hero, the page title, the footer line, and the social card. Do not replace or "improve" it. (It succeeded "Practical AI, Taught Free", which succeeded "Demos over memos".) Lead with what people learn and take home; keep "ship" as the verb for what they do with it.
 
 ## Core rules
 
@@ -85,7 +85,7 @@ The site (`site/lib/hackathon.js`) is the source of truth for session titles and
 
 - Yes: builders, craftspeople, ship, demo, workflow, toolchain, receipts, high-signal, bleeding edge, session, workshop, Zero to Launch
 - No: ninjas/rockstars/gurus, synergy, "AI-powered future", disrupt, "don't miss out", FOMO framing, "limited spots" (unless literally true), **"launch" as a verb** (see core rule 8 — the program name Zero to Launch is the one exception)
-- Mantras (use sparingly, one at a time, as closers): "practical AI, taught free", "proof of work", "receipts required", "just ship it", "feel the fear and do it anyways"
+- Mantras (use sparingly, one at a time, as closers): "practical AI, built together", "proof of work", "receipts required", "just ship it", "feel the fear and do it anyways"
 
 ## Formatting for readability (event/announcement posts)
 
@@ -97,7 +97,7 @@ Santos wants social posts scannable, not wall-of-text and not a dry listing. Sta
    - 🗓 date · time
    - 📍 venue - address
    - 🔗 RSVP link
-4. Close with a mantra when it fits ("practical AI, taught free" / "just ship it").
+4. Close with a mantra when it fits ("practical AI, built together" / "just ship it").
 
 Emoji: restrained and functional (anchors 🗓 📍 🔗 💬 🎤 →), never decorative spam. One hook, one detail block, one link. Blank lines between blocks. Discord can use `**bold**` headers; X and LinkedIn use line breaks + anchors (no markdown renders there).
 

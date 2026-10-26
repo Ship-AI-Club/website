@@ -459,6 +459,7 @@ export async function emailCertificateHoldersAction(prev, formData) {
       name: admin.name,
       certificates,
       resultsUrl,
+      testLabel: certificates[0]?.project,
     });
     return result.ok ? { ok: `Test sent to ${admin.email}.` } : { error: "Resend wouldn't take the test. Try again." };
   }

@@ -9,7 +9,7 @@ export default function WorkshopCard({ href, category, name, summary, meta, pric
       </a>
       <div className="card-body">
         {category && <span className="chip chip-quiet wc-category">{category}</span>}
-        <h3><a href={href}>{name}</a></h3>
+        <h3><a href={href}>{name}<span className="wc-arrow" aria-hidden="true">→</span></a></h3>
         {summary && <p>{summary}</p>}
         {meta && <p className="meta">{meta}</p>}
         <div className="wc-card-bottom">

@@ -58,7 +58,7 @@ export default function Workshops() {
             meta={`October 10, 2026 · 9 AM–1 PM MST · ${VIBE_GTM.venue} · Coffee, breakfast and lunch included`}
             price={ended ? null : price.amount}
             anchor={!ended && price.promotional ? 999 : null}
-            unit={ended ? "Workshop ended" : price.promotional ? "USD · offer ends October 7, 11:59 PM MST" : "USD · one-time workshop admission"}
+            unit={ended ? null : price.promotional ? "USD · offer ends October 7, 11:59 PM MST" : "USD · one-time workshop admission"}
             tag={ended ? "Workshop ended" : `Only ${VIBE_GTM.capacity} seats`}
             tagClass={ended ? "tag-tbd" : ""}
           />

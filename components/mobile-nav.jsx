@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const links = [
   { href: "/workshops", label: "Workshops", detail: "Build Something Useful" },
@@ -42,7 +42,7 @@ export default function MobileNav({ children, extraLinks = [] }) {
     if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setOpen(false);
   }}>
     <button className="mobile-nav-toggle" type="button" ref={toggle} aria-label={open ? "Close navigation" : "Open navigation"} aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)}>
-      {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+      <span className="mobile-nav-icon" aria-hidden="true"><i /><i /><i /></span>
     </button>
     {open && <div className="mobile-nav-panel" id={id}>
       <nav aria-label="Mobile navigation" onClick={event => { if (event.target.closest("a")) setOpen(false); }}>

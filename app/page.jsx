@@ -96,7 +96,7 @@ export default async function Page() {
           {featured && (
             <p className="eyebrow">
               <a href={featured.hackathonHref || `/programs/${featured.slug}`} className="link">
-                Now running · {featured.hasHackathon ? `${EVENT.name} · ${EVENT.datesShort.replace(/, \d{4}$/, "")}` : featured.name}
+                Now running · {featured.hasHackathon ? `${EVENT.name} · ${EVENT.datesShort.replace(/, \d{4}$/, "").replace(/ /g, "\u00a0")}` : featured.name}
               </a>
             </p>
           )}
@@ -121,7 +121,7 @@ export default async function Page() {
                 {nextEvent ? (
                   <>
                     <h2>{nextEvent.title}</h2>
-                    <p className="meta">{nextEvent.date} · {nextEvent.time} · {nextEvent.place || "Phoenix, AZ"}</p>
+                    <p className="meta">{[nextEvent.date, nextEvent.time, nextEvent.place || "Phoenix, AZ"].join("\u00a0· ")}</p>
                     {nextEvent.title === VIBE_GTM.name && <span className="tag">Only {VIBE_GTM.capacity} seats</span>}
                     <a className="btn btn-solid btn-sm" href={nextEvent.url} target="_blank" rel="noreferrer">Reserve a seat</a>
                   </>
@@ -143,7 +143,7 @@ export default async function Page() {
         <section id="programs" className="section hero-after-stage" aria-labelledby="programs-title" style={{ borderTop: 0 }}>
           <div className="section-head">
             <h2 id="programs-title">Pick your <span className="key">on-ramp.</span></h2>
-            <p className="section-lede">Free, multi-session programs that take a builder from first prompt to a launched product.</p>
+            <p className="section-lede">Free, multi-session programs that take a builder from first prompt to a shipped product.</p>
           </div>
           <ol className="rows">
             {PROGRAMS.map((program) => {
@@ -152,7 +152,7 @@ export default async function Page() {
                 <li key={program.slug} className="row">
                   <div>
                     <p className="row-title"><a href={`/programs/${program.slug}`}>{program.name}</a></p>
-                    <p className="meta">{program.datesLabel || "Dates TBD"} · {programVenueNames(program).join(" · ")} · {program.sessions.length} sessions</p>
+                    <p className="meta">{[program.datesLabel || "Dates TBD", ...programVenueNames(program), `${program.sessions.length} sessions`].join("\u00a0· ")}</p>
                     <p>{program.tagline}</p>
                   </div>
                   <div className="row-side">

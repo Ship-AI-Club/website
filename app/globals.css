@@ -4380,3 +4380,736 @@ h3 .icon {
   font-size: var(--sap-fs-micro);
   color: var(--dim);
 }
+
+/* ==================================================================
+   Brand polish: rhythm, line breaks, phones, micro-interactions, header
+================================================================== */
+
+:root {
+  --sap-section-y: 176px;
+  --club-half: calc(var(--sap-section-y) / 2);
+}
+
+@media (max-width: 860px) {
+  :root {
+    --sap-section-y: 112px;
+  }
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+p, li, dd, figcaption, blockquote {
+  text-wrap: pretty;
+}
+
+.hero-lede,
+.section-lede,
+.article-lede,
+.final .lede,
+html body .programs-lede,
+.eyebrow,
+.kicker {
+  text-wrap: balance;
+}
+
+.section-head .section-lede,
+.section-head .lede,
+.final .lede,
+.hero-lede {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section {
+  padding-top: var(--sap-section-y);
+  padding-bottom: var(--sap-section-y);
+}
+
+.section:has(+ .band),
+.section:has(+ .final) {
+  padding-bottom: var(--club-half);
+}
+
+.band > .final {
+  padding-top: var(--club-half);
+}
+
+.band .section {
+  padding-top: var(--club-half);
+  padding-bottom: var(--club-half);
+}
+
+.hero-after-stage {
+  padding-top: var(--sap-section-y);
+}
+
+.section-head {
+  margin-bottom: 72px;
+}
+
+.section-lede {
+  margin-bottom: 72px;
+}
+
+.section-head .section-lede {
+  margin-bottom: 0;
+}
+
+.section > h1 {
+  max-width: 20ch;
+  margin-bottom: 24px;
+}
+
+.section > h2 {
+  margin-bottom: 24px;
+}
+
+.section > h2 + .section-lede,
+.section > h1 + .section-lede {
+  margin-top: 0;
+}
+
+main .kicker,
+main .eyebrow {
+  display: block;
+  margin-bottom: 20px;
+}
+
+main .hero .eyebrow {
+  display: inline-block;
+}
+
+.article {
+  padding-top: 88px;
+  padding-bottom: calc(var(--sap-section-y) * 0.6);
+}
+
+.article h1 {
+  margin-bottom: 24px;
+}
+
+.article-lede {
+  margin-bottom: 40px;
+}
+
+.article h2 {
+  margin: 2.4em 0 0.8em;
+}
+
+.hk-subhead {
+  margin: 5rem 0 2rem;
+  padding-top: 3rem;
+}
+
+.hk-simple .section {
+  padding-top: var(--club-half);
+  padding-bottom: var(--club-half);
+}
+
+.hk-ws {
+  padding-top: 72px;
+  padding-bottom: calc(var(--sap-section-y) * 0.6);
+}
+
+.footer {
+  padding-top: 72px;
+  padding-bottom: 40px;
+}
+
+.hero-window-foot {
+  margin-top: 10px;
+}
+
+.value h3 {
+  margin-bottom: 12px;
+}
+
+.hk-fact-label {
+  margin-bottom: 6px;
+}
+
+@media (max-width: 860px) {
+  .section-head,
+  .section-lede {
+    margin-bottom: 48px;
+  }
+
+  .section-head .section-lede {
+    margin-bottom: 0;
+  }
+
+  .hk-subhead {
+    margin: 3.5rem 0 1.5rem;
+    padding-top: 2.25rem;
+  }
+
+  .article {
+    padding-top: 56px;
+  }
+
+  .hk-ws {
+    padding-top: 48px;
+  }
+
+  .footer {
+    padding-top: 56px;
+  }
+
+  .key,
+  .hero-mark,
+  .hero-accent,
+  h1 > span:only-of-type,
+  .section h2 > span:only-of-type {
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  .row-side {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .row-side .tag {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .row-side .btn:last-child:nth-child(2),
+  .row-side > .btn:only-child {
+    grid-column: 1 / -1;
+  }
+
+  .row-side .btn {
+    padding: 0 12px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .stage .window {
+    margin: -40px 20px 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .cta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .cta-row:has(> :nth-child(3)),
+  .cta-row:has(> :only-child) {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-row > .btn {
+    width: 100%;
+    min-width: 0;
+    padding: 0 12px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .final-checks {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-lede {
+    margin-bottom: 32px;
+  }
+}
+
+.section > p > .btn {
+  max-width: 100%;
+}
+
+.wc-card,
+.wc-card .card-body,
+html body .program-card,
+.row > *,
+.event > *,
+.facts > *,
+.hk-fact,
+.kit-deck,
+.sp-tier {
+  min-width: 0;
+}
+
+.article code,
+.kit-install code,
+.sk code {
+  overflow-wrap: anywhere;
+}
+
+/* ---------- micro-interactions ---------- */
+
+.btn {
+  transition: background-color var(--sap-dur-fast) ease, color var(--sap-dur-fast) ease, transform 120ms ease-out;
+}
+
+.btn:active:not(:disabled):not([aria-disabled="true"]) {
+  transform: scale(0.97);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 4px var(--ink);
+}
+
+.btn-solid:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 4px var(--accent);
+}
+
+.band .btn:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--sap-band-bg), inset 0 0 0 4px var(--sap-band-text);
+}
+
+.link,
+.article a:not(.btn),
+.partner-note a,
+.events-more a,
+.events-empty a,
+.hero-window-foot a,
+.footer-legal a {
+  transition: color var(--sap-dur-fast) ease, text-underline-offset var(--sap-dur-fast) ease-out, text-decoration-color var(--sap-dur-fast) ease;
+}
+
+.event-arrow {
+  transition: transform var(--sap-dur-lock) var(--sap-ease), color var(--sap-dur-fast) ease;
+}
+
+.wc-card {
+  position: relative;
+  transition: transform 320ms var(--sap-ease);
+}
+
+.wc-card h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.wc-card h3 a:focus-visible {
+  outline: none;
+}
+
+.wc-card h3 a:focus-visible::after {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.wc-card .card-art:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.wc-arrow {
+  display: inline-block;
+  margin-left: 8px;
+  color: var(--dim);
+  font-weight: 400;
+  transition: transform var(--sap-dur-lock) var(--sap-ease), color var(--sap-dur-fast) ease;
+}
+
+html body .program-card {
+  transition: transform 320ms var(--sap-ease), border-color var(--sap-dur-fast) ease;
+}
+
+html body .program-card-link:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.faq summary::after {
+  content: "+";
+  transition: transform var(--sap-dur-lock) var(--sap-ease), background-color var(--sap-dur-fast) ease;
+}
+
+.faq details[open] summary::after {
+  content: "+";
+  transform: rotate(45deg);
+}
+
+.faq summary:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--sap-band-text);
+}
+
+html body .wd-curriculum summary > svg,
+html body .wd-faq summary > svg {
+  transition: transform var(--sap-dur-lock) var(--sap-ease), color var(--sap-dur-fast) ease;
+}
+
+.hk-faq-item summary:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+html body .programs-filters button,
+html body .wc-filter-list button,
+html body .programs-primary {
+  transition: background-color var(--sap-dur-fast) ease, color var(--sap-dur-fast) ease, transform 120ms ease-out;
+}
+
+html body .programs-filters button:active,
+html body .wc-filter-list button:active,
+html body .programs-primary:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover,
+  .article a:not(.btn):hover,
+  .partner-note a:hover,
+  .events-more a:hover,
+  .events-empty a:hover,
+  .hero-window-foot a:hover,
+  .footer-legal a:hover,
+  .footer a:hover {
+    text-underline-offset: 3px;
+  }
+
+  .event:hover .event-arrow {
+    transform: translateX(4px);
+  }
+
+  .wc-card:hover,
+  html body .program-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .wc-card:hover .wc-arrow {
+    transform: translateX(4px);
+    color: var(--accent);
+  }
+
+  .wc-card:hover h3 a {
+    color: var(--accent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .wc-card,
+  html body .program-card,
+  .wc-arrow,
+  .event-arrow,
+  .faq summary::after,
+  .mobile-nav-icon i,
+  .mobile-nav-toggle,
+  .mode-toggle,
+  .mode-toggle svg,
+  html body .programs-filters button,
+  html body .wc-filter-list button,
+  html body .programs-primary {
+    transition: none !important;
+  }
+
+  .btn:active,
+  html body .programs-primary:active,
+  html body .programs-filters button:active,
+  html body .wc-filter-list button:active,
+  .mobile-nav-toggle:active,
+  .mode-toggle:active {
+    transform: none !important;
+  }
+
+  .wc-card:hover,
+  html body .program-card:hover,
+  .wc-card:hover .wc-arrow,
+  .event:hover .event-arrow,
+  html body .program-card:hover .program-card-action svg {
+    transform: none !important;
+  }
+}
+
+/* ---------- programs directory ---------- */
+
+html body .programs-page {
+  padding-bottom: var(--sap-section-y);
+}
+
+html body .programs-hero {
+  padding: 88px 0 var(--sap-section-y);
+}
+
+html body .programs-intro h1 {
+  font-family: var(--sap-font-display);
+  font-weight: 400;
+  letter-spacing: var(--sap-track-display);
+  line-height: var(--sap-lh-display);
+  font-size: var(--sap-fs-display);
+  text-wrap: balance;
+}
+
+html body .programs-intro h1 span {
+  font-style: italic;
+  letter-spacing: var(--sap-track-key);
+  color: inherit;
+}
+
+html body .programs-lede {
+  max-width: var(--sap-measure-lede);
+  font-size: var(--sap-fs-lede);
+}
+
+html body .programs-primary {
+  --notch: var(--sap-notch);
+  position: relative;
+  min-height: var(--sap-btn-h);
+  padding: 0 var(--sap-btn-px);
+  background: var(--ink);
+  color: var(--bg);
+  font: var(--sap-font-button);
+  letter-spacing: -0.005em;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%, 0 100%);
+}
+
+html body .programs-primary:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+html body .programs-primary:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 4px var(--accent);
+}
+
+html body .program-assessment {
+  margin-bottom: var(--club-half);
+}
+
+html body .programs-explorer {
+  padding-top: var(--club-half);
+}
+
+html body .programs-section-heading {
+  margin-bottom: 40px;
+}
+
+html body .programs-section-heading h2,
+html body .program-assessment h2,
+html body .programs-help h2 {
+  font-family: var(--sap-font-display);
+  font-weight: 400;
+  letter-spacing: var(--sap-track-display);
+}
+
+html body .program-card h3 {
+  font-family: var(--sap-font-display);
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: var(--sap-track-display);
+}
+
+html body .programs-help {
+  margin-top: var(--club-half);
+  padding: 48px;
+}
+
+@media (max-width: 760px) {
+  html body .programs-hero {
+    padding: 56px 0 var(--sap-section-y);
+  }
+
+  html body .programs-help {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 28px 22px;
+  }
+
+  html body .programs-help .programs-primary,
+  html body .program-assessment .programs-primary,
+  html body .programs-intro .programs-primary {
+    width: 100%;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  html body .programs-section-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ---------- header: phone menu and theme toggle ---------- */
+
+.mobile-nav-toggle {
+  transition: background-color var(--sap-dur-fast) ease, transform 120ms ease-out;
+}
+
+.mobile-nav-toggle:active {
+  transform: scale(0.97);
+}
+
+.mobile-nav-toggle:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.mobile-nav-icon {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 14px;
+}
+
+.mobile-nav-icon i {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform var(--sap-dur-lock) var(--sap-ease), opacity var(--sap-dur-fast) ease;
+}
+
+.mobile-nav-icon i:nth-child(1) {
+  top: 0;
+}
+
+.mobile-nav-icon i:nth-child(2) {
+  top: 6.25px;
+}
+
+.mobile-nav-icon i:nth-child(3) {
+  bottom: 0;
+}
+
+.mobile-nav-toggle[aria-expanded="true"] .mobile-nav-icon i:nth-child(1) {
+  transform: translateY(6.25px) rotate(45deg);
+}
+
+.mobile-nav-toggle[aria-expanded="true"] .mobile-nav-icon i:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-nav-toggle[aria-expanded="true"] .mobile-nav-icon i:nth-child(3) {
+  transform: translateY(-6.25px) rotate(-45deg);
+}
+
+.mode-toggle {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  transition: background-color var(--sap-dur-fast) ease, border-color var(--sap-dur-fast) ease, transform 120ms ease-out;
+}
+
+.mode-toggle:active {
+  transform: scale(0.97);
+}
+
+.mode-toggle:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.mode-toggle svg {
+  grid-area: 1 / 1;
+  width: 18px;
+  height: 18px;
+  transition: opacity var(--sap-dur-fast) ease, transform var(--sap-dur-fast) ease;
+}
+
+.mode-toggle .mode-moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+}
+
+:root[data-mode="dark"] .mode-toggle .mode-sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.6);
+}
+
+:root[data-mode="dark"] .mode-toggle .mode-moon {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode="light"]) .mode-toggle .mode-sun {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+  }
+
+  :root:not([data-mode="light"]) .mode-toggle .mode-moon {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hk-hero p,
+.hk-ws .article-lede,
+.rs-lede,
+.sk .article-lede {
+  text-wrap: balance;
+}
+
+html body .hero .lede {
+  margin: 22px auto 32px;
+}
+
+html body .wd-page {
+  padding-top: 40px;
+  padding-bottom: calc(var(--sap-section-y) * 0.6);
+}
+
+html body .wd-hero h1 {
+  font-family: var(--sap-font-display);
+  font-weight: 400;
+  letter-spacing: var(--sap-track-display);
+}
+
+html body .wd-section {
+  padding-top: 5.5rem;
+}
+
+html body .wd-section h2 {
+  letter-spacing: var(--sap-track-display);
+  margin-bottom: 1.75rem;
+}
+
+@media (max-width: 860px) {
+  html body .wd-section {
+    padding-top: 4rem;
+  }
+
+  .row-side {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  html body .wc-catalogue .hero .cta-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gd-setup li {
+  min-width: 0;
+}
+
+.gd-setup pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 860px) {
+  .nav .mobile-nav-panel nav > a {
+    border-left: 0;
+  }
+}

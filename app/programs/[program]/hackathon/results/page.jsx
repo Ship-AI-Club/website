@@ -219,7 +219,7 @@ export default async function Page({ params }) {
                         {category.voted && <span className="hk-cat-tag">Room-voted</span>}
                       </h3>
                       <p>
-                        <strong className="rs-winner">{entrant.team}</strong>
+                        <strong className="rs-winner rs-podium">{entrant.team}</strong>
                         {entrant.blurb ? ` — ${entrant.blurb}` : ""}
                       </p>
                       <a className="rs-project" href={certPath(entrant)}>

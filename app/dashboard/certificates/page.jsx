@@ -6,10 +6,10 @@ import { EVENT } from "../../../lib/hackathon";
 import {
   EDITION,
   ISSUER,
-  LINKEDIN_ADD_URL,
   certFields,
   certPath,
   credentialName,
+  linkedinAddUrl,
 } from "../../../lib/results";
 
 export const metadata = {
@@ -69,7 +69,7 @@ export default async function Page() {
                 </a>
                 <a
                   className="btn btn-ghost ac-btn-sm"
-                  href={LINKEDIN_ADD_URL}
+                  href={linkedinAddUrl(cert)}
                   target="_blank"
                   rel="noreferrer"
                 >

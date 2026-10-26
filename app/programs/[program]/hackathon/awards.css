@@ -120,6 +120,15 @@ button.btn {
   font-weight: 500;
 }
 
+.rs-podium {
+  display: block;
+  font-family: var(--sap-font-display);
+  font-size: clamp(1.5rem, 3.4vw, 2rem);
+  line-height: 1.15;
+  font-weight: 400;
+  margin-bottom: 0.35rem;
+}
+
 .rs-will strong {
   color: var(--ink);
   font-weight: 500;
@@ -344,6 +353,64 @@ button.btn {
   font-weight: 500;
 }
 
+.cert-sign {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2rem;
+  align-items: end;
+  text-align: left;
+  margin-top: 2.5rem;
+}
+
+.cert-sign-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.cert-signature {
+  display: block;
+  width: min(15rem, 100%);
+  aspect-ratio: 907 / 210;
+  background-color: var(--ink);
+  -webkit-mask: url("/brand/santos-signature.png") left center / contain no-repeat;
+  mask: url("/brand/santos-signature.png") left center / contain no-repeat;
+  margin-bottom: 0.35rem;
+}
+
+.cert-sign-date time {
+  font-family: var(--sap-font-display);
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--ink);
+  padding-bottom: 0.75rem;
+  white-space: nowrap;
+}
+
+.cert-sign-name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  border-top: 1px solid var(--hairline);
+  padding-top: 0.7rem;
+  font-family: var(--sap-font-body);
+  font-size: 0.8rem;
+  color: var(--dim);
+}
+
+.cert-sign-name strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+@media (max-width: 620px) {
+  .cert-sign {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
 .cert-kind {
   font-family: var(--sap-font-body);
   font-weight: 500;
@@ -393,6 +460,13 @@ button.btn {
 /* a white stamp rather than a grey one — this is the pill a
    non-winning builder shows a hiring manager, and --dim on a hairline
    is the visual grammar of a disabled control */
+.cert-award-win {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 500;
+}
+
 .cert-award-plain {
   color: var(--ink);
   border-color: rgba(var(--fg-rgb), 0.45);
@@ -501,6 +575,22 @@ button.btn {
     color: #000;
   }
 
+  .cert-signature {
+    background-color: #000;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .cert-sign-name {
+    color: #333;
+    border-top-color: #bbb;
+  }
+
+  .cert-sign-name strong,
+  .cert-sign-date time {
+    color: #000;
+  }
+
   .cert-issuer {
     color: #333;
     border-top-color: #bbb;
@@ -547,8 +637,10 @@ button.btn {
     color: #444;
   }
 
-  .cert-award {
+  .cert-award,
+  .cert-award-win {
     color: #000;
+    background: none;
     border-color: #666;
   }
 }

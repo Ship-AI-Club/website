@@ -7,12 +7,12 @@ import { PROGRAMS, programBySlug } from "../../../../../../lib/programs";
 import {
   EDITION,
   ISSUER,
-  LINKEDIN_ADD_URL,
   certFields,
   certUrl,
   credentialName,
   fromCertificate,
   isWinner,
+  linkedinAddUrl,
   placementOf,
   previewEntrants,
 } from "../../../../../../lib/results";
@@ -156,14 +156,14 @@ export default async function Page({ params }) {
               the certificate convention carries the sentence instead */}
           <p className="cert-body">
             This certifies that <strong>{e.team}</strong> shipped{" "}
-            <strong>{e.project}</strong> publicly at <strong>{EDITION.event}</strong>, held{" "}
+            {e.project !== e.team && <><strong>{e.project}</strong>{" "}</>}publicly at <strong>{EDITION.event}</strong>, held{" "}
             {EDITION.held} at {EDITION.venue}, {EDITION.city} — a two-day hackathon judged on
             what shipped rather than what was demoed.
           </p>
 
           {e.members?.length > 0 && <p className="cert-members">{e.members.join(" · ")}</p>}
 
-          <p className={won ? "cert-award" : "cert-award cert-award-plain"}>
+          <p className={won ? "cert-award cert-award-win" : "cert-award cert-award-plain"}>
             {won ? (
               <Trophy size={15} strokeWidth={1.75} aria-hidden="true" />
             ) : (
@@ -189,9 +189,22 @@ export default async function Page({ params }) {
             </div>
           </dl>
 
-          <p className="cert-issuer">
-            Issued by <strong>{ISSUER}</strong> · {EDITION.city}
-          </p>
+          <div className="cert-sign">
+            <div className="cert-sign-col">
+              <span className="cert-signature" role="img" aria-label="Signature of Santos Hernandez" />
+              <p className="cert-sign-name">
+                <strong>Santos Hernandez</strong>
+                <span>Founder, {ISSUER}</span>
+              </p>
+            </div>
+            <div className="cert-sign-col cert-sign-date">
+              <time dateTime={EDITION.issuedISO}>{EDITION.issued}</time>
+              <p className="cert-sign-name">
+                <strong>Date issued</strong>
+                <span>{EDITION.city}</span>
+              </p>
+            </div>
+          </div>
 
           <p className="cert-verify">
             Verify at shipai.club/programs/zero-to-launch/hackathon/certificate/{e.id}.
@@ -199,7 +212,7 @@ export default async function Page({ params }) {
         </div>
 
         <div className="cert-actions">
-          <a className="btn btn-solid" href={LINKEDIN_ADD_URL} target="_blank" rel="noreferrer">
+          <a className="btn btn-solid" href={linkedinAddUrl(e)} target="_blank" rel="noreferrer">
             Add to LinkedIn
             <ArrowUpRight size={15} strokeWidth={1.75} aria-hidden="true" />
           </a>
@@ -212,8 +225,8 @@ export default async function Page({ params }) {
           <CertActions fields={certFields(e)} />
         </div>
         <p className="cert-note">
-          LinkedIn opens an empty certification form — it stopped accepting prefilled
-          links. Copy the details first and the five fields are one paste away.
+          Add to LinkedIn opens the certification form with every field filled in. If
+          LinkedIn ever opens it empty, copy the details first and paste them in.
         </p>
 
         <p className="cert-back">

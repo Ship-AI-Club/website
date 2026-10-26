@@ -115,7 +115,12 @@ export default async function Page({ params }) {
             than instead of it: one is how you hear, the other is where
             the program lives. */}
         <div className="nav-ctas">
-          {program.hasHackathon ? (
+          {program.hasHackathon && program.status === "past" ? (
+            <>
+              <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
+              <a className="btn btn-solid" href={`${program.hackathonHref}/results`}>See the results</a>
+            </>
+          ) : program.hasHackathon ? (
             <>
               <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
               <a className="btn btn-solid" href="/dashboard">Register</a>

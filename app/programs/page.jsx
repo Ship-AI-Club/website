@@ -56,8 +56,7 @@ export default function Page() {
           <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
         </nav>
         <div className="nav-ctas">
-          <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
-          <a className="btn btn-solid" href="/dashboard">Register</a>
+          <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>
         </div>
       <MobileNav /></header>
 

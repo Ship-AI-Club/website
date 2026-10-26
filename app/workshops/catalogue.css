@@ -49,3 +49,4 @@
   .wc-discovery-tools .wc-search { flex: 1; }
   .wc-search input { width: 100%; }
 }
+.wc-calendar-solo{grid-template-columns:minmax(0,1fr)}

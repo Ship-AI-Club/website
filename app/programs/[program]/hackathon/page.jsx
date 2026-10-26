@@ -99,22 +99,21 @@ export default async function Page({ params }) {
           <a href="#teams">Teams</a>
           <a href="#judges">Judges</a>
         </nav>
-        <a className="btn btn-solid nav-cta" href="/dashboard">Register your team</a>
+        <a className="btn btn-solid nav-cta" href="/programs/zero-to-launch/hackathon/results">See the results</a>
       <MobileNav /></header>
 
       <main id="top" className="hk-simple">
         <section className="hero hk-hero">
-          <p className="eyebrow">Zero to Launch · {EVENT.datesShort} · Phoenix</p>
+          <p className="eyebrow">Zero to Launch · Held {EVENT.datesShort} · Phoenix</p>
           <h1 className="hero-h1">
             Ship AI AZ{" "}<br />
             <span className="hero-accent">GTM Hackathon</span>
           </h1>
           <p className="lede">
-            Build and ship the best marketing site. Bring a teammate or come solo and find one.
+            Teams built and shipped the best marketing sites they could in one weekend. Thank you to everyone who shipped.
           </p>
           <div className="cta-row">
-            <a className="btn btn-solid" href="/dashboard">Register your team</a>
-            <a className="btn btn-ghost" href={EVENT.meetup} target="_blank" rel="noreferrer">RSVP on Meetup</a>
+            <a className="btn btn-solid" href="/programs/zero-to-launch/hackathon/results">See the results</a>
             <a className="btn btn-ghost" href={OPENING_DECK} target="_blank" rel="noopener noreferrer">Open the opening ceremony deck</a>
             <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noopener noreferrer">Join Discord</a>
           </div>
@@ -204,13 +203,12 @@ export default async function Page({ params }) {
         <HackathonSponsors compact />
 
         <section className="section hk-close">
-          <h2>Leave with a live site.</h2>
+          <h2>Every team left with a live site.</h2>
           <p className="section-lede">
-            New and existing projects welcome. Any tools, any stack. You keep your IP.
-            Submit your live URL by 1:00 PM on Sunday, October 18.
+            The hackathon is over. See who shipped what, and join Discord to hear about the next one.
           </p>
           <div className="cta-row">
-            <a className="btn btn-solid" href="/dashboard">Register your team</a>
+            <a className="btn btn-solid" href="/programs/zero-to-launch/hackathon/results">See the results</a>
             <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Join Discord</a>
           </div>
           <p className="hk-note">

@@ -4,6 +4,7 @@ import Scene from "../components/scene";
 import { getUpcomingEvents } from "../lib/meetup";
 import { JsonLd } from "../components/article";
 import { PROGRAMS, programVenueNames } from "../lib/programs";
+import ProgramCard from "../components/program-card";
 import { EVENT } from "../lib/hackathon";
 import { VIBE_GTM, workshopPrice } from "../lib/vibe-gtm-workshop";
 import { UPCOMING_WORKSHOPS } from "../lib/workshops";
@@ -70,13 +71,6 @@ function eventsSchema(events) {
     })),
   };
 }
-
-const STATUS = {
-  running: { label: "Running now", tag: "tag-go" },
-  upcoming: { label: "Upcoming", tag: "" },
-  tbd: { label: "Dates TBD", tag: "tag-tbd" },
-  past: { label: "Past program", tag: "tag-tbd" },
-};
 
 export default async function Page() {
   const events = await getUpcomingEvents(1);
@@ -145,25 +139,14 @@ export default async function Page() {
             <h2 id="programs-title">Pick your <span className="key">on-ramp.</span></h2>
             <p className="section-lede">Free, multi-session programs that take a builder from first prompt to a shipped product.</p>
           </div>
-          <ol className="rows">
-            {PROGRAMS.map((program) => {
-              const status = STATUS[program.status] || STATUS.tbd;
-              return (
-                <li key={program.slug} className="row">
-                  <div>
-                    <p className="row-title"><a href={`/programs/${program.slug}`}>{program.name}</a></p>
-                    <p className="meta">{[program.datesLabel || "Dates TBD", ...programVenueNames(program), `${program.sessions.length} sessions`].join("\u00a0· ")}</p>
-                    <p>{program.tagline}</p>
-                  </div>
-                  <div className="row-side">
-                    <span className={`tag ${status.tag}`}>{status.label}</span>
-                    <a className="btn btn-ghost btn-sm" href={`/programs/${program.slug}`}>View the program</a>
-                    {program.hasHackathon && <a className="btn btn-ghost btn-sm" href={program.hackathonHref}>The hackathon</a>}
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
+          <ul className="pcards">
+            {PROGRAMS.map((program) => (
+              <ProgramCard
+                key={program.slug}
+                program={{ slug: program.slug, name: program.name, status: program.status, datesLabel: program.datesLabel, sessions: program.sessions.length, venues: programVenueNames(program) }}
+              />
+            ))}
+          </ul>
         </section>
 
         <section id="workshops" className="section" aria-labelledby="workshops-title">
@@ -172,19 +155,21 @@ export default async function Page() {
             <p className="section-lede">Focused, paid workshops with expert guidance and time to build. Bring your project and work through the decisions that move it forward. Blueprints come preloaded with skills and best practices; recordings and materials are emailed afterward.</p>
           </div>
           <div className="cards cards-three">
+            {!vibeEnded && (
             <WorkshopCard
-              href={VIBE_GTM.path}
-              category="Design and go-to-market"
-              name={VIBE_GTM.name}
-              summary="Help customers understand what you sell and how to contact you."
-              meta={`October 10, 2026 · 9 AM–1 PM MST · ${VIBE_GTM.venue}`}
-              price={vibeEnded ? null : price.amount}
-              anchor={!vibeEnded && price.promotional ? 999 : null}
-              unit={vibeEnded ? "Workshop ended" : "USD · one-time workshop admission"}
-              tag={vibeEnded ? null : `Only ${VIBE_GTM.capacity} seats`}
-              tagClass=""
-            />
-            {UPCOMING_WORKSHOPS.slice(0, 2).map((workshop) => {
+                href={VIBE_GTM.path}
+                category="Design and go-to-market"
+                name={VIBE_GTM.name}
+                summary="Help customers understand what you sell and how to contact you."
+                meta={`October 10, 2026 · 9 AM–1 PM MST · ${VIBE_GTM.venue}`}
+                price={vibeEnded ? null : price.amount}
+                anchor={!vibeEnded && price.promotional ? 999 : null}
+                unit={vibeEnded ? "Workshop ended" : "USD · one-time workshop admission"}
+                tag={vibeEnded ? null : `Only ${VIBE_GTM.capacity} seats`}
+                tagClass=""
+              />
+            )}
+            {UPCOMING_WORKSHOPS.slice(0, vibeEnded ? 3 : 2).map((workshop) => {
               const card = WORKSHOP_PRESENTATION[workshop.slug];
               return (
                 <WorkshopCard

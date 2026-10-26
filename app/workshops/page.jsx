@@ -24,7 +24,7 @@ export default function Workshops() {
   const price = workshopPrice();
   const ended = Date.now() >= new Date(VIBE_GTM.end).getTime();
   return <>
-    <JsonLd data={workshopCatalogueSchema([{slug:"vibe-coding-gtm",name:VIBE_GTM.name}, ORG, ...UPCOMING_WORKSHOPS])} />
+    <JsonLd data={workshopCatalogueSchema([...(ended ? [] : [{slug:"vibe-coding-gtm",name:VIBE_GTM.name}]), ORG, ...UPCOMING_WORKSHOPS])} />
     <SiteHeader current="/workshops" />
     <main className="wc-catalogue">
       <section className="hero" aria-labelledby="workshops-title">
@@ -48,20 +48,22 @@ export default function Workshops() {
 
       <section className="section" id="scheduled-events" aria-labelledby="scheduled-title">
         <div className="section-head"><h2 id="scheduled-title">On the calendar.</h2><p className="section-lede">Meet us in the build room.</p></div>
-        <div className="cards cards-two">
+        <div className={ended ? "cards cards-two wc-calendar-solo" : "cards cards-two"}>
+          {!ended && (
           <WorkshopCard
-            href={VIBE_GTM.path}
-            category="Design and go-to-market"
-            artLabel="Design → Launch"
-            name={VIBE_GTM.name}
-            summary={VIBE_GTM.description}
-            meta={`October 10, 2026 · 9 AM–1 PM MST · ${VIBE_GTM.venue} · Coffee, breakfast and lunch included`}
-            price={ended ? null : price.amount}
-            anchor={!ended && price.promotional ? 999 : null}
-            unit={ended ? null : price.promotional ? "USD · offer ends October 7, 11:59 PM MST" : "USD · one-time workshop admission"}
-            tag={ended ? "Workshop ended" : `Only ${VIBE_GTM.capacity} seats`}
-            tagClass={ended ? "tag-tbd" : ""}
-          />
+              href={VIBE_GTM.path}
+              category="Design and go-to-market"
+              artLabel="Design → Launch"
+              name={VIBE_GTM.name}
+              summary={VIBE_GTM.description}
+              meta={`October 10, 2026 · 9 AM–1 PM MST · ${VIBE_GTM.venue} · Coffee, breakfast and lunch included`}
+              price={ended ? null : price.amount}
+              anchor={!ended && price.promotional ? 999 : null}
+              unit={ended ? null : price.promotional ? "USD · offer ends October 7, 11:59 PM MST" : "USD · one-time workshop admission"}
+              tag={ended ? "Workshop ended" : `Only ${VIBE_GTM.capacity} seats`}
+              tagClass={ended ? "tag-tbd" : ""}
+            />
+          )}
           <WorkshopCard
             href={`/workshops/${ORG.slug}`}
             category="Strategy and guided build labs"

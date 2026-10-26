@@ -120,6 +120,8 @@ export default async function Page({ params }) {
               <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
               <a className="btn btn-solid" href={`${program.hackathonHref}/results`}>See the results</a>
             </>
+          ) : program.status === "past" ? (
+            <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>
           ) : program.hasHackathon ? (
             <>
               <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a>
@@ -158,12 +160,12 @@ export default async function Page({ params }) {
           </div>
           <div className="hk-fact">
             <p className="hk-fact-label"><Ticket size={14} strokeWidth={1.75} aria-hidden="true" />Cost</p>
-            <p className="hk-fact-value">{program.status === "running" ? "See session registration" : "Announced with registration"}</p>
+            <p className="hk-fact-value">{program.status === "running" ? "See session registration" : program.status === "past" ? "Free" : "Announced with registration"}</p>
           </div>
           {program.hasHackathon && (
             <div className="hk-fact">
               <p className="hk-fact-label"><GitBranch size={14} strokeWidth={1.75} aria-hidden="true" />Build window</p>
-              <p className="hk-fact-value">Opens {EVENT.buildOpens}</p>
+              <p className="hk-fact-value">{program.status === "past" ? "Closed" : `Opens ${EVENT.buildOpens}`}</p>
             </div>
           )}
         </div>
@@ -180,7 +182,16 @@ export default async function Page({ params }) {
 
         {/* Nothing is on a calendar until the dates land, so an unscheduled
             program gets the one thing that works: tell me when. */}
-        {program.startISO ? (
+        {program.status === "past" ? (
+          <>
+            <p className="hk-note">This program has finished. The session materials stay published below.</p>
+            <div className="cta-row hk-submit-cta">
+              <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">
+                <svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true"><path d={siDiscord.path} /></svg>Hear about the next cohort
+              </a>
+            </div>
+          </>
+        ) : program.startISO ? (
           <div className="cta-row hk-submit-cta">
             <a className="btn btn-solid" href={MEETUP} target="_blank" rel="noreferrer">
               <svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true"><path d={siMeetup.path} /></svg>Ship AI on Meetup

@@ -424,16 +424,24 @@ export async function emailCertificateHoldersAction(prev, formData) {
     select distinct u.id, u.email, coalesce(nullif(u.name, ''), '') as name
       from certificate_holders h
       join certificates c on c.id = h.certificate_id and c.revoked_at is null
+      join submissions s on s.id = c.submission_id and s.status = 'submitted'
       join users u on u.id = h.user_id
      order by u.email`;
   if (!holders.length) return { error: "No certificate holders yet. Issue certificates first." };
+
+  const submittedIds = new Set(
+    (await sql`
+      select c.id from certificates c
+        join submissions s on s.id = c.submission_id and s.status = 'submitted'
+       where c.revoked_at is null`).map((r) => r.id),
+  );
 
   const sentBefore = new Set(
     (await sql`select target from audit_log where action = 'email-certificate-ready'`).map((r) => r.target),
   );
 
   const build = async (user) => {
-    const certs = await certificatesFor(user.id);
+    const certs = (await certificatesFor(user.id)).filter((c) => submittedIds.has(c.id));
     return certs.map((cert) => ({
       project: cert.project || cert.team,
       team: cert.team,

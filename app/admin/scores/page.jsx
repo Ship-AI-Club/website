@@ -34,7 +34,8 @@ export default async function Page() {
   const [{ n: holderCount }] = await sql`
     select count(distinct h.user_id)::int as n
       from certificate_holders h
-      join certificates c on c.id = h.certificate_id and c.revoked_at is null`;
+      join certificates c on c.id = h.certificate_id and c.revoked_at is null
+      join submissions s on s.id = c.submission_id and s.status = 'submitted'`;
 
   return (
     <>

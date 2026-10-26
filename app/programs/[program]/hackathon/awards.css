@@ -662,3 +662,364 @@ button.btn {
   font-size: 0.85rem;
   margin-top: 0.35rem;
 }
+
+
+/* ---------- results: the winners announcement ---------- */
+
+.rs-hero {
+  border-bottom: 1px solid var(--sap-band-rule);
+}
+
+.rs-hero .band-bg {
+  opacity: 0.32;
+}
+
+.rs-hero-inner {
+  position: relative;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: clamp(5rem, 11vw, 9rem) clamp(1.25rem, 5vw, 4rem) clamp(4rem, 8vw, 6.5rem);
+}
+
+.rs-hero .kicker {
+  color: var(--sap-band-text-muted);
+}
+
+.rs-hero h1 {
+  font-family: var(--sap-font-display);
+  font-weight: 400;
+  font-size: clamp(3.2rem, 11vw, 7.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  margin: 0.4rem 0 1.5rem;
+  text-wrap: balance;
+}
+
+.rs-hero h1 .key {
+  font-style: italic;
+  display: inline-block;
+}
+
+.rs-hero-lede {
+  max-width: 38rem;
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--sap-band-text-muted);
+  margin-bottom: 2rem;
+  text-wrap: pretty;
+}
+
+.rs-share {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.rs-share .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.rs-page-wide {
+  max-width: 72rem;
+  padding-top: clamp(4rem, 8vw, 7rem);
+}
+
+.rs-section-title {
+  font-family: var(--sap-font-display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 4.5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 2.5rem;
+  text-wrap: balance;
+}
+
+.rs-section-title .key {
+  font-style: italic;
+}
+
+.rs-page-wide section + section {
+  margin-top: clamp(4.5rem, 9vw, 8rem);
+}
+
+.rs-podium-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem;
+}
+
+.rs-win {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  background: var(--sap-bg-raised);
+  border: 1px solid var(--hairline);
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
+}
+
+.rs-win-lead {
+  grid-column: 1 / -1;
+  background: var(--sap-band-bg);
+  color: var(--sap-band-text);
+  border-color: var(--sap-band-bg);
+  --ink: var(--sap-band-text);
+  --dim: var(--sap-band-text-muted);
+  --accent: var(--sap-band-text);
+  --hairline: var(--sap-band-rule);
+  --sunken: var(--sap-band-bg-raised);
+  --surface: var(--sap-band-bg-raised);
+  --bg: var(--sap-band-bg);
+  padding: clamp(2rem, 5vw, 4rem);
+}
+
+.rs-win-lead .btn-solid {
+  background: var(--sap-band-text);
+  color: var(--sap-band-bg);
+}
+
+.rs-win-lead .btn-ghost {
+  color: var(--sap-band-text);
+  box-shadow: inset 0 0 0 1px var(--sap-band-text-muted);
+}
+
+.rs-win-num {
+  position: absolute;
+  right: clamp(1rem, 3vw, 2.25rem);
+  bottom: -0.18em;
+  font-family: var(--sap-font-display);
+  font-style: italic;
+  font-size: clamp(9rem, 22vw, 17rem);
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.08;
+  pointer-events: none;
+  user-select: none;
+}
+
+.rs-win-lead .rs-win-num {
+  opacity: 0.12;
+  font-size: clamp(12rem, 30vw, 26rem);
+}
+
+.rs-win > :not(.rs-win-num) {
+  position: relative;
+}
+
+.rs-win-place {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--sap-font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+}
+
+.rs-win-name {
+  font-family: var(--sap-font-display);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  margin-bottom: 0.6rem;
+}
+
+.rs-win-lead .rs-win-name {
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  line-height: 1;
+}
+
+.rs-win-people {
+  color: var(--dim);
+  font-size: 0.95rem;
+  margin-bottom: 1.1rem;
+}
+
+.rs-win-blurb {
+  color: var(--dim);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  max-width: 40rem;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-wrap: pretty;
+}
+
+.rs-win-prize {
+  font-family: var(--sap-font-mono);
+  font-size: 0.8rem;
+  color: var(--dim);
+  margin-bottom: 1.75rem;
+}
+
+.rs-win-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.rs-win-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.rs-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.75rem;
+}
+
+.rs-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 2rem;
+  background: var(--sap-bg-raised);
+  border: 1px solid var(--hairline);
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+}
+
+.rs-card-place {
+  font-family: var(--sap-font-body);
+  font-size: 0.8rem;
+  color: var(--dim);
+}
+
+.rs-card-win .rs-card-place {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.rs-card h3 {
+  font-family: var(--sap-font-display);
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.rs-card-people {
+  color: var(--dim);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.rs-card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+}
+
+.rs-card-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rs-card-links a:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+
+@media (max-width: 900px) {
+  .rs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .rs-podium-grid,
+  .rs-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rs-win-actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .rs-share .btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+@media print {
+  .rs-hero .band-bg,
+  .rs-share {
+    display: none;
+  }
+}
+
+.rs-page-wide {
+  padding-bottom: clamp(5rem, 10vw, 9rem);
+}
+
+.rs-page-wide .rs-close {
+  margin-top: clamp(6rem, 12vw, 11rem);
+  padding-top: clamp(3.5rem, 7vw, 5.5rem);
+  border-top: 1px solid var(--hairline);
+  text-align: center;
+}
+
+.rs-close-line {
+  font-family: var(--sap-font-display);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 7vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+}
+
+.rs-close-line .key {
+  font-style: italic;
+}
+
+.rs-close-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.rs-close-ctas .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+@media (max-width: 680px) {
+  .rs-close-ctas .btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}

@@ -6,7 +6,7 @@ import { useToastActionState } from "../../components/toast-provider";
 
 import { useFormStatus } from "react-dom";
 
-import { issueCertificatesAction, revokeCertificateAction } from "./actions";
+import { emailCertificateHoldersAction, issueCertificatesAction, revokeCertificateAction } from "./actions";
 
 function IssueButton() {
   const { pending } = useFormStatus();
@@ -55,5 +55,37 @@ export function RevokeCertificateForm({ certificateId }) {
         <RevokeButton />
       </div>
     </form>
+  );
+}
+
+function SendButton({ children, className }) {
+  const { pending } = useFormStatus();
+  return (
+    <button type="submit" className={className} disabled={pending}>
+      {pending ? "Sending…" : children}
+    </button>
+  );
+}
+
+export function EmailHoldersForm({ holders }) {
+  const [state, action] = useToastActionState(emailCertificateHoldersAction, {});
+
+  return (
+    <div className="ac-actions">
+      <form action={action} className="ac-form is-tight">
+        <input type="hidden" name="mode" value="test" />
+        <SendButton className="btn btn-ghost ac-btn-sm">Send a test to me</SendButton>
+      </form>
+      <form
+        action={action}
+        className="ac-form is-tight"
+        onSubmit={(event) => {
+          if (!window.confirm(`Email ${holders} people that their certificate is ready?`)) event.preventDefault();
+        }}
+      >
+        <input type="hidden" name="mode" value="all" />
+        <SendButton className="btn btn-solid ac-btn-sm">Email {holders} participants</SendButton>
+      </form>
+    </div>
   );
 }

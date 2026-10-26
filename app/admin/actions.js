@@ -12,10 +12,11 @@ import {
   slugify,
   text,
 } from "../../lib/accounts";
-import { CATEGORIES, EDITION, credentialName, certUrl } from "../../lib/results";
+import { CATEGORIES, EDITION, SITE, credentialName, certUrl, fromCertificate, placementOf } from "../../lib/results";
+import { certificatesFor } from "../../lib/store";
 import { TIERS, tierFor } from "../../lib/sponsors";
 import { SETTINGS, setSetting, pastDeadline } from "../../lib/settings";
-import { certificateIssuedEmail, judgeAssignedEmail, roleDecidedEmail } from "../../lib/email";
+import { certificateIssuedEmail, certificateReadyEmail, judgeAssignedEmail, roleDecidedEmail } from "../../lib/email";
 
 /* ------------------------------------------------------------------
    Administration.
@@ -405,6 +406,103 @@ export async function setAwardAction(prev, formData) {
 }
 
 /* ---------- certificates ---------- */
+
+/**
+ * "Your certificate is ready" to everyone who holds one.
+ *
+ * `mode=test` sends a single copy to the signed-in admin so the
+ * message can be read in a real inbox first. `mode=all` sends one
+ * email per person (a person on two teams gets one email listing
+ * both) and skips anybody already sent this one, so a retry after a
+ * timeout never double-sends.
+ */
+export async function emailCertificateHoldersAction(prev, formData) {
+  const admin = await requireAdmin();
+  const mode = String(formData.get("mode")) === "all" ? "all" : "test";
+
+  const holders = await sql`
+    select distinct u.id, u.email, coalesce(nullif(u.name, ''), '') as name
+      from certificate_holders h
+      join certificates c on c.id = h.certificate_id and c.revoked_at is null
+      join users u on u.id = h.user_id
+     order by u.email`;
+  if (!holders.length) return { error: "No certificate holders yet. Issue certificates first." };
+
+  const sentBefore = new Set(
+    (await sql`select target from audit_log where action = 'email-certificate-ready'`).map((r) => r.target),
+  );
+
+  const build = async (user) => {
+    const certs = await certificatesFor(user.id);
+    return certs.map((cert) => ({
+      project: cert.project || cert.team,
+      team: cert.team,
+      url: certUrl(cert),
+      placement: cert.award || cert.crowd ? placementOf(fromCertificate(cert)).replace(/^Winner — /, "") : null,
+    }));
+  };
+
+  const resultsUrl = `${SITE}/programs/zero-to-launch/hackathon/results`;
+
+  if (mode === "test") {
+    const certificates = await build(holders.find((h) => h.email === admin.email) ?? holders[0]);
+    const result = await certificateReadyEmail({
+      to: admin.email,
+      name: admin.name,
+      certificates,
+      resultsUrl,
+    });
+    return result.ok ? { ok: `Test sent to ${admin.email}.` } : { error: "Resend wouldn't take the test. Try again." };
+  }
+
+  const started = Date.now();
+  const BUDGET_MS = 40000;
+  let sent = 0;
+  let skipped = 0;
+  let failed = 0;
+  let remaining = 0;
+  for (const user of holders) {
+    if (sentBefore.has(user.id)) {
+      skipped += 1;
+      continue;
+    }
+    if (Date.now() - started > BUDGET_MS) {
+      remaining += 1;
+      continue;
+    }
+    const certificates = await build(user);
+    if (!certificates.length) continue;
+
+    /* Claim before sending, so a retry, a second tab or a failed
+       write can never email the same person twice. A failed send
+       releases the claim so the next run picks them up again. */
+    const claimed = await sql`
+      insert into audit_log (actor_id, action, target, meta)
+      select ${admin.id}::uuid, 'email-certificate-ready'::text, ${user.id}::text, ${JSON.stringify({ email: user.email })}::jsonb
+       where not exists (
+         select 1 from audit_log where action = 'email-certificate-ready' and target = ${user.id})
+      returning target`;
+    if (!claimed.length) {
+      skipped += 1;
+      continue;
+    }
+
+    const result = await certificateReadyEmail({ to: user.email, name: user.name, certificates, resultsUrl });
+    if (result.ok) {
+      sent += 1;
+    } else {
+      failed += 1;
+      await sql`delete from audit_log where action = 'email-certificate-ready' and target = ${user.id}`;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 600));
+  }
+
+  const tail = [
+    remaining ? `${remaining} left, run it again to continue` : "",
+    failed ? `${failed} failed, run it again to retry them` : "",
+  ].filter(Boolean);
+  return { ok: `${sent} sent, ${skipped} already emailed${tail.length ? `, ${tail.join(", ")}` : ""}.` };
+}
 
 /** A permanent, unique, human-readable credential id. */
 async function mintCertificateId(preferred) {

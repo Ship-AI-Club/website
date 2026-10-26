@@ -6,7 +6,8 @@ import { requireAdmin } from "../../../lib/auth";
 import { RUBRIC, SCORE_MAX } from "../../../lib/accounts";
 import { allCertificates, leaderboard } from "../../../lib/store";
 import { EDITION, certPath, credentialName } from "../../../lib/results";
-import { IssueCertificatesForm, RevokeCertificateForm } from "../certificate-form";
+import { EmailHoldersForm, IssueCertificatesForm, RevokeCertificateForm } from "../certificate-form";
+import { sql } from "../../../lib/db";
 
 export const metadata = {
   title: "Leaderboard — Ship AI",
@@ -14,6 +15,7 @@ export const metadata = {
 };
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 function scoreValue(value) {
   return value === null || value === undefined ? "—" : value.toFixed ? value.toFixed(1) : value;
@@ -29,6 +31,10 @@ export default async function Page() {
   void admin;
 
   const [entries, certificates] = await Promise.all([leaderboard(), allCertificates()]);
+  const [{ n: holderCount }] = await sql`
+    select count(distinct h.user_id)::int as n
+      from certificate_holders h
+      join certificates c on c.id = h.certificate_id and c.revoked_at is null`;
 
   return (
     <>
@@ -186,6 +192,15 @@ export default async function Page() {
           each public id and updates its award wording.
         </p>
         <IssueCertificatesForm />
+        {holderCount > 0 && (
+          <>
+            <p>
+              Tell every certificate holder it&apos;s ready. Send a test to yourself first;
+              the real send skips anyone who already got it.
+            </p>
+            <EmailHoldersForm holders={holderCount} />
+          </>
+        )}
         {certificates.length ? (
           <div className="ac-table-wrap">
             <table className="ac-table">

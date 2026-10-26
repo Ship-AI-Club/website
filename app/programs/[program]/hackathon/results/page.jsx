@@ -144,6 +144,7 @@ export default async function Page({ params }) {
 
   const entrants = published ? sortedEntrants(all) : [];
   const won = published ? winners(entrants) : [];
+  const rest = won.length ? entrants.filter((e) => !isWinner(e)) : entrants;
 
   return (
     <>
@@ -219,36 +220,46 @@ export default async function Page({ params }) {
               </section>
             )}
 
-            <section aria-labelledby="rs-all-title">
-              <h2 id="rs-all-title" className="rs-section-title">
-                Every team that <span className="key">shipped</span>
-              </h2>
-              <p className="rs-lede">
-                Placing is one measure. Every team below put a live project in front of people,
-                and each has a certificate that stays up.
-              </p>
-              <ul className="rs-grid">
-                {entrants.map((e) => (
-                  <li key={e.id} className={isWinner(e) ? "rs-card rs-card-win" : "rs-card"}>
-                    <p className="rs-card-place">{placementOf(e)}</p>
-                    <h3>{e.project || e.team}</h3>
-                    {byline(e) && <p className="rs-card-people">{byline(e)}</p>}
-                    <div className="rs-card-links">
-                      {e.url && (
-                        <a href={e.url} target="_blank" rel="noreferrer">
-                          Project
-                          <ArrowUpRight size={13} strokeWidth={1.75} aria-hidden="true" />
+            {rest.length > 0 && (
+              <section aria-labelledby="rs-all-title">
+                <h2 id="rs-all-title" className="rs-section-title">
+                  {won.length ? (
+                    <>
+                      Everyone else who <span className="key">shipped</span>
+                    </>
+                  ) : (
+                    <>
+                      Every team that <span className="key">shipped</span>
+                    </>
+                  )}
+                </h2>
+                <p className="rs-lede">
+                  Placing is one measure. Every team below put a live project in front of people,
+                  and each has a certificate that stays up.
+                </p>
+                <ul className="rs-grid">
+                  {rest.map((e) => (
+                    <li key={e.id} className="rs-card">
+                      <p className="rs-card-place">{placementOf(e)}</p>
+                      <h3>{e.project || e.team}</h3>
+                      {byline(e) && <p className="rs-card-people">{byline(e)}</p>}
+                      <div className="rs-card-links">
+                        {e.url && (
+                          <a href={e.url} target="_blank" rel="noreferrer">
+                            Project
+                            <ArrowUpRight size={13} strokeWidth={1.75} aria-hidden="true" />
+                          </a>
+                        )}
+                        <a href={certPath(e)} aria-label={`View the certificate for ${e.project || e.team}`}>
+                          <BadgeCheck size={13} strokeWidth={1.75} aria-hidden="true" />
+                          Certificate
                         </a>
-                      )}
-                      <a href={certPath(e)} aria-label={`View the certificate for ${e.project || e.team}`}>
-                        <BadgeCheck size={13} strokeWidth={1.75} aria-hidden="true" />
-                        Certificate
-                      </a>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </section>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             <section className="rs-close" aria-label="Keep going">
               <p className="rs-close-line">

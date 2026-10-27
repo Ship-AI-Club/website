@@ -57,6 +57,22 @@ export default async function Page({ params }) {
         </> : <p className="ht-detail-copy">This team has registered and is still preparing its submission.</p>}
       </section>
 
+      {team.pitch_video_url && <section id="team-pitch" className="ht-detail-section ht-pitch-section" aria-labelledby="ht-pitch-title">
+        <span className="ht-status is-submitted">Recorded pitch</span>
+        <h2 id="ht-pitch-title">Watch {team.name}&apos;s pitch</h2>
+        <video className="ht-pitch-video" controls playsInline preload="metadata" poster={team.pitch_video_poster_url || undefined}>
+          <source src={team.pitch_video_url} type="video/mp4" />
+          Your browser does not support embedded video.
+        </video>
+        <p className="ht-pitch-caption">Presented at the Ship AI × Workuity Hackathon in Phoenix.</p>
+      </section>}
+
+      {!team.pitch_video_url && team.pitch_video_poster_url && <section id="team-pitch" className="ht-detail-section ht-pitch-section" aria-labelledby="ht-pitch-title">
+        <span className="ht-status is-submitted">Project preview</span>
+        <h2 id="ht-pitch-title">See {team.name}</h2>
+        <img className="ht-pitch-poster" src={team.pitch_video_poster_url} alt={`${team.name} project preview`} loading="lazy" />
+      </section>}
+
       <section className="ht-detail-section" aria-labelledby="ht-members-title">
         <h2 id="ht-members-title">The team</h2>
         <p className="ht-detail-count">{team.member_count} member{team.member_count === 1 ? "" : "s"}</p>

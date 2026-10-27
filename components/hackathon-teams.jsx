@@ -15,7 +15,7 @@ export default async function HackathonTeams() {
       </div>
       {teams.length ? <ul className="ht-team-grid">
         {teams.map(team => <li key={team.slug}>
-          <Link className="ht-team-card" href={publicTeamPath(team)}>
+          <Link className="ht-team-card" href={`${publicTeamPath(team)}${team.pitch_video_url || team.pitch_video_poster_url ? "#team-pitch" : ""}`}>
             <div className="ht-team-top">
               <span className="ht-team-mark" aria-hidden="true">{safeUrl(team.logo_url) ? <img src={safeUrl(team.logo_url)} alt="" loading="lazy" /> : team.name.charAt(0).toUpperCase()}</span>
               <span className={`ht-status${team.submitted ? " is-submitted" : ""}`}>{team.submitted ? "Submitted" : "Building"}</span>
@@ -24,7 +24,7 @@ export default async function HackathonTeams() {
             <p className="ht-team-project">{team.submitted ? team.project || "Submitted project" : team.tagline || "Project not submitted yet"}</p>
             <div className="ht-team-bottom">
               <span><Users size={14} aria-hidden="true" /> {team.member_count} member{team.member_count === 1 ? "" : "s"}</span>
-              <span className="ht-view-team">View team <ArrowRight size={15} aria-hidden="true" /></span>
+              <span className="ht-view-team">{team.pitch_video_url ? "Watch pitch" : team.pitch_video_poster_url ? "See project" : "View team"} <ArrowRight size={15} aria-hidden="true" /></span>
             </div>
           </Link>
         </li>)}

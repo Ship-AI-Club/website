@@ -37,6 +37,10 @@
 .ht-member-list strong { font-size:.95rem; overflow-wrap:anywhere; }
 .ht-member-list p { color:var(--faint); font-size:.8rem; margin-top:.3rem; line-height:1.5; overflow-wrap:anywhere; }
 .ht-detail-count { color:var(--faint); font-size:.85rem; }
+.ht-pitch-section { padding-top:0; }
+.ht-pitch-video { display:block; width:100%; max-height:75vh; aspect-ratio:16/9; margin:1.25rem 0 .75rem; background:#07120f; border:1px solid var(--hairline); }
+.ht-pitch-poster { display:block; width:100%; max-height:75vh; margin:1.25rem 0 .75rem; object-fit:contain; background:#07120f; border:1px solid var(--hairline); }
+.ht-pitch-caption { color:var(--faint); font-size:.82rem; line-height:1.6; }
 @media (max-width:950px) { .ht-team-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width:600px) { .ht-directory-head { align-items:flex-start; flex-direction:column; gap:.7rem; } .ht-team-grid,.ht-member-list { grid-template-columns:1fr; } .ht-team-card { padding:1.2rem; } .ht-detail-title { align-items:flex-start; gap:.8rem; } }
 @media (prefers-reduced-motion:reduce) { .ht-team-card { transition:none; } }

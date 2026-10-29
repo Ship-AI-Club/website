@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
-import { useToastActionState } from "../../../components/toast-provider";
+import { useToastActionState } from "../../../../components/toast-provider";
 import { createFounderTeamAction, joinFounderTeamAction } from "./actions";
 
 function Submit({ label, busy, ghost }) {

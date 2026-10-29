@@ -5,7 +5,7 @@ import { getUpcomingEvents } from "../lib/meetup";
 import { JsonLd } from "../components/article";
 import { PROGRAMS, programVenueNames } from "../lib/programs";
 import ProgramCard from "../components/program-card";
-import { EVENT } from "../lib/hackathon";
+import { FOUNDER_WEEKEND as FW } from "../lib/founder-weekend";
 import { VIBE_GTM, workshopPrice } from "../lib/vibe-gtm-workshop";
 import { UPCOMING_WORKSHOPS } from "../lib/workshops";
 import { WORKSHOP_PRESENTATION } from "../lib/workshop-presentation";
@@ -77,7 +77,6 @@ export default async function Page() {
   const nextEvent = events[0];
   const price = workshopPrice();
   const vibeEnded = Date.now() >= new Date(VIBE_GTM.end).getTime();
-  const featured = PROGRAMS.find((p) => p.status === "running" && p.hasHackathon) || PROGRAMS.find((p) => p.status === "running");
 
   return (
     <>
@@ -87,13 +86,11 @@ export default async function Page() {
 
       <main id="top">
         <section className="hero" aria-labelledby="hero-title">
-          {featured && (
-            <p className="eyebrow">
-              <a href={featured.hackathonHref || `/programs/${featured.slug}`} className="link">
-                Now running · {featured.hasHackathon ? `${EVENT.name} · ${EVENT.datesShort.replace(/, \d{4}$/, "").replace(/ /g, "\u00a0")}` : featured.name}
-              </a>
-            </p>
-          )}
+          <p className="eyebrow">
+            <a href={FW.path} className="link">
+              Featured · {FW.name} · {FW.datesShort.replace(/ /g, "\u00a0")}
+            </a>
+          </p>
           <h1 className="hero-h1" id="hero-title">
             <span className="sr-only">Ship AI: </span>
             Practical AI, <span className="key">Built Together</span>
@@ -109,24 +106,19 @@ export default async function Page() {
 
           <div className="stage">
             <Scene scene="slipway" alt="Dithered night scene: a hull on the slipway with scaffolding around it and two builders at work. We build together." />
-            <aside id="events" className="window" aria-label="Next session">
-              <div className="window-bar"><b>Next session</b><span>{nextEvent ? "RSVPs open" : "Calendar"}</span></div>
+            <aside id="events" className="window" aria-label="Featured event">
+              <div className="window-bar"><b>Featured event</b><span>{FW.rsvpUrl ? "RSVPs open" : "Registration open"}</span></div>
               <div className="hero-window-body">
-                {nextEvent ? (
-                  <>
-                    <h2>{nextEvent.title}</h2>
-                    <p className="meta">{[nextEvent.date, nextEvent.time, nextEvent.place || "Phoenix, AZ"].join("\u00a0· ")}</p>
-                    {nextEvent.title === VIBE_GTM.name && <span className="tag">Only {VIBE_GTM.capacity} seats</span>}
-                    <a className="btn btn-solid btn-sm" href={nextEvent.url} target="_blank" rel="noreferrer">Reserve a seat</a>
-                  </>
-                ) : (
-                  <>
-                    <h2>New sessions post every few weeks.</h2>
-                    <a className="btn btn-solid btn-sm" href={MEETUP} target="_blank" rel="noreferrer">See the calendar</a>
-                  </>
-                )}
+                <h2>{FW.name}: build an AI company by Sunday</h2>
+                <p className="meta">{[FW.datesShort, FW.venue, FW.cost].join("\u00a0· ")}</p>
+                <span className="tag">Hackathon · {FW.teams}</span>
+                <a className="btn btn-solid btn-sm" href={FW.path}>See the weekend</a>
                 <p className="hero-window-foot">
-                  <span>See event details for tickets</span>
+                  {nextEvent ? (
+                    <a href={nextEvent.url} target="_blank" rel="noreferrer">Next session: {nextEvent.title}</a>
+                  ) : (
+                    <span>New sessions post every few weeks</span>
+                  )}
                   <a href={MEETUP} target="_blank" rel="noreferrer">Full calendar</a>
                 </p>
               </div>

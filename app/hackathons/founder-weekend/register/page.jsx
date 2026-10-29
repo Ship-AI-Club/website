@@ -1,13 +1,13 @@
-import "../../account.css";
+import "../../../account.css";
 import "../founder-weekend.css";
 
-import { Lockup } from "../../../components/seal";
-import MobileNav from "../../../components/mobile-nav";
-import { currentUser } from "../../../lib/auth";
-import { MAX_TEAM_SIZE } from "../../../lib/accounts";
-import { teamFor } from "../../../lib/store";
-import { DISCORD } from "../../../lib/hackathon";
-import { FOUNDER_WEEKEND as FW } from "../../../lib/founder-weekend";
+import { Lockup } from "../../../../components/seal";
+import MobileNav from "../../../../components/mobile-nav";
+import { currentUser } from "../../../../lib/auth";
+import { MAX_TEAM_SIZE } from "../../../../lib/accounts";
+import { teamFor } from "../../../../lib/store";
+import { DISCORD } from "../../../../lib/hackathon";
+import { FOUNDER_WEEKEND as FW } from "../../../../lib/founder-weekend";
 import { leaveFounderTeamAction } from "./actions";
 import { CreateTeamForm, JoinTeamForm } from "./team-forms";
 

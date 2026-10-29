@@ -1,9 +1,8 @@
 import { Award, BadgeCheck, Briefcase, Clapperboard, Compass, Landmark, Users } from "lucide-react";
-import { JsonLd, faqSchema } from "../../components/article";
-import Scene from "../../components/scene";
-import SiteFooter from "../../components/site-footer";
-import SiteHeader from "../../components/site-header";
-import { DISCORD } from "../../lib/hackathon";
+import { JsonLd, faqSchema } from "../../../components/article";
+import Scene from "../../../components/scene";
+import SiteFooter from "../../../components/site-footer";
+import SiteHeader from "../../../components/site-header";
 import {
   FOUNDER_WEEKEND as FW,
   FW_BENEFITS,
@@ -11,11 +10,14 @@ import {
   FW_FAQS,
   FW_HOSTS,
   FW_WEEKEND,
-} from "../../lib/founder-weekend";
-import { founderWeekendStats, founderWeekendTeams } from "../../lib/founder-weekend-stats";
+} from "../../../lib/founder-weekend";
+import { founderWeekendStats, founderWeekendTeams } from "../../../lib/founder-weekend-stats";
 import "./founder-weekend.css";
 
 const REGISTER = `${FW.path}/register`;
+const RSVP = FW.rsvpUrl || REGISTER;
+const RSVP_LINK = FW.rsvpUrl ? { href: RSVP, target: "_blank", rel: "noopener noreferrer" } : { href: RSVP };
+const RSVP_LABEL = FW.rsvpUrl ? "RSVP on Luma" : "Register your team";
 const ROLE_REQUEST = "/login?next=/dashboard/requests";
 const PRIZE = FW.prizePool ? `$${FW.prizePool.toLocaleString("en-US")}` : "Cash";
 const NAV = [
@@ -27,7 +29,7 @@ const NAV = [
 
 const FACTS = [
   { value: "Feb 6–7", label: "Saturday and Sunday, 2027" },
-  { value: "Phoenix", label: "In person, Arizona" },
+  { value: "Phoenix", label: FW.venue },
   { value: FW.cost, label: FW.teams },
   { value: PRIZE, label: FW.prizePool ? "Prize pool" : "Prizes and awards" },
 ];
@@ -73,8 +75,8 @@ const EVENT_SCHEMA = {
   eventStatus: "https://schema.org/EventScheduled",
   location: {
     "@type": "Place",
-    name: "Phoenix, Arizona",
-    address: { "@type": "PostalAddress", addressLocality: "Phoenix", addressRegion: "AZ", addressCountry: "US" },
+    name: FW.venue,
+    address: { "@type": "PostalAddress", streetAddress: FW.street, addressLocality: "Phoenix", addressRegion: "AZ", postalCode: "85016", addressCountry: "US" },
   },
   organizer: { "@type": "Organization", name: "Ship AI", url: "https://www.shipai.club" },
   performer: FW_HOSTS.map((host) => ({ "@type": "Person", name: host.name })),
@@ -86,7 +88,7 @@ const EVENT_SCHEMA = {
     price: "0",
     priceCurrency: "USD",
     availability: "https://schema.org/InStock",
-    url: `https://www.shipai.club${REGISTER}`,
+    url: FW.rsvpUrl || `https://www.shipai.club${REGISTER}`,
     validFrom: "2026-10-28T00:00:00-07:00",
   },
 };
@@ -146,14 +148,14 @@ export default async function Page() {
       <JsonLd data={faqSchema(FW_FAQS)} />
       <SiteHeader
         links={NAV}
-        cta={<a className="btn btn-solid btn-sm nav-cta" href={REGISTER}>Register your team</a>}
-        extraLinks={[...NAV, { href: REGISTER, label: "Register your team" }]}
+        cta={<a className="btn btn-solid btn-sm nav-cta" {...RSVP_LINK}>{FW.rsvpUrl ? "RSVP" : "Register"}</a>}
+        extraLinks={[...NAV, { href: REGISTER, label: "Register your team" }, ...(FW.rsvpUrl ? [{ href: RSVP, label: "RSVP" }] : [])]}
       />
 
       <main id="top" className="fw">
         <section className="hero fw-hero" aria-labelledby="fw-title">
           <p className="fw-hero-meta">
-            <span className="tag tag-go">Registration open</span>
+            <span className="tag tag-go">{FW.rsvpUrl ? "RSVPs open" : "Registration open"}</span>
             <span>{FW.name}{" ·"} Arizona AI hackathon</span>
           </p>
           <h1 className="hero-h1" id="fw-title">
@@ -164,8 +166,8 @@ export default async function Page() {
             One weekend in Phoenix to build an AI company, then pitch it to judges, employers and investors. Free for teams of 1–4.
           </p>
           <div className="cta-row">
-            <a className="btn btn-solid" href={REGISTER}>Register your team</a>
-            <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noopener noreferrer">Join the Discord</a>
+            <a className="btn btn-solid" {...RSVP_LINK}>{RSVP_LABEL}</a>
+            {FW.rsvpUrl && <a className="btn btn-ghost" href={REGISTER}>Register your team</a>}
           </div>
 
           <div className="stage fw-stage">
@@ -181,8 +183,8 @@ export default async function Page() {
                 ))}
               </dl>
               <div className="fw-hero-window-foot">
-                <span className="meta">Phoenix{" ·"} Sat–Sun{" ·"} Free</span>
-                <a className="btn btn-solid btn-sm" href={REGISTER}>Register</a>
+                <span className="meta">{FW.venue}{" ·"} Free</span>
+                <a className="btn btn-solid btn-sm" {...RSVP_LINK}>{FW.rsvpUrl ? "RSVP" : "Register"}</a>
               </div>
             </aside>
             <p className="fw-toast" aria-hidden="true">
@@ -410,10 +412,10 @@ export default async function Page() {
         <section className="band" aria-labelledby="fw-final-title">
           <div className="final">
             <h2 id="fw-final-title">Feel the fear. <span className="key">Ship it anyway.</span></h2>
-            <p className="lede">Register a team now, or come solo and find one at Saturday&apos;s kickoff.</p>
+            <p className="lede">{FW.rsvpUrl ? "RSVP, then register a team" : "Register a team now"}, or come solo and find one at Saturday&apos;s kickoff.</p>
             <div className="cta-row">
-              <a className="btn btn-solid" href={REGISTER}>Register your team</a>
-              <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noopener noreferrer">Join the Discord</a>
+              <a className="btn btn-solid" {...RSVP_LINK}>{RSVP_LABEL}</a>
+              {FW.rsvpUrl && <a className="btn btn-ghost" href={REGISTER}>Register your team</a>}
             </div>
             <ul className="final-checks">
               <li>Free to enter</li>

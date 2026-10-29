@@ -3,12 +3,12 @@
 import { randomInt } from "node:crypto";
 import { revalidatePath } from "next/cache";
 
-import { requireOnboarded, requireUser } from "../../../lib/auth";
-import { sql } from "../../../lib/db";
-import { LIMITS, MAX_TEAM_SIZE, slugify, text } from "../../../lib/accounts";
-import { teamFor } from "../../../lib/store";
-import { createTeamMembership, joinTeamMembership } from "../../../lib/team-membership";
-import { FOUNDER_WEEKEND as FW } from "../../../lib/founder-weekend";
+import { requireOnboarded, requireUser } from "../../../../lib/auth";
+import { sql } from "../../../../lib/db";
+import { LIMITS, MAX_TEAM_SIZE, slugify, text } from "../../../../lib/accounts";
+import { teamFor } from "../../../../lib/store";
+import { createTeamMembership, joinTeamMembership } from "../../../../lib/team-membership";
+import { FOUNDER_WEEKEND as FW } from "../../../../lib/founder-weekend";
 
 const RETURN = `${FW.path}/register`;
 const CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";

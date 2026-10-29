@@ -2,7 +2,6 @@ import { Award, BadgeCheck, Briefcase, Clapperboard, Compass, Landmark, Users } 
 import { JsonLd, faqSchema } from "../../../components/article";
 import Scene from "../../../components/scene";
 import { Seal } from "../../../components/seal";
-import SponsorForm from "./sponsor-form";
 import SiteFooter from "../../../components/site-footer";
 import SiteHeader from "../../../components/site-header";
 import {
@@ -457,13 +456,13 @@ export default async function Page() {
                   <ul className="checks">
                     {tier.perks.map((perk) => <li key={perk}>{perk}</li>)}
                   </ul>
+                  <a className="btn btn-ghost btn-sm" href={`${FW.path}/sponsor?package=${tier.id}`}>Choose {tier.name.toLowerCase()}</a>
                 </div>
               </div>
             ))}
           </div>
-          <div className="window fw-sponsor-window" id="sponsor-form">
-            <div className="window-bar"><b>Sponsor inquiry</b><span>{FW.name}</span></div>
-            <SponsorForm tiers={FW_SPONSOR_TIERS} />
+          <div className="cta-row fw-center">
+            <a className="btn btn-solid" href={`${FW.path}/sponsor`}>Become a sponsor</a>
           </div>
         </section>
 

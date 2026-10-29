@@ -3,17 +3,17 @@
 import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 
-import "../../forms.css";
+import "../../../forms.css";
 
 const EMPTY = { name: "", email: "", company: "", site: "", message: "", website: "" };
 
-export default function SponsorForm({ tiers }) {
+export default function SponsorForm({ tiers, initial }) {
   const options = [
     ...tiers.map((t) => ({ id: t.id, label: `${t.name} · $${t.price.toLocaleString("en-US")}` })),
     { id: "undecided", label: "Not sure yet" },
   ];
   const [fields, setFields] = useState(EMPTY);
-  const [pick, setPick] = useState(tiers[0]?.id ?? "undecided");
+  const [pick, setPick] = useState(initial || tiers[0]?.id || "undecided");
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
 

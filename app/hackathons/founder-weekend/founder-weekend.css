@@ -609,9 +609,40 @@
   letter-spacing: var(--sap-track-display);
 }
 
+.fw-sponsor-tier .checks {
+  flex: 1;
+}
+
+.fw-sponsor-tier .btn {
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
 .fw-sponsor-tier h3 {
   font-size: 20px;
   margin-bottom: 6px;
+}
+
+.fw-sponsor-page .hero-h1 {
+  text-wrap: balance;
+}
+
+.fw-sponsor-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 40px;
+  max-width: 760px;
+  margin: 0 auto 40px;
+  padding: 28px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.fw-sponsor-summary-price {
+  margin: 8px 0 14px;
+  font-family: var(--sap-font-display);
+  font-size: var(--sap-fs-figure);
+  line-height: 1;
 }
 
 .fw-sponsor-window {
@@ -621,6 +652,7 @@
 
 .fw-sponsor-form,
 .fw-sponsor-done {
+  margin-top: 0;
   padding: 24px 28px 28px;
 }
 
@@ -743,8 +775,13 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .fw-sponsor-pair {
+  .fw-sponsor-pair,
+  .fw-sponsor-summary {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fw-sponsor-summary {
+    gap: 24px;
   }
 
   .fw-sponsor-form,

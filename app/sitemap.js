@@ -17,6 +17,7 @@ export default function sitemap() {
     { url: `${BASE}/programs`, lastModified, changeFrequency: "weekly", priority: 0.9 },
     { url: FOUNDER_WEEKEND.url, lastModified, changeFrequency: "daily", priority: 1 },
     { url: `${FOUNDER_WEEKEND.url}/register`, lastModified, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${FOUNDER_WEEKEND.url}/sponsor`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/workshops/assessment`, lastModified, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/workshops`, lastModified, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/workshops/vibe-coding-gtm`, lastModified, changeFrequency: "daily", priority: 0.9 },

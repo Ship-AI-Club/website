@@ -1,18 +1,18 @@
-/* The marketing deck's paper, cobalt, Geist, frame, and type scale carry forward. */
+
 .ge-slide .mk-content { gap:1.4cqw; }
 .ge-label { font:1cqw/1.4 var(--sap-font-mono); color:var(--accent); display:block; }
 .ge-slide h4 { font-size:2.6cqw; line-height:1.1; letter-spacing:-.04em; }
 .ge-slide p { line-height:1.45; }
 .ge-slide .mk-lead { line-height:1.45; }
 .ge-opening,.ge-brief,.ge-paths,.ge-task,.ge-approval,.ge-measure,.ge-rehearsal { display:grid; grid-template-columns:1fr 1fr; gap:3cqw; align-items:center; }
-.ge-brand { background:#edf2ff; border:1px solid var(--hairline); border-radius: 0; padding:1.8cqw; display:flex; flex-direction:column; align-items:center; gap:1.1cqw; }
+.ge-brand { background:var(--sunken); border:1px solid var(--hairline); border-radius: 0; padding:1.8cqw; display:flex; flex-direction:column; align-items:center; gap:1.1cqw; }
 .ge-brand img { width:18cqw; height:18cqw; }
 .ge-brand strong { font-size:2.4cqw; letter-spacing:-.04em; }
 .ge-opening h4 { font-size:4.5cqw; margin:1cqw 0; }
 .ge-opening p { font-size:1.75cqw; margin-bottom:1.4cqw; }
 .ge-opening a { font-size:1.1cqw; color:var(--accent); }
 .ge-brief { align-items:stretch; }
-.ge-brief > div { background:#edf2ff; padding:2.3cqw; border-radius: 0; }
+.ge-brief > div { background:var(--sunken); padding:2.3cqw; border-radius: 0; }
 .ge-brief h4 { font-size:3.8cqw; margin:1.2cqw 0; }
 .ge-brief p { font-size:1.4cqw; }
 .ge-cta { display:inline-block; margin-top:1.5cqw; background:var(--accent); color:white; padding:.7cqw 1cqw; font-size:1.2cqw; border-radius: 0; }
@@ -28,7 +28,7 @@
 .ge-journey b { position:absolute; right:-2cqw; top:5cqw; font-size:2cqw; color:var(--accent); }
 .ge-paths { align-items:stretch; gap:0; }
 .ge-paths > div { padding:2.5cqw; }
-.ge-paths > div:first-child { background:#edf2ff; border-left:3px solid var(--accent); }
+.ge-paths > div:first-child { background:var(--sunken); border-left:3px solid var(--accent); }
 .ge-paths > div:last-child { border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); }
 .ge-paths h4 { font-size:3.3cqw; margin:1.5cqw 0 1cqw; }
 .ge-paths p { font-size:1.6cqw; max-width:32ch; }
@@ -55,7 +55,7 @@
 .ge-prompt-tools > a { margin-left:auto; }
 .ge-sources { display:flex; gap:1.5cqw; }
 .ge-approval { align-items:stretch; }
-.ge-review-copy { border:1px solid var(--hairline); padding:1.7cqw; background:white; }
+.ge-review-copy { border:1px solid var(--hairline); padding:1.7cqw; background:var(--surface); }
 .ge-review-copy label { display:block; font-size:1.3cqw; margin:.9cqw 0 .5cqw; }
 .ge-review-copy textarea { width:100%; height:7cqw; padding:.8cqw; font:1.35cqw/1.4 var(--sap-font-body); color:var(--ink); background:var(--bg); border:1px solid var(--edge); resize:vertical; }
 .ge-review-copy p { font-size:1.1cqw; margin-top:.7cqw; }
@@ -68,8 +68,8 @@
 .ge-stack strong { font-size:2cqw; letter-spacing:-.04em; white-space:nowrap; }
 .ge-stack strong span { color:var(--accent); font-size:1.4cqw; }
 .ge-stack a > span { font-size:1.2cqw; color:var(--dim); max-width:23ch; }
-.ge-app { border:1px solid var(--edge); border-radius: 0; overflow:hidden; background:white; }
-.ge-app-header { display:flex; justify-content:space-between; background:#edf2ff; border-bottom:1px solid var(--hairline); padding:.8cqw 1.5cqw; font:1cqw var(--sap-font-mono); color:var(--accent); }
+.ge-app { border:1px solid var(--edge); border-radius: 0; overflow:hidden; background:var(--surface); }
+.ge-app-header { display:flex; justify-content:space-between; background:var(--sunken); border-bottom:1px solid var(--hairline); padding:.8cqw 1.5cqw; font:1cqw var(--sap-font-mono); color:var(--accent); }
 .ge-app-body { display:grid; grid-template-columns:1.4fr 1fr; gap:3cqw; padding:1.5cqw 2cqw; }
 .ge-app-body h4 { margin:.5cqw 0; }
 .ge-app-body p { font-size:1.2cqw; color:var(--dim); }

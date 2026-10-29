@@ -24,8 +24,24 @@
   flex-direction: column;
   overflow: hidden;
 
-  /* The palette is global (globals.css). A projector needs two things
-     heavier than a screen does: rules, and SVG line art. */
+  color-scheme: light;
+  --bg: var(--sap-paper);
+  --bg-rgb: 243, 239, 227;
+  --surface: var(--sap-sheet);
+  --sunken: var(--sap-paper-deep);
+  --ink: var(--sap-banknote);
+  --fg-rgb: 13, 36, 30;
+  --dim: var(--sap-slate-green);
+  --faint: var(--sap-slate-green);
+  --accent: var(--sap-dither);
+  --accent-rgb: 28, 85, 68;
+  --edge: #6B766F;
+  --fix: var(--sap-brass);
+  --good: var(--sap-dither);
+  --bad: #A3341F;
+  --warn: #A3341F;
+  --sap-band-bg: var(--sap-night-water);
+  --sap-band-bg-raised: var(--sap-night-water-raised);
   --hairline: rgba(var(--fg-rgb), 0.22);
   --wire: rgba(var(--fg-rgb), 0.5);
 

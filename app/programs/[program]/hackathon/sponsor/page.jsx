@@ -30,6 +30,7 @@ import {
 } from "../../../../../lib/sponsors";
 
 import "./sponsor.css";
+import { ogImage } from "../../../../../lib/og";
 
 function BrandGlyph({ icon, size = 18 }) {
   return (
@@ -59,7 +60,7 @@ export const metadata = {
     description: DESCRIPTION,
     url: "https://www.shipai.club/programs/zero-to-launch/hackathon/sponsor",
     siteName: "Ship AI",
-    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
+    images: [ogImage({ kicker: "Sponsor", title: TITLE, tagline: "Four tiers with the prices published. Credits and hours count the same as cash." })],
   },
 };
 

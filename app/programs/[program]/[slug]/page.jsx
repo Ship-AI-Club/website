@@ -32,6 +32,7 @@ import {
 } from "../../../../lib/programs";
 import { DISCORD, GTM_DECK, rsvpLinks, venueOf } from "../../../../lib/hackathon";
 import { Lockup } from "../../../../components/seal";
+import { ogImage } from "../../../../lib/og";
 
 const SITE = "https://www.shipai.club";
 const skillsByName = new Map(registry.skills.map((s) => [s.name, s]));
@@ -106,7 +107,7 @@ export async function generateMetadata({ params }) {
     title: `${title} — Ship AI`,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: "Ship AI", images: [{ url: "/og-community.png", width: 1200, height: 630 }] },
+    openGraph: { title, description, url, siteName: "Ship AI", images: [ogImage({ kicker: `${program.name} · Session ${w.n}`, title: w.title, meta: when })] },
   };
 }
 

@@ -1,5 +1,6 @@
 import { Article, Faq, JsonLd, faqSchema, articleSchema, EventList } from "../../components/article";
 import { getUpcomingEvents } from "../../lib/meetup";
+import { ogImage } from "../../lib/og";
 
 const UPDATED = "July 2026";
 const TITLE = "AI Meetup in Phoenix: Ship AI";
@@ -10,7 +11,7 @@ export const metadata = {
   title: `${TITLE} — Ship AI`,
   description: DESCRIPTION,
   alternates: { canonical: "https://www.shipai.club/ai-meetup-phoenix" },
-  openGraph: { title: TITLE, description: DESCRIPTION, images: [{ url: "/og-community.png", width: 1200, height: 630 }] },
+  openGraph: { title: TITLE, description: DESCRIPTION, images: [ogImage({ kicker: "Ship AI meetup", title: "AI meetup in Phoenix", key: "in Phoenix", tagline: "Workshops, an AI news briefing and five-minute demos. RSVP free." })] },
 };
 
 const FAQS = [

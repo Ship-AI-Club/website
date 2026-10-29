@@ -20,6 +20,7 @@ import { certificateById } from "../../../../../../lib/store";
 import CertActions from "./cert-actions";
 import "../../awards.css";
 import { Lockup, Seal } from "../../../../../../components/seal";
+import { ogImage } from "../../../../../../lib/og";
 
 /* Certificates are issued from /admin after the awards, so this page
    is rendered on demand rather than built ahead: the credential has to
@@ -65,7 +66,7 @@ export async function generateMetadata({ params }) {
       /* a page-level openGraph replaces the root layout's wholesale,
          so the site card has to be restated or the credential shares
          as a text-only link */
-      images: [{ url: "/og-community.png", width: 1200, height: 630 }],
+      images: [ogImage({ kicker: "Certificate", title: e.team, tagline: credentialName(e), meta: EDITION.event })],
     },
     robots: { index: true, follow: true },
   };

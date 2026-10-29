@@ -11,6 +11,7 @@ import { UPCOMING_WORKSHOPS } from "../lib/workshops";
 import { WORKSHOP_PRESENTATION } from "../lib/workshop-presentation";
 import WorkshopCard from "../components/workshop-card";
 import "./workshops/catalogue.css";
+import { DEFAULT_OG } from "../lib/og";
 
 export const metadata = {
   title: "Ship AI — Hands-on AI Workshops in Phoenix",
@@ -23,7 +24,7 @@ export const metadata = {
       "Hands-on workshops, expert guidance, and real projects. In person, in Phoenix.",
     url: "https://www.shipai.club",
     siteName: "Ship AI",
-    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
+    images: [DEFAULT_OG],
   },
 };
 

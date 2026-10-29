@@ -7,6 +7,7 @@ import { JsonLd } from "../../components/article";
 import { PROGRAMS, programVenueNames } from "../../lib/programs";
 import { DISCORD } from "../../lib/hackathon";
 import { Lockup } from "../../components/seal";
+import { ogImage } from "../../lib/og";
 
 const SITE = "https://www.shipai.club";
 
@@ -40,7 +41,7 @@ export const metadata = {
     description: "Multi-session Ship AI programs for builders in Phoenix. Learn by building.",
     url: "https://www.shipai.club/programs",
     siteName: "Ship AI",
-    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
+    images: [ogImage({ kicker: "Programs", title: "From first prompt to real progress.", key: "real progress.", tagline: "Free, multi-session programs for builders in Phoenix." })],
   },
 };
 

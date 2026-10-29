@@ -9,6 +9,7 @@ import { PROGRAMS, programBySlug, sessionBySlug, sessionDateLabel, sessionVenues
 import { DISCORD } from "../../../../../lib/hackathon";
 import registry from "../../../../../lib/skills.generated.json";
 import { Lockup } from "../../../../../components/seal";
+import { ogImage } from "../../../../../lib/og";
 
 const SITE = "https://www.shipai.club";
 
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }) {
     title: `${title} — Ship AI`,
     description: g.lede.slice(0, 300),
     alternates: { canonical: url },
-    openGraph: { title, description: g.lede.slice(0, 200), url, siteName: "Ship AI", images: [{ url: "/og-community.png", width: 1200, height: 630 }] },
+    openGraph: { title, description: g.lede.slice(0, 200), url, siteName: "Ship AI", images: [ogImage({ kicker: `${program.name} · Session ${w.n} guide`, title: w.eventTitle, tagline: "A follow-along guide you can run at your own pace.", meta: "Guide · Free" })] },
   };
 }
 

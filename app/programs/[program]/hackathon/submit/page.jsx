@@ -8,6 +8,7 @@ import { Lockup } from "../../../../../components/seal";
 import { DISCORD, EVENT } from "../../../../../lib/hackathon";
 import { SUBMISSION_CHECKS, SUBMISSION_FIELDS } from "../../../../../lib/submissions";
 import { PITCH_PATH, PITCH_STEPS } from "../../../../../lib/hackathon-pitch";
+import { ogImage } from "../../../../../lib/og";
 
 const SUBMIT_URL = "/dashboard/submission";
 
@@ -19,7 +20,7 @@ export const metadata = {
   title: `${TITLE} — Ship AI`,
   description: DESCRIPTION,
   alternates: { canonical: "https://www.shipai.club/programs/zero-to-launch/hackathon/submit" },
-  openGraph: { title: TITLE, description: DESCRIPTION, images: [{ url: "/og-community.png", width: 1200, height: 630 }] },
+  openGraph: { title: TITLE, description: DESCRIPTION, images: [ogImage({ kicker: EVENT.name, title: "Submit your marketing site", key: "marketing site", tagline: "Judged on design, craft and receipts. One submission per team." })] },
   robots: { index: true, follow: true },
 };
 

@@ -11,6 +11,7 @@ import { EVENT, DISCORD, HACKATHON_PRIZES, HACKATHON_MAX_PRIZE_VALUE } from "../
 import { BREAKOUTS, OPENING_DECK, SATURDAY_AGENDA } from "../../../../lib/hackathon-opening";
 import "../../../../app/hackathon-opening.css";
 import { Lockup } from "../../../../components/seal";
+import { ogImage } from "../../../../lib/og";
 
 const FACTS = [
   { icon: Coins, label: "Prize pool", value: `Up to $${HACKATHON_MAX_PRIZE_VALUE.toLocaleString('en-US')} total value` },
@@ -65,13 +66,13 @@ export const metadata = {
     description: 'Build your AI organization and launch a useful site in Phoenix. Four guided breakouts connect positioning, product design, engineering and marketing.',
     url: "https://www.shipai.club/programs/zero-to-launch/hackathon",
     siteName: "Ship AI",
-    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
+    images: [ogImage({ kicker: "Zero to Launch hackathon", title: "Build your AI organization", key: "AI organization", tagline: "Four guided breakouts across positioning, product, engineering and marketing.", meta: EVENT.datesShort })],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Zero to Launch Hackathon — Build Your AI Organization | Ship AI',
     description: 'Build your AI organization and launch a useful site in Phoenix. Four guided breakouts connect positioning, product design, engineering and marketing.',
-    images: ['/og-community.png'],
+    images: [ogImage({ kicker: "Zero to Launch hackathon", title: "Build your AI organization", key: "AI organization", tagline: "Four guided breakouts across positioning, product, engineering and marketing.", meta: EVENT.datesShort }).url],
   },
 };
 

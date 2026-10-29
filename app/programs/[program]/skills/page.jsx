@@ -9,6 +9,7 @@ import { PROGRAMS, programBySlug, sessionDateLabel } from "../../../../lib/progr
 import { DISCORD } from "../../../../lib/hackathon";
 import registry from "../../../../lib/skills.generated.json";
 import { Lockup } from "../../../../components/seal";
+import { ogImage } from "../../../../lib/og";
 
 const SITE = "https://www.shipai.club";
 const byName = new Map(registry.skills.map((s) => [s.name, s]));
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }) {
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: "Ship AI", images: [{ url: "/og-community.png", width: 1200, height: 630 }] },
+    openGraph: { title, description, url, siteName: "Ship AI", images: [ogImage({ kicker: `${program.name} · Skills`, title: `${program.name} skills`, key: "skills", tagline: "Every skill file from the program, free to download and run." })] },
   };
 }
 

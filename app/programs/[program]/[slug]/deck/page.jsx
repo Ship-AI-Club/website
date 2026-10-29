@@ -5,6 +5,7 @@ import { deckFor } from "../../../../../lib/decks";
 import { growthDeckForTrack } from "../../../../../lib/growth-engineering-deck";
 import { PROGRAMS, programBySlug, sessionBySlug } from "../../../../../lib/programs";
 import DeckControls from "./deck-controls";
+import { ogImage } from "../../../../../lib/og";
 
 const SITE = "https://www.shipai.club";
 
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }) {
     title: `${title} — Ship AI`,
     description: `The ${program.name} session ${w.n} presentation. ${w.copy}`.slice(0, 300),
     alternates: { canonical: url },
-    openGraph: { title, description: w.copy.slice(0, 200), url, siteName: "Ship AI", images: [{ url: "/og-community.png", width: 1200, height: 630 }] },
+    openGraph: { title, description: w.copy.slice(0, 200), url, siteName: "Ship AI", images: [ogImage({ kicker: `${program.name} · Session ${w.n} slides`, title: w.eventTitle, meta: "Slides · Free" })] },
   };
 }
 

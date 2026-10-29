@@ -13,6 +13,7 @@ const nextConfig = {
     "/api/workshops/*/materials/*": ["./workshop-kits/build-your-ai-organization/**/*", "./workshop-kits/vibe-coding-gtm/**/*"],
     "/api/workshops/*/og": ["./public/brand/seal-banknote.svg", "./public/workshop-art/website-marketing-instructors.png", "./public/fonts/*.ttf"],
     "/programs/[program]/hackathon/results/opengraph-image": ["./public/fonts/*.ttf"],
+    "/og": ["./public/fonts/*.ttf", "./public/brand/lockup-community-horizontal-bone.svg"],
     "/api/fx-deck": ["./public/marketing-resources/library/copywriting/**/*.md", "./public/marketing-resources/library/copy-editing/**/*.md", "./public/marketing-resources/library/cro/**/*.md"],
     "/api/fx-showcase": ["./content/skills/**/*.md", "./content/program-skills/**/*.md", "./content/workshop-skills/**/*.md", "./public/marketing-resources/library/seo-audit/**/*.md", "./public/marketing-resources/library/programmatic-seo/**/*.md", "./public/marketing-resources/library/copywriting/**/*.md", "./public/marketing-resources/library/copy-editing/**/*.md", "./public/marketing-resources/library/cro/**/*.md"],
   },

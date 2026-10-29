@@ -17,6 +17,7 @@ import {
   MEETUP,
   venueOf,
 } from "../../../lib/hackathon";
+import { ogImage } from "../../../lib/og";
 
 const SITE = "https://www.shipai.club";
 
@@ -61,7 +62,7 @@ export async function generateMetadata({ params }) {
     title,
     description: program.description,
     alternates: { canonical: url },
-    openGraph: { title, description: program.description, url, siteName: "Ship AI", images: [{ url: "/og-community.png", width: 1200, height: 630 }] },
+    openGraph: { title, description: program.description, url, siteName: "Ship AI", images: [ogImage({ kicker: `${program.name} · Program`, title: program.headline, key: program.headlineKey, meta: program.datesLabel || "Phoenix, Arizona", alt: `${program.name}: ${program.headline}` })] },
   };
 }
 

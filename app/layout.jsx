@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import { ToastProvider } from "../components/toast-provider";
 import { MODE_BOOT_SCRIPT } from "../lib/mode";
 import "./globals.css";
+import { DEFAULT_OG } from "../lib/og";
 
 const besley = localFont({
   src: [
@@ -38,9 +39,9 @@ export const metadata = {
       "Hands-on AI workshops, expert guidance, and real projects in Phoenix. Craft over hype.",
     url: "https://www.shipai.club",
     siteName: "Ship AI",
-    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
+    images: [DEFAULT_OG],
   },
-  twitter: { card: "summary_large_image", images: [{ url: "/og-community.png", alt: "Ship AI Community: Practical AI, Built Together" }] },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport = {

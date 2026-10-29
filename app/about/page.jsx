@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { siDiscord, siGithub, siMeetup, siX } from "simple-icons";
 import { Lockup } from "../../components/seal";
+import { ogImage } from "../../lib/og";
 
 const TITLE = "About — Ship AI";
 const DESCRIPTION =
@@ -26,7 +27,7 @@ export const metadata = {
     description: DESCRIPTION,
     url: "https://www.shipai.club/about",
     siteName: "Ship AI",
-    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
+    images: [ogImage({ kicker: "About Ship AI", title: "What we're about.", key: "about.", tagline: "Practical AI education for Phoenix builders. Our values and our host." })],
   },
 };
 

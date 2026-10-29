@@ -10,6 +10,7 @@ import {
   FW_CRITERIA,
   FW_FAQS,
   FW_HOSTS,
+  FW_MENTORS,
   FW_WEEKEND,
 } from "../../../lib/founder-weekend";
 import { founderWeekendStats, founderWeekendTeams } from "../../../lib/founder-weekend-stats";
@@ -83,7 +84,7 @@ const EVENT_SCHEMA = {
     { "@type": "Organization", name: "Ship AI", url: "https://www.shipai.club" },
     { "@type": "Organization", name: FW.partner.name, url: FW.partner.url },
   ],
-  performer: FW_HOSTS.filter((host) => host.role !== "Mentor").map((host) => ({ "@type": "Person", name: host.name })),
+  performer: FW_HOSTS.map((host) => ({ "@type": "Person", name: host.name })),
   url: FW.url,
   image: ["https://www.shipai.club/og-community.png"],
   isAccessibleForFree: true,
@@ -129,6 +130,26 @@ export const revalidate = 30;
 
 function initial(name) {
   return Array.from(String(name || "").trim())[0]?.toUpperCase() || "?";
+}
+
+function PeopleList({ people }) {
+  return (
+    <ul className={`fw-hosts fw-hosts-${Math.min(people.length, 3)}`}>
+      {people.map((person) => (
+        <li className="fw-host" key={person.name}>
+          {person.photo ? (
+            <img src={person.photo} alt="" width="96" height="96" loading="lazy" />
+          ) : (
+            <span className="fw-host-initials" aria-hidden="true">{person.name.split(" ").map((w) => w[0]).join("")}</span>
+          )}
+          <div>
+            <h3>{person.name}</h3>
+            <p className="k">{person.role}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 function CoHosts() {
@@ -385,25 +406,12 @@ export default async function Page() {
           <div className="section-head">
             <p className="k">06{" ·"} People</p>
             <h2 id="fw-hosts-title">Hosted by builders. <span className="key">Judged by them too.</span></h2>
-            <p className="section-lede">
-              Founder Weekend is presented by Ship AI and {FW.partner.name}, and held at {FW.venue}.
-            </p>
           </div>
-          <ul className="fw-hosts">
-            {FW_HOSTS.map((host) => (
-              <li className="fw-host" key={host.name}>
-                {host.photo ? (
-                  <img src={host.photo} alt="" width="96" height="96" loading="lazy" />
-                ) : (
-                  <span className="fw-host-initials" aria-hidden="true">{host.name.split(" ").map((w) => w[0]).join("")}</span>
-                )}
-                <div>
-                  <h3>{host.name}</h3>
-                  <p className="k">{host.role}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <PeopleList people={FW_HOSTS} />
+          <div className="fw-mentors">
+            <p className="k">Mentors on the floor</p>
+            <PeopleList people={FW_MENTORS} />
+          </div>
           <div className="fw-roles" id="help">
             {ROLES.map((role) => (
               <div className="card fw-role" key={role.name}>

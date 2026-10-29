@@ -489,11 +489,37 @@
 .fw-hosts {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 340px));
   justify-content: center;
-  gap: 32px 72px;
+  gap: 32px 56px;
   margin: 0 0 72px;
   padding: 0;
+}
+
+.fw-hosts-1 {
+  grid-template-columns: minmax(0, 340px);
+}
+
+.fw-hosts-2 {
+  grid-template-columns: repeat(2, minmax(0, 340px));
+}
+
+.fw-hosts-3 {
+  grid-template-columns: repeat(3, minmax(0, 320px));
+}
+
+.fw-mentors {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-width: 980px;
+  margin: -24px auto 72px;
+  padding-top: 40px;
+  border-top: 1px solid var(--hairline);
+}
+
+.fw-mentors .fw-hosts {
+  margin: 0;
 }
 
 .fw-host {
@@ -560,6 +586,10 @@
 }
 
 @media (max-width: 1040px) {
+  .fw-hosts-3 {
+    grid-template-columns: repeat(2, minmax(0, 340px));
+  }
+
   .fw-benefits {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -659,9 +689,16 @@
     width: 100%;
   }
 
-  .fw-hosts {
+  .fw-hosts,
+  .fw-hosts-1,
+  .fw-hosts-2,
+  .fw-hosts-3 {
     grid-template-columns: minmax(0, 1fr);
     gap: 24px;
+  }
+
+  .fw-mentors {
+    align-items: stretch;
   }
 }
 

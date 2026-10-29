@@ -16,5 +16,5 @@ export default async function Page({ params }) {
   if (!/^[0-9a-f-]{36}$/i.test(id)) notFound();
   const entry = await presentationSubmission(id);
   if (!entry || submissionPitchMode(entry.pitch) !== "generated") notFound();
-  return <HackathonPitchDeck deck={buildPitch(entry, { name: entry.team_name })} backHref={`/judge/presentations?team=${id}`} backLabel="Presentation order" />;
+  return <HackathonPitchDeck deck={buildPitch(entry, { name: entry.team_name })} backHref={`/judge/presentations?event=${entry.hackathon_id}&team=${id}`} backLabel="Presentation order" />;
 }

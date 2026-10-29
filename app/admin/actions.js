@@ -14,6 +14,7 @@ import {
 } from "../../lib/accounts";
 import { CATEGORIES, EDITION, SITE, credentialName, certUrl, fromCertificate, placementOf } from "../../lib/results";
 import { certificatesFor } from "../../lib/store";
+import { EVENT } from "../../lib/hackathon";
 import { TIERS, tierFor } from "../../lib/sponsors";
 import { SETTINGS, setSetting, pastDeadline } from "../../lib/settings";
 import { certificateIssuedEmail, certificateReadyEmail, judgeAssignedEmail, roleDecidedEmail } from "../../lib/email";
@@ -209,7 +210,8 @@ export async function autoAssignJudgesAction(prev, formData) {
   if (!judges.length) return { error: "No judges yet. Grant the role first." };
 
   const submissions = await sql`
-    select id, team_id from submissions where status = 'submitted' order by submitted_at`;
+    select s.id, s.team_id from submissions s join teams t on t.id = s.team_id
+     where s.status = 'submitted' and t.hackathon_id = ${EVENT.id} order by s.submitted_at`;
   if (!submissions.length) return { error: "Nothing submitted yet." };
 
   const existing = await sql`select submission_id, judge_id from judge_assignments`;
@@ -593,7 +595,7 @@ export async function issueCertificatesAction(prev, formData) {
 
   const submissions = await sql`
     select s.*, t.name as team_name from submissions s join teams t on t.id = s.team_id
-     where s.status = 'submitted' order by s.submitted_at`;
+     where s.status = 'submitted' and t.hackathon_id = ${EVENT.id} order by s.submitted_at`;
   if (!submissions.length) return { error: "Nothing submitted yet." };
 
   let issued = 0;

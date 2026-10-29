@@ -8,6 +8,11 @@ import { SUBMISSION_CHECKS } from "../../../lib/submissions";
 import { submissionsOpen } from "../../../lib/settings";
 import { judgesFor, submissionForTeam, teamsFor } from "../../../lib/store";
 import SubmissionForm from "./submission-form";
+import FounderSubmissionForm from "./founder-submission-form";
+import { FOUNDER_WEEKEND as FW } from "../../../lib/founder-weekend";
+import { FW_SUBMISSION_CHECKS } from "../../../lib/founder-weekend-submissions";
+import { hackathonById } from "../../../lib/hackathons";
+import { hackathonSubmissionsOpen } from "../../../lib/settings";
 
 export const metadata = {
   title: "Your Submission — Ship AI",
@@ -17,24 +22,33 @@ export const metadata = {
 export default async function Page({ searchParams }) {
   const user = await requireOnboarded("/dashboard/submission");
   const params = await searchParams;
-  const teams = await teamsFor(user.id);
+  const [founderTeams, launchTeams] = await Promise.all([teamsFor(user.id, FW.id), teamsFor(user.id)]);
+  const both = founderTeams.length > 0 && launchTeams.length > 0;
+  const teams = [
+    ...founderTeams.map((t) => (both ? { ...t, name: `${t.name} · ${FW.name}` } : t)),
+    ...launchTeams.map((t) => (both ? { ...t, name: `${t.name} · ${EVENT.name}` } : t)),
+  ];
   const team = params?.team ? teams.find((t) => t.id === params.team) : teams[0];
   if (params?.team && !team) notFound();
+
+  if (team?.hackathon_id === FW.id) {
+    return <FounderSubmission team={founderTeams.find((t) => t.id === team.id)} teams={teams} />;
+  }
 
   if (!team) {
     return (
       <>
         <div className="ac-head">
-          <p className="ac-kicker">Zero to Launch</p>
+          <p className="ac-kicker">{FW.name}</p>
           <h1>Your submission</h1>
         </div>
         <div className="ac-empty">
           <strong>One submission per team.</strong>
-          Make a team first — a team of one is a team. Any member can edit the entry
+          Register a team first. A team of one is a team, and any member can edit the entry
           afterwards.
           <p style={{ marginTop: "1.25rem" }}>
-            <a className="btn btn-solid ac-btn-sm" href="/dashboard/team">
-              Create or join a team
+            <a className="btn btn-solid ac-btn-sm" href={`${FW.path}/register`}>
+              Register a team
             </a>
           </p>
         </div>
@@ -124,6 +138,67 @@ export default async function Page({ searchParams }) {
         <p className="ac-fine">
           See the focus and event details on{" "}
           <a href="/programs/zero-to-launch/hackathon#focus">the hackathon page</a>.
+        </p>
+      </section>
+    </>
+  );
+}
+
+async function FounderSubmission({ team, teams }) {
+  const [submission, open] = await Promise.all([
+    submissionForTeam(team.id),
+    hackathonSubmissionsOpen(hackathonById(FW.id)),
+  ]);
+
+  return (
+    <>
+      <div className="ac-head">
+        <p className="ac-kicker">{FW.name} · {team.name}</p>
+        <h1>Your submission</h1>
+        <p>
+          Your company, your live product and your pitch. Save a draft any time, submit when
+          it&apos;s ready, and keep editing until the deadline.
+        </p>
+      </div>
+
+      <TeamPicker teams={teams} selectedId={team.id} href="/dashboard/submission" />
+
+      <p className={open ? "ac-note" : "ac-error"}>
+        <AlertTriangle
+          size={15}
+          strokeWidth={1.75}
+          aria-hidden="true"
+          style={{ verticalAlign: "-2px", marginRight: ".5rem" }}
+        />
+        Deadline: <strong>{FW.deadline}</strong>. No late submissions.
+        {open && submission?.status === "submitted" && " You can keep editing until then."}
+      </p>
+
+      <section className="ac-card">
+        <div className="ac-card-head">
+          <h2>Your entry</h2>
+          {submission && (
+            <span className={`ac-pill ${submission.status === "submitted" ? "is-ok" : "is-warn"}`}>
+              {submission.status === "submitted" ? "Submitted" : "Draft"}
+            </span>
+          )}
+        </div>
+        <FounderSubmissionForm key={team.id} teamId={team.id} submission={submission} deadline={FW.deadline} open={open} />
+      </section>
+
+      <section className="ac-card">
+        <h3>Before you submit</h3>
+        <ul className="ac-list">
+          {FW_SUBMISSION_CHECKS.map((c) => (
+            <li key={c}>
+              <CheckCircle2 size={15} strokeWidth={1.75} aria-hidden="true" />
+              <span>{c}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="ac-fine">
+          Judges score six criteria from 1 to 10. See them on{" "}
+          <a href={`${FW.path}#judging`}>the {FW.name} page</a>.
         </p>
       </section>
     </>

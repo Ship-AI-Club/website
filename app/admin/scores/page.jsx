@@ -3,7 +3,8 @@
 import { BarChart3, BadgeCheck } from "lucide-react";
 
 import { requireAdmin } from "../../../lib/auth";
-import { RUBRIC, SCORE_MAX } from "../../../lib/accounts";
+import { EVENT } from "../../../lib/hackathon";
+import { CURRENT_HACKATHON_ID, HACKATHONS, hackathonById } from "../../../lib/hackathons";
 import { allCertificates, leaderboard } from "../../../lib/store";
 import { EDITION, certPath, credentialName } from "../../../lib/results";
 import { EmailHoldersForm, IssueCertificatesForm, RevokeCertificateForm } from "../certificate-form";
@@ -26,11 +27,15 @@ function formatDate(value) {
   return new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
-export default async function Page() {
+export default async function Page({ searchParams }) {
   const admin = await requireAdmin();
   void admin;
 
-  const [entries, certificates] = await Promise.all([leaderboard(), allCertificates()]);
+  const query = await searchParams;
+  const hackathon = hackathonById(query?.event) ?? hackathonById(CURRENT_HACKATHON_ID);
+  const RUBRIC = hackathon.rubric;
+  const SCORE_MAX = hackathon.scoreMax;
+  const [entries, certificates] = await Promise.all([leaderboard(hackathon.id), allCertificates()]);
   const [{ n: holderCount }] = await sql`
     select count(distinct h.user_id)::int as n
       from certificate_holders h
@@ -40,7 +45,7 @@ export default async function Page() {
   return (
     <>
       <div className="ac-head">
-        <p className="ac-kicker">Admin / judging</p>
+        <p className="ac-kicker">Admin / judging · {hackathon.name}</p>
         <h1>Scores</h1>
         <p>
           Ordered by average score, ties broken by crowd votes. Spread is the gap between
@@ -49,6 +54,12 @@ export default async function Page() {
           average of one card isn&apos;t comparable to an average of three.
         </p>
       </div>
+
+      <nav className="ac-actions" aria-label="Choose a hackathon">
+        {HACKATHONS.map((h) => (
+          <a key={h.id} className={`btn ${h.id === hackathon.id ? "btn-solid" : "btn-ghost"} ac-btn-sm`} href={`/admin/scores?event=${h.id}`} aria-current={h.id === hackathon.id ? "page" : undefined}>{h.name}</a>
+        ))}
+      </nav>
 
       <section className="ac-card">
         <div className="ac-card-head">
@@ -182,7 +193,7 @@ export default async function Page() {
         </div>
       )}
 
-      <section className="ac-card">
+      {hackathon.id === EVENT.id && <section className="ac-card">
         <div className="ac-card-head">
           <BadgeCheck size={18} strokeWidth={1.75} aria-hidden="true" />
           <h2>Certificates</h2>
@@ -240,7 +251,7 @@ export default async function Page() {
             Issue certificates after the submitted teams and awards are settled.
           </div>
         )}
-      </section>
+      </section>}
     </>
   );
 }

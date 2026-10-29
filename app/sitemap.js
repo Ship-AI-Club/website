@@ -5,6 +5,7 @@ import { BREAKOUTS, OPENING_DECK } from "../lib/hackathon-opening";
 import { AI_ORGANIZATION_EVENT } from "../lib/ai-organization-event";
 import { UPCOMING_WORKSHOPS } from "../lib/workshops";
 import registry from "../lib/skills.generated.json";
+import { FOUNDER_WEEKEND } from "../lib/founder-weekend";
 
 const BASE = "https://www.shipai.club";
 
@@ -14,6 +15,8 @@ export default function sitemap() {
     { url: `${BASE}/`, lastModified, changeFrequency: "daily", priority: 1 },
     { url: `${BASE}/about`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/programs`, lastModified, changeFrequency: "weekly", priority: 0.9 },
+    { url: FOUNDER_WEEKEND.url, lastModified, changeFrequency: "daily", priority: 1 },
+    { url: `${FOUNDER_WEEKEND.url}/register`, lastModified, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE}/workshops/assessment`, lastModified, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/workshops`, lastModified, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/workshops/vibe-coding-gtm`, lastModified, changeFrequency: "daily", priority: 0.9 },

@@ -6,6 +6,9 @@ import { sql, one } from "../../../lib/db";
 import { scoreCard, submissionById } from "../../../lib/store";
 import Scorecard from "../scorecard";
 import { PITCH_FIELDS, customPitchDeckUrl } from "../../../lib/submissions";
+import { EVENT } from "../../../lib/hackathon";
+import { hackathonById, judgingRubric, scoreValues } from "../../../lib/hackathons";
+import { FW_SUBMISSION_FIELDS } from "../../../lib/founder-weekend-submissions";
 
 export const dynamic = "force-dynamic";
 
@@ -35,12 +38,16 @@ export default async function Page({ params }) {
   const conflict = submission.members.some((m) => m.id === user.id);
   const deckUrl = customPitchDeckUrl(submission.pitch);
 
-  const sections = [
-    ["What the site is for", submission.summary],
-    ...PITCH_FIELDS.map(field => [field.name, submission.pitch?.[field.key]]),
-    ["What they shipped", submission.launch],
-    ["Receipts", submission.receipts],
-  ].filter(([, value]) => value);
+  const hackathon = hackathonById(submission.hackathon_id) ?? hackathonById(EVENT.id);
+  const sections = (hackathon.criteriaColumn
+    ? [["The pitch", submission.summary],
+      ...FW_SUBMISSION_FIELDS.filter((f) => ["marketing_url", "socials"].includes(f.key)).map((f) => [f.name, submission.pitch?.[f.key]])]
+    : [
+      ["What the site is for", submission.summary],
+      ...PITCH_FIELDS.map(field => [field.name, submission.pitch?.[field.key]]),
+      ["What they shipped", submission.launch],
+      ["Receipts", submission.receipts],
+    ]).filter(([, value]) => value);
 
   return (
     <>
@@ -58,7 +65,7 @@ export default async function Page({ params }) {
 
       <div className="ac-head">
         <p className="ac-kicker">
-          {submission.team_name}
+          {hackathon.name} · {submission.team_name}
         </p>
         <h1>{submission.project || "Untitled"}</h1>
         <p>{submission.members.map((m) => m.name || m.email).join(", ")}</p>
@@ -125,7 +132,7 @@ export default async function Page({ params }) {
             <h2>Your card</h2>
             {card?.submitted_at && <span className="ac-pill is-ok">filed</span>}
           </div>
-          <Scorecard submissionId={id} card={card} filed={Boolean(card?.submitted_at)} />
+          <Scorecard submissionId={id} card={card && { ...scoreValues(hackathon, card), notes: card.notes }} filed={Boolean(card?.submitted_at)} {...judgingRubric(hackathon)} />
         </section>
       )}
     </>

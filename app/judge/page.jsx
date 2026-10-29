@@ -1,9 +1,9 @@
 import { ArrowRight, Scale } from "lucide-react";
 
 import { requireRole } from "../../lib/auth";
-import { RUBRIC } from "../../lib/accounts";
 import { judgeQueue } from "../../lib/store";
-import { EVENT } from "../../lib/hackathon";
+import { FOUNDER_WEEKEND as FW } from "../../lib/founder-weekend";
+import { CURRENT_HACKATHON_ID, hackathonById } from "../../lib/hackathons";
 
 export const metadata = {
   title: "Judging — Ship AI",
@@ -15,22 +15,23 @@ export default async function Page() {
   const queue = await judgeQueue(user.id);
 
   const done = queue.filter((q) => q.scored_at).length;
+  const current = hackathonById(CURRENT_HACKATHON_ID);
 
   return (
     <>
       <div className="ac-head">
-        <p className="ac-kicker">Sunday · {EVENT.venue}</p>
+        <p className="ac-kicker">{FW.name} · {FW.datesShort}</p>
         <h1>Your queue</h1>
         <p>
-          Review the live marketing site and the work shipped during the weekend.
-          Score design, craft, and receipts equally, from 1 to 5.
+          Open the live product, watch the five-minute pitch, and score six criteria
+          equally, from {current.scoreMin} to {current.scoreMax}.
         </p>
       </div>
 
       <section className="ac-card">
         <h2>Review every submitted project</h2>
         <p className="ac-fine">The shared presentation order is ready for all judges. No assignments needed.</p>
-        <a className="btn btn-solid" href="/judge/presentations">Open presentation order</a>
+        <a className="btn btn-solid" href={`/judge/presentations?event=${current.id}`}>Open presentation order</a>
       </section>
 
       <section className="ac-card">
@@ -39,7 +40,7 @@ export default async function Page() {
           <h2>How it&apos;s scored</h2>
         </div>
         <ul className="ac-list">
-          {RUBRIC.map((c) => (
+          {current.rubric.map((c) => (
             <li key={c.key}>
               <strong>{c.name}</strong>
               <span>{c.copy}</span>
@@ -55,8 +56,8 @@ export default async function Page() {
       {queue.length === 0 ? (
         <div className="ac-empty">
           <strong>Nothing assigned yet.</strong>
-          Entries are dealt out once submissions close at {EVENT.deadline}. You&apos;ll get an
-          email when your queue is ready.
+          Score from the presentation order. Entries assigned to you by the organisers
+          show up here.
         </div>
       ) : (
         <section className="ac-card">

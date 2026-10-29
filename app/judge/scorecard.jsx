@@ -68,7 +68,7 @@ function Buttons({ filed, hasNext }) {
    submit, and the value the server receives comes from React state,
    which a form reset can't touch.
 ------------------------------------------------------------------ */
-function Scale({ name, value, onChange }) {
+function Scale({ name, value, onChange, min, max }) {
   return (
     <>
       <input type="hidden" name={name} value={value === null ? "" : value} />
@@ -79,9 +79,9 @@ function Scale({ name, value, onChange }) {
           keyboard thinks it's on 6 is its own small trap. */}
       <fieldset className="ac-scale" key={`${name}-${value}`}>
         <legend className="ac-hint" style={{ marginBottom: ".2rem" }}>
-          1 is the lowest score; 5 is the strongest.
+          {min} is the lowest score; {max} is the strongest.
         </legend>
-        {Array.from({ length: SCORE_MAX - SCORE_MIN + 1 }, (_, i) => i + SCORE_MIN).map(n => (
+        {Array.from({ length: max - min + 1 }, (_, i) => i + min).map(n => (
           <label key={n} className={value === n ? "is-on" : undefined}>
             <input
               type="radio"
@@ -98,10 +98,10 @@ function Scale({ name, value, onChange }) {
   );
 }
 
-export default function Scorecard({ submissionId, card, filed, saveAction = saveScoreAction, hasNext = false }) {
+export default function Scorecard({ submissionId, card, filed, saveAction = saveScoreAction, hasNext = false, hackathonId = "", rubric = RUBRIC, scoreMin = SCORE_MIN, scoreMax = SCORE_MAX }) {
   const [state, action] = useToastActionState(saveAction, {});
   const [values, setValues] = useState(() =>
-    Object.fromEntries(RUBRIC.map((c) => [c.key, card?.[c.key] ?? null])),
+    Object.fromEntries(rubric.map((c) => [c.key, card?.[c.key] ?? null])),
   );
 
   /* Controlled for the same reason the axes are: an uncontrolled
@@ -111,23 +111,24 @@ export default function Scorecard({ submissionId, card, filed, saveAction = save
   const [notes, setNotes] = useState(card?.notes ?? "");
 
   const set = (key) => (n) => setValues((prev) => ({ ...prev, [key]: n }));
-  const total = weightedScore(values);
+  const total = weightedScore(values, rubric, scoreMin, scoreMax);
 
   return (
     <form action={action} className="ac-form">
       <input type="hidden" name="submission_id" value={submissionId} />
+      {hackathonId && <input type="hidden" name="hackathon" value={hackathonId} />}
 
       <div>
-        {RUBRIC.map((c) => (
+        {rubric.map((c) => (
           <div key={c.key} className="ac-axis">
             <div className="ac-axis-head">
               <span className="ac-axis-name">{c.name}</span>
               <span className="ac-axis-value">
-                {values[c.key] === null ? <em>not scored</em> : `${values[c.key]} / ${SCORE_MAX}`}
+                {values[c.key] === null ? <em>not scored</em> : `${values[c.key]} / ${scoreMax}`}
               </span>
             </div>
             <p>{c.copy}</p>
-            <Scale name={c.key} value={values[c.key]} onChange={set(c.key)} />
+            <Scale name={c.key} value={values[c.key]} onChange={set(c.key)} min={scoreMin} max={scoreMax} />
             <p className="ac-axis-guide">{c.guide}</p>
           </div>
         ))}
@@ -135,7 +136,7 @@ export default function Scorecard({ submissionId, card, filed, saveAction = save
 
       <div className="ac-total">
         <b>{total === null ? "—" : total.toFixed(1)}</b>
-        <span>average, out of {SCORE_MAX}</span>
+        <span>average, out of {scoreMax}</span>
       </div>
 
       <div className="ac-field">

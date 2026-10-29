@@ -1,0 +1,178 @@
+.fw-why {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.fw-why > div:only-child {
+  grid-column: 1 / -1;
+  max-width: 46rem;
+}
+
+.fw-why .section-lede + .section-lede {
+  margin-top: 1rem;
+}
+
+.fw-video {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  max-height: 34rem;
+  justify-self: center;
+  background: var(--ink);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-sm);
+  object-fit: cover;
+}
+
+.fw-criteria {
+  list-style: none;
+  margin: 1.8rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.fw-criteria li {
+  display: grid;
+  grid-template-columns: 3rem minmax(10rem, 16rem) 1fr auto;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.fw-criteria h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.fw-criteria p {
+  margin: 0;
+  color: var(--dim);
+  font-size: 0.95rem;
+}
+
+.fw-criteria-n,
+.fw-criteria-scale {
+  color: var(--accent);
+  font-family: var(--sap-font-mono);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.fw-criteria-scale {
+  color: var(--faint);
+}
+
+.fw-teams {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.fw-teams li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+}
+
+.fw-team-mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.08);
+  font-weight: 600;
+}
+
+.fw-team-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.fw-team-size {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--dim);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.fw-register {
+  max-width: 46rem;
+}
+
+.fw-register-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.fw-register-card {
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-sm);
+}
+
+.fw-register-card h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+.fw-invite {
+  display: inline-block;
+  margin: 0.25rem 0 1rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px dashed var(--accent);
+  color: var(--ink);
+  font-family: var(--sap-font-mono);
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+}
+
+.fw-members {
+  margin: 0 0 1.5rem;
+  padding-left: 1.1rem;
+  color: var(--dim);
+}
+
+@media (max-width: 860px) {
+  .fw-why,
+  .fw-register-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fw-criteria li {
+    grid-template-columns: 2.25rem 1fr auto;
+  }
+
+  .fw-criteria p {
+    grid-column: 2 / -1;
+  }
+}
+
+@media (max-width: 860px) {
+  .fw-criteria-scale {
+    grid-row: 1;
+    grid-column: 3;
+  }
+}
+
+.fw-register-grid > .cta-row {
+  grid-column: 1 / -1;
+}

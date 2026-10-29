@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Check, ChevronDown, Search } from "lucide-react";
 
-export default function TeamSelect({ entries, selected }) {
+export default function TeamSelect({ entries, selected, hackathonId }) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const root = useRef(null);
@@ -47,7 +47,7 @@ export default function TeamSelect({ entries, selected }) {
           </div>
           <ol className="pr-picker-list" aria-label="Teams in presentation order">
             {visible.map(entry => <li key={entry.id}>
-              <Link href={`/judge/presentations?team=${entry.id}`} className="pr-picker-option" aria-current={entry.id === selected ? "page" : undefined} onClick={() => setOpen(false)}>
+              <Link href={`/judge/presentations?event=${hackathonId}&team=${entry.id}`} className="pr-picker-option" aria-current={entry.id === selected ? "page" : undefined} onClick={() => setOpen(false)}>
                 <span className="pr-picker-number">{String(entry.number).padStart(2, "0")}</span>
                 <span className="pr-picker-copy"><strong>{entry.project || "Untitled project"}</strong><span>{entry.team}</span></span>
                 <span className={`pr-picker-status${entry.scored ? " is-scored" : ""}`}>{entry.conflict ? "Your team" : entry.scored ? <><Check size={13} aria-hidden="true" /> Scored</> : "To score"}</span>

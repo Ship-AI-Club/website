@@ -485,8 +485,8 @@ export async function castVoteAction(prev, formData) {
 
   const submissionId = text(formData.get("submission_id"), 40);
   const entry = one(await sql`
-    select s.id, s.project, s.team_id from submissions s
-     where s.id = ${submissionId} and s.status = 'submitted'`);
+    select s.id, s.project, s.team_id from submissions s join teams t on t.id = s.team_id
+     where s.id = ${submissionId} and s.status = 'submitted' and t.hackathon_id = ${EVENT.id}`);
   if (!entry) return { error: "That entry isn't in the running." };
 
   const own = await sql`

@@ -628,3 +628,8 @@ create table if not exists mentee_ai_assessments (
   next_steps text not null default '', created_by uuid,
   created_at timestamptz not null default now(), updated_at timestamptz not null default now()
 );
+
+/* Founder Weekend scores six criteria from 1 to 10. Each event's rubric
+   lives in lib/hackathons.js; criteria holds the axes for events that
+   don't use the original score columns. */
+alter table scores add column if not exists criteria jsonb not null default '{}'::jsonb;

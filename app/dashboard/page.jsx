@@ -110,7 +110,7 @@ export default async function Page({ searchParams }) {
     ? await sql`
         select s.id, s.project, t.name as team_name
           from submissions s join teams t on t.id = s.team_id
-         where s.status = 'submitted'
+         where s.status = 'submitted' and t.hackathon_id = ${EVENT.id}
            and not exists (select 1 from team_members m
                             where m.team_id = s.team_id and m.user_id = ${user.id})
          order by t.name`

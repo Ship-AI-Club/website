@@ -130,6 +130,15 @@ function initial(name) {
   return Array.from(String(name || "").trim())[0]?.toUpperCase() || "?";
 }
 
+function WorkuityMark() {
+  return (
+    <a className="fw-workuity" href={FW.partner.url} target="_blank" rel="noopener noreferrer">
+      <span className="fw-workuity-logo" role="img" aria-label="Workuity" />
+      <span>AI Exchange</span>
+    </a>
+  );
+}
+
 const two = (n) => String(n).padStart(2, "0");
 
 export default async function Page() {
@@ -160,7 +169,7 @@ export default async function Page() {
           <p className="fw-hero-meta">
             <span className="tag tag-go">{FW.rsvpUrl ? "RSVPs open" : "Registration open"}</span>
             <span>{FW.name}{" ·"} Arizona AI hackathon</span>
-            <span>·&nbsp;By Ship AI × <a className="link" href={FW.partner.url} target="_blank" rel="noopener noreferrer">{FW.partner.name}</a></span>
+            <span className="fw-by">·&nbsp;By Ship AI × <WorkuityMark /></span>
           </p>
           <h1 className="hero-h1" id="fw-title">
             <span className="sr-only">{FW.name}: </span>
@@ -365,7 +374,7 @@ export default async function Page() {
             <p className="k">06{" ·"} People</p>
             <h2 id="fw-hosts-title">Hosted by builders. <span className="key">Judged by them too.</span></h2>
             <p className="section-lede">
-              Founder Weekend is a Ship AI × <a className="link" href={FW.partner.url} target="_blank" rel="noopener noreferrer">{FW.partner.name}</a> hackathon, held at {FW.venue}.
+              Founder Weekend is a Ship AI × <WorkuityMark /> hackathon, held at {FW.venue}.
             </p>
           </div>
           <ul className="fw-hosts">

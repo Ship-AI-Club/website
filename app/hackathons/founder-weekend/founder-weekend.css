@@ -710,3 +710,38 @@
 .fw-register-grid > .cta-row {
   grid-column: 1 / -1;
 }
+
+.fw-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fw-workuity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  vertical-align: middle;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.fw-workuity-logo {
+  display: inline-block;
+  height: 1.35em;
+  aspect-ratio: 5 / 1;
+  background-color: currentColor;
+  -webkit-mask: url("/sponsor-workuity.png") center / contain no-repeat;
+  mask: url("/sponsor-workuity.png") center / contain no-repeat;
+}
+
+.fw-workuity > span:last-child {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fw-workuity:hover {
+    color: var(--accent);
+  }
+}

@@ -86,7 +86,7 @@ const EVENT_SCHEMA = {
   ],
   performer: FW_HOSTS.map((host) => ({ "@type": "Person", name: host.name })),
   url: FW.url,
-  image: ["https://www.shipai.club/og-community.png"],
+  image: [`https://www.shipai.club${FW.ogImage}`],
   isAccessibleForFree: true,
   offers: {
     "@type": "Offer",
@@ -100,7 +100,7 @@ const EVENT_SCHEMA = {
 
 export const metadata = {
   title: FW.seoTitle,
-  description: FW.description,
+  description: FW.metaDescription,
   keywords: [
     "AI hackathon Arizona",
     "AZ AI hackathon",
@@ -109,20 +109,24 @@ export const metadata = {
     "startup weekend Phoenix",
     "Arizona startup hackathon",
     "build an AI company",
+    "Arizona AI Hackathon",
+    "Workuity AI Exchange",
+    "free hackathon Phoenix 2027",
   ],
   alternates: { canonical: FW.url },
   openGraph: {
-    title: `${FW.name} · Arizona AI Hackathon`,
-    description: `${FW.tagline} Free in Phoenix, ${FW.datesShort}. Teams of 1–4.`,
+    title: `Arizona AI Hackathon | ${FW.name}`,
+    description: `${FW.tagline} A free AI hackathon at ${FW.venue} in Phoenix, ${FW.datesShort}. Teams of 1–4.`,
     url: FW.url,
     siteName: "Ship AI",
-    images: [{ url: "/og-community.png", width: 1200, height: 630 }],
+    type: "website",
+    images: [{ url: FW.ogImage, width: 1200, height: 630, alt: `Arizona AI Hackathon: ${FW.name}, ${FW.datesShort} at ${FW.venue}, Phoenix` }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${FW.name} · Arizona AI Hackathon`,
-    description: `${FW.tagline} Free in Phoenix, ${FW.datesShort}.`,
-    images: ["/og-community.png"],
+    title: `Arizona AI Hackathon | ${FW.name}`,
+    description: `${FW.tagline} A free AI hackathon at ${FW.venue} in Phoenix, ${FW.datesShort}.`,
+    images: [FW.ogImage],
   },
 };
 

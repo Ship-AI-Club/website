@@ -1,7 +1,8 @@
-import MobileNav from "../../components/mobile-nav";
-import { CalendarDays, Coins, MapPin, Ticket, Users } from "lucide-react";
+import { Award, BadgeCheck, Briefcase, Clapperboard, Compass, Landmark, Users } from "lucide-react";
 import { JsonLd, faqSchema } from "../../components/article";
-import { Lockup } from "../../components/seal";
+import Scene from "../../components/scene";
+import SiteFooter from "../../components/site-footer";
+import SiteHeader from "../../components/site-header";
 import { DISCORD } from "../../lib/hackathon";
 import {
   FOUNDER_WEEKEND as FW,
@@ -16,13 +17,34 @@ import "./founder-weekend.css";
 
 const REGISTER = `${FW.path}/register`;
 const ROLE_REQUEST = "/login?next=/dashboard/requests";
-const PRIZE = FW.prizePool ? `$${FW.prizePool.toLocaleString("en-US")} prize pool` : "Cash prizes and awards";
+const PRIZE = FW.prizePool ? `$${FW.prizePool.toLocaleString("en-US")}` : "Cash";
+const NAV = [
+  { href: "#why", label: "Why" },
+  { href: "#judging", label: "Judging" },
+  { href: "#weekend", label: "Weekend" },
+  { href: "#faq", label: "FAQ" },
+];
 
 const FACTS = [
-  { icon: CalendarDays, label: "When", value: FW.dates },
-  { icon: MapPin, label: "Where", value: "Phoenix, Arizona" },
-  { icon: Ticket, label: "Entry", value: `${FW.cost} · ${FW.teams.toLowerCase()}` },
-  { icon: Coins, label: "Prizes", value: PRIZE },
+  { value: "Feb 6–7", label: "Saturday and Sunday, 2027" },
+  { value: "Phoenix", label: "In person, Arizona" },
+  { value: FW.cost, label: FW.teams },
+  { value: PRIZE, label: FW.prizePool ? "Prize pool" : "Prizes and awards" },
+];
+
+const BENEFIT_ICONS = {
+  "Prize pool": Award,
+  "Venture capitalists": Landmark,
+  "Employer network": Briefcase,
+  Certificates: BadgeCheck,
+  Mentors: Compass,
+  "Your pitch, recorded": Clapperboard,
+};
+
+const MISSING = [
+  { k: "A deadline", v: "Submissions close Sunday at noon" },
+  { k: "A team", v: "Up to four, or find one at kickoff" },
+  { k: "A room", v: "Judges, employers and investors watching" },
 ];
 
 const ROLES = [
@@ -30,11 +52,13 @@ const ROLES = [
     name: "Mentor",
     copy: "Spend a few hours on the floor with teams. Founders, engineers, designers, marketers and operators all have something a team needs by Saturday afternoon.",
     cta: "Apply to mentor",
+    tag: "Both days",
   },
   {
     name: "Volunteer",
     copy: "Run check-in, shoot photos and video, or keep the pitch schedule on time. You get a front-row seat to every pitch.",
     cta: "Apply to volunteer",
+    tag: "Both days",
   },
 ];
 
@@ -101,8 +125,15 @@ function initial(name) {
   return Array.from(String(name || "").trim())[0]?.toUpperCase() || "?";
 }
 
+const two = (n) => String(n).padStart(2, "0");
+
 export default async function Page() {
   const [stats, teams] = await Promise.all([founderWeekendStats(), founderWeekendTeams()]);
+  const tally = stats.teams > 0 ? null : [
+    { label: "When", value: "Feb 6–7" },
+    { label: "Where", value: "Phoenix" },
+    { label: "Entry", value: FW.cost },
+  ];
   const counts = [
     { label: "Teams registered", value: stats.teams },
     { label: "Participants", value: stats.participants },
@@ -113,195 +144,291 @@ export default async function Page() {
     <>
       <JsonLd data={EVENT_SCHEMA} />
       <JsonLd data={faqSchema(FW_FAQS)} />
-      <header className="nav">
-        <Lockup />
-        <nav>
-          <a href="#why">Why</a>
-          <a href="#judging">Judging</a>
-          <a href="#weekend">Weekend</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-        <a className="btn btn-solid nav-cta" href={REGISTER}>Register your team</a>
-        <MobileNav extraLinks={[{ href: REGISTER, label: "Register your team" }]} />
-      </header>
+      <SiteHeader
+        links={NAV}
+        cta={<a className="btn btn-solid btn-sm nav-cta" href={REGISTER}>Register your team</a>}
+        extraLinks={[...NAV, { href: REGISTER, label: "Register your team" }]}
+      />
 
-      <main id="top" className="hk-simple fw">
-        <section className="hero hk-hero">
-          <p className="eyebrow">Arizona AI hackathon · Phoenix · {FW.datesShort}</p>
-          <h1 className="hero-h1">
-            Founder <span className="hero-accent">Weekend</span>
+      <main id="top" className="fw">
+        <section className="hero fw-hero" aria-labelledby="fw-title">
+          <p className="fw-hero-meta">
+            <span className="tag tag-go">Registration open</span>
+            <span>{FW.name}{" ·"} Arizona AI hackathon</span>
+          </p>
+          <h1 className="hero-h1" id="fw-title">
+            <span className="sr-only">{FW.name}: </span>
+            Build an AI company. <span className="key">Ship it by Sunday.</span>
           </h1>
-          <p className="lede">
-            Build an AI company in one weekend. Ship it by Sunday, then pitch it to judges, employers and investors.
+          <p className="hero-lede">
+            One weekend in Phoenix to build an AI company, then pitch it to judges, employers and investors. Free for teams of 1–4.
           </p>
           <div className="cta-row">
             <a className="btn btn-solid" href={REGISTER}>Register your team</a>
-            <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noopener noreferrer">Join Discord</a>
+            <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noopener noreferrer">Join the Discord</a>
+          </div>
+
+          <div className="stage fw-stage">
+            <Scene scene="launch" alt="Dithered night scene: a finished boat sliding down the ways into the water. You leave with something shipped." />
+            <aside className="window fw-hero-window" aria-label="Registration">
+              <div className="window-bar"><b>{FW.name} · Registration</b><span>{FW.datesShort}</span></div>
+              <dl className="fw-tally">
+                {(tally || counts).map((item) => (
+                  <div key={item.label}>
+                    <dt>{item.label}</dt>
+                    <dd>{item.value.toLocaleString("en-US")}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="fw-hero-window-foot">
+                <span className="meta">Phoenix{" ·"} Sat–Sun{" ·"} Free</span>
+                <a className="btn btn-solid btn-sm" href={REGISTER}>Register</a>
+              </div>
+            </aside>
+            <p className="fw-toast" aria-hidden="true">
+              <span className="fw-toast-dot" />
+              Submissions close Sunday, 12:00 PM
+            </p>
           </div>
         </section>
 
-        <section className="hk-facts" aria-label="Event details">
-          {FACTS.map((fact) => (
-            <div key={fact.label} className="hk-fact">
-              <p className="hk-fact-label">
-                <fact.icon size={14} strokeWidth={1.75} aria-hidden="true" />
-                {fact.label}
-              </p>
-              <p className="hk-fact-value">{fact.value}</p>
-            </div>
-          ))}
+        <section className="fw-facts-wrap hero-after-stage" aria-label="Event details">
+          <dl className="facts fw-facts">
+            {FACTS.map((fact) => (
+              <div key={fact.label}>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
         </section>
 
-        <section className="section" id="why">
-          <div className="fw-why">
-            <div>
-              <h2>Why a weekend</h2>
-              <p className="section-lede">
-                You&apos;ve had the idea for months. AI made building it cheap. What&apos;s missing is a deadline, a team and a room that expects you to ship.
-              </p>
-              <p className="section-lede">
-                Founder Weekend gives you all three, and puts the people who hire and invest in the front row.
-              </p>
-            </div>
-            {FW.whyVideo && (
+        <section className="section fw-split" id="why" aria-labelledby="fw-why-title">
+          <div className="fw-split-copy">
+            <p className="k">01{" ·"} Why a weekend</p>
+            <h2 id="fw-why-title">You&apos;ve had the idea <span className="key">for months.</span></h2>
+            <p className="section-lede">
+              AI made building it cheap. What&apos;s missing is a deadline, a team and a room that expects you to ship. Founder Weekend gives you all three, and puts the people who hire and invest in the front row.
+            </p>
+          </div>
+          {FW.whyVideo ? (
+            <figure className="window fw-video-window">
+              <div className="window-bar"><b>Why we built {FW.name}</b><span>Video</span></div>
               <video className="fw-video" src={FW.whyVideo} poster={FW.whyPoster || undefined} controls playsInline preload="metadata" />
-            )}
-          </div>
-        </section>
-
-        <section className="section" id="benefits">
-          <h2>What you leave with</h2>
-          <div className="hk-focus-grid">
-            {FW_BENEFITS.map((benefit) => (
-              <div key={benefit.name}>
-                <h3>{benefit.name}</h3>
-                <p>{benefit.copy}</p>
+            </figure>
+          ) : (
+            <div className="fw-panel">
+              <Scene scene="workbench" alt="" />
+              <div className="window fw-panel-window">
+                <div className="window-bar"><b>What&apos;s missing</b><span>3 of 3 included</span></div>
+                <ul className="fw-missing">
+                  {MISSING.map((item) => (
+                    <li key={item.k}>
+                      <span className="fw-check" aria-hidden="true" />
+                      <b>{item.k}</b>
+                      <span>{item.v}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ))}
-          </div>
+            </div>
+          )}
         </section>
 
-        <section className="section" id="judging">
-          <h2>How teams are judged</h2>
-          <p className="section-lede">Six criteria, each scored from 1 to 10. Pitches run five minutes.</p>
-          <ol className="fw-criteria">
-            {FW_CRITERIA.map((criterion, index) => (
-              <li key={criterion.name}>
-                <span className="fw-criteria-n">{String(index + 1).padStart(2, "0")}</span>
-                <h3>{criterion.name}</h3>
-                <p>{criterion.parts.join(" · ")}</p>
-                <span className="fw-criteria-scale">1–10</span>
-              </li>
-            ))}
-          </ol>
+        <section className="section" id="benefits" aria-labelledby="fw-benefits-title">
+          <div className="section-head">
+            <p className="k">02{" ·"} What you leave with</p>
+            <h2 id="fw-benefits-title">More than a demo. <span className="key">A company.</span></h2>
+            <p className="section-lede">Every team that submits leaves with a certificate, a recorded pitch and a room full of people who saw it.</p>
+          </div>
+          <ul className="fw-benefits">
+            {FW_BENEFITS.map((benefit, index) => {
+              const Icon = BENEFIT_ICONS[benefit.name] || Award;
+              return (
+                <li className="card fw-benefit" key={benefit.name}>
+                  <div className="card-body">
+                    <p className="fw-benefit-top">
+                      <Icon size={20} strokeWidth={1.5} aria-hidden="true" />
+                      <span className="k">{two(index + 1)}</span>
+                    </p>
+                    <h3>{benefit.name}</h3>
+                    <p>{benefit.copy}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
         </section>
 
-        <section className="section" id="weekend">
-          <h2>The weekend</h2>
-          <div className="hk-weekend-grid">
-            {FW_WEEKEND.map((day) => (
-              <div key={day.day}>
-                <h3>{day.day}</h3>
-                <p className="hk-hours">{day.hours}</p>
-                <p>{day.copy}</p>
-              </div>
-            ))}
+        <section className="section fw-split fw-split-flip" id="judging" aria-labelledby="fw-judging-title">
+          <div className="fw-split-copy">
+            <p className="k">03{" ·"} Judging</p>
+            <h2 id="fw-judging-title">Six criteria. <span className="key">Scored 1 to 10.</span></h2>
+            <p className="section-lede">
+              Judges score what your company is by Sunday, not what it could be. Pitches run five minutes, and going over costs points.
+            </p>
           </div>
-          <p className="hk-note">Arizona time. Submissions close at {FW.deadline}.</p>
-        </section>
-
-        <section className="section" id="teams" aria-labelledby="fw-teams-title">
-          <h2 id="fw-teams-title">Who&apos;s building</h2>
-          <div className="hk-stat-band" aria-label="Registration counts">
-            {counts.map((count) => (
-              <div className="hk-stat-item" key={count.label}>
-                <p className="hk-stat-value">{count.value.toLocaleString("en-US")}</p>
-                <p className="hk-stat-label">{count.label}</p>
-              </div>
-            ))}
-          </div>
-          {teams.length > 0 ? (
-            <ul className="fw-teams">
-              {teams.map((team) => (
-                <li key={team.slug}>
-                  <span className="fw-team-mark" aria-hidden="true">{initial(team.name)}</span>
-                  <span className="fw-team-name">{team.name}</span>
-                  <span className="fw-team-size"><Users size={13} aria-hidden="true" /> {team.member_count}</span>
+          <div className="fw-panel">
+            <Scene scene="swell" alt="" />
+            <div className="window" role="group" aria-label="Judge scorecard">
+              <div className="window-bar"><b>Judge scorecard</b><span>6 criteria · 1–10 each</span></div>
+              <ol className="fw-scorecard">
+              {FW_CRITERIA.map((criterion, index) => (
+                <li className="fw-score-row" key={criterion.name}>
+                  <span className="k">{two(index + 1)}</span>
+                  <div>
+                    <h3>{criterion.name}</h3>
+                    <p>{criterion.parts.join(" · ")}</p>
+                  </div>
+                  <span className="fw-score">
+                    <span className="fw-ticks" aria-hidden="true">
+                      {Array.from({ length: 10 }, (_, i) => <i key={i} />)}
+                    </span>
+                    <span className="k">/10</span>
+                  </span>
                 </li>
               ))}
-            </ul>
-          ) : (
-            <p className="section-lede">Register now and your team is the first one on this list.</p>
-          )}
-          <div className="cta-row">
-            <a className="btn btn-solid" href={REGISTER}>Register your team</a>
+            </ol>
+            </div>
           </div>
         </section>
 
-        <section className="section" id="hosts">
-          <h2>Hosts and judges</h2>
-          <ul className="hk-judge-list">
+        <section className="section" id="weekend" aria-labelledby="fw-weekend-title">
+          <div className="section-head">
+            <p className="k">04{" ·"} The weekend</p>
+            <h2 id="fw-weekend-title">Two days. <span className="key">One company.</span></h2>
+            <p className="section-lede">Arizona time. Submissions close at {FW.deadline}.</p>
+          </div>
+          <div className="fw-days">
+            {FW_WEEKEND.map((day, index) => (
+              <article className="card fw-day" key={day.day}>
+                <div className="fw-day-head">
+                  <span className="k">Day {index + 1}</span>
+                  <h3>{day.day}</h3>
+                  <span className="tag">{day.hours}</span>
+                </div>
+                <ol className="fw-beats">
+                  {day.beats.map((beat) => (
+                    <li key={beat.what}>
+                      <span className="k">{beat.time}</span>
+                      <span>{beat.what}</span>
+                    </li>
+                  ))}
+                </ol>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="band fw-band" id="teams" aria-labelledby="fw-teams-title">
+          <Scene scene="stars" mode="ascii" band className="band-bg" />
+          <div className="section">
+            <div className="section-head">
+              <p className="k">05{" ·"} Who&apos;s building</p>
+              <h2 id="fw-teams-title">The roster <span className="key">so far.</span></h2>
+            </div>
+            <dl className="fw-counts">
+              {counts.map((count) => (
+                <div key={count.label}>
+                  <dt>{count.label}</dt>
+                  <dd>{count.value.toLocaleString("en-US")}</dd>
+                </div>
+              ))}
+            </dl>
+            {teams.length > 0 ? (
+              <ul className="fw-teams">
+                {teams.map((team) => (
+                  <li key={team.slug}>
+                    <span className="fw-team-mark" aria-hidden="true">{initial(team.name)}</span>
+                    <span className="fw-team-name">{team.name}</span>
+                    <span className="fw-team-size"><Users size={13} aria-hidden="true" /> {team.member_count}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="fw-empty">Register now and your team is the first name on this board.</p>
+            )}
+            <div className="cta-row fw-center">
+              <a className="btn btn-solid" href={REGISTER}>Register your team</a>
+            </div>
+          </div>
+        </section>
+
+        <section className="section" id="hosts" aria-labelledby="fw-hosts-title">
+          <div className="section-head">
+            <p className="k">06{" ·"} People</p>
+            <h2 id="fw-hosts-title">Hosted by builders. <span className="key">Judged by them too.</span></h2>
+          </div>
+          <ul className="fw-hosts">
             {FW_HOSTS.map((host) => (
-              <li className="hk-judge" key={host.name}>
-                <span className="hk-roster-avatar hk-judge-avatar">
-                  <img src={host.photo} alt="" width="64" height="64" loading="lazy" />
-                </span>
-                <div className="hk-roster-body">
+              <li className="fw-host" key={host.name}>
+                <img src={host.photo} alt="" width="96" height="96" loading="lazy" />
+                <div>
                   <h3>{host.name}</h3>
-                  <p>{host.role}</p>
+                  <p className="k">{host.role}</p>
                 </div>
               </li>
             ))}
           </ul>
-        </section>
-
-        <section className="section" id="help">
-          <h2>Mentors and volunteers</h2>
-          <div className="hk-roles">
+          <div className="fw-roles" id="help">
             {ROLES.map((role) => (
-              <div className="hk-role" key={role.name}>
-                <h3>{role.name}</h3>
-                <p>{role.copy}</p>
-                <p className="hk-role-cta"><a href={ROLE_REQUEST}>{role.cta} →</a></p>
+              <div className="card fw-role" key={role.name}>
+                <div className="card-body">
+                  <p className="fw-benefit-top">
+                    <span className="k">{role.name}</span>
+                    <span className="tag">{role.tag}</span>
+                  </p>
+                  <h3>{role.name === "Mentor" ? "Mentor a team" : "Help run the weekend"}</h3>
+                  <p>{role.copy}</p>
+                  <a className="btn btn-ghost btn-sm" href={ROLE_REQUEST}>{role.cta}</a>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="section" id="faq">
-          <h2>FAQ</h2>
-          <div className="hk-faq">
-            {FW_FAQS.map((faq) => (
-              <details className="hk-faq-item" key={faq.q}>
-                <summary>
-                  <h3>{faq.q}</h3>
-                  <span className="hk-faq-chevron" aria-hidden="true" />
-                </summary>
-                <p>{faq.a}</p>
-              </details>
-            ))}
+        <section className="band fw-band" id="faq" aria-labelledby="fw-faq-title">
+          <Scene scene="stars" mode="ascii" band className="band-bg" />
+          <div className="section">
+            <div className="section-head">
+              <h2 id="fw-faq-title">Questions, <span className="key">answered.</span></h2>
+            </div>
+            <div className="faq">
+              {FW_FAQS.map((faq, index) => (
+                <details key={faq.q}>
+                  <summary>
+                    <span className="k">{two(index + 1)}</span>
+                    <span>{faq.q}</span>
+                  </summary>
+                  <p className="faq-a">{faq.a}</p>
+                </details>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="section hk-close">
-          <h2>{FW.tagline}</h2>
-          <p className="section-lede">Free. {FW.teams}. Phoenix, {FW.dates}.</p>
-          <div className="cta-row">
-            <a className="btn btn-solid" href={REGISTER}>Register your team</a>
-            <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noopener noreferrer">Join Discord</a>
+        <section className="band" aria-labelledby="fw-final-title">
+          <div className="final">
+            <h2 id="fw-final-title">Feel the fear. <span className="key">Ship it anyway.</span></h2>
+            <p className="lede">Register a team now, or come solo and find one at Saturday&apos;s kickoff.</p>
+            <div className="cta-row">
+              <a className="btn btn-solid" href={REGISTER}>Register your team</a>
+              <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noopener noreferrer">Join the Discord</a>
+            </div>
+            <ul className="final-checks">
+              <li>Free to enter</li>
+              <li>{FW.teams}</li>
+              <li>Phoenix, {FW.datesShort.replace(/ /g, " ")}</li>
+            </ul>
+          </div>
+          <div className="final-stage">
+            <Scene scene="harbor" band alt="Dithered harbor at dusk: many small boats at their moorings with their lights on. The community." />
+            <p>Harbor at dusk · Phoenix, Arizona</p>
           </div>
         </section>
       </main>
 
-      <footer className="footer">
-        <Lockup compact />
-        <nav>
-          <a href="/">Home</a>
-          <a href="/programs">Programs</a>
-          <a href={REGISTER}>Register</a>
-        </nav>
-        <p className="fine">© 2026 Ship AI</p>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

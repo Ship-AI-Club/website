@@ -488,10 +488,10 @@
 
 .fw-hosts {
   list-style: none;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 340px));
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 24px 72px;
+  gap: 32px 72px;
   margin: 0 0 72px;
   padding: 0;
 }
@@ -509,6 +509,19 @@
   border: 1px solid var(--hairline);
   background: var(--surface);
   filter: saturate(0.6);
+}
+
+.fw-host-initials {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  font-family: var(--sap-font-display);
+  font-size: 34px;
+  color: var(--dim);
 }
 
 .fw-host h3 {
@@ -647,6 +660,7 @@
   }
 
   .fw-hosts {
+    grid-template-columns: minmax(0, 1fr);
     gap: 24px;
   }
 }
@@ -760,12 +774,21 @@
   mask: url("/sponsor-workuity.png") center / contain no-repeat;
 }
 
+.fw-cohost-partner {
+  align-items: flex-end;
+}
+
+.fw-cohost-rule {
+  align-self: stretch;
+  width: 1px;
+  background: var(--hairline);
+}
+
 .fw-cohost-sub {
-  padding-left: 12px;
-  border-left: 1px solid var(--hairline);
   font-weight: 600;
   font-size: 17px;
-  line-height: 1.1;
+  line-height: 1;
+  margin-bottom: -2px;
 }
 
 @media (hover: hover) and (pointer: fine) {

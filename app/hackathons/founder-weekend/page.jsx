@@ -83,7 +83,7 @@ const EVENT_SCHEMA = {
     { "@type": "Organization", name: "Ship AI", url: "https://www.shipai.club" },
     { "@type": "Organization", name: FW.partner.name, url: FW.partner.url },
   ],
-  performer: FW_HOSTS.map((host) => ({ "@type": "Person", name: host.name })),
+  performer: FW_HOSTS.filter((host) => host.role !== "Mentor").map((host) => ({ "@type": "Person", name: host.name })),
   url: FW.url,
   image: ["https://www.shipai.club/og-community.png"],
   isAccessibleForFree: true,
@@ -141,8 +141,9 @@ function CoHosts() {
           <span className="fw-cohost-wm">Ship AI</span>
         </span>
         <span className="fw-cohost-x" aria-hidden="true">×</span>
-        <a className="fw-cohost" href={FW.partner.url} target="_blank" rel="noopener noreferrer">
+        <a className="fw-cohost fw-cohost-partner" href={FW.partner.url} target="_blank" rel="noopener noreferrer">
           <span className="fw-workuity-logo" role="img" aria-label="Workuity" />
+          <span className="fw-cohost-rule" aria-hidden="true" />
           <span className="fw-cohost-sub">AI Exchange</span>
         </a>
       </div>
@@ -391,7 +392,11 @@ export default async function Page() {
           <ul className="fw-hosts">
             {FW_HOSTS.map((host) => (
               <li className="fw-host" key={host.name}>
-                <img src={host.photo} alt="" width="96" height="96" loading="lazy" />
+                {host.photo ? (
+                  <img src={host.photo} alt="" width="96" height="96" loading="lazy" />
+                ) : (
+                  <span className="fw-host-initials" aria-hidden="true">{host.name.split(" ").map((w) => w[0]).join("")}</span>
+                )}
                 <div>
                   <h3>{host.name}</h3>
                   <p className="k">{host.role}</p>

@@ -45,7 +45,7 @@ export function SponsorshipForm({ sponsorship = null, users = [] }) {
     <form key={key} action={action} className="ac-form is-tight">
       {editing && <input type="hidden" name="sponsorship_id" value={sponsorship.id} />}
       {editing ? (
-        <input type="hidden" name="user_id" value={sponsorship.user_id} />
+        <input type="hidden" name="user_id" value={sponsorship.user_id ?? ""} />
       ) : (
         <div className="ac-field">
           <label className="ac-label" htmlFor={`user-${idPrefix}`}>

@@ -2,6 +2,7 @@ import { Award, BadgeCheck, Briefcase, Clapperboard, Compass, Landmark, Users } 
 import { JsonLd, faqSchema } from "../../../components/article";
 import Scene from "../../../components/scene";
 import { Seal } from "../../../components/seal";
+import SponsorForm from "./sponsor-form";
 import SiteFooter from "../../../components/site-footer";
 import SiteHeader from "../../../components/site-header";
 import {
@@ -11,6 +12,7 @@ import {
   FW_FAQS,
   FW_HOSTS,
   FW_MENTORS,
+  FW_SPONSOR_TIERS,
   FW_WEEKEND,
 } from "../../../lib/founder-weekend";
 import { founderWeekendStats, founderWeekendTeams } from "../../../lib/founder-weekend-stats";
@@ -26,6 +28,7 @@ const NAV = [
   { href: "#why", label: "Why" },
   { href: "#judging", label: "Judging" },
   { href: "#weekend", label: "Weekend" },
+  { href: "#sponsor", label: "Sponsor" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -430,6 +433,37 @@ export default async function Page() {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="section" id="sponsor" aria-labelledby="fw-sponsor-title">
+          <div className="section-head">
+            <p className="k">07{" ·"} Sponsor</p>
+            <h2 id="fw-sponsor-title">Back the builders. <span className="key">Two ways in.</span></h2>
+            <p className="section-lede">
+              Prices are published so you can decide before you message us. We never sell lead lists or attendee data.
+            </p>
+          </div>
+          <div className="fw-sponsor-tiers">
+            {FW_SPONSOR_TIERS.map((tier) => (
+              <div className="card fw-sponsor-tier" key={tier.name}>
+                <div className="card-body">
+                  <p className="fw-benefit-top">
+                    <span className="k">{tier.name}</span>
+                    <span className="tag">{tier.slots}</span>
+                  </p>
+                  <p className="fw-sponsor-price">${tier.price.toLocaleString("en-US")}</p>
+                  <h3>{tier.headline}</h3>
+                  <ul className="checks">
+                    {tier.perks.map((perk) => <li key={perk}>{perk}</li>)}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="window fw-sponsor-window" id="sponsor-form">
+            <div className="window-bar"><b>Sponsor inquiry</b><span>{FW.name}</span></div>
+            <SponsorForm tiers={FW_SPONSOR_TIERS} />
           </div>
         </section>
 

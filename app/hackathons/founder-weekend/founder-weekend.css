@@ -711,37 +711,87 @@
   grid-column: 1 / -1;
 }
 
-.fw-by {
-  display: inline-flex;
+.fw-cohosts {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 12px;
+  margin-top: 40px;
 }
 
-.fw-workuity {
+.fw-cohosts-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px 26px;
+  padding: 16px 28px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+}
+
+.fw-cohost {
   display: inline-flex;
   align-items: center;
-  gap: 0.45em;
-  vertical-align: middle;
+  gap: 12px;
   color: var(--ink);
   white-space: nowrap;
 }
 
+.fw-cohost-wm {
+  font-family: var(--sap-font-display);
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.fw-cohost-x {
+  font-family: var(--sap-font-mono);
+  font-size: 18px;
+  color: var(--dim);
+}
+
 .fw-workuity-logo {
-  display: inline-block;
-  height: 1.35em;
+  display: block;
+  height: 28px;
   aspect-ratio: 5 / 1;
   background-color: currentColor;
   -webkit-mask: url("/sponsor-workuity.png") center / contain no-repeat;
   mask: url("/sponsor-workuity.png") center / contain no-repeat;
 }
 
-.fw-workuity > span:last-child {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.fw-cohost-sub {
+  padding-left: 12px;
+  border-left: 1px solid var(--hairline);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.1;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .fw-workuity:hover {
+  a.fw-cohost {
+    transition: color var(--sap-dur-fast) var(--sap-ease);
+  }
+
+  a.fw-cohost:hover {
     color: var(--accent);
+  }
+}
+
+@media (max-width: 640px) {
+  .fw-cohosts-row {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 20px;
+  }
+
+  .fw-cohost-x {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.fw-cohost {
+    transition: none;
   }
 }

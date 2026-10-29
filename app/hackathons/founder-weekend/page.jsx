@@ -1,6 +1,7 @@
 import { Award, BadgeCheck, Briefcase, Clapperboard, Compass, Landmark, Users } from "lucide-react";
 import { JsonLd, faqSchema } from "../../../components/article";
 import Scene from "../../../components/scene";
+import { Seal } from "../../../components/seal";
 import SiteFooter from "../../../components/site-footer";
 import SiteHeader from "../../../components/site-header";
 import {
@@ -130,12 +131,22 @@ function initial(name) {
   return Array.from(String(name || "").trim())[0]?.toUpperCase() || "?";
 }
 
-function WorkuityMark() {
+function CoHosts() {
   return (
-    <a className="fw-workuity" href={FW.partner.url} target="_blank" rel="noopener noreferrer">
-      <span className="fw-workuity-logo" role="img" aria-label="Workuity" />
-      <span>AI Exchange</span>
-    </a>
+    <div className="fw-cohosts">
+      <span className="k">Presented by</span>
+      <div className="fw-cohosts-row">
+        <span className="fw-cohost">
+          <Seal size={34} />
+          <span className="fw-cohost-wm">Ship AI</span>
+        </span>
+        <span className="fw-cohost-x" aria-hidden="true">×</span>
+        <a className="fw-cohost" href={FW.partner.url} target="_blank" rel="noopener noreferrer">
+          <span className="fw-workuity-logo" role="img" aria-label="Workuity" />
+          <span className="fw-cohost-sub">AI Exchange</span>
+        </a>
+      </div>
+    </div>
   );
 }
 
@@ -169,7 +180,6 @@ export default async function Page() {
           <p className="fw-hero-meta">
             <span className="tag tag-go">{FW.rsvpUrl ? "RSVPs open" : "Registration open"}</span>
             <span>{FW.name}{" ·"} Arizona AI hackathon</span>
-            <span className="fw-by">·&nbsp;By Ship AI × <WorkuityMark /></span>
           </p>
           <h1 className="hero-h1" id="fw-title">
             <span className="sr-only">{FW.name}: </span>
@@ -182,6 +192,7 @@ export default async function Page() {
             <a className="btn btn-solid" {...RSVP_LINK}>{RSVP_LABEL}</a>
             {FW.rsvpUrl && <a className="btn btn-ghost" href={REGISTER}>Register your team</a>}
           </div>
+          <CoHosts />
 
           <div className="stage fw-stage">
             <Scene scene="launch" alt="Dithered night scene: a finished boat sliding down the ways into the water. You leave with something shipped." />
@@ -374,7 +385,7 @@ export default async function Page() {
             <p className="k">06{" ·"} People</p>
             <h2 id="fw-hosts-title">Hosted by builders. <span className="key">Judged by them too.</span></h2>
             <p className="section-lede">
-              Founder Weekend is a Ship AI × <WorkuityMark /> hackathon, held at {FW.venue}.
+              Founder Weekend is presented by Ship AI and {FW.partner.name}, and held at {FW.venue}.
             </p>
           </div>
           <ul className="fw-hosts">

@@ -1,4 +1,5 @@
 import SiteHeader from "../components/site-header";
+import { siDiscord } from "simple-icons";
 import SiteFooter from "../components/site-footer";
 import Scene from "../components/scene";
 import { getUpcomingEvents } from "../lib/meetup";
@@ -83,7 +84,7 @@ export default async function Page() {
     <>
       <JsonLd data={ORG_SCHEMA} />
       {events.length > 0 && <JsonLd data={eventsSchema(events)} />}
-      <SiteHeader current="/" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>} />
+      <SiteHeader current="/" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={18} height={18} fill="currentColor" aria-hidden="true" focusable="false"><path d={siDiscord.path} /></svg>Join the Discord</a>} />
 
       <main id="top">
         <section className="hero" aria-labelledby="hero-title">

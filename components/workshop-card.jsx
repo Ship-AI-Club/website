@@ -1,10 +1,10 @@
 import Scene from "./scene";
 
-export default function WorkshopCard({ href, category, name, summary, meta, price, anchor, unit, tag, tagClass = "", artLabel }) {
+export default function WorkshopCard({ href, category, name, summary, meta, price, anchor, unit, tag, tagClass = "", artLabel, scene = "workbench", action }) {
   return (
     <article className="card wc-card">
       <a className="card-art" href={href} aria-label={`Explore ${name}`}>
-        <Scene scene="workbench" cell={[5, 3]} />
+        <Scene scene={scene} cell={[5, 3]} />
         {(category || artLabel) && <span className="chip chip-quiet">{artLabel || category}</span>}
       </a>
       <div className="card-body">
@@ -22,6 +22,7 @@ export default function WorkshopCard({ href, category, name, summary, meta, pric
           </div>
           {tag && <span className={`tag ${tagClass}`}>{tag}</span>}
         </div>
+        {action}
       </div>
     </article>
   );

@@ -1,0 +1,489 @@
+/* Homepage only. Classes are prefixed home- so nothing here leaks into
+   other pages; colours, type and motion come from the Star fix tokens. */
+
+.home-facts {
+  margin-top: 22px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  line-height: 1.6;
+  color: var(--dim);
+  text-wrap: balance;
+}
+
+/* the departure board: the next event, docked to the scene's lower edge */
+.home-stage {
+  height: 440px;
+}
+
+.home-board {
+  position: relative;
+  z-index: 2;
+  margin: -96px 40px 0;
+}
+
+.home-board-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 36px;
+  padding: 28px 32px;
+}
+
+.home-board-row-quiet {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.home-board-date b,
+.home-board-count b {
+  display: block;
+  font-family: var(--sap-font-display);
+  font-weight: 400;
+  letter-spacing: var(--sap-track-display);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.home-board-date b {
+  font-size: 34px;
+}
+
+.home-board-count b {
+  font-size: 44px;
+}
+
+.home-board-date span,
+.home-board-count span,
+.home-board .meta {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  line-height: 1.5;
+  color: var(--dim);
+}
+
+.home-board-main h2 {
+  font-size: 26px;
+  line-height: 1.15;
+}
+
+.home-board-count {
+  padding: 0 32px;
+  border-left: 1px solid var(--hairline);
+  border-right: 1px solid var(--hairline);
+  text-align: center;
+}
+
+.home-board-act {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  font-size: 15px;
+}
+
+.home-board-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 28px;
+  padding: 12px 32px;
+  border-top: 1px solid var(--hairline);
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  color: var(--dim);
+}
+
+.home-board-foot a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.home-first {
+  border-top: 0;
+}
+
+/* three ways in */
+.home-ways {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  list-style: none;
+}
+
+.home-way {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px 32px 28px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  transition: transform 320ms var(--sap-ease);
+}
+
+.home-way h3 {
+  margin: 18px 0 10px;
+  font-family: var(--sap-font-display);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: var(--sap-track-display);
+}
+
+.home-way h3 a::after,
+.home-pod h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.home-way h3 a:focus-visible,
+.home-pod h3 a:focus-visible {
+  outline: none;
+}
+
+.home-way h3 a:focus-visible::after,
+.home-pod h3 a:focus-visible::after {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.home-way > p {
+  color: var(--dim);
+}
+
+.home-way .home-way-now {
+  align-self: stretch;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+  font-size: 15px;
+}
+
+.home-way > p:not(.home-way-now) {
+  margin-bottom: 22px;
+}
+
+.home-way-now b {
+  display: block;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.home-way-go {
+  display: flex;
+  align-self: stretch;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.home-tag-free {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.home-arrow {
+  display: inline-block;
+  transition: transform var(--sap-dur-lock) var(--sap-ease);
+}
+
+.home-programs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 28px;
+  margin-top: 32px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  color: var(--dim);
+}
+
+.home-programs a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* proof ledger */
+.home-ledger {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+  align-items: center;
+  gap: 56px;
+}
+
+.home-figure > b {
+  display: block;
+  font-family: var(--sap-font-display);
+  font-size: clamp(96px, 13vw, 168px);
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+}
+
+.home-figure h2 {
+  margin: 16px 0 12px;
+  font-size: clamp(26px, 3vw, 36px);
+  line-height: 1.1;
+}
+
+.home-figure .meta,
+.home-pod .meta {
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  color: var(--dim);
+}
+
+.home-figure .meta + p {
+  margin-top: 18px;
+}
+
+.home-podium {
+  display: grid;
+  gap: 12px;
+  list-style: none;
+}
+
+.home-pod {
+  position: relative;
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 24px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  transition: transform 320ms var(--sap-ease);
+}
+
+.home-pod h3 {
+  font-family: var(--sap-font-display);
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.home-pod p {
+  margin-top: 3px;
+  color: var(--dim);
+  font-size: 15px;
+}
+
+/* workshops */
+.home-cards .wc-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-cards .card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.home-cards .card-art .chip {
+  display: none;
+}
+
+.home-center {
+  justify-content: center;
+  gap: 16px 28px;
+  margin-top: 40px;
+}
+
+.wn {
+  position: relative;
+  z-index: 3;
+  margin-top: 16px;
+}
+
+.wn-open {
+  width: 100%;
+}
+
+.wn-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.wn-row {
+  display: flex;
+  gap: 8px;
+}
+
+.wn-row input {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--sap-btn-h-sm);
+  padding: 0 12px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--sap-input-border);
+  border-radius: 0;
+}
+
+.wn-row input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.wn-trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.wn-error {
+  margin-top: 8px;
+  color: var(--sap-danger);
+  font-size: 14px;
+}
+
+.wn-done {
+  padding: 12px 14px;
+  border: 1px solid var(--accent);
+  color: var(--ink);
+  font-size: 14.5px;
+}
+
+/* host and partners in one block */
+.home-host {
+  margin: 0 auto;
+}
+
+.home-host h3 {
+  margin-bottom: 4px;
+  font-family: var(--sap-font-display);
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.home-partners {
+  margin-top: 72px;
+  padding-top: 40px;
+  border-top: 1px solid var(--hairline);
+  text-align: center;
+}
+
+.home-partners .partner-note {
+  margin-top: 24px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-way:hover,
+  .home-pod:hover {
+    transform: translateY(-4px);
+  }
+
+  .home-way:hover .home-arrow,
+  .home-pod:hover .home-arrow {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-way,
+  .home-pod,
+  .home-arrow {
+    transition: none;
+  }
+
+  .home-way:hover,
+  .home-pod:hover,
+  .home-way:hover .home-arrow,
+  .home-pod:hover .home-arrow {
+    transform: none;
+  }
+}
+
+@media (max-width: 1040px) {
+  .home-board-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 24px 28px;
+  }
+
+  .home-board-count {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .home-stage {
+    height: 300px;
+  }
+
+  .home-board {
+    margin: -48px 0 0;
+  }
+
+  .home-board-row,
+  .home-board-row-quiet {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding: 22px 20px;
+  }
+
+  .home-board-count {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 16px 0;
+    border: 0;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    text-align: left;
+  }
+
+  .home-board-count span {
+    margin-top: 0;
+  }
+
+  .home-board-act {
+    justify-items: stretch;
+    text-align: center;
+  }
+
+  .home-board-foot {
+    padding: 12px 20px;
+  }
+
+  .home-ways,
+  .home-ledger {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-ledger {
+    gap: 40px;
+  }
+
+  .home-pod {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 16px;
+  }
+
+  .home-pod .meta {
+    grid-column: 1 / -1;
+  }
+
+  .home-pair .btn {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0 12px;
+    font-size: 15px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .home-partners {
+    margin-top: 48px;
+  }
+}

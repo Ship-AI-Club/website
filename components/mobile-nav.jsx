@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 
 const links = [
+  { href: "/#events", label: "Events", detail: "See What's Next" },
   { href: "/workshops", label: "Workshops", detail: "Build Something Useful" },
   { href: "/programs", label: "Programs", detail: "Learn Together. Ship Together." },
   { href: "/about", label: "About", detail: "Meet Ship AI" },

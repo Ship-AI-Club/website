@@ -5113,3 +5113,15 @@ html body .wd-section h2 {
     border-left: 0;
   }
 }
+
+/* Five header links plus a button run out of room just above the phone
+   breakpoint, so the descriptor steps aside and the links tighten. */
+@media (min-width: 861px) and (max-width: 1000px) {
+  .nav .brand-desc {
+    display: none;
+  }
+
+  .nav nav a {
+    padding: 6px 10px;
+  }
+}

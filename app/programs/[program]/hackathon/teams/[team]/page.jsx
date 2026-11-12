@@ -1,87 +1,187 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ExternalLink } from "lucide-react";
-import MobileNav from "../../../../../../components/mobile-nav";
-import { publicTeam, publicTeamPath, HACKATHON_PATH } from "../../../../../../lib/public-teams";
-import { EVENT } from "../../../../../../lib/hackathon";
+import SiteFooter from "../../../../../../components/site-footer";
+import SiteHeader from "../../../../../../components/site-header";
+import { EventHero, PeopleRow } from "../../../../../../components/event-page";
+import { RecordRow } from "../../../../../../components/event-form";
+import { publicTeam, publicTeamPath, publicTeams, HACKATHON_PATH } from "../../../../../../lib/public-teams";
+import { DISCORD, EVENT, HACKATHON_PRIZES } from "../../../../../../lib/hackathon";
 import { safeUrl } from "../../../../../../lib/accounts";
 import { PITCH_FIELDS, customPitchDeckUrl, submissionPitchMode } from "../../../../../../lib/submissions";
-import "../../../../../../components/hackathon-teams.css";
-import { Lockup } from "../../../../../../components/seal";
+import { certPath, fromCertificate } from "../../../../../../lib/results";
+import { SHIPPED, SHIPPED_RESULTS } from "../../../../../../lib/shipped";
+import { publishedCertificates } from "../../../../../../lib/store";
+import "../../../../../../components/team-page.css";
 
 export const dynamic = "force-dynamic";
+
+const same = (a, b) => Boolean(a && b) && a.trim().toLowerCase() === b.trim().toLowerCase();
+const projectOf = (team) => (team.submitted && team.project) || team.name;
 
 export async function generateMetadata({ params }) {
   const { program, team: slug } = await params;
   const team = program === "zero-to-launch" ? await publicTeam(slug) : null;
   if (!team) return { title: "Team not found — Ship AI", robots: { index: false, follow: false } };
+  const project = projectOf(team);
   return {
-    title: `${team.name} — ${EVENT.name}`,
+    title: `${same(project, team.name) ? project : `${project} by ${team.name}`} — ${EVENT.name}`,
     description: team.summary?.slice(0, 160) || `Meet ${team.name} at ${EVENT.name}. View their team and project.`,
     alternates: { canonical: `https://www.shipai.club${publicTeamPath(team)}` },
   };
 }
 
+/* A team's own words can hold web addresses. Make them links without
+   touching anything else: http(s) addresses and bare names on common
+   endings, with trailing punctuation left outside the link. */
+const ADDRESS = /(https?:\/\/[^\s<>()]+|\b(?:[a-z0-9-]+\.)+(?:com|net|org|dev|app|io|ai|co|club)\b(?:\/[^\s<>()]*)?)/gi;
+
+function Linked({ text }) {
+  return String(text).split(ADDRESS).map((part, index) => {
+    if (index % 2 === 0) return part;
+    const tail = part.match(/[.,;:!?'")\]]+$/)?.[0] ?? "";
+    const address = tail ? part.slice(0, -tail.length) : part;
+    const href = safeUrl(address);
+    if (!href) return part;
+    return <span key={index}><a href={href} target="_blank" rel="noreferrer nofollow ugc">{address}</a>{tail}</span>;
+  });
+}
+
+/* The team page: the entry card. The project is the headline and the
+   team its byline. Under it the recorded pitch sits beside a card of
+   facts (how it placed, who built it, the one button), then one
+   readable column: the summary, the team's other answers as rows that
+   open in place, and the team. The page ends on the fleet: where this
+   project sits among those that shipped, and the one before and after.
+
+   It degrades in steps: a recording, else the preview image, else the
+   card alone. A team that has not submitted gets the card and the team. */
 export default async function Page({ params }) {
   const { program, team: slug } = await params;
   if (program !== "zero-to-launch") notFound();
   const team = await publicTeam(slug);
   if (!team) notFound();
-  const deck = customPitchDeckUrl(team.pitch) || (team.submitted && submissionPitchMode(team.pitch) === "generated" ? `${publicTeamPath(team)}/deck` : "");
-  const logo = safeUrl(team.logo_url);
-  return <>
-    <header className="nav">
-      <Lockup />
-      <nav><Link href={HACKATHON_PATH}>Hackathon</Link><Link href={`${HACKATHON_PATH}#teams`}>All teams</Link></nav>
-      <Link href="/dashboard" className="btn btn-ghost nav-cta">Your dashboard</Link><MobileNav />
-    </header>
-    <main className="ht-detail">
-      <Link className="ht-back" href={`${HACKATHON_PATH}#teams`}><ArrowLeft size={15} aria-hidden="true" /> All teams</Link>
-      <header className="ht-detail-header">
-        <p className="eyebrow">{EVENT.name} · {EVENT.datesShort}</p>
-        <div className="ht-detail-title"><span className="ht-team-mark" aria-hidden="true">{logo ? <img src={logo} alt="" /> : team.name.charAt(0).toUpperCase()}</span><h1>{team.name}</h1></div>
-        {team.tagline && <p className="ht-detail-tagline">{team.tagline}</p>}
-      </header>
 
-      <section className="ht-detail-section" aria-labelledby="ht-project-title">
-        <span className={`ht-status${team.submitted ? " is-submitted" : ""}`}>{team.submitted ? "Submitted project" : "Building"}</span>
-        <h2 id="ht-project-title">{team.submitted ? team.project || "The project" : "Project coming soon"}</h2>
-        {team.submitted ? <>
-          {team.summary && <p className="ht-detail-copy">{team.summary}</p>}
-          <div className="ht-project-links">
-            {safeUrl(team.live_url) && <a className="btn btn-solid" href={safeUrl(team.live_url)} target="_blank" rel="noreferrer">Open site <ExternalLink size={14} aria-hidden="true" /></a>}
-            {deck && <a className="btn btn-ghost" href={deck} target="_blank" rel="noreferrer">Open pitch deck <ExternalLink size={14} aria-hidden="true" /></a>}
-            {safeUrl(team.repo_url) && <a className="btn btn-ghost" href={safeUrl(team.repo_url)} target="_blank" rel="noreferrer">View code <ExternalLink size={14} aria-hidden="true" /></a>}
-          </div>
-          {[["What they shipped", team.launch], ["Receipts", team.receipts], ...PITCH_FIELDS.map(field => [field.name, team.pitch?.[field.key]])].filter(([, value]) => value).map(([label, value]) => <div key={label}><h3>{label}</h3><p className="ht-detail-copy">{value}</p></div>)}
-        </> : <p className="ht-detail-copy">This team has registered and is still preparing its submission.</p>}
-      </section>
+  const [everyTeam, certificateRows] = await Promise.all([publicTeams(), publishedCertificates()]);
+  const fleet = everyTeam.filter((entry) => entry.submitted);
+  const at = fleet.findIndex((entry) => entry.slug === team.slug);
+  const project = projectOf(team);
 
-      {team.pitch_video_url && <section id="team-pitch" className="ht-detail-section ht-pitch-section" aria-labelledby="ht-pitch-title">
-        <span className="ht-status is-submitted">Recorded pitch</span>
-        <h2 id="ht-pitch-title">Watch {team.name}&apos;s pitch</h2>
-        <video className="ht-pitch-video" controls playsInline preload="metadata" poster={team.pitch_video_poster_url || undefined}>
-          <source src={team.pitch_video_url} type="video/mp4" />
-          Your browser does not support embedded video.
-        </video>
-        <p className="ht-pitch-caption">Presented at the Ship AI × Workuity Hackathon in Phoenix.</p>
-      </section>}
+  const certificate = certificateRows.map(fromCertificate)
+    .find((entry) => same(entry.team, team.name) || same(entry.project, team.project));
+  const podiumPlace = certificate?.award || SHIPPED.podium.find((entry) => entry.team === team.slug)?.place;
+  const prize = HACKATHON_PRIZES.find((entry) => entry.name === podiumPlace);
+  const placed = !team.submitted ? "Building" : podiumPlace ? [podiumPlace, prize && `$${prize.cash}`].filter(Boolean).join(" · ") : "Launched";
+  const podiumSlugs = new Set(SHIPPED.podium.map((entry) => entry.team));
 
-      {!team.pitch_video_url && team.pitch_video_poster_url && <section id="team-pitch" className="ht-detail-section ht-pitch-section" aria-labelledby="ht-pitch-title">
-        <span className="ht-status is-submitted">Project preview</span>
-        <h2 id="ht-pitch-title">See {team.name}</h2>
-        <img className="ht-pitch-poster" src={team.pitch_video_poster_url} alt={`${team.name} project preview`} loading="lazy" />
-      </section>}
+  const site = team.submitted && safeUrl(team.live_url);
+  const deck = team.submitted && (customPitchDeckUrl(team.pitch) || (submissionPitchMode(team.pitch) === "generated" ? `${publicTeamPath(team)}/deck` : ""));
+  const repo = team.submitted && safeUrl(team.repo_url);
+  const links = [
+    deck && { href: deck, label: "Pitch deck", external: true },
+    repo && { href: repo, label: "Code", external: true },
+    certificate && { href: certPath(certificate), label: "Certificate" },
+  ].filter(Boolean);
 
-      <section className="ht-detail-section" aria-labelledby="ht-members-title">
-        <h2 id="ht-members-title">The team</h2>
-        <p className="ht-detail-count">{team.member_count} member{team.member_count === 1 ? "" : "s"}</p>
-        {team.members.length ? <ul className="ht-member-list">{team.members.map((member, index) => <li key={index}>
-          <span className="ht-member-avatar" aria-hidden="true">{safeUrl(member.avatar_url) ? <img src={safeUrl(member.avatar_url)} alt="" loading="lazy" /> : member.name.charAt(0).toUpperCase()}</span>
-          <div><strong>{member.name}</strong>{(member.title || member.company) && <p>{[member.title, member.company].filter(Boolean).join(" · ")}</p>}</div>
-        </li>)}</ul> : <p className="ht-detail-copy">Team members have not shared public profiles.</p>}
-      </section>
-    </main>
-    <footer className="footer"><span className="fine">{EVENT.name} · Phoenix</span><Link href={`${HACKATHON_PATH}#teams`}>All teams</Link><span className="fine">© 2026 Ship AI</span></footer>
-  </>;
+  const video = team.pitch_video_url;
+  const poster = team.pitch_video_poster_url;
+  const answers = team.submitted
+    ? [["What they shipped", team.launch], ["Receipts", team.receipts], ...PITCH_FIELDS.map((field) => [field.name, team.pitch?.[field.key]])].filter(([, value]) => value)
+    : [];
+  const summary = team.submitted && team.summary && !same(team.summary, team.tagline) ? team.summary : "";
+  const people = team.members.map((member) => ({
+    name: member.name,
+    role: [member.title, member.company].filter(Boolean).join(" · "),
+    photo: safeUrl(member.avatar_url) || null,
+  }));
+  const pitchedOn = new Date(EVENT.endISO).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "America/Phoenix" });
+
+  return (
+    <>
+      <SiteHeader current="/programs" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>} />
+
+      <main id="top">
+        <EventHero
+          crumb={{ href: `${HACKATHON_PATH}#teams`, label: `The ${fleet.length || SHIPPED.teams} that shipped` }}
+          name={same(project, team.name) ? EVENT.name : `by ${team.name} · ${EVENT.name}`}
+          title={project}
+          lede={team.tagline || undefined}
+        />
+
+        <div className={video || poster ? "tp-entry" : "tp-entry is-solo"} id="team-pitch">
+          {video && (
+            <video className="tp-media" controls playsInline preload="metadata" poster={poster || undefined} aria-label={`${project}: the recorded pitch`}>
+              <source src={video} type="video/mp4" />
+              Your browser does not support embedded video.
+            </video>
+          )}
+          {!video && poster && <img className="tp-media" src={poster} alt={`${project} project preview`} />}
+
+          <aside className="tp-card" aria-label="Project facts">
+            <dl>
+              <div><dt>{team.submitted ? "Placed" : "Status"}</dt><dd><b>{placed}</b></dd></div>
+              <div><dt>Team</dt><dd>{team.name}{team.member_count > 1 ? ` · ${team.member_count} members` : ""}</dd></div>
+              <div><dt>{video ? "Pitched" : "Held"}</dt><dd>{video ? pitchedOn : EVENT.datesShort} · Phoenix</dd></div>
+            </dl>
+            <div className="tp-act">
+              {site && <a className="btn btn-solid" href={site} target="_blank" rel="noreferrer">Open site</a>}
+              {links.length > 0 && (
+                <p className="tp-links">
+                  {links.map((link) => <a key={link.label} href={link.href} {...(link.external ? { target: "_blank", rel: "noreferrer" } : {})}>{link.label}</a>)}
+                </p>
+              )}
+              {!team.submitted && <p className="tp-quiet">This team has registered and is still preparing its submission.</p>}
+            </div>
+          </aside>
+        </div>
+
+        <div className="tp-col">
+          {summary && <p className="tp-summary">{summary}</p>}
+
+          {answers.length > 0 && (
+            <div className="ef-records tp-answers">
+              {answers.map(([label, value], index) => (
+                <RecordRow key={label} title={label} open={!summary && index === 0}>
+                  <p><Linked text={value} /></p>
+                </RecordRow>
+              ))}
+            </div>
+          )}
+
+          <section aria-labelledby="tp-team-title">
+            <h2 id="tp-team-title" className="tp-h">The team</h2>
+            {people.length > 0 ? (
+              <PeopleRow people={people} />
+            ) : (
+              <p className="tp-none">{team.member_count} member{team.member_count === 1 ? "" : "s"}. Team members have not shared public profiles.</p>
+            )}
+          </section>
+        </div>
+
+        {at >= 0 && fleet.length > 1 && (
+          <nav className="tp-fleet" aria-label="Other projects that shipped">
+            <p className="tp-fleet-bar">
+              <span>{at + 1} of {fleet.length} that shipped</span>
+              <a href={SHIPPED_RESULTS}>The results</a>
+            </p>
+            <div className="tp-rail" style={{ "--tp-n": fleet.length }} aria-hidden="true">
+              {fleet.map((entry, index) => (
+                <i key={entry.slug} className={index === at ? "is-here" : podiumSlugs.has(entry.slug) ? "is-placed" : undefined} />
+              ))}
+            </div>
+            <div className="tp-around">
+              {[[fleet[(at - 1 + fleet.length) % fleet.length], "← Before"], [fleet[(at + 1) % fleet.length], "Next →"]].map(([entry, label]) => (
+                <a key={label} href={publicTeamPath(entry)}>
+                  <span className="ev-label">{label}</span>
+                  <b>{projectOf(entry)}</b>
+                </a>
+              ))}
+            </div>
+          </nav>
+        )}
+
+        <div className="ev-end" />
+      </main>
+
+      <SiteFooter />
+    </>
+  );
 }

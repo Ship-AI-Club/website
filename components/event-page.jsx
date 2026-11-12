@@ -17,9 +17,9 @@ export function EventHero({ name, crumb, title, keyPhrase, lede }) {
       {crumb && <p className="ev-crumb"><a href={crumb.href}>← {crumb.label}</a></p>}
       <h1 className="hero-h1" id="ev-title">
         {name && <span className="ev-name">{name}</span>}
-        {title} <span className="key">{keyPhrase}</span>
+        {title}{keyPhrase && <> <span className="key">{keyPhrase}</span></>}
       </h1>
-      <p className="hero-lede">{lede}</p>
+      {lede && <p className="hero-lede">{lede}</p>}
     </section>
   );
 }

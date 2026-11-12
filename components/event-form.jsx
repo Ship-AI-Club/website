@@ -54,9 +54,9 @@ export function TaggedRows({ items }) {
 }
 
 /* A row that opens in place, for the record under a closed board. */
-export function RecordRow({ title, tag, children }) {
+export function RecordRow({ title, tag, open = false, children }) {
   return (
-    <details className="ef-record">
+    <details className="ef-record" open={open || undefined}>
       <summary>
         <h3>{title}</h3>
         {tag && <span className="ev-label">{tag}</span>}

@@ -106,9 +106,9 @@
   margin: 0;
 }
 
-/* on the programs hub, the open email form sits on the same raised
-   panel as the assessment invitation below it */
-#explore-programs .toc-action .wn-form {
+/* on both hubs, the open email form sits on the same raised panel as
+   the assessment invitation on the programs hub */
+.hub-list .toc-action .wn-form {
   padding: 20px;
   background: var(--surface);
   border: 1px solid var(--hairline);

@@ -1,15 +1,19 @@
-import MobileNav from "../../../../components/mobile-nav";
 import { notFound } from "next/navigation";
-import { BookOpen, Download, FileCode2, Package, Presentation, Terminal } from "lucide-react";
-import { siDiscord, siGithub } from "simple-icons";
+import { siDiscord } from "simple-icons";
 import { JsonLd } from "../../../../components/article";
+import Scene from "../../../../components/scene";
+import SiteFooter from "../../../../components/site-footer";
+import SiteHeader from "../../../../components/site-header";
+import SkillManifest, { CopyButton } from "../../../../components/skill-manifest";
 import { deckFor } from "../../../../lib/decks";
 import { guideFor } from "../../../../lib/guides";
-import { PROGRAMS, programBySlug, sessionDateLabel } from "../../../../lib/programs";
+import { PROGRAMS, programBySlug } from "../../../../lib/programs";
 import { DISCORD } from "../../../../lib/hackathon";
 import registry from "../../../../lib/skills.generated.json";
-import { Lockup } from "../../../../components/seal";
 import { ogImage } from "../../../../lib/og";
+import "../../program.css";
+import "../../voyage.css";
+import "../../skills.css";
 
 const SITE = "https://www.shipai.club";
 const byName = new Map(registry.skills.map((s) => [s.name, s]));
@@ -36,6 +40,20 @@ export async function generateMetadata({ params }) {
   };
 }
 
+const QUESTIONS = [
+  ["Do I have to attend to use these?", "No. They're published so anyone can run the process, now or years from now."],
+  ["Do they only work in Claude Code?", "No. They're markdown with frontmatter — anything that reads a skills directory runs them."],
+  ["Can I change them?", "Yes, and you should. They're opinionated on purpose — edit them to fit your product and workflow."],
+  ["What's the catch?", "These published skill files are free to download. Ship AI also runs hands-on workshops and programs in Phoenix."],
+];
+
+/* "What it does. Use when…": the second sentence is the finding aid, so
+   it stays in view on the row and the first opens with it. */
+function splitDescription(description) {
+  const at = description.indexOf(" Use ");
+  return at > 0 ? { what: description.slice(0, at), when: description.slice(at + 1) } : { what: description, when: "" };
+}
+
 export default async function Page({ params }) {
   const { program: programSlug } = await params;
   const program = programBySlug(programSlug);
@@ -45,6 +63,7 @@ export default async function Page({ params }) {
   const total = manifest.all.count;
   const programHref = `/programs/${program.slug}`;
   const description = `Every skill file from the ${program.name} program, free to download and run.`;
+  const install = `curl -fsSLO ${SITE}/skills/${manifest.all.file}\nunzip -o ${manifest.all.file} -d .\nrm ${manifest.all.file}`;
   const schema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -58,74 +77,91 @@ export default async function Page({ params }) {
     author: { "@type": "Organization", name: "Ship AI", url: SITE },
   };
 
+  const sessions = program.sessions
+    .filter((w) => manifest.sessions[w.slug])
+    .map((w) => {
+      const kit = manifest.sessions[w.slug];
+      const href = `${programHref}/${w.slug}`;
+      return {
+        slug: w.slug,
+        title: w.eventTitle,
+        href,
+        guideHref: guideFor(program.slug, w.slug) ? `${href}/guide` : null,
+        deckHref: deckFor(program.slug, w.slug) ? `${href}/deck` : null,
+        bundleHref: `/skills/${kit.file}`,
+        count: kit.count,
+        skills: (w.skills || [])
+          .map((name) => byName.get(name))
+          .filter(Boolean)
+          .map((skill) => ({ name: skill.name, ...splitDescription(skill.description) })),
+      };
+    });
+
   return (
     <>
       <JsonLd data={schema} />
-      <header className="nav">
-        <Lockup />
-        <nav><a href="/programs">Programs</a><a href={programHref}>Sessions</a>{program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}</nav>
-        <div className="nav-ctas">{program.hasHackathon ? <><a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Discord</a><a className="btn btn-solid" href="/dashboard">Register</a></> : <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Get notified</a>}</div>
-      <MobileNav /></header>
+      <SiteHeader current="/programs" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={18} height={18} fill="currentColor" aria-hidden="true" focusable="false"><path d={siDiscord.path} /></svg>Join the Discord</a>} />
 
-      <main className="sk">
-        <p className="kicker">{program.name} · {program.datesLabel || "Dates TBD"}</p>
-        <h1 className="sk-h1">{total} skills,<br />free to take.</h1>
-        <p className="article-lede">
-          Every mechanical piece of the {program.sessions.length}-session program, as skill files.
-          Plain markdown with frontmatter — run them in Claude Code, the Codex extension, or anything
-          that reads a skills directory. No account, no signup, no expiry.
-        </p>
+      <main>
+        <section className="hero vy-hero kx-hero" aria-labelledby="kx-title">
+          <p className="vy-crumb"><a href={programHref}>← {program.name}</a></p>
+          <h1 className="hero-h1" id="kx-title">
+            <span className="vy-name">{program.name}</span>
+            {total} skills, <span className="key">free to take.</span>
+          </h1>
+          <p className="hero-lede">
+            Every mechanical piece of the {program.sessions.length}-session program, as skill files.
+            Plain markdown with frontmatter — run them in Claude Code, the Codex extension, or anything
+            that reads a skills directory. No account, no signup, no expiry.
+          </p>
+        </section>
 
-        <div className="sk-top">
-          <a className="btn btn-solid" href={`/skills/${manifest.all.file}`} download><Download size={16} strokeWidth={1.75} aria-hidden="true" />Download all {total}</a>
-          {program.templateRepo && <a className="btn btn-ghost" href={program.templateRepo} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={15} height={15} fill="currentColor" aria-hidden="true"><path d={siGithub.path} /></svg>Template repo</a>}
-          <a className="btn btn-ghost" href={programHref}><BookOpen size={15} strokeWidth={1.75} aria-hidden="true" />The sessions</a>
-        </div>
-
-        <h2 className="hk-subhead"><Terminal size={18} strokeWidth={1.75} aria-hidden="true" />Install</h2>
-        <p>The archive is a <code>.claude/skills/</code> directory and nothing else, so it drops into an existing project without touching anything already there.</p>
-        <pre className="sk-install"><code>{`curl -fsSLO ${SITE}/skills/${manifest.all.file}\nunzip -o ${manifest.all.file} -d .\nrm ${manifest.all.file}`}</code></pre>
-        <p className="hk-note">Want just one session? Each below has its own bundle, and every skill links to its raw <code>SKILL.md</code>.</p>
-
-        <h2 className="hk-subhead"><Package size={18} strokeWidth={1.75} aria-hidden="true" />By session</h2>
-        {program.sessions.map((w) => {
-          const kit = manifest.sessions[w.slug];
-          if (!kit) return null;
-          const list = (w.skills || []).map((name) => byName.get(name)).filter(Boolean);
-          return (
-            <section key={w.slug} className="sk-session">
-              <div className="sk-session-head">
-                <span className="sk-session-n">{w.n}</span>
-                <div><h3><a href={`${programHref}/${w.slug}`}>{w.eventTitle}</a></h3><p className="sk-session-meta">{sessionDateLabel(w)} · {w.title}</p></div>
-                <div className="sk-session-dl"><a className="btn btn-ghost" href={`/skills/${kit.file}`} download><Download size={14} strokeWidth={1.75} aria-hidden="true" />{kit.count} skills</a></div>
+        <div className="kx-board-wrap">
+          <aside className="window kx-board" aria-label="Download and install">
+            <div className="window-bar"><b>{manifest.all.file}</b><span>{total} skills · {sessions.length} sessions</span></div>
+            <div className="kx-row">
+              <div className="kx-act">
+                <a className="btn btn-solid" href={`/skills/${manifest.all.file}`} download>Download all {total}</a>
+                {program.templateRepo && <a className="link" href={program.templateRepo} target="_blank" rel="noreferrer">Template repo</a>}
               </div>
-              <ul className="sk-list">
-                {list.map((skill) => <li key={skill.name}><p className="sk-name"><code>/{skill.name}</code><a href={`/skills/${skill.name}/SKILL.md`} className="sk-raw"><FileCode2 size={12} strokeWidth={1.75} aria-hidden="true" />SKILL.md</a></p><p className="sk-desc">{skill.description}</p></li>)}
-              </ul>
-              <p className="sk-session-links">
-                {guideFor(program.slug, w.slug) && <a href={`${programHref}/${w.slug}/guide`}><BookOpen size={13} strokeWidth={1.75} aria-hidden="true" />Follow-along guide</a>}
-                {deckFor(program.slug, w.slug) && <a href={`${programHref}/${w.slug}/deck`}><Presentation size={13} strokeWidth={1.75} aria-hidden="true" />Slides</a>}
-              </p>
-            </section>
-          );
-        })}
-
-        <h2 className="hk-subhead">Questions people ask</h2>
-        <div className="hk-faq">
-          <div className="hk-faq-item"><h3>Do I have to attend to use these?</h3><p>No. They&apos;re published so anyone can run the process, now or years from now.</p></div>
-          <div className="hk-faq-item"><h3>Do they only work in Claude Code?</h3><p>No. They&apos;re markdown with frontmatter — anything that reads a skills directory runs them.</p></div>
-          <div className="hk-faq-item"><h3>Can I change them?</h3><p>Yes, and you should. They&apos;re opinionated on purpose — edit them to fit your product and workflow.</p></div>
-          <div className="hk-faq-item"><h3>What&apos;s the catch?</h3><p>These published skill files are free to download. Ship AI also runs hands-on workshops and programs in Phoenix.</p></div>
+              <div>
+                <div className="kx-cmd">
+                  <pre><code>{install}</code></pre>
+                  <CopyButton text={install} />
+                </div>
+                <p className="kx-note">The archive is a <code>.claude/skills/</code> directory and nothing else, so it drops into an existing project without touching anything already there.</p>
+              </div>
+            </div>
+          </aside>
         </div>
 
-        <div className="hk-discord"><svg viewBox="0 0 24 24" width={22} height={22} fill="currentColor" aria-hidden="true"><path d={siDiscord.path} /></svg><div><h3>Ran one and it did something odd?</h3><p>Say so in Discord. These files improve on what people hit running them for real.</p></div><a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a></div>
+        <SkillManifest total={total} sessions={sessions} />
+
+        <section className="section kx-faq" aria-labelledby="kx-faq-title">
+          <div className="section-head"><h2 id="kx-faq-title">Questions people ask</h2></div>
+          <ul>
+            {QUESTIONS.map(([question, answer]) => <li key={question}><h3>{question}</h3><p>{answer}</p></li>)}
+          </ul>
+        </section>
+
+        <section className="band" aria-labelledby="kx-final-title">
+          <Scene scene="stars" mode="ascii" band className="band-bg" />
+          <div className="final">
+            <h2 id="kx-final-title">Ran one and it did <span className="key">something odd?</span></h2>
+            <p className="lede">Say so in Discord. These files improve on what people hit running them for real.</p>
+            <div className="cta-row">
+              <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>
+              <a className="btn btn-ghost" href={programHref}>All {program.name} sessions</a>
+            </div>
+          </div>
+          <div className="final-stage">
+            <Scene scene="harbor" band alt="Dithered harbor at dusk: many small boats at their moorings with their lights on. The community." />
+            <p>Harbor at dusk · Phoenix, Arizona</p>
+          </div>
+        </section>
       </main>
 
-      <footer className="footer">
-        <Lockup compact />
-        <nav><a href="/">Home</a><a href="/programs">Programs</a><a href={programHref}>{program.name}</a>{program.hasHackathon && <a href={program.hackathonHref}>Hackathon</a>}{program.templateRepo && <a href={program.templateRepo} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={14} height={14} fill="currentColor" aria-hidden="true"><path d={siGithub.path} /></svg></a>}</nav>
-        <p className="fine">© 2026 Ship AI</p>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

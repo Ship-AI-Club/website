@@ -2,7 +2,7 @@ import { randomBytes, createHash } from "node:crypto";
 import { generateText, Output, jsonSchema } from "ai";
 import { hasDb, sql } from "../../../lib/db";
 import { isEmail, normalizeEmail } from "../../../lib/waitlist";
-import { assessmentCatalogue, eligibleFirstWorkshops, validateAssessment, publicRecommendation } from "../../../lib/workshop-assessment";
+import { assessmentCatalogue, eligibleFirstWorkshops, validateAssessment, publicRecommendation, previewRecommendation, PREVIEW_TOKEN } from "../../../lib/workshop-assessment";
 import { assessmentStorage, assessmentIpHash, takeAssessmentCredit } from "../../../lib/assessment-store";
 
 export const runtime = "nodejs";
@@ -24,6 +24,8 @@ export async function POST(request) {
   if (!isEmail(email) || email.length > 254 || body.consent !== true) return respond({error:"Enter your email and agree to save your recommendation."},400);
   if (body.website) return respond({error:"Please try again without autofill."},400);
   // Email capture, valid inputs and durable spend caps all precede Gateway usage.
+  // SHIPAI_PREVIEW=1 with no database: a placeholder result, so the page can be worked on locally.
+  if (!hasDb() && previewRecommendation()) return respond({result:previewRecommendation(),sharePath:`/workshops/recommendation/${PREVIEW_TOKEN}`});
   if (!hasDb() || !process.env.AI_GATEWAY_API_KEY) return respond({error:"Recommendations are offline briefly. Browse the workshops or try again shortly."},503);
   let claimed = false;
   try {

@@ -18,6 +18,7 @@ import {
   sessionDateLabel,
   sessionNights,
   sessionScheduled,
+  sessionState,
   sessionVenues,
 } from "../../../../lib/programs";
 import { DISCORD, GTM_DECK, rsvpLinks, venueOf } from "../../../../lib/hackathon";
@@ -132,9 +133,9 @@ export default async function Page({ params }) {
      A session with no date in a finished program reads as finished. */
   const scheduled = sessionScheduled(w);
   const nights = sessionNights(w);
-  const today = new Date().toISOString().slice(0, 10);
-  const upcoming = scheduled && nights.some((night) => night.iso >= today);
-  const finished = (scheduled && !upcoming) || (!scheduled && program.status === "past");
+  const state = sessionState(program, w);
+  const upcoming = state === "upcoming";
+  const finished = state === "finished";
   const waitlistOpen = !program.startISO && hasDb();
   const rsvp = upcoming ? rsvpLinks(w) : null;
   const recording = w.media?.recording;

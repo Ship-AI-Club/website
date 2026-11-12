@@ -1,17 +1,20 @@
 import { notFound } from "next/navigation";
-import { ArrowRight, BookOpen, Download, Play, Presentation } from "lucide-react";
-import { siGithub } from "simple-icons";
+import { siDiscord, siGithub } from "simple-icons";
 import { JsonLd } from "../../../components/article";
 import Scene from "../../../components/scene";
 import SiteFooter from "../../../components/site-footer";
 import SiteHeader from "../../../components/site-header";
+import WorkshopNotify from "../../../components/workshop-notify";
+import { PROGRAM_DETAILS } from "../../../components/program-details";
 import { hasDb } from "../../../lib/db";
 import { deckFor } from "../../../lib/decks";
 import { guideFor } from "../../../lib/guides";
 import registry from "../../../lib/skills.generated.json";
-import { PROGRAMS, programBySlug, programVenueNames, sessionDateLabel, sessionNights, sessionScheduled, sessionVenues } from "../../../lib/programs";
-import WaitlistForm from "./waitlist-form";
+import { PROGRAMS, programBySlug, programVenueNames, sessionDateLabel, sessionNights, sessionScheduled } from "../../../lib/programs";
+import "../../../components/departure-board.css";
 import "../program.css";
+import "../../hub.css";
+import "../voyage.css";
 import {
   DISCORD,
   MEETUP,
@@ -26,12 +29,6 @@ const SCENES = {
   "the-first-build": { scene: "slipway", alt: "Dithered night scene: a hull on the slipway with scaffolding and two builders at work." },
   "zero-to-launch": { scene: "launch", alt: "Dithered night scene: a finished boat sliding down the ways into the water." },
   "growth-loops": { scene: "fleet", alt: "Dithered fleet of boats under way together." },
-};
-
-const STATUS = {
-  past: { label: "Finished", className: "tag tag-tbd" },
-  running: { label: "RSVPs open", className: "tag tag-go" },
-  tbd: { label: "Dates TBD", className: "tag tag-tbd" },
 };
 
 const WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
@@ -98,6 +95,8 @@ function seriesSchema(program) {
   };
 }
 
+const lowerFirst = (text) => text.charAt(0).toLowerCase() + text.slice(1);
+
 export default async function Page({ params }) {
   const { program: programSlug } = await params;
   const program = programBySlug(programSlug);
@@ -107,43 +106,41 @@ export default async function Page({ params }) {
   const nextProgram = program.nextProgram ? programBySlug(program.nextProgram) : null;
   const schema = seriesSchema(program);
   const venueNames = programVenueNames(program);
-  const someScheduled = program.sessions.some(sessionScheduled);
   const waitlistOpen = !program.startISO && hasDb();
   const past = program.status === "past";
-  const status = STATUS[program.status] || STATUS.tbd;
+  const running = !past && !!program.startISO;
   const art = SCENES[program.slug] || SCENES["the-first-build"];
   const count = program.sessions.length;
   const countWord = WORDS[count] || String(count);
+  const detail = PROGRAM_DETAILS[program.slug];
+  const ext = (href) => (href.startsWith("/") || href.startsWith("#") ? {} : { target: "_blank", rel: "noreferrer" });
 
-  const primary = program.hasHackathon && past
-    ? { href: `${program.hackathonHref}/results`, label: "See the results" }
-    : past
-      ? { href: "#sessions", label: "Browse the sessions", internal: true }
-      : program.hasHackathon
-        ? { href: "/dashboard", label: "Register", internal: true }
-        : waitlistOpen
-          ? { href: "#waitlist", label: "Join the waitlist", internal: true }
-          : program.startISO
-            ? { href: MEETUP, label: "RSVP on Meetup" }
-            : { href: DISCORD, label: "Get notified in Discord" };
-  const ext = (link) => (link.internal || link.href.startsWith("/") ? {} : { target: "_blank", rel: "noreferrer" });
+  /* Each session with the files it has, read once. */
+  const sessions = program.sessions.map((w) => ({
+    w,
+    href: `/programs/${program.slug}/${w.slug}`,
+    deck: deckFor(program.slug, w.slug),
+    guide: guideFor(program.slug, w.slug),
+    kit: manifest?.sessions[w.slug],
+    recording: !!w.media?.poster,
+  }));
+  const counts = [
+    ["Decks", sessions.filter((s) => s.deck).length],
+    ["Guides", sessions.filter((s) => s.guide).length],
+    ["Skill files", manifest?.all.count || 0],
+    ["Recordings", sessions.filter((s) => s.recording).length],
+  ].filter(([, n]) => n > 0);
 
-  const navLinks = [
-    { href: "/programs", label: "Programs" },
-    { href: "#sessions", label: "Sessions" },
-    ...(manifest ? [{ href: `/programs/${program.slug}/skills`, label: "Skills" }] : []),
-    ...(program.hasHackathon ? [{ href: program.hackathonHref, label: "Hackathon" }] : []),
-  ];
+  /* Where the ship sits: the last stop once the program has finished,
+     the next session while it runs, the first stop before it starts. */
+  const today = new Date().toISOString().slice(0, 10);
+  const upcoming = sessions.findIndex((s) => sessionNights(s.w).some((night) => night.iso >= today));
+  const shipAt = past ? count - 1 : running && upcoming >= 0 ? upcoming : 0;
+  const next = running && upcoming >= 0 ? sessions[upcoming] : null;
 
-  const place = venueNames.length > 1 ? "Phoenix area" : "Phoenix";
-  const cost = past ? "Free" : program.status === "running" ? "See registration" : "TBD";
-  const costLabel = past ? "Every session" : program.status === "running" ? "See session registration" : "Announced with registration";
-  const facts = [
-    { value: program.datesLabel || "Dates TBD", label: past ? "When it ran" : "When" },
-    { value: place, label: "Where" },
-    { value: String(count), label: "Sessions" },
-    { value: cost, label: costLabel },
-  ];
+  const runningAction = program.hasHackathon
+    ? { href: "/dashboard", label: "Register" }
+    : { href: MEETUP, label: "RSVP on Meetup" };
 
   const nextStep = program.hasHackathon
     ? { href: program.hackathonHref, label: "The hackathon weekend" }
@@ -151,203 +148,99 @@ export default async function Page({ params }) {
       ? { href: `/programs/${nextProgram.slug}`, label: `Next up: ${nextProgram.name}` }
       : null;
 
+  const firstNight = sessions.flatMap((s) => sessionNights(s.w))[0];
+
   return (
     <>
       {schema && <JsonLd data={schema} />}
-      <SiteHeader
-        links={navLinks}
-        cta={<a className="btn btn-solid btn-sm nav-cta" href={primary.href} {...ext(primary)}>{primary.label}</a>}
-        extraLinks={[...navLinks, { href: primary.href, label: primary.label }]}
-      />
+      <SiteHeader current="/programs" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={18} height={18} fill="currentColor" aria-hidden="true" focusable="false"><path d={siDiscord.path} /></svg>Join the Discord</a>} />
 
-      <main className="pg">
-        <section className="hero pg-hero" aria-labelledby="pg-title">
-          <p className="pg-hero-meta">
-            <span className={status.className}>{status.label}</span>
-            <span>{program.name}{" ·"} {countWord} sessions{" ·"} {place}</span>
-          </p>
+      <main>
+        <section className="hero vy-hero" aria-labelledby="pg-title">
+          <p className="vy-crumb"><a href="/programs">← All programs</a></p>
           <h1 className="hero-h1" id="pg-title">
-            <span className="sr-only">{program.name}: </span>
+            <span className="vy-name">{program.name}</span>
             <KeyHeadline text={program.headline} keyPhrase={program.headlineKey} />
           </h1>
           <p className="hero-lede">{program.tagline}</p>
-          <div className="cta-row">
-            <a className="btn btn-solid" href={primary.href} {...ext(primary)}>{primary.label}</a>
-            {primary.href !== DISCORD && <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>}
-          </div>
-
-          <div className="stage pg-stage">
-            <Scene scene={art.scene} alt={art.alt} />
-            <aside className="window pg-hero-window" aria-label={`${program.name} sessions`}>
-              <div className="window-bar"><b>{program.name}{" ·"} Sessions</b><span>{count} total</span></div>
-              <ol className="pg-run">
-                {program.sessions.map((w) => (
-                  <li key={w.slug}>
-                    <span className="k">{w.n}</span>
-                    <a href={`/programs/${program.slug}/${w.slug}`}>{w.eventTitle}</a>
-                    <span className={past ? "pg-pill is-done" : sessionScheduled(w) ? "pg-pill is-live" : "pg-pill"}>
-                      {past ? "Done" : sessionScheduled(w) ? sessionNights(w)[0].date : "TBD"}
-                    </span>
-                  </li>
-                ))}
-              </ol>
-            </aside>
-            {manifest && (
-              <p className="pg-toast" aria-hidden="true">
-                <Download size={14} strokeWidth={1.75} />
-                {manifest.all.count} skill files{" ·"} free to download
-              </p>
-            )}
-          </div>
         </section>
 
-        <section className="pg-facts-wrap hero-after-stage" aria-label="Program details">
-          <dl className="facts pg-facts">
-            {facts.map((fact) => (
-              <div key={fact.label}>
-                <dt>{fact.label}</dt>
-                <dd>{fact.value}</dd>
+        <div className="hub-board">
+          <div className="stage dboard-stage vy-stage"><Scene scene={art.scene} alt={art.alt} /></div>
+          <aside className="window dboard vy-board" aria-label={past ? "Program materials" : "Program dates"}>
+            <div className="window-bar">
+              <b>{past ? "Materials, published free" : running ? "Next session" : "Next cohort"}</b>
+              <span>{[past && program.datesLabel ? `Ran ${program.datesLabel}` : null, `${countWord} sessions`, venueNames.join(" & ")].filter(Boolean).join(" · ")}</span>
+            </div>
+            {past ? (
+              <div className="dboard-row vy-row vy-row-past">
+                <dl className="vy-counts">{counts.map(([label, n]) => <div key={label}><dt>{label}</dt><dd>{n}</dd></div>)}</dl>
+                <div className="vy-act">
+                  <a className="btn btn-solid" href="#sessions">Open the materials</a>
+                  <p className="vy-links">
+                    {manifest && <a className="link" href={`/skills/${manifest.all.file}`} download>Download all {manifest.all.count} skills</a>}
+                    {program.hasHackathon && <a className="link" href={`${program.hackathonHref}/results`}>See the hackathon results</a>}
+                  </p>
+                </div>
               </div>
-            ))}
-          </dl>
-          {!past && !waitlistOpen && program.datesCopy && <p className="pg-venue-note">{program.datesCopy}</p>}
-          <p className="pg-venue-note">
-            {program.venueNote || (
-              <>
-                Every session is at{" "}
-                <a href="https://www.workuity.com/" target="_blank" rel="noreferrer">Workuity Biltmore</a>, the venue sponsor.
-              </>
-            )}
-          </p>
-        </section>
-
-        {!past && waitlistOpen && (
-          <section className="section pg-split" id="waitlist" aria-labelledby="pg-waitlist-title">
-            <div className="pg-split-copy">
-              <p className="k">Waitlist</p>
-              <h2 id="pg-waitlist-title">
-                {someScheduled ? <>Get the rest of <span className="key">the dates.</span></> : <>Get the dates <span className="key">first.</span></>}
-              </h2>
-              <p className="section-lede">
-                {someScheduled
-                  ? "Put your name down for the nights not on the calendar yet. Tell us what you want working by the end, and that's what gets built on screen."
-                  : "Put your name down and get the dates the day they're set. Tell us what you want working by the end, and that's what gets built on screen."}
-              </p>
-              {program.datesCopy && <p className="pg-note">{program.datesCopy}</p>}
-            </div>
-            <div className="window pg-form-window">
-              <div className="window-bar"><b>Waitlist{" ·"} {program.name}</b><span>{program.datesLabel || "Dates TBD"}</span></div>
-              <div className="pg-form-body">
-                <WaitlistForm program={program.slug} programName={program.name} discord={DISCORD} />
+            ) : running ? (
+              <div className="dboard-row vy-row vy-row-past">
+                <p className="vy-when"><b>{next ? next.w.eventTitle : program.datesLabel}</b><span>{next ? sessionDateLabel(next.w) : `${countWord} sessions`}</span></p>
+                <div className="vy-act"><a className="btn btn-solid" href={runningAction.href} {...ext(runningAction.href)}>{runningAction.label}</a></div>
               </div>
-            </div>
-          </section>
-        )}
-
-        {program.acts && (
-          <section className="section" id="how" aria-labelledby="pg-how-title">
-            <div className="section-head">
-              <p className="k">How it runs</p>
-              <h2 id="pg-how-title">{countWord} sessions, <span className="key">one path.</span></h2>
-              <p className="section-lede">Sessions run in order, and each one stands on its own. Follow along on a laptop, or just watch the live build.</p>
-            </div>
-            <ol className={`pg-acts pg-acts-${Math.min(program.acts.length, 4)}`}>
-              {program.acts.map((a) => (
-                <li className="card pg-act" key={a.name}>
-                  <div className="card-body">
-                    <p className="pg-act-top">
-                      <span className="k">{a.range}</span>
-                    </p>
-                    <h3>{a.name}</h3>
-                    <p>{a.copy}</p>
+            ) : (
+              <div className="dboard-row vy-row">
+                <p className="vy-when"><b>Dates to be announced</b><span>One email when they are set</span></p>
+                {waitlistOpen ? (
+                  <div className="vy-signup">
+                    <WorkshopNotify slug={program.slug} name={program.name} prompt="Email me when the dates are set" startOpen askGoal />
                   </div>
+                ) : (
+                  <div className="vy-act"><a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Get notified in Discord</a></div>
+                )}
+              </div>
+            )}
+          </aside>
+        </div>
+
+        <section className="section vy-log" id="sessions" aria-labelledby="pg-sessions-title">
+          <div className="section-head">
+            <h2 id="pg-sessions-title">What you <span className="key">leave with.</span></h2>
+          </div>
+          <div className="vy-voyage">
+            <p className="vy-mark vy-mark-start">{past && firstNight ? `Departed ${firstNight.date}, ${firstNight.iso.slice(0, 4)}` : running ? "Under way" : "In harbor"}</p>
+            <ol className="vy-route">
+              {sessions.map(({ w, href, deck, guide, kit, recording }, index) => (
+                <li key={w.slug} className={index === shipAt ? "vy-stop has-ship" : "vy-stop"}>
+                  <span className="vy-dot" aria-hidden="true" />
+                  <article className="vy-card">
+                    <span className="vy-label">{[w.act, sessionScheduled(w) ? sessionDateLabel(w) : null].filter(Boolean).join(" · ") || `Session ${w.n}`}</span>
+                    <h3><a href={href}>{w.eventTitle}</a></h3>
+                    <p className="vy-sub">{w.title}</p>
+                    <p className="vy-take"><span>You leave with</span>{w.take}</p>
+                    {(deck || guide || kit || recording) && (
+                      <p className="vy-files">
+                        {deck && <a href={`${href}/deck`}>Slides</a>}
+                        {guide && <a href={`${href}/guide`}>Guide</a>}
+                        {kit && <a href={`/skills/${kit.file}`} download>{kit.count} skill{kit.count === 1 ? "" : "s"}</a>}
+                        {recording && <a href={href}>Recording</a>}
+                      </p>
+                    )}
+                  </article>
                 </li>
               ))}
             </ol>
-          </section>
-        )}
-
-        <section className="section" id="sessions" aria-labelledby="pg-sessions-title">
-          <div className="section-head">
-            <p className="k">The sessions</p>
-            <h2 id="pg-sessions-title">What you <span className="key">leave with.</span></h2>
-            <p className="section-lede">{past ? "The program has finished. Every session's materials stay published." : "Every session has a take-home: the thing you leave with."}</p>
+            <p className="vy-mark vy-mark-end">
+              {past && program.hasHackathon
+                ? <>Arrived: <a href={`${program.hackathonHref}/results`}>the hackathon weekend</a></>
+                : past && nextProgram
+                  ? <>Arrived. Next: <a href={`/programs/${nextProgram.slug}`}>{nextProgram.name}</a></>
+                  : detail
+                    ? `Arrival: ${lowerFirst(detail.outcome)}`
+                    : "Arrival"}
+            </p>
           </div>
-          <ol className="pg-sessions">
-            {program.sessions.map((w) => {
-              const kit = manifest?.sessions[w.slug];
-              const deck = deckFor(program.slug, w.slug);
-              const guide = guideFor(program.slug, w.slug);
-              const href = `/programs/${program.slug}/${w.slug}`;
-              return (
-                <li key={w.slug} className="card pg-session">
-                  <div className="pg-session-side">
-                    <span className="pg-session-n">{w.n}</span>
-                    <p className="k">{sessionDateLabel(w)}</p>
-                    <p className="k">{sessionVenues(w, program).map((venue) => venue.name).join(" & ")}</p>
-                    {w.act && <span className="tag">{w.act}</span>}
-                  </div>
-                  <div className="pg-session-main">
-                    <h3><a className="pg-session-link" href={href}>{w.eventTitle}</a></h3>
-                    <p className="pg-session-sub">{w.title}</p>
-                    <p className="pg-session-copy">{w.copy}</p>
-                    <p className="pg-session-take"><span className="k">You leave with</span>{w.take}</p>
-                    <p className="pg-session-kit">
-                      <span className="pg-session-more">Session details <ArrowRight size={14} strokeWidth={1.75} aria-hidden="true" /></span>
-                      {deck && <a href={`${href}/deck`}><Presentation size={13} strokeWidth={1.75} aria-hidden="true" />Slides</a>}
-                      {guide && <a href={`${href}/guide`}><BookOpen size={13} strokeWidth={1.75} aria-hidden="true" />Guide</a>}
-                      {kit && <a href={`/skills/${kit.file}`} download><Download size={13} strokeWidth={1.75} aria-hidden="true" />{kit.count} skill{kit.count === 1 ? "" : "s"}</a>}
-                    </p>
-                  </div>
-                  {w.media?.poster && (
-                    <div className="pg-session-media">
-                      <img src={w.media.poster} alt="" loading="lazy" />
-                      <span className="pg-play"><Play size={14} strokeWidth={2} aria-hidden="true" />Recording</span>
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-          </ol>
         </section>
-
-        {manifest && (
-          <section className="section pg-split pg-split-flip" id="materials" aria-labelledby="pg-materials-title">
-            <div className="pg-split-copy">
-              <p className="k">Open source</p>
-              <h2 id="pg-materials-title">Take the materials <span className="key">home.</span></h2>
-              <p className="section-lede">Slides, follow-along guides and {manifest.all.count} skill files, published free to take and run any time.</p>
-              <div className="cta-row">
-                <a className="btn btn-solid" href={`/programs/${program.slug}/skills`}>All {manifest.all.count} skills</a>
-                <a className="btn btn-ghost" href={`/skills/${manifest.all.file}`} download>Download the zip</a>
-              </div>
-            </div>
-            <div className="pg-panel">
-              <Scene scene="swell" alt="" />
-              <div className="window pg-files">
-                <div className="window-bar"><b>skills/{program.kitPrefix || program.slug}</b><span>{manifest.all.count} files</span></div>
-                <ul>
-                  {program.sessions.map((w) => {
-                    const kit = manifest.sessions[w.slug];
-                    if (!kit) return null;
-                    return (
-                      <li key={w.slug}>
-                        <span className="k">{w.n}</span>
-                        <span className="pg-file">{kit.file}</span>
-                        <span className="k">{kit.count} skill{kit.count === 1 ? "" : "s"}</span>
-                      </li>
-                    );
-                  })}
-                  <li className="pg-files-all">
-                    <span className="k">All</span>
-                    <span className="pg-file">{manifest.all.file}</span>
-                    <a className="k" href={`/skills/${manifest.all.file}`} download>Download</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-        )}
 
         <section className="band" aria-labelledby="pg-final-title">
           <Scene scene="stars" mode="ascii" band className="band-bg" />
@@ -366,11 +259,6 @@ export default async function Page({ params }) {
                 </a>
               </p>
             )}
-            <ul className="final-checks">
-              <li>In person, {place}</li>
-              <li>{countWord} sessions</li>
-              {manifest && <li>Materials published free</li>}
-            </ul>
           </div>
           <div className="final-stage">
             <Scene scene="harbor" band alt="Dithered harbor at dusk: many small boats at their moorings with their lights on. The community." />

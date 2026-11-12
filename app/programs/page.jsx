@@ -88,7 +88,7 @@ export default function Page() {
 
         <section className="section hub-list" id="explore-programs" aria-label="Programs">
           <div className="toc">
-            <ContentsGroup title="The four programs, in order" aside={"Free · In person in Phoenix"}>
+            <ContentsGroup title="The four programs, in order" aside="In person in Phoenix">
               {PROGRAMS.map((program) => {
                 const detail = PROGRAM_DETAILS[program.slug];
                 const past = program.status === "past";
@@ -99,7 +99,7 @@ export default function Page() {
                     line={detail.description}
                     figure={program.sessions.length + " sessions"}
                     sub={past ? "Ran " + program.datesLabel : "Dates to be announced"}
-                    facts={[["For", sentence(detail.audience)], ["You leave with", detail.outcome], ["Cost", "Free"]]}
+                    facts={[["For", sentence(detail.audience)], ["You leave with", detail.outcome], ["Cost", past ? "Free" : "Announced with registration"]]}
                     link={{ href: "/programs/" + program.slug, label: "See the full program" }}
                     open={program.slug === firstUndated}
                   >

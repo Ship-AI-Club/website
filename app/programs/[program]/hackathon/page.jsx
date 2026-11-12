@@ -1,38 +1,42 @@
-import MobileNav from "../../../../components/mobile-nav";
 import { notFound } from "next/navigation";
-import { CalendarDays, Coins, MapPin, Ticket } from "lucide-react";
 import { JsonLd } from "../../../../components/article";
 import HackathonJudges from "../../../../components/hackathon-judges";
 import HackathonRoster from "../../../../components/hackathon-roster";
-import HackathonTeams from "../../../../components/hackathon-teams";
 import HackathonSponsors from "../../../../components/hackathon-sponsors";
+import Scene from "../../../../components/scene";
+import SiteFooter from "../../../../components/site-footer";
+import SiteHeader from "../../../../components/site-header";
+import { BoardPodium, EventBoard, EventDays, EventHero, EventSection } from "../../../../components/event-page";
 import { PROGRAMS, programBySlug } from "../../../../lib/programs";
-import { EVENT, DISCORD, HACKATHON_PRIZES, HACKATHON_MAX_PRIZE_VALUE } from "../../../../lib/hackathon";
-import { BREAKOUTS, OPENING_DECK, SATURDAY_AGENDA } from "../../../../lib/hackathon-opening";
+import { EVENT, DISCORD, HACKATHON_PRIZES } from "../../../../lib/hackathon";
+import { BREAKOUTS, OPENING_DECK } from "../../../../lib/hackathon-opening";
+import { publicTeams, publicTeamPath } from "../../../../lib/public-teams";
+import { SHIPPED, SHIPPED_RESULTS } from "../../../../lib/shipped";
+import { FOUNDER_WEEKEND as FW } from "../../../../lib/founder-weekend";
 import "../../../../app/hackathon-opening.css";
-import { Lockup } from "../../../../components/seal";
+import "../../program.css";
 import { ogImage } from "../../../../lib/og";
 
-const FACTS = [
-  { icon: Coins, label: "Prize pool", value: `Up to $${HACKATHON_MAX_PRIZE_VALUE.toLocaleString('en-US')} total value` },
-  { icon: CalendarDays, label: "When", value: EVENT.dates },
-  { icon: MapPin, label: "Where", value: `${EVENT.venue} · ${EVENT.city}` },
-  { icon: Ticket, label: "Entry", value: "Free · teams of 1–4" },
+const PATH = "/programs/zero-to-launch/hackathon";
+
+/* How the weekend ran: the two days as they happened, and the decks. */
+const RAN = [
+  {
+    label: "Day 1 · 9 AM–5 PM",
+    title: "Saturday, Oct 17",
+    rows: [["9:00 AM", "Welcome ceremony"], ...BREAKOUTS.map((item) => [item.time.split("–")[0] + " " + item.time.slice(-2), item.title])],
+  },
+  {
+    label: "Day 2 · 9 AM–2 PM",
+    title: "Sunday, Oct 18",
+    rows: [["9:00 AM", "Start"], ["1:00 PM", "Submissions closed"], ["1:30 PM", "Awards"]],
+  },
 ];
 
-const FOCUS = [
-  { name: "Design", copy: "Make your site clear, useful, and easy to navigate." },
-  { name: "Craft", copy: "Polish the details. Make it work well on every screen." },
-  { name: "Receipts", copy: "Show the amount you shipped: live pages, working features, and a real URL." },
-];
-
-const BENEFITS = [
-  "Employers and business professionals attending",
-  "Certifications for everyone who submits",
-  "Launch your site and product",
-  "Networking and team building",
-  "On-site sessions on Saturday",
-  "Recorded pitch and content for your project",
+const DECKS = [
+  { href: OPENING_DECK, label: "Opening ceremony" },
+  ...BREAKOUTS.map((item) => ({ href: item.href, label: item.title })),
+  { href: `${PATH}/bots`, label: "All bot templates" },
 ];
 
 const EVENT_SCHEMA = {
@@ -87,148 +91,94 @@ export function generateStaticParams() {
 
 export default async function Page({ params }) {
   const { program: programSlug } = await params;
-  if (!programBySlug(programSlug)?.hasHackathon) notFound();
+  const program = programBySlug(programSlug);
+  if (!program?.hasHackathon) notFound();
+
+  /* The weekend is over, so this page is the record: the podium on the
+     board, then every project that shipped. Teams that registered but
+     did not submit stay on their own team pages. */
+  const teams = (await publicTeams()).filter((team) => team.submitted);
+  const placed = new Map(SHIPPED.podium.map((entry) => [entry.team, entry.place]));
+  const shippedCount = teams.length || SHIPPED.teams;
 
   return (
     <>
       <JsonLd data={EVENT_SCHEMA} />
-      <header className="nav">
-        <Lockup />
-        <nav>
-          <a href="#focus">What to build</a>
-          <a href="#schedule">Weekend</a>
-          <a href="#teams">Teams</a>
-          <a href="#judges">Judges</a>
-        </nav>
-        <a className="btn btn-solid nav-cta" href="/programs/zero-to-launch/hackathon/results">See the results</a>
-      <MobileNav /></header>
+      <SiteHeader current="/programs" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>} />
 
-      <main id="top" className="hk-simple">
-        <section className="hero hk-hero">
-          <p className="eyebrow">Zero to Launch · Held {EVENT.datesShort} · Phoenix</p>
-          <h1 className="hero-h1">
-            Ship AI AZ{" "}<br />
-            <span className="hero-accent">GTM Hackathon</span>
-          </h1>
-          <p className="lede">
-            Teams built and shipped the best marketing sites they could in one weekend. Thank you to everyone who shipped.
+      <main id="top">
+        <EventHero
+          crumb={{ href: `/programs/${program.slug}`, label: program.name }}
+          title="Ship AI AZ"
+          keyPhrase="GTM Hackathon"
+          lede="Teams built and shipped the best marketing sites they could in one weekend. Thank you to everyone who shipped."
+        />
+
+        <EventBoard
+          scene="harbor"
+          alt="Dithered harbor at dusk: many small boats at their moorings with their lights on. Every team is in."
+          label="Results"
+          bar={[`Results · held ${EVENT.datesShort}`, `${SHIPPED.registered} teams · ${SHIPPED.teams} shipped · ${SHIPPED.builders} builders`]}
+          foot={<><span>{EVENT.venue}, Phoenix</span><a href={SHIPPED_RESULTS}>All {SHIPPED.teams} projects and results</a></>}
+        >
+          <BoardPodium podium={SHIPPED.podium} prizes={HACKATHON_PRIZES.map((prize) => `$${prize.cash}`)} />
+        </EventBoard>
+
+        <EventSection id="teams" title={`The ${shippedCount} that shipped`}>
+          {teams.length > 0 ? (
+            <ul className="ev-teams" style={{ marginTop: 0 }}>
+              {teams.map((team) => (
+                <li key={team.slug}>
+                  <a href={`${publicTeamPath(team)}${team.pitch_video_url || team.pitch_video_poster_url ? "#team-pitch" : ""}`}>
+                    {team.project || team.name}
+                    <span>{placed.get(team.slug) || (team.pitch_video_url ? "Pitch →" : "Project →")}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="ev-note"><a href={SHIPPED_RESULTS}>See every project on the results page</a></p>
+          )}
+        </EventSection>
+
+        <EventSection id="schedule" title="How the weekend ran">
+          <EventDays days={RAN} />
+          <p className="ev-links">
+            {DECKS.map((deck) => <a key={deck.href} href={deck.href}>{deck.label} →</a>)}
           </p>
-          <div className="cta-row">
-            <a className="btn btn-solid" href="/programs/zero-to-launch/hackathon/results">See the results</a>
-            <a className="btn btn-ghost" href={OPENING_DECK} target="_blank" rel="noopener noreferrer">Open the opening ceremony deck</a>
-            <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noopener noreferrer">Join Discord</a>
-          </div>
-        </section>
+        </EventSection>
 
-        <section className="hk-facts" aria-label="Event details">
-          {FACTS.map((fact) => (
-            <div key={fact.label} className="hk-fact">
-              <p className="hk-fact-label">
-                <fact.icon size={14} strokeWidth={1.75} aria-hidden="true" />
-                {fact.label}
-              </p>
-              <p className="hk-fact-value">{fact.value}</p>
+        <div className="ev-legacy">
+          <HackathonJudges />
+          <HackathonRoster />
+          <HackathonSponsors compact />
+        </div>
+
+        <div className="ev-end" />
+
+        <section className="band" aria-labelledby="hk-final-title">
+          <Scene scene="stars" mode="ascii" band className="band-bg" />
+          <div className="final">
+            <h2 id="hk-final-title">Every team left <span className="key">with a live site.</span></h2>
+            <p className="lede">The hackathon is over. See who shipped what, and join Discord to hear about the next one.</p>
+            <div className="cta-row">
+              <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>
+              <a className="btn btn-ghost" href={FW.path}>{FW.name}, {FW.datesShort.replace(", 2027", "")}</a>
             </div>
-          ))}
-        </section>
-
-        <section className="section" id="decks">
-          <h2>Build your AI organization</h2>
-          <div className="hk-live-resources">
-            <a href={OPENING_DECK} target="_blank" rel="noopener noreferrer">
-              <span>START HERE · SATURDAY, 9:00 AM ↗</span>
-              <h3>Opening ceremony</h3>
-              <p>Meet the AI organization you’ll build. Get the agenda, team setup, judging, prizes, and Sunday pitch plan.</p>
-            </a>
-            {BREAKOUTS.map(item => <a key={item.number} href={item.href} target="_blank" rel="noopener noreferrer">
-              <span>BREAKOUT {item.number} · {item.time} · 45 MIN ↗</span>
-              <h3>{item.title}</h3>
-              <p>{item.outcome}</p>
-            </a>)}
+            <p className="pg-final-link">
+              <a href={`${PATH}/submit`}>Submission details</a>
+              {" · "}<a href={`${PATH}/pitch`}>Five-minute pitch reference</a>
+              {" · "}<a href={`${PATH}/sponsor`}>Sponsor the event</a>
+            </p>
           </div>
-          <p className="hk-note"><a href="/programs/zero-to-launch/hackathon/bots" target="_blank" rel="noopener noreferrer">Open all bot templates ↗</a> · Copy one setup prompt in each breakout and let your assistant guide you.</p>
-        </section>
-
-        <section className="section" id="focus">
-          <h2>Design, craft, and receipts</h2>
-          <div className="hk-focus-grid">
-            {FOCUS.map((item) => (
-              <div key={item.name}>
-                <h3>{item.name}</h3>
-                <p>{item.copy}</p>
-              </div>
-            ))}
+          <div className="final-stage">
+            <Scene scene="harbor" band alt="Dithered harbor at dusk: many small boats at their moorings with their lights on. The community." />
+            <p>Harbor at dusk · Phoenix, Arizona</p>
           </div>
-        </section>
-
-        <section className="section" id="prizes">
-          <h2>Prizes for what you ship</h2>
-          <div className="hk-focus-grid">
-            {HACKATHON_PRIZES.map(prize => <div key={prize.name}>
-              <h3>{prize.name} · ${prize.cash}</h3>
-              {prize.extra && <p>{prize.extra}.</p>}
-            </div>)}
-          </div>
-        </section>
-
-        <section className="section" id="benefits">
-          <h2>What’s in it for you</h2>
-          <ul className="hk-benefit-list">
-            {BENEFITS.map((benefit) => <li key={benefit}>{benefit}</li>)}
-          </ul>
-        </section>
-
-        <section className="section" id="schedule">
-          <h2>The weekend</h2>
-          <div className="hk-weekend-grid">
-            <div>
-              <h3>Saturday, Oct 17</h3>
-              <p className="hk-hours">9 AM–5 PM</p>
-              <p>Four guided breakouts with time to work between them. Lunch at noon. Wrap up at 5 PM.</p>
-            </div>
-            <div>
-              <h3>Sunday, Oct 18</h3>
-              <p className="hk-hours">9 AM–2 PM</p>
-              <p>Start at 9 AM. Submit by 1:00 PM. Awards are planned for 1:30 PM.</p>
-            </div>
-          </div>
-          <ol className="hk-morning-agenda" aria-label="Saturday agenda">
-            {SATURDAY_AGENDA.map(item => <li key={item.time}><time>{item.time}</time><span>{item.title}{item.duration ? ` · ${item.duration}` : ''}</span></li>)}
-          </ol>
-          <p className="hk-note">Arizona time · {EVENT.address}. Please park in the surface lot.</p>
-        </section>
-
-        <HackathonTeams />
-        <HackathonRoster />
-        <HackathonJudges />
-        <HackathonSponsors compact />
-
-        <section className="section hk-close">
-          <h2>Every team left with a live site.</h2>
-          <p className="section-lede">
-            The hackathon is over. See who shipped what, and join Discord to hear about the next one.
-          </p>
-          <div className="cta-row">
-            <a className="btn btn-solid" href="/programs/zero-to-launch/hackathon/results">See the results</a>
-            <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Join Discord</a>
-          </div>
-          <p className="hk-note">
-            <a href="/programs/zero-to-launch/hackathon/submit">Submission details</a>
-            {" · "}<a href="/programs/zero-to-launch/hackathon/pitch">Five-minute pitch reference</a>
-            {" · "}<a href="/programs/zero-to-launch/hackathon/sponsor">Sponsor the event</a>
-          </p>
         </section>
       </main>
 
-      <footer className="footer">
-        <Lockup compact />
-        <nav>
-          <a href="/">Home</a>
-          <a href="/programs/zero-to-launch">Workshops</a>
-          <a href="/programs/zero-to-launch/hackathon/results">Results</a>
-        </nav>
-        <p className="fine">Sponsored by Workuity · © 2026 Ship AI</p>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

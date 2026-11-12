@@ -16,6 +16,7 @@ import "./workshops/catalogue.css";
 import "../components/departure-board.css";
 import "./home.css";
 import { DEFAULT_OG } from "../lib/og";
+import { SHIPPED, SHIPPED_RESULTS } from "../lib/shipped";
 
 export const metadata = {
   title: "Ship AI — Hands-on AI Workshops in Phoenix",
@@ -37,19 +38,7 @@ const MEETUP = "https://www.meetup.com/shipai/";
 const LUMA = "https://luma.com/shipai";
 const GITHUB = "https://github.com/Ship-AI-Club";
 
-const RESULTS = "/programs/zero-to-launch/hackathon/results";
-
-/* The October 2026 hackathon is finished, so its outcome is a fixed
-   record: 17 teams launched and the judges placed these three. The
-   full list lives on the results page. */
-const SHIPPED = {
-  teams: 17,
-  podium: [
-    { place: "First place", project: "Dropdone", line: "A desktop app that learns how you clean a messy export, then repeats it every week." },
-    { place: "Second place", project: "Agent Task Lock", line: "A Mac app that shows what your AI agents are doing, step by step." },
-    { place: "Third place", project: "Orbis", line: "Turns old photos into a 3D world you can walk through and share." },
-  ],
-};
+const RESULTS = SHIPPED_RESULTS;
 
 const CARD_SCENES = ["workbench", "fleet", "voyage"];
 

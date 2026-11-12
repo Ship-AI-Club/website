@@ -1,0 +1,511 @@
+/* The event page: the weekend board. Shared by Founder Weekend and the
+   Zero to Launch hackathon. Board basics come from departure-board.css,
+   the proof ledger from app/home.css. */
+
+.ev-crumb {
+  margin-bottom: 28px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+}
+
+.ev-crumb a {
+  color: var(--dim);
+}
+
+.ev-crumb a:hover {
+  color: var(--accent);
+}
+
+.ev-name,
+.ev-label {
+  display: block;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: var(--dim);
+}
+
+.ev-name {
+  margin-bottom: 14px;
+  font-size: 15px;
+}
+
+.ev-hero .hero-h1 {
+  max-width: none;
+}
+
+.ev-hero .hero-h1 .key {
+  display: block;
+}
+
+.ev-hero .hero-lede {
+  margin-bottom: 0;
+}
+
+/* the board */
+.ev-board-wrap {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 56px var(--gutter) 0;
+}
+
+.ev-board-wrap .stage {
+  margin-top: 0;
+}
+
+.ev-stage {
+  height: 260px;
+}
+
+.ev-board {
+  margin-top: -84px;
+}
+
+.ev-podium {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+}
+
+.ev-podium li + li {
+  border-left: 1px solid var(--hairline);
+}
+
+.ev-podium a {
+  display: block;
+  height: 100%;
+  padding: 24px 26px;
+}
+
+.ev-podium b {
+  display: block;
+  margin: 8px 0 6px;
+  font-family: var(--sap-font-display);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: var(--sap-track-display);
+}
+
+.ev-line {
+  display: block;
+  color: var(--dim);
+  font-size: 15px;
+}
+
+.ev-go {
+  display: block;
+  margin-top: 12px;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.ev-go i {
+  display: inline-block;
+  font-style: normal;
+  transition: transform var(--sap-dur-lock) var(--sap-ease);
+}
+
+.ev-podium a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+/* sections */
+.ev-section {
+  max-width: calc(1040px + var(--gutter) * 2);
+  border-top: 0;
+  padding-bottom: 0;
+}
+
+.ev-section .section-head {
+  margin-bottom: 40px;
+}
+
+.ev-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--ev-cols), minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+  list-style: none;
+}
+
+.ev-grid li {
+  padding: 24px 24px 24px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.ev-grid li:not(:nth-child(3n + 1)) {
+  padding-left: 24px;
+  border-left: 1px solid var(--hairline);
+}
+
+.ev-grid h3,
+.ev-rows h3,
+.ev-days h3,
+.ev-people h3,
+.ev-two h3 {
+  font-family: var(--sap-font-display);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: var(--sap-track-display);
+}
+
+.ev-grid h3 {
+  margin-bottom: 8px;
+}
+
+.ev-grid p,
+.ev-rows p,
+.ev-two p,
+.ev-two li {
+  color: var(--dim);
+  font-size: 15.5px;
+}
+
+.ev-rows {
+  border-top: 1px solid var(--ink);
+  list-style: none;
+}
+
+.ev-rows li {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.ev-days {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+}
+
+.ev-days article {
+  padding: 24px 28px 0 0;
+}
+
+.ev-days article + article {
+  padding-left: 28px;
+  border-left: 1px solid var(--hairline);
+}
+
+.ev-days h3 {
+  margin: 6px 0 14px;
+  font-size: 24px;
+}
+
+.ev-days dl > div {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--hairline);
+  font-size: 15.5px;
+}
+
+.ev-days dt {
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  line-height: 1.9;
+  color: var(--dim);
+}
+
+.ev-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 22px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+}
+
+.ev-links a,
+.ev-note a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ev-note {
+  margin-top: 16px;
+  color: var(--dim);
+  font-size: 15px;
+  text-align: center;
+}
+
+/* people */
+.ev-people {
+  display: grid;
+  grid-template-columns: repeat(var(--ev-cols), minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+  list-style: none;
+}
+
+.ev-people li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 20px 20px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.ev-people li + li {
+  padding-left: 20px;
+  border-left: 1px solid var(--hairline);
+}
+
+.ev-people img,
+.ev-initials {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border: 1px solid var(--hairline);
+}
+
+.ev-initials {
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  font-family: var(--sap-font-mono);
+  font-size: 15px;
+  color: var(--dim);
+}
+
+.ev-people h3 {
+  font-size: 21px;
+}
+
+.ev-people p {
+  color: var(--dim);
+  font-size: 14.5px;
+}
+
+/* two raised panels: the asks, and the sponsor tiers */
+.ev-two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.ev-people + .ev-two {
+  margin-top: 28px;
+}
+
+.ev-two > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 26px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+}
+
+.ev-two h3 {
+  margin: 8px 0;
+  font-size: 24px;
+}
+
+.ev-two ul {
+  margin: 12px 0 0;
+  padding-left: 18px;
+}
+
+.ev-two .btn,
+.ev-two .link {
+  margin-top: auto;
+}
+
+.ev-two p + .link,
+.ev-two p + .btn,
+.ev-two ul + .btn {
+  margin-top: 18px;
+}
+
+.ev-price {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--sap-font-display);
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: var(--sap-track-display);
+  color: var(--ink);
+}
+
+/* the live roster, once teams exist */
+.ev-counts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 56px;
+  text-align: center;
+}
+
+.ev-counts dd {
+  font-family: var(--sap-font-display);
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: var(--sap-track-display);
+}
+
+.ev-teams {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 32px;
+  margin-top: 36px;
+  border-top: 1px solid var(--ink);
+  list-style: none;
+}
+
+.ev-teams li,
+.ev-teams a {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ev-teams li {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.ev-teams a {
+  flex: 1;
+}
+
+.ev-teams span {
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  line-height: 1.9;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.ev-act {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.ev-ledger .home-figure .btn {
+  margin-top: 22px;
+}
+
+.ev-faq {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.ev-faq summary {
+  grid-template-columns: minmax(0, 1fr) 28px;
+}
+
+.ev-faq .faq-a {
+  padding-left: 0;
+}
+
+/* older data-bound blocks (judges, builders, sponsors) set inside the
+   new page: centre their headings and drop their rules */
+.ev-legacy .section {
+  max-width: calc(1040px + var(--gutter) * 2);
+  border-top: 0;
+  padding-bottom: 0;
+}
+
+.ev-legacy .section > h2 {
+  max-width: none;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.ev-end {
+  height: var(--sap-section-y);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ev-podium a:hover b,
+  .ev-teams a:hover {
+    color: var(--accent);
+  }
+
+  .ev-podium a:hover .ev-go i {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ev-go i {
+    transition: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .ev-board-wrap {
+    padding-top: 40px;
+  }
+
+  .ev-stage {
+    height: 180px;
+  }
+
+  .ev-board {
+    margin-top: -48px;
+  }
+
+  .ev-board .window-bar {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .ev-podium,
+  .ev-grid,
+  .ev-days,
+  .ev-people,
+  .ev-two,
+  .ev-teams {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ev-podium li + li {
+    border-left: 0;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .ev-podium a {
+    padding: 18px 20px;
+  }
+
+  .ev-podium b {
+    font-size: 24px;
+  }
+
+  .ev-grid li,
+  .ev-grid li:not(:nth-child(3n + 1)) {
+    padding: 20px 0;
+    border-left: 0;
+  }
+
+  .ev-rows li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .ev-days article,
+  .ev-days article + article {
+    padding: 24px 0 0;
+    border-left: 0;
+  }
+
+  .ev-people li,
+  .ev-people li + li {
+    padding: 16px 0;
+    border-left: 0;
+  }
+
+  .ev-two .btn {
+    width: 100%;
+  }
+}

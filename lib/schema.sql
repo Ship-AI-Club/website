@@ -484,6 +484,9 @@ create table if not exists waitlist (
 create unique index if not exists waitlist_program_email_uniq on waitlist (program, email);
 create index if not exists waitlist_program_idx on waitlist (program, created_at desc);
 create index if not exists waitlist_ip_idx on waitlist (ip, created_at desc);
+/* Set when the "your workshop has a date" email went to this address,
+   so the announcement can be sent again without emailing anyone twice. */
+alter table waitlist add column if not exists notified_at timestamptz;
 
 /* ------------------------------------------------------------------
    Catching up an existing database.

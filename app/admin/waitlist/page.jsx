@@ -7,6 +7,8 @@ import { programBySlug } from "../../../lib/programs";
 import { AI_ORGANIZATION_EVENT } from "../../../lib/ai-organization-event";
 import { workshopBySlug } from "../../../lib/workshops";
 import { waitlistCounts, waitlistEntries } from "../../../lib/store";
+import { dateNoticeCounts, ensureWaitlistNotified } from "../../../lib/waitlist-notify";
+import AnnounceForm from "./announce-form";
 
 export const metadata = {
   title: "Waitlist — Ship AI",
@@ -31,6 +33,16 @@ export default async function Page() {
   void admin;
 
   const [counts, entries] = await Promise.all([waitlistCounts(), waitlistEntries()]);
+
+  /* Fail soft: the list is still worth reading if the notice column
+     can't be added or counted, it just can't offer the send. */
+  let notices = new Map();
+  try {
+    await ensureWaitlistNotified();
+    notices = await dateNoticeCounts();
+  } catch (error) {
+    console.error("waitlist: could not read date notices", error?.message || error);
+  }
 
   /* One query, grouped here — a waitlist is small enough to read in a
      single pass, and this keeps the per-program tables in the same
@@ -91,6 +103,9 @@ export default async function Page() {
               <h2>{programName(slug)}</h2>
               <span className="ac-pill is-live">{rows.length}</span>
             </div>
+            {workshopBySlug(slug) && notices.get(slug)?.pending > 0 && (
+              <AnnounceForm slug={slug} name={programName(slug)} pending={notices.get(slug).pending} notified={notices.get(slug).notified} />
+            )}
             <div className="ac-table-wrap">
               <table className="ac-table">
                 <thead>

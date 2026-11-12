@@ -55,7 +55,7 @@ export default function Workshops() {
           id="scheduled-events"
           scene="fleet"
           label="On the calendar"
-          status="Registration open"
+          status="Waitlist open"
           date={{ big: "Feb 19–20", small: "2027 · Phoenix" }}
           title={ORG.name}
           meta={["Two days", "9 AM–5 PM", "50 seats"].join(" · ")}

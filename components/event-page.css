@@ -421,6 +421,17 @@
   text-align: center;
 }
 
+.ev-legacy .hk-roster-head {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.ev-legacy .hk-roster-heading {
+  max-width: none;
+  margin: 0 auto;
+  font-size: var(--sap-fs-h2);
+}
+
 .ev-end {
   height: var(--sap-section-y);
 }

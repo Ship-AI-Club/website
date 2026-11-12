@@ -21,7 +21,6 @@ const MAX_PER_IP_HOUR = 12;
 
 /* Programs awaiting dates and events awaiting registration take signups —
    otherwise the endpoint is an open write keyed by any string. */
-const WORKSHOP_SLUGS = UPCOMING_WORKSHOPS.map((w) => w.slug);
 const OPEN_SLUGS = [...PROGRAMS.filter((p) => !p.startISO).map((p) => p.slug), ...UPCOMING_WORKSHOPS.map((w) => w.slug), AI_ORGANIZATION_EVENT.slug];
 
 function clientIp(request) {
@@ -56,10 +55,10 @@ export async function POST(request) {
     return fail("That program isn't taking waitlist signups.");
   }
 
-  /* "Get notified" on a workshop card asks for an email and nothing
-     else: the person wants one message when a date is set. The longer
-     waitlist form still requires a name and a goal. */
-  const notifyOnly = body.notify === true && WORKSHOP_SLUGS.includes(program);
+  /* "Get notified" on a workshop or an undated program asks for an
+     email and nothing else: the person wants one message when a date is
+     set. The longer waitlist form still requires a name and a goal. */
+  const notifyOnly = body.notify === true;
   const name = String(body.name ?? "").trim();
   const company = String(body.company ?? "").trim();
   const email = normalizeEmail(body.email);

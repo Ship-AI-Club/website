@@ -13,6 +13,7 @@ import WorkshopCard from "../components/workshop-card";
 import WorkshopNotify from "../components/workshop-notify";
 import { EVENT as HACKATHON } from "../lib/hackathon";
 import "./workshops/catalogue.css";
+import "../components/departure-board.css";
 import "./home.css";
 import { DEFAULT_OG } from "../lib/og";
 
@@ -130,36 +131,36 @@ export default async function Page() {
           </div>
           <p className="home-facts">Free events&nbsp;· Free programs&nbsp;· Paid workshops from ${lowestPrice.toLocaleString("en-US")}&nbsp;· In person, in Phoenix</p>
 
-          <div className="stage home-stage">
+          <div className="stage dboard-stage">
             <Scene scene="slipway" alt="Dithered night scene: a hull on the slipway with scaffolding around it and two builders at work. We build together." />
           </div>
-          <aside id="events" className="window home-board" aria-label="Next event">
+          <aside id="events" className="window dboard" aria-label="Next event">
             <div className="window-bar"><b>Next event</b><span>{fwOpen ? "Registration open" : "On Meetup"}</span></div>
             {fwOpen ? (
-              <div className="home-board-row">
-                <p className="home-board-date"><b>{FW.datesShort.replace(/, \d{4}$/, "")}</b><span>{new Date(FW.startISO).getFullYear()}&nbsp;· {FW.venue}</span></p>
-                <div className="home-board-main">
+              <div className="dboard-row">
+                <p className="dboard-date"><b>{FW.datesShort.replace(/, \d{4}$/, "")}</b><span>{new Date(FW.startISO).getFullYear()}&nbsp;· {FW.venue}</span></p>
+                <div className="dboard-main">
                   <h2>{FW.name}: build an AI company by Sunday</h2>
                   <p className="meta">{[FW.cost, FW.teams, "No application"].join("\u00a0· ")}</p>
                 </div>
-                <p className="home-board-count"><b>{fwDays}</b><span>{fwDays === 1 ? "day to kickoff" : "days to kickoff"}</span></p>
-                <div className="home-board-act">
+                <p className="dboard-count"><b>{fwDays}</b><span>{fwDays === 1 ? "day to kickoff" : "days to kickoff"}</span></p>
+                <div className="dboard-act">
                   <a className="btn btn-solid" href={fwRegister}>Register free</a>
                   <a className="link" href={FW.path}>See the weekend</a>
                 </div>
               </div>
             ) : (
-              <div className="home-board-row home-board-row-quiet">
-                <div className="home-board-main">
+              <div className="dboard-row dboard-row-quiet">
+                <div className="dboard-main">
                   <h2>{nextEvent ? nextEvent.title : "New sessions post every few weeks"}</h2>
                   <p className="meta">{nextEvent ? nextEvent.place : "Free and open to all, in Phoenix"}</p>
                 </div>
-                <div className="home-board-act">
+                <div className="dboard-act">
                   <a className="btn btn-solid" href={nextEvent ? nextEvent.url : MEETUP} target="_blank" rel="noreferrer">RSVP on Meetup</a>
                 </div>
               </div>
             )}
-            <p className="home-board-foot">
+            <p className="dboard-foot">
               {fwOpen && nextEvent ? (
                 <span>Also coming up: <a href={nextEvent.url} target="_blank" rel="noreferrer">{nextEvent.title}</a></span>
               ) : (

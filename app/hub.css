@@ -1,0 +1,131 @@
+/* Catalog hubs (/workshops and /programs): one template. Shared pieces
+   live in components/departure-board.css and components/contents-list.css. */
+
+.hub-board {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 56px var(--gutter) 0;
+}
+
+.hub-board .stage {
+  margin-top: 0;
+}
+
+.hub-list {
+  border-top: 0;
+}
+
+.hub-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.hub-chips button {
+  min-height: 44px;
+  padding: 0 16px;
+  font: 600 14.5px/1 var(--sap-font-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  cursor: pointer;
+  transition: background-color var(--sap-dur-fast) ease, color var(--sap-dur-fast) ease;
+}
+
+.hub-chips button span {
+  margin-left: 6px;
+  font-family: var(--sap-font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--dim);
+}
+
+.hub-chips button[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+
+.hub-chips button[aria-pressed="true"] span {
+  color: inherit;
+  opacity: 0.75;
+}
+
+.hub-chips button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.hub-three {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 980px;
+  margin: 0 auto;
+  border-top: 1px solid var(--ink);
+  list-style: none;
+}
+
+.hub-three li {
+  padding: 28px 28px 0 0;
+}
+
+.hub-three li + li {
+  padding-left: 28px;
+  border-left: 1px solid var(--hairline);
+}
+
+.hub-three h3 {
+  margin-bottom: 8px;
+  font-family: var(--sap-font-display);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: var(--sap-track-display);
+}
+
+.hub-three p {
+  color: var(--dim);
+  font-size: 15.5px;
+}
+
+.hub-note {
+  margin-top: 48px;
+  text-align: center;
+  color: var(--dim);
+}
+
+/* the program assessment keeps its own stylesheet; this only seats it
+   in the shared page width */
+.hub-assess.programs-page {
+  max-width: 1044px;
+  padding: 0 var(--gutter) var(--sap-section-y);
+}
+
+.hub-assess .program-assessment {
+  margin: 0;
+}
+
+@media (max-width: 860px) {
+  .hub-board {
+    padding-top: 40px;
+  }
+
+  .hub-three {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hub-three li,
+  .hub-three li + li {
+    padding: 22px 0;
+    border-left: 0;
+  }
+
+  .hub-three li + li {
+    border-top: 1px solid var(--hairline);
+  }
+
+  .hub-pair .btn {
+    flex: 1 1 100%;
+  }
+}

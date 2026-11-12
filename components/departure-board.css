@@ -1,0 +1,161 @@
+/* The departure board: the next dated thing, docked to a scene's lower
+   edge. Shared by the homepage and the catalog hubs. */
+
+.dboard-stage {
+  height: 440px;
+}
+
+.dboard {
+  position: relative;
+  z-index: 2;
+  margin: -96px 40px 0;
+}
+
+.dboard-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 36px;
+  padding: 28px 32px;
+}
+
+.dboard-row-quiet {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.dboard-date b,
+.dboard-count b {
+  display: block;
+  font-family: var(--sap-font-display);
+  font-weight: 400;
+  letter-spacing: var(--sap-track-display);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.dboard-date b {
+  font-size: 34px;
+}
+
+.dboard-count b {
+  font-size: 44px;
+}
+
+.dboard-date span,
+.dboard-count span,
+.dboard .meta {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  line-height: 1.5;
+  color: var(--dim);
+}
+
+.dboard-main h2 {
+  font-size: 26px;
+  line-height: 1.15;
+}
+
+.dboard-count {
+  padding: 0 32px;
+  border-left: 1px solid var(--hairline);
+  border-right: 1px solid var(--hairline);
+  text-align: center;
+}
+
+.dboard-act {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  font-size: 15px;
+}
+
+.dboard-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 28px;
+  padding: 12px 32px;
+  border-top: 1px solid var(--hairline);
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  color: var(--dim);
+}
+
+.dboard-foot a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1040px) {
+  .dboard-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 24px 28px;
+  }
+
+  .dboard-count {
+    display: none;
+  }
+}
+
+
+@media (max-width: 860px) {
+  .dboard-stage {
+    height: 300px;
+  }
+
+  .dboard {
+    margin: -48px 0 0;
+  }
+
+  .dboard-row,
+  .dboard-row-quiet {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding: 22px 20px;
+  }
+
+  .dboard-count {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 16px 0;
+    border: 0;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    text-align: left;
+  }
+
+  .dboard-count span {
+    margin-top: 0;
+  }
+
+  .dboard-act {
+    justify-items: stretch;
+    text-align: center;
+  }
+
+  .dboard-foot {
+    padding: 12px 20px;
+  }
+}
+
+.dboard-stage-slim {
+  height: 220px;
+}
+
+.dboard-slim {
+  margin-top: -64px;
+}
+
+@media (max-width: 860px) {
+  .dboard-stage-slim {
+    height: 160px;
+  }
+
+  .dboard-slim {
+    margin-top: -40px;
+  }
+}

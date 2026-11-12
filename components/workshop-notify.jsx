@@ -1,13 +1,14 @@
 "use client";
 
 import { useId, useState } from "react";
+import "./workshop-notify.css";
 
-/* A workshop with no date can't be booked, so the card offers the one
-   honest thing: an email when a date is set. Email only; it posts to
-   the same waitlist the workshop page uses, keyed by workshop slug. */
-export default function WorkshopNotify({ slug, name }) {
+/* A workshop or program with no date can't be booked, so it offers the
+   one honest thing: an email when a date is set. Email only; it posts
+   to the same waitlist the detail pages use, keyed by slug. */
+export default function WorkshopNotify({ slug, name, button = "Get notified", prompt = "Email me when a date is set", startOpen = false }) {
   const id = useId();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(startOpen);
   const [email, setEmail] = useState("");
   const [trap, setTrap] = useState("");
   const [status, setStatus] = useState("idle"); // idle | sending | done
@@ -45,7 +46,7 @@ export default function WorkshopNotify({ slug, name }) {
     return (
       <div className="wn">
         <button type="button" className="btn btn-ghost btn-sm wn-open" onClick={() => setOpen(true)} aria-label={`Get notified when ${name} has a date`}>
-          Get notified
+          {button}
         </button>
       </div>
     );
@@ -53,9 +54,9 @@ export default function WorkshopNotify({ slug, name }) {
 
   return (
     <form className="wn wn-form" onSubmit={send} noValidate>
-      <label htmlFor={id}>Email me when a date is set</label>
+      <label htmlFor={id}>{prompt}</label>
       <div className="wn-row">
-        <input id={id} type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} disabled={status === "sending"} aria-describedby={error ? `${id}-error` : undefined} aria-invalid={error ? true : undefined} autoFocus required />
+        <input id={id} type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} disabled={status === "sending"} aria-describedby={error ? `${id}-error` : undefined} aria-invalid={error ? true : undefined} autoFocus={!startOpen} required />
         <button type="submit" className="btn btn-solid btn-sm" disabled={status === "sending"}>{status === "sending" ? "Saving" : "Notify me"}</button>
       </div>
       <input className="wn-trap" type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" value={trap} onChange={(e) => setTrap(e.target.value)} />

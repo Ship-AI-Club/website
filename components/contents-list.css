@@ -1,0 +1,181 @@
+/* Contents-page catalogue, shared by /workshops and /programs. */
+
+.toc {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.toc-group + .toc-group {
+  margin-top: 56px;
+}
+
+.toc-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--sap-font-mono);
+  color: var(--dim);
+}
+
+.toc-head h3 {
+  font-family: var(--sap-font-mono);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.toc-head span {
+  font-size: var(--sap-fs-label);
+}
+
+.toc-row {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.toc-row summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 28px;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.toc-row summary::-webkit-details-marker {
+  display: none;
+}
+
+.toc-row summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.toc-row h4 {
+  font-family: var(--sap-font-display);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: var(--sap-track-display);
+  text-wrap: balance;
+}
+
+.toc-row summary p {
+  margin-top: 5px;
+  color: var(--dim);
+  font-size: 15.5px;
+}
+
+.toc-row .toc-figure {
+  margin-top: 0;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.toc-figure b {
+  display: block;
+  font-family: var(--sap-font-display);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: var(--sap-track-display);
+  color: var(--ink);
+}
+
+.toc-figure span {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+}
+
+.toc-mark {
+  font-family: var(--sap-font-display);
+  font-size: 24px;
+  line-height: 1;
+  text-align: center;
+  transition: transform var(--sap-dur-lock) var(--sap-ease);
+}
+
+.toc-row[open] .toc-mark {
+  transform: rotate(45deg);
+}
+
+.toc-open {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+  align-items: end;
+  gap: 40px;
+  padding: 4px 0 28px;
+}
+
+.toc-open dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 32px;
+  margin-bottom: 16px;
+}
+
+.toc-open dt {
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  color: var(--dim);
+}
+
+.toc-open dd {
+  font-size: 15px;
+}
+
+.toc-action .wn {
+  margin-top: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .toc-row summary:hover h4 {
+    color: var(--accent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toc-mark {
+    transition: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .toc-row summary {
+    grid-template-columns: minmax(0, 1fr) 24px;
+    gap: 10px 14px;
+  }
+
+  .toc-row .toc-figure {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .toc-figure span {
+    margin-top: 0;
+  }
+
+  .toc-mark {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: start;
+    padding-top: 2px;
+  }
+
+  .toc-row h4,
+  .toc-figure b {
+    font-size: 21px;
+  }
+
+  .toc-open {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}

@@ -1,0 +1,63 @@
+/* The email-only "tell me the date" form. Used on the homepage cards
+   and inside the hub contents rows. */
+
+.wn {
+  position: relative;
+  z-index: 3;
+  margin-top: 16px;
+}
+
+.wn-open {
+  width: 100%;
+}
+
+.wn-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.wn-row {
+  display: flex;
+  gap: 8px;
+}
+
+.wn-row input {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--sap-btn-h-sm);
+  padding: 0 12px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--sap-input-border);
+  border-radius: 0;
+}
+
+.wn-row input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.wn-trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.wn-error {
+  margin-top: 8px;
+  color: var(--sap-danger);
+  font-size: 14px;
+}
+
+.wn-done {
+  padding: 12px 14px;
+  border: 1px solid var(--accent);
+  color: var(--ink);
+  font-size: 14.5px;
+}

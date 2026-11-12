@@ -1,12 +1,17 @@
-import MobileNav from "../../components/mobile-nav";
-import { ArrowRight, BookOpen, MapPin } from "lucide-react";
+import SiteHeader from "../../components/site-header";
+import SiteFooter from "../../components/site-footer";
+import { siDiscord } from "simple-icons";
 import ProgramAssessment from "../../components/program-assessment";
-import ProgramExplorer from "../../components/program-explorer";
+import DepartureBoard from "../../components/departure-board";
+import { ContentsGroup, ContentsRow } from "../../components/contents-list";
+import WorkshopNotify from "../../components/workshop-notify";
+import { PROGRAM_DETAILS } from "../../components/program-details";
 import "./programs.css";
+import "../hub.css";
 import { JsonLd } from "../../components/article";
-import { PROGRAMS, programVenueNames } from "../../lib/programs";
+import { PROGRAMS } from "../../lib/programs";
 import { DISCORD } from "../../lib/hackathon";
-import { Lockup } from "../../components/seal";
+import { FOUNDER_WEEKEND as FW } from "../../lib/founder-weekend";
 import { ogImage } from "../../lib/og";
 
 const SITE = "https://www.shipai.club";
@@ -45,68 +50,77 @@ export const metadata = {
   },
 };
 
+/* The Founder Weekend countdown is rendered on the server. */
+export const revalidate = 3600;
+
+const sentence = (text) => text.replace(/^For /, "").replace(/^./, (c) => c.toUpperCase());
+
 export default function Page() {
+  const now = Date.now();
+  const fwOpen = now < new Date(FW.endISO).getTime();
+  const fwDays = Math.max(0, Math.ceil((new Date(FW.startISO).getTime() - now) / 864e5));
+  const firstUndated = PROGRAMS.find((program) => program.status !== "past" && !program.startISO)?.slug;
+
   return (
     <>
       <JsonLd data={LIST_SCHEMA} />
-      <header className="nav">
-        <Lockup />
-        <nav>
-          <a href="/workshops">Workshops</a>
-          <a href="/programs" aria-current="page">Programs</a>
-          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
-        </nav>
-        <div className="nav-ctas">
-          <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>
-        </div>
-      <MobileNav /></header>
+      <SiteHeader current="/programs" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={18} height={18} fill="currentColor" aria-hidden="true" focusable="false"><path d={siDiscord.path} /></svg>Join the Discord</a>} />
 
-      <main className="programs-page">
-        <section className="programs-hero" aria-labelledby="programs-title">
-          <div className="programs-intro">
-            <p className="programs-eyebrow">Ship AI / Programs</p>
-            <h1 id="programs-title">From first prompt<br />to <span>real progress.</span></h1>
-            <p className="programs-lede">Learn in public. Ship something real. Hands-on programs that help you use AI, build a product, and take it further.</p>
-            <a className="programs-primary" href="#explore-programs">Find your program <ArrowRight size={18} aria-hidden="true" /></a>
-            <div className="programs-hero-meta"><span><MapPin size={15} aria-hidden="true" /> Built together in Phoenix</span><span><BookOpen size={15} aria-hidden="true" /> Published session materials</span></div>
-          </div>
-          <div className="programs-path">
-            <p className="programs-eyebrow">A path from learning to shipping</p>
-            <ol>
-              {PROGRAMS.map((program, i) => <li key={program.slug}>
-                <a href={`/programs/${program.slug}`}>
-                  <span className="programs-path-number">0{i + 1}</span>
-                  <div><span className="programs-path-stage">{["Learn the tools", "Build the product", "Take it to market", "Keep people coming back"][i]}</span><strong>{program.name}</strong></div>
-                  <ArrowRight size={18} aria-hidden="true" />
-                </a>
-              </li>)}
-            </ol>
-            <p className="programs-path-note">Start where you are. You don’t need to take every program.</p>
+      <main>
+        <section className="hero" aria-labelledby="programs-title">
+          <h1 className="hero-h1" id="programs-title">From first prompt <span className="key">to real progress.</span></h1>
+          <p className="hero-lede">Learn in public. Ship something real. Hands-on programs that help you use AI, build a product, and take it further.</p>
+          <div className="cta-row hub-pair"><a className="btn btn-solid" href="#explore-programs">Join the next cohort</a><a className="btn btn-ghost" href="#program-assessment">Take the assessment</a></div>
+        </section>
+
+        {fwOpen && (
+          <DepartureBoard
+            scene="launch"
+            label="Where the programs lead"
+            status="Registration open"
+            date={{ big: FW.datesShort.replace(/, \d{4}$/, ""), small: new Date(FW.startISO).getFullYear() + " · " + FW.venue }}
+            title={FW.name + ": build an AI company by Sunday"}
+            meta={[FW.cost, FW.teams, "No application"].join(" · ")}
+            figure={{ big: fwDays, small: fwDays === 1 ? "day to kickoff" : "days to kickoff" }}
+            action={{ href: FW.path + "/register", label: "Register free" }}
+          />
+        )}
+
+        <section className="section hub-list" id="explore-programs" aria-label="Programs">
+          <div className="toc">
+            <ContentsGroup title="The four programs, in order" aside={"Free · In person in Phoenix"}>
+              {PROGRAMS.map((program) => {
+                const detail = PROGRAM_DETAILS[program.slug];
+                const past = program.status === "past";
+                return (
+                  <ContentsRow
+                    key={program.slug}
+                    title={program.name}
+                    line={detail.description}
+                    figure={program.sessions.length + " sessions"}
+                    sub={past ? "Ran " + program.datesLabel : "Dates to be announced"}
+                    facts={[["For", sentence(detail.audience)], ["You leave with", detail.outcome], ["Cost", "Free"]]}
+                    link={{ href: "/programs/" + program.slug, label: "See the full program" }}
+                    open={program.slug === firstUndated}
+                  >
+                    {past
+                      ? <a className="btn btn-solid btn-sm" href={"/programs/" + program.slug}>Open the free materials</a>
+                      : <WorkshopNotify slug={program.slug} name={program.name} prompt="Email me when the next cohort has dates" startOpen />}
+                  </ContentsRow>
+                );
+              })}
+            </ContentsGroup>
           </div>
         </section>
 
-        <ProgramAssessment programs={PROGRAMS.map(program => ({
-          slug: program.slug, name: program.name, sessions: program.sessions.length, datesLabel: program.datesLabel,
-        }))} />
-
-        <ProgramExplorer programs={PROGRAMS.map(program => ({
-          slug: program.slug, name: program.name, status: program.status,
-          datesLabel: program.datesLabel,
-          sessions: program.sessions.length, venues: programVenueNames(program),
-        }))} />
-
-        <aside className="programs-help">
-          <div><p className="programs-eyebrow">Build with the community</p><h2>A little guidance goes a long way.</h2><p>Find your next session, ask a question, or share what you’re building with Ship AI.</p></div>
-          <a className="programs-primary" href={DISCORD} target="_blank" rel="noreferrer">Join us on Discord <ArrowRight size={18} aria-hidden="true" /></a>
-        </aside>
+        <div className="programs-page hub-assess">
+          <ProgramAssessment programs={PROGRAMS.map(program => ({
+            slug: program.slug, name: program.name, sessions: program.sessions.length, datesLabel: program.datesLabel,
+          }))} />
+        </div>
       </main>
 
-      <footer className="footer programs-footer">
-        <Lockup compact />
-        <nav><a href="/">Home</a><a href="/workshops">Workshops</a>
-          <a href="/programs">Programs</a><a href="/programs/zero-to-launch/hackathon">Hackathon</a></nav>
-        <p className="fine">© 2026 Ship AI</p>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

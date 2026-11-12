@@ -1,0 +1,514 @@
+/* The workshop build sheet. Board and stage basics come from
+   departure-board.css; page-level hub pieces from app/hub.css. */
+
+.ws-crumb {
+  margin-bottom: 28px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+}
+
+.ws-crumb a {
+  color: var(--dim);
+}
+
+.ws-crumb a:hover {
+  color: var(--accent);
+}
+
+.ws-hero .hero-lede {
+  max-width: 62ch;
+  margin-bottom: 0;
+}
+
+.ws-hero .hero-lede strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.ws-stage {
+  height: 260px;
+}
+
+.ws-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ws-dboard {
+  margin-top: -80px;
+}
+
+.ws-row {
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 340px);
+}
+
+.ws-price b {
+  font-size: 54px;
+}
+
+.ws-facts {
+  display: grid;
+  gap: 10px;
+  padding-left: 36px;
+  border-left: 1px solid var(--hairline);
+}
+
+.ws-facts dt {
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  color: var(--dim);
+}
+
+.ws-facts dd {
+  font-size: 15px;
+}
+
+.ws-signup .wn {
+  margin-top: 0;
+}
+
+.ws-fine {
+  margin-top: 10px;
+  color: var(--dim);
+  font-size: 13.5px;
+}
+
+/* sections */
+.ws-section {
+  max-width: 1044px;
+  border-top: 0;
+  padding-bottom: 0;
+}
+
+.ws-section:last-of-type {
+  padding-bottom: var(--sap-section-y);
+}
+
+.ws-cols {
+  display: grid;
+  grid-template-columns: repeat(var(--ws-count), minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+  list-style: none;
+}
+
+.ws-cols li {
+  padding: 24px 24px 0 0;
+}
+
+.ws-cols li + li {
+  padding-left: 24px;
+  border-left: 1px solid var(--hairline);
+}
+
+.ws-cols h3,
+.ws-acc h3,
+.ws-days h3,
+.ws-related h3 {
+  font-family: var(--sap-font-display);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: var(--sap-track-display);
+}
+
+.ws-cols h3 {
+  margin-bottom: 8px;
+}
+
+.ws-cols p,
+.ws-acc p,
+.ws-days p,
+.ws-related p {
+  color: var(--dim);
+  font-size: 15.5px;
+}
+
+.ws-kit h3 {
+  font-family: var(--sap-font-mono);
+  font-size: 15px;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+.ws-acc {
+  border-top: 1px solid var(--ink);
+}
+
+.ws-acc details {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.ws-acc summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.ws-acc summary::-webkit-details-marker {
+  display: none;
+}
+
+.ws-acc summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.ws-acc details > p {
+  max-width: 68ch;
+  padding: 0 44px 22px 0;
+}
+
+.ws-mark {
+  font-family: var(--sap-font-display);
+  font-size: 24px;
+  line-height: 1;
+  text-align: center;
+  transition: transform var(--sap-dur-lock) var(--sap-ease);
+}
+
+.ws-acc details[open] .ws-mark {
+  transform: rotate(45deg);
+}
+
+.ws-days {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+}
+
+.ws-days article {
+  padding: 24px 28px 0 0;
+}
+
+.ws-days article + article {
+  padding-left: 28px;
+  border-left: 1px solid var(--hairline);
+}
+
+.ws-day,
+.ws-steps span,
+.ws-related span {
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  color: var(--dim);
+}
+
+.ws-days h3 {
+  margin: 6px 0 16px;
+}
+
+.ws-days ol {
+  list-style: none;
+}
+
+.ws-days li {
+  padding: 14px 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.ws-days h4 {
+  margin-bottom: 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ws-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 28px;
+  list-style: none;
+}
+
+.ws-section .vg-instructors {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* pathway */
+.ws-route {
+  position: relative;
+  height: 96px;
+  border-bottom: 1.5px dashed var(--ink);
+  color: var(--sap-art);
+}
+
+.ws-route-art {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+}
+
+.ws-route-art .scene {
+  width: 100%;
+  height: 100%;
+}
+
+.ws-ship {
+  position: absolute;
+  bottom: -1px;
+  left: calc((var(--ws-here) + 0.5) * 100% / var(--ws-stops));
+  width: 46px;
+  height: 46px;
+  margin-left: -23px;
+  border-radius: 50%;
+  background: var(--bg) url("/brand/seal-banknote.svg") center / contain no-repeat;
+}
+
+:root[data-mode="dark"] .ws-ship {
+  background-image: url("/brand/seal-bone.svg");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode="light"]) .ws-ship {
+    background-image: url("/brand/seal-bone.svg");
+  }
+}
+
+.ws-steps {
+  display: grid;
+  grid-template-columns: repeat(var(--ws-stops), minmax(0, 1fr));
+  list-style: none;
+}
+
+.ws-steps li {
+  padding: 18px 16px 0 0;
+}
+
+.ws-steps li + li {
+  padding-left: 16px;
+  border-left: 1px solid var(--hairline);
+}
+
+.ws-steps a {
+  display: block;
+}
+
+.ws-steps b {
+  display: block;
+  margin-top: 6px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.ws-steps .is-here span {
+  color: var(--accent);
+}
+
+.ws-related {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 48px;
+  list-style: none;
+}
+
+.ws-related li {
+  position: relative;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  transition: transform 320ms var(--sap-ease);
+}
+
+.ws-related h3 {
+  margin: 8px 0 6px;
+}
+
+.ws-related h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.ws-related h3 a:focus-visible {
+  outline: none;
+}
+
+.ws-related h3 a:focus-visible::after {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.ws-arrow {
+  display: inline-block;
+  margin-left: 8px;
+  transition: transform var(--sap-dur-lock) var(--sap-ease);
+}
+
+/* the following bar */
+.ws-bar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter)));
+  background: var(--surface);
+  border-top: 1px solid var(--ink);
+  transform: translateY(110%);
+  visibility: hidden;
+  transition: transform 260ms var(--sap-ease), visibility 0s 260ms;
+}
+
+.ws-bar.is-shown {
+  transform: none;
+  visibility: visible;
+  transition: transform 260ms var(--sap-ease);
+}
+
+.ws-bar b {
+  display: block;
+  font-family: var(--sap-font-display);
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.ws-bar span {
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  color: var(--dim);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ws-related li:hover {
+    transform: translateY(-4px);
+  }
+
+  .ws-related li:hover .ws-arrow {
+    transform: translateX(4px);
+  }
+
+  .ws-acc summary:hover h3,
+  .ws-steps a:hover b {
+    color: var(--accent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ws-bar,
+  .ws-bar.is-shown,
+  .ws-mark,
+  .ws-related li,
+  .ws-arrow {
+    transition: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .ws-stage {
+    height: 180px;
+  }
+
+  .ws-dboard {
+    margin-top: -48px;
+  }
+
+  .ws-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ws-facts {
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+    gap: 10px 24px;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .ws-cols,
+  .ws-days,
+  .ws-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ws-cols li,
+  .ws-cols li + li,
+  .ws-steps li,
+  .ws-steps li + li {
+    padding: 20px 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .ws-steps li,
+  .ws-steps li + li {
+    padding: 14px 0;
+  }
+
+  .ws-days article,
+  .ws-days article + article {
+    padding: 24px 0 0;
+    border-left: 0;
+  }
+
+  .ws-route {
+    display: none;
+  }
+
+  .ws-steps {
+    border-top: 1px solid var(--ink);
+  }
+
+  .ws-acc details > p {
+    padding-right: 0;
+  }
+
+  .ws-bar span {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .ws-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* the workshop name: the key phrase always takes its own line */
+.ws-hero .hero-h1 {
+  max-width: none;
+}
+
+.ws-hero .hero-h1 .key {
+  display: block;
+}
+
+/* take-home files read as a ruled list: file name, then what it is */
+.ws-cols.ws-kit {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.ws-cols.ws-kit li,
+.ws-cols.ws-kit li + li {
+  display: grid;
+  grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+  gap: 8px 32px;
+  padding: 18px 0;
+  border-left: 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.ws-cols.ws-kit h3 {
+  margin-bottom: 0;
+}
+
+@media (max-width: 860px) {
+  .ws-cols.ws-kit li,
+  .ws-cols.ws-kit li + li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

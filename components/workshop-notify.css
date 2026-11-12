@@ -61,3 +61,11 @@
   color: var(--ink);
   font-size: 14.5px;
 }
+
+.wn-goal {
+  margin-top: 14px;
+}
+
+.wn-goal .wn-row input {
+  font-size: 15px;
+}

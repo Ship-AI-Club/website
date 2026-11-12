@@ -19,6 +19,9 @@ export const dynamic = "force-dynamic";
    a script doesn't get to fill the table. Mirrors lib/auth.js. */
 const MAX_PER_IP_HOUR = 12;
 
+/* What an email-only signup stores as its goal until the person adds one. */
+const NOTIFY_GOAL = "Email me when a date is set.";
+
 /* Programs awaiting dates and events awaiting registration take signups —
    otherwise the endpoint is an open write keyed by any string. */
 const OPEN_SLUGS = [...PROGRAMS.filter((p) => !p.startISO).map((p) => p.slug), ...UPCOMING_WORKSHOPS.map((w) => w.slug), AI_ORGANIZATION_EVENT.slug];
@@ -62,7 +65,11 @@ export async function POST(request) {
   const name = String(body.name ?? "").trim();
   const company = String(body.company ?? "").trim();
   const email = normalizeEmail(body.email);
-  const goal = notifyOnly ? "Email me when a date is set." : String(body.goal ?? "").trim();
+  /* An email-only signup may send one optional line afterwards: what
+     they want working by the end. Until then the goal holds a
+     placeholder, which is also what lets that line be added later. */
+  const typedGoal = String(body.goal ?? "").trim();
+  const goal = notifyOnly ? typedGoal || NOTIFY_GOAL : typedGoal;
   const notes = String(body.notes ?? "").trim();
 
   if (!name && !notifyOnly) return fail("A name — whatever you go by is fine.");
@@ -100,6 +107,14 @@ export async function POST(request) {
       returning id`;
 
     if (!rows.length) {
+      /* The one case a second submission may write: the same address
+         adding its optional line to an email-only signup. It can only
+         replace the placeholder, never something a person wrote. */
+      if (notifyOnly && typedGoal) {
+        await sql`
+          update waitlist set goal = ${typedGoal}
+           where program = ${program} and email = ${email} and goal = ${NOTIFY_GOAL}`;
+      }
       return Response.json({ ok: true, status: "already" });
     }
 

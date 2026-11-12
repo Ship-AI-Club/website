@@ -6,3 +6,11 @@ export const PROGRAM_DETAILS = {
   "zero-to-launch": { n: "03", scene: "launch", goal: "launch", stage: "Take it to market", audience: "For builders ready to launch", icon: Rocket, tone: "green", description: "Find your audience, sharpen your positioning, and ship a marketing site. Six free sessions led into the GTM hackathon.", outcome: "A live marketing site", steps: ["Position", "Market", "Launch"] },
   "growth-loops": { n: "04", scene: "swell", goal: "grow", stage: "Keep people coming back", audience: "For teams with a live product", icon: Repeat2, tone: "amber", description: "Measure the customer journey, improve activation and retention, and ship a growth loop you can track.", outcome: "A measurable growth loop", steps: ["Measure", "Improve", "Repeat"] },
 };
+
+/* The dither scene each program page and its session pages open on. */
+export const PROGRAM_SCENES = {
+  "day-zero": { scene: "workbench", alt: "Dithered chart table with dividers, a ruler and a laptop. Hands-on." },
+  "the-first-build": { scene: "slipway", alt: "Dithered night scene: a hull on the slipway with scaffolding and two builders at work." },
+  "zero-to-launch": { scene: "launch", alt: "Dithered night scene: a finished boat sliding down the ways into the water." },
+  "growth-loops": { scene: "fleet", alt: "Dithered fleet of boats under way together." },
+};

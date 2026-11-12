@@ -1,0 +1,316 @@
+/* Session page: the log entry. One stop of the program's voyage log,
+   opened up. The recording (or the program's scene) sits in a window
+   under the headline with the files docked beneath it; the page ends on
+   the program's route. Board basics come from
+   components/departure-board.css, rows from components/workshop-sheet.css. */
+
+.sx-hero .hero-h1 {
+  max-width: none;
+}
+
+.sx-hero .hero-lede {
+  margin-bottom: 0;
+}
+
+/* the window: a recording with the files docked under it */
+.sx-window {
+  max-width: calc(1040px + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: 56px var(--gutter) 0;
+}
+
+.sx-player {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid var(--ink);
+}
+
+.sx-docked {
+  border-top: 0;
+}
+
+/* the window: a scene with the board over its lower edge */
+.sx-stage {
+  height: 240px;
+}
+
+.sx-board {
+  margin-top: -72px;
+}
+
+.sx-row {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+}
+
+.sx-row-act {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.sx-signup .wn {
+  margin-top: 0;
+}
+
+.sx-when a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* the files: one cell each, with a count */
+.sx-files {
+  display: grid;
+  grid-template-columns: repeat(var(--sx-count), minmax(0, 1fr));
+}
+
+.sx-board .sx-files {
+  border-top: 1px solid var(--hairline);
+}
+
+.sx-board .window-bar + .sx-files {
+  border-top: 0;
+}
+
+.sx-file {
+  display: block;
+  padding: 20px 24px;
+}
+
+.sx-file + .sx-file {
+  border-left: 1px solid var(--hairline);
+}
+
+.sx-file b {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--sap-font-display);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: var(--sap-track-display);
+}
+
+.sx-file span {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  color: var(--dim);
+}
+
+.sx-file i {
+  font-style: normal;
+  transition: transform var(--sap-dur-lock) var(--sap-ease);
+}
+
+.sx-file:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+/* sections: one 820px column */
+.sx-section {
+  max-width: calc(820px + var(--gutter) * 2);
+  border-top: 0;
+  padding-bottom: 0;
+}
+
+.sx-section .section-head {
+  margin-bottom: 36px;
+}
+
+.sx-prose p {
+  max-width: 64ch;
+  margin: 0 auto;
+  color: var(--dim);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.sx-prose p + p {
+  margin-top: 16px;
+}
+
+.sx-takes {
+  margin-top: 48px;
+}
+
+.sx-takes .ws-cols li {
+  padding-bottom: 24px;
+}
+
+.sx-after {
+  padding: 20px 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  color: var(--dim);
+  font-size: 15.5px;
+}
+
+.sx-after span {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+}
+
+.sx-after code {
+  color: var(--ink);
+  font-family: var(--sap-font-mono);
+  font-size: 0.92em;
+}
+
+.sx-more {
+  margin-top: 16px;
+  font-size: 15px;
+}
+
+.sx-photos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.sx-photos img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border: 1px solid var(--hairline);
+}
+
+/* the skills: names in view, each description opens in place */
+.ws-acc.sx-skills h3 {
+  font-family: var(--sap-font-mono);
+  font-size: 19px;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+.sx-skills details > p a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.sx-install {
+  margin: 20px 0 0;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  overflow-x: auto;
+}
+
+.sx-install code {
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  line-height: 1.7;
+  white-space: pre;
+}
+
+/* the route: the program's stops, with the ship at this one */
+.sx-route {
+  max-width: calc(1100px + var(--gutter) * 2);
+  padding-bottom: var(--sap-section-y);
+}
+
+.sx-route .ws-route {
+  height: 56px;
+}
+
+.sx-route .ws-steps b {
+  font-size: 15px;
+}
+
+.sx-route .ws-steps .is-here b {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sx-file:hover b {
+    color: var(--accent);
+  }
+
+  .sx-file:hover i {
+    transform: translateX(4px);
+  }
+
+  .sx-file[download]:hover i {
+    transform: translateY(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sx-file i {
+    transition: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .sx-window {
+    padding-top: 40px;
+  }
+
+  .sx-stage {
+    height: 170px;
+  }
+
+  .sx-board {
+    margin-top: -44px;
+  }
+
+  .sx-row,
+  .sx-row-act {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sx-window .window-bar,
+  .sx-board .window-bar {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sx-files {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sx-file {
+    padding: 16px 20px;
+  }
+
+  .sx-file + .sx-file {
+    border-left: 0;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .sx-file b {
+    font-size: 20px;
+  }
+
+  .sx-takes {
+    margin-top: 32px;
+  }
+
+  .sx-takes .ws-cols li,
+  .sx-takes .ws-cols li + li {
+    border-bottom: 0;
+  }
+
+  .sx-takes .ws-cols li + li {
+    border-top: 1px solid var(--hairline);
+  }
+
+  .sx-photos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* on a phone the route is the stop before, this one and the stop after */
+  .sx-route .ws-steps li:not(.is-near) {
+    display: none;
+  }
+}

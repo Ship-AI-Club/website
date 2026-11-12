@@ -5,7 +5,7 @@ import Scene from "../../../components/scene";
 import SiteFooter from "../../../components/site-footer";
 import SiteHeader from "../../../components/site-header";
 import WorkshopNotify from "../../../components/workshop-notify";
-import { PROGRAM_DETAILS } from "../../../components/program-details";
+import { PROGRAM_DETAILS, PROGRAM_SCENES } from "../../../components/program-details";
 import { hasDb } from "../../../lib/db";
 import { deckFor } from "../../../lib/decks";
 import { guideFor } from "../../../lib/guides";
@@ -24,12 +24,7 @@ import { ogImage } from "../../../lib/og";
 
 const SITE = "https://www.shipai.club";
 
-const SCENES = {
-  "day-zero": { scene: "workbench", alt: "Dithered chart table with dividers, a ruler and a laptop. Hands-on." },
-  "the-first-build": { scene: "slipway", alt: "Dithered night scene: a hull on the slipway with scaffolding and two builders at work." },
-  "zero-to-launch": { scene: "launch", alt: "Dithered night scene: a finished boat sliding down the ways into the water." },
-  "growth-loops": { scene: "fleet", alt: "Dithered fleet of boats under way together." },
-};
+const SCENES = PROGRAM_SCENES;
 
 const WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
 

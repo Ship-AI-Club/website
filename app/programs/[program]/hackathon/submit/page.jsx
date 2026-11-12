@@ -1,15 +1,17 @@
-import MobileNav from "../../../../../components/mobile-nav";
 import { notFound } from "next/navigation";
-import { AlertTriangle, ArrowRight, CheckCircle2 } from "lucide-react";
 import { JsonLd } from "../../../../../components/article";
+import SiteFooter from "../../../../../components/site-footer";
+import SiteHeader from "../../../../../components/site-header";
+import { EventHero, EventSection } from "../../../../../components/event-page";
+import { BoardAction, FormBoard, TaggedRows } from "../../../../../components/event-form";
 import { PROGRAMS, programBySlug } from "../../../../../lib/programs";
-import { Lockup } from "../../../../../components/seal";
-
 import { DISCORD, EVENT } from "../../../../../lib/hackathon";
 import { SUBMISSION_CHECKS, SUBMISSION_FIELDS } from "../../../../../lib/submissions";
 import { PITCH_PATH, PITCH_STEPS } from "../../../../../lib/hackathon-pitch";
+import { SHIPPED, SHIPPED_RESULTS } from "../../../../../lib/shipped";
 import { ogImage } from "../../../../../lib/og";
 
+const PATH = "/programs/zero-to-launch/hackathon";
 const SUBMIT_URL = "/dashboard/submission";
 
 const TITLE = `Submit Your Marketing Site — ${EVENT.name}`;
@@ -19,10 +21,14 @@ const DESCRIPTION =
 export const metadata = {
   title: `${TITLE} — Ship AI`,
   description: DESCRIPTION,
-  alternates: { canonical: "https://www.shipai.club/programs/zero-to-launch/hackathon/submit" },
+  alternates: { canonical: `https://www.shipai.club${PATH}/submit` },
   openGraph: { title: TITLE, description: DESCRIPTION, images: [ogImage({ kicker: EVENT.name, title: "Submit your marketing site", key: "marketing site", tagline: "Judged on design, craft and receipts. One submission per team." })] },
   robots: { index: true, follow: true },
 };
+
+/* The board reads the deadline, so the page is rebuilt often enough to
+   close on time. */
+export const revalidate = 300;
 
 export function generateStaticParams() {
   return PROGRAMS.filter((program) => program.hasHackathon).map((program) => ({
@@ -30,10 +36,18 @@ export function generateStaticParams() {
   }));
 }
 
+/* The counter, with two states read from EVENT.deadlineISO.
+   Open: the deadline and "Open your submission" on the board, then what
+   the form asks for, the pitch and the checks.
+   Closed: the board leads to the results, and the requirements stay
+   below as a record of what teams were asked for. */
 export default async function Page({ params }) {
   const { program: programSlug } = await params;
   const program = programBySlug(programSlug);
   if (!program?.hasHackathon) notFound();
+
+  const open = Date.now() < Date.parse(EVENT.deadlineISO);
+  const [deadlineTime, deadlineDay] = EVENT.deadline.split(", ");
 
   return (
     <>
@@ -43,113 +57,92 @@ export default async function Page({ params }) {
           "@type": "WebPage",
           name: TITLE,
           description: DESCRIPTION,
-          url: "https://www.shipai.club/programs/zero-to-launch/hackathon/submit",
-          isPartOf: { "@type": "WebPage", url: "https://www.shipai.club/programs/zero-to-launch/hackathon" },
+          url: `https://www.shipai.club${PATH}/submit`,
+          isPartOf: { "@type": "WebPage", url: `https://www.shipai.club${PATH}` },
         }}
       />
 
-      <header className="nav">
-        <Lockup />
-        <nav>
-          <a href="/programs">Programs</a>
-          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
-          <a href="/programs/zero-to-launch/hackathon#focus">What to build</a>
-          <a href="/programs/zero-to-launch/hackathon#judges">Judges</a>
-        </nav>
-        <div className="nav-ctas">
-          <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
-            Discord
-          </a>
-          <a className="btn btn-solid" href="/dashboard">
-            Register
-          </a>
-        </div>
-      <MobileNav /></header>
+      <SiteHeader current="/programs" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>} />
 
-      <main className="hk-submit-page">
-        <p className="kicker">{EVENT.name}</p>
-        <h1>Submit your marketing site</h1>
+      <main id="top">
+        <EventHero
+          crumb={{ href: PATH, label: EVENT.name }}
+          title="Submit your"
+          keyPhrase="marketing site"
+          lede="One submission per team, judged on design, craft, and receipts: the pages, features, and improvements you shipped. Each criterion is scored from 1 to 5 and weighted equally."
+        />
 
-        <p className="hk-deadline">
-          <AlertTriangle size={16} strokeWidth={1.75} aria-hidden="true" />
-          <span>Deadline: <strong>{EVENT.deadline}</strong>. No late submissions.</span>
-        </p>
+        {open ? (
+          <FormBoard
+            scene="launch"
+            alt="A boat sliding down the slipway into the water"
+            label="Submission deadline"
+            bar={["Submissions · open", "One per team"]}
+            foot={
+              <>
+                <a href={PITCH_PATH}>Five-minute pitch reference</a>
+                <span>Stuck? Post in <a href={DISCORD} target="_blank" rel="noreferrer">the Discord</a> before the deadline, not after.</span>
+              </>
+            }
+          >
+            <BoardAction
+              date={[deadlineDay, deadlineTime]}
+              title="No late submissions."
+              line="Sign in with an email code. Any team member can edit the draft up to the deadline."
+            >
+              <a className="btn btn-solid" href={SUBMIT_URL}>Open your submission</a>
+            </BoardAction>
+          </FormBoard>
+        ) : (
+          <FormBoard
+            scene="harbor"
+            alt="Boats back in the harbor at night"
+            label="Submissions closed"
+            bar={[`Submissions · closed ${EVENT.deadline}`, `${SHIPPED.teams} of ${SHIPPED.registered} teams submitted`]}
+            foot={
+              <>
+                <span>Signed in? Your entry is still in your account.</span>
+                <a href={SUBMIT_URL}>Open your submission</a>
+              </>
+            }
+          >
+            <BoardAction
+              title={`${SHIPPED.teams} teams submitted.`}
+              line="The judges placed three. Every project and its recorded pitch is on the results page."
+            >
+              <a className="btn btn-solid" href={SHIPPED_RESULTS}>See the results</a>
+            </BoardAction>
+          </FormBoard>
+        )}
 
-        <p className="article-lede">
-          Build and ship the best marketing site. One submission per team, judged on design,
-          craft, and receipts: the pages, features, and improvements you shipped.
-          Each criterion is scored from 1 to 5 and weighted equally.
-        </p>
+        <EventSection id="fields" title={open ? "What the form asks for" : "What the form asked for"}>
+          <TaggedRows items={SUBMISSION_FIELDS.map((f) => ({ name: f.name, tag: f.required ? "Required" : null, copy: f.copy }))} />
+        </EventSection>
 
-        <div className="cta-row hk-submit-cta">
-          <a className="btn btn-solid" href={SUBMIT_URL}>
-            Open your submission
-          </a>
-          <a className="btn btn-ghost" href={PITCH_PATH}>
-            Five-minute pitch reference
-          </a>
-        </div>
-        <p className="hk-note">
-          You&apos;ll need an account — an email address and a six-digit code, no password.
-          Create or join a team of one to four people. Save a draft whenever you like; any team member can edit it up to the deadline.
-          Stuck? Post in{" "}
-          <a href={DISCORD} target="_blank" rel="noreferrer">the Discord</a> before the
-          deadline, not after.
-        </p>
+        <EventSection
+          id="pitch"
+          title="Your five-minute pitch"
+          lede={open ? "Use your own deck or our optional four-slide generator. You can submit your project without a deck and prepare it later." : undefined}
+        >
+          <TaggedRows items={PITCH_STEPS.map((step) => ({ name: step.title, tag: step.window, quiet: true, copy: step.prompt }))} />
+          <p className="ev-links">
+            <a href={PITCH_PATH}>Open the pitch reference and speaker notes →</a>
+            <a href={`${PITCH_PATH}/demo?view=all`}>Review all four slides of the demo pitch →</a>
+          </p>
+        </EventSection>
 
-        <h2 className="hk-subhead">What the form asks for</h2>
-        <ol className="hk-fields">
-          {SUBMISSION_FIELDS.map((f) => (
-            <li key={f.name}>
-              <p className="hk-field-name">
-                {f.name}
-                {f.required && <span className="hk-field-req">Required</span>}
-              </p>
-              <p>{f.copy}</p>
-            </li>
-          ))}
-        </ol>
+        {open && (
+          <EventSection id="checks" title="Before you hit submit">
+            <ul className="ef-checks">
+              {SUBMISSION_CHECKS.map((check) => <li key={check}>{check}</li>)}
+            </ul>
+          </EventSection>
+        )}
 
-        <h2 className="hk-subhead">Your five-minute pitch</h2>
-        <p>Use your own deck or our optional four-slide generator. You can submit your project without a deck and prepare it later. If you have slides already, add an optional viewable link in your submission.</p>
-        <p>To generate a draft, answer three optional pitch prompts or prefill suggestions and branding from your website. Review and save your answers, then open the deck with speaker notes and a live site link. Either way, plan for five minutes:</p>
-        <ol className="hk-fields">
-          {PITCH_STEPS.map(step => <li key={step.id}><p className="hk-field-name">{step.title} <span className="hk-field-req">{step.window}</span></p><p>{step.prompt}</p></li>)}
-        </ol>
-        <p><a href={PITCH_PATH}>Open the pitch reference and speaker notes →</a></p>
-        <p><a href={`${PITCH_PATH}/demo?view=all`}>Review all four slides of the demo pitch →</a></p>
-
-        <h2 className="hk-subhead">Before you hit submit</h2>
-        <ul className="hk-check">
-          {SUBMISSION_CHECKS.map((check) => (
-            <li key={check}>
-              <CheckCircle2 size={16} strokeWidth={1.75} aria-hidden="true" />
-              {check}
-            </li>
-          ))}
-        </ul>
-
-        <div className="cta-row hk-submit-cta">
-          <a className="btn btn-solid" href={SUBMIT_URL}>
-            Open your submission
-          </a>
-          <a className="btn btn-ghost" href="/programs/zero-to-launch/hackathon">
-            Back to the hackathon
-            <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
-          </a>
-        </div>
+        <div className="ev-end" />
       </main>
 
-      <footer className="footer">
-        <Lockup compact />
-        <nav>
-          <a href="/">Home</a>
-          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
-          <a href="/programs">Programs</a>
-          <a href="/programs/zero-to-launch">Sessions</a>
-        </nav>
-        <p className="fine">© 2026 Ship AI</p>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

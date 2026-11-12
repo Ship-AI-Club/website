@@ -1,15 +1,17 @@
 import "../../../account.css";
-import "../founder-weekend.css";
+import "../../../programs/voyage.css";
 
-import { Lockup } from "../../../../components/seal";
-import MobileNav from "../../../../components/mobile-nav";
+import SiteFooter from "../../../../components/site-footer";
+import SiteHeader from "../../../../components/site-header";
+import { EventHero } from "../../../../components/event-page";
+import { Passage, PassageStop } from "../../../../components/event-form";
 import { currentUser } from "../../../../lib/auth";
 import { MAX_TEAM_SIZE } from "../../../../lib/accounts";
 import { teamFor } from "../../../../lib/store";
 import { DISCORD } from "../../../../lib/hackathon";
 import { FOUNDER_WEEKEND as FW } from "../../../../lib/founder-weekend";
 import { leaveFounderTeamAction } from "./actions";
-import { CreateTeamForm, JoinTeamForm } from "./team-forms";
+import { CreateTeamForm, InviteCode, JoinTeamForm } from "./team-forms";
 
 export const dynamic = "force-dynamic";
 
@@ -21,113 +23,99 @@ export const metadata = {
   alternates: { canonical: `https://www.shipai.club${RETURN}` },
 };
 
-function SignedOut() {
-  return (
-    <div className="fw-register-grid">
-      <section className="fw-register-card">
-        <h2>1. Sign in</h2>
-        <p className="section-lede">One email code. No password.</p>
-      </section>
-      <section className="fw-register-card">
-        <h2>2. Start or join a team</h2>
-        <p className="section-lede">Register a team of 1–{MAX_TEAM_SIZE}, or join one with an invite code.</p>
-      </section>
-      <div className="cta-row">
-        <a className="btn btn-solid" href={`/login?next=${encodeURIComponent(RETURN)}`}>Sign in to register</a>
-      </div>
-    </div>
-  );
-}
-
-function Onboard() {
-  return (
-    <div className="cta-row">
-      <a className="btn btn-solid" href={`/onboarding?next=${encodeURIComponent(RETURN)}`}>Finish your profile</a>
-    </div>
-  );
-}
-
-function YourTeam({ team }) {
-  const open = MAX_TEAM_SIZE - team.members.length;
-  return (
-    <section className="fw-register-card">
-      <h2>{team.name}</h2>
-      <p className="section-lede">You&apos;re registered for {FW.name}. Share this code so teammates can join.</p>
-      <p className="ac-label">Invite code</p>
-      <p className="fw-invite">{team.invite_code}</p>
-      <ul className="fw-members">
-        {team.members.map((member) => (
-          <li key={member.id}>{member.name || "New member"}{member.is_owner ? " · captain" : ""}</li>
-        ))}
-      </ul>
-      <p className="hk-note">
-        {open > 0 ? `${open} open spot${open === 1 ? "" : "s"}.` : "Your team is full."} Questions? Ask in{" "}
-        <a href={DISCORD} target="_blank" rel="noopener noreferrer">Discord</a>.
-      </p>
-      <div className="cta-row">
-        <a className="btn btn-solid ac-btn-sm" href={`/dashboard/submission?team=${team.id}`}>Submit your project</a>
-      </div>
-      <p className="hk-note">Submissions close {FW.deadline}.</p>
-      <form action={leaveFounderTeamAction}>
-        <input type="hidden" name="team_id" value={team.id} />
-        <button type="submit" className="btn btn-ghost ac-btn-sm">Leave team</button>
-      </form>
-    </section>
-  );
-}
-
+/* Registration as a passage: sign in, start or join a team, submit on
+   Sunday. Finished steps fold to a line and the ship sits at the step
+   that holds the form, so the page shows one action per state:
+   signed out, profile unfinished, no team yet, on a team. */
 export default async function Page() {
   const user = await currentUser();
-  const team = user?.onboarded_at ? await teamFor(user.id, null, FW.id) : null;
+  const onboarded = Boolean(user?.onboarded_at);
+  const team = onboarded ? await teamFor(user.id, null, FW.id) : null;
+  const open = team ? MAX_TEAM_SIZE - team.members.length : 0;
+  const submitLabel = `Closes ${FW.deadline}`;
 
   return (
     <>
-      <header className="nav">
-        <Lockup />
-        <nav>
-          <a href={FW.path}>{FW.name}</a>
-          <a href={`${FW.path}#faq`}>FAQ</a>
-        </nav>
-        <a className="btn btn-ghost nav-cta" href={FW.path}>Back to the event</a>
-        <MobileNav extraLinks={[{ href: FW.path, label: FW.name }]} />
-      </header>
+      <SiteHeader cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>} />
 
-      <main className="hk-simple fw">
-        <section className="hero hk-hero fw-register">
-          <p className="eyebrow">{FW.name} · Phoenix · {FW.datesShort}</p>
-          <h1 className="hero-h1">Register your team</h1>
-          <p className="lede">Free. {FW.teams}. Solo is fine, and you can add teammates any time before the weekend.</p>
-        </section>
+      <main id="top">
+        <EventHero
+          crumb={{ href: FW.path, label: FW.name }}
+          title="Register"
+          keyPhrase="your team"
+          lede={`Free. ${FW.teams}. Solo is fine, and you can add teammates any time before the weekend.`}
+        />
 
-        <section className="section">
-          {!user && <SignedOut />}
-          {user && !user.onboarded_at && <Onboard />}
-          {user?.onboarded_at && team && <YourTeam team={team} />}
-          {user?.onboarded_at && !team && (
-            <div className="fw-register-grid">
-              <section className="fw-register-card">
-                <h2>Start a team</h2>
-                <p className="section-lede">You&apos;ll get an invite code for up to {MAX_TEAM_SIZE - 1} teammates.</p>
-                <CreateTeamForm />
-              </section>
-              <section className="fw-register-card">
-                <h2>Join a team</h2>
-                <p className="section-lede">Someone already registered? Use their code.</p>
-                <JoinTeamForm />
-              </section>
-            </div>
+        <Passage
+          foot={FW.rsvpUrl && <>Not on the guest list yet? <a href={FW.rsvpUrl} target="_blank" rel="noopener noreferrer">RSVP on Luma</a></>}
+        >
+          {!user && (
+            <PassageStop state="here" label="Step 1" title="Sign in">
+              <div className="ef-step-body">
+                <p>One email code. No password.</p>
+                <a className="btn btn-solid" href={`/login?next=${encodeURIComponent(RETURN)}`}>Sign in to register</a>
+              </div>
+            </PassageStop>
           )}
-        </section>
+          {user && !onboarded && (
+            <PassageStop state="here" label="Step 1" title="Finish your profile">
+              <div className="ef-step-body">
+                <a className="btn btn-solid" href={`/onboarding?next=${encodeURIComponent(RETURN)}`}>Finish your profile</a>
+              </div>
+            </PassageStop>
+          )}
+          {onboarded && <PassageStop state="done" label="Step 1 · done" title="Signed in" />}
+
+          {!onboarded && <PassageStop label="Step 2" title="Start or join a team" />}
+          {onboarded && !team && (
+            <PassageStop state="here" label="Step 2" title="Start or join a team">
+              <div className="ef-halves">
+                <div>
+                  <h3>Start a team</h3>
+                  <p>You&apos;ll get an invite code for up to {MAX_TEAM_SIZE - 1} teammates.</p>
+                  <CreateTeamForm />
+                </div>
+                <div>
+                  <h3>Join a team</h3>
+                  <JoinTeamForm />
+                </div>
+              </div>
+            </PassageStop>
+          )}
+          {team && (
+            <PassageStop state="done" label="Step 2 · done" title={`${team.name} is registered`}>
+              <div className="ef-step-body">
+                <span className="vy-label">Invite code · share it so teammates can join</span>
+                <InviteCode code={team.invite_code} />
+                <ul className="ef-members">
+                  {team.members.map((member) => (
+                    <li key={member.id}>{member.name || "New member"}{member.is_owner ? " · captain" : ""}</li>
+                  ))}
+                </ul>
+                <span className="vy-label">{open > 0 ? `${open} open spot${open === 1 ? "" : "s"}` : "Your team is full"}</span>
+                <form action={leaveFounderTeamAction} className="ef-leave">
+                  <input type="hidden" name="team_id" value={team.id} />
+                  <button type="submit">Leave team</button>
+                </form>
+              </div>
+            </PassageStop>
+          )}
+
+          {team ? (
+            <PassageStop state="here" label={submitLabel} title="Submit your project">
+              <div className="ef-step-body">
+                <a className="btn btn-solid" href={`/dashboard/submission?team=${team.id}`}>Submit your project</a>
+              </div>
+            </PassageStop>
+          ) : (
+            <PassageStop label={submitLabel} title="Submit your project" />
+          )}
+        </Passage>
+
+        <div className="ev-end" />
       </main>
 
-      <footer className="footer">
-        <Lockup compact />
-        <nav>
-          <a href={FW.path}>{FW.name}</a>
-          <a href="/dashboard">Account</a>
-        </nav>
-        <p className="fine">© 2026 Ship AI</p>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

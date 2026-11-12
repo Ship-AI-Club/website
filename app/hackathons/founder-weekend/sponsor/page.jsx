@@ -1,8 +1,10 @@
 import SiteFooter from "../../../../components/site-footer";
 import SiteHeader from "../../../../components/site-header";
+import { EventHero } from "../../../../components/event-page";
+import { FormBoard } from "../../../../components/event-form";
 import { FOUNDER_WEEKEND as FW, FW_SPONSOR_TIERS } from "../../../../lib/founder-weekend";
+import { DISCORD } from "../../../../lib/hackathon";
 import SponsorForm from "./sponsor-form";
-import "../founder-weekend.css";
 
 export const metadata = {
   title: `Sponsor ${FW.name} | Arizona AI Hackathon in Phoenix`,
@@ -17,41 +19,31 @@ export const metadata = {
   },
 };
 
+/* The counter: the board under the headline is the inquiry form. Each
+   package shows its price and placements on its own choice, once. */
 export default async function Page({ searchParams }) {
   const params = await searchParams;
   const initial = FW_SPONSOR_TIERS.some((t) => t.id === params?.package) ? params.package : undefined;
 
   return (
     <>
-      <SiteHeader
-        links={[{ href: FW.path, label: FW.name }, { href: `${FW.path}#sponsor`, label: "Packages" }]}
-        cta={<a className="btn btn-ghost btn-sm nav-cta" href={FW.path}>Back to the event</a>}
-      />
-      <main id="top" className="fw">
-        <section className="section fw-sponsor-page" aria-labelledby="fw-sponsor-page-title">
-          <div className="section-head">
-            <p className="k">{FW.name}{" ·"} Sponsor</p>
-            <h1 className="hero-h1" id="fw-sponsor-page-title">Back the builders. <span className="key">Pick a package.</span></h1>
-            <p className="section-lede">
-              Tell us who you are and which package fits. We reply by email and confirm the price and every placement in writing before anything is final.
-            </p>
-          </div>
-          <div className="fw-sponsor-summary">
-            {FW_SPONSOR_TIERS.map((tier) => (
-              <div key={tier.id}>
-                <p className="k">{tier.name}{" ·"} {tier.slots}</p>
-                <p className="fw-sponsor-summary-price">${tier.price.toLocaleString("en-US")}</p>
-                <ul className="checks">
-                  {tier.perks.map((perk) => <li key={perk}>{perk}</li>)}
-                </ul>
-              </div>
-            ))}
-          </div>
-          <div className="window fw-sponsor-window">
-            <div className="window-bar"><b>Sponsor inquiry</b><span>{FW.datesShort}</span></div>
-            <SponsorForm tiers={FW_SPONSOR_TIERS} initial={initial} />
-          </div>
-        </section>
+      <SiteHeader cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>} />
+      <main id="top">
+        <EventHero
+          crumb={{ href: FW.path, label: FW.name }}
+          title="Back the builders."
+          keyPhrase="Pick a package."
+          lede="Tell us who you are and which package fits. We reply by email and confirm the price and every placement in writing before anything is final."
+        />
+        <FormBoard
+          scene="slipway"
+          alt="A boat on the slipway, still being built"
+          label="Sponsor inquiry"
+          bar={["Sponsor inquiry", FW.datesShort]}
+        >
+          <SponsorForm tiers={FW_SPONSOR_TIERS} initial={initial} />
+        </FormBoard>
+        <div className="ev-end" />
       </main>
       <SiteFooter />
     </>

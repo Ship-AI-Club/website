@@ -32,7 +32,7 @@ const COLUMNS = [
     links: [
       { href: "/dashboard", label: "Dashboard" },
       { href: "/workshops/materials", label: "Workshop materials" },
-      { href: "/programs/zero-to-launch/hackathon/sponsor", label: "Sponsor" },
+      { href: "/hackathons/founder-weekend/sponsor", label: "Sponsor" },
     ],
   },
 ];

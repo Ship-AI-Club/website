@@ -8,10 +8,6 @@ import "../../../forms.css";
 const EMPTY = { name: "", email: "", company: "", site: "", message: "", website: "" };
 
 export default function SponsorForm({ tiers, initial }) {
-  const options = [
-    ...tiers.map((t) => ({ id: t.id, label: `${t.name} · $${t.price.toLocaleString("en-US")}` })),
-    { id: "undecided", label: "Not sure yet" },
-  ];
   const [fields, setFields] = useState(EMPTY);
   const [pick, setPick] = useState(initial || tiers[0]?.id || "undecided");
   const [status, setStatus] = useState("idle");
@@ -46,7 +42,7 @@ export default function SponsorForm({ tiers, initial }) {
 
   if (status === "sent") {
     return (
-      <div className="ik-done fw-sponsor-done">
+      <div className="ik-done">
         <CheckCircle2 size={22} strokeWidth={1.75} aria-hidden="true" />
         <h2>Thanks. We&apos;ll be in touch.</h2>
         <p>We&apos;ll reply by email to confirm the package and placements in writing.</p>
@@ -55,28 +51,28 @@ export default function SponsorForm({ tiers, initial }) {
   }
 
   return (
-    <form className="ik-form fw-sponsor-form" onSubmit={send} noValidate>
-      <fieldset className="ik-roles">
-        <legend className="ik-label">Package</legend>
-        <div className="ik-role-row">
-          {options.map((o) => (
-            <label key={o.id} className={`ik-role${pick === o.id ? " is-on" : ""}`}>
-              <input
-                className="sr-only"
-                type="radio"
-                name="package"
-                value={o.id}
-                checked={pick === o.id}
-                onChange={() => setPick(o.id)}
-                disabled={sending}
-              />
-              {o.label}
+    <form className="ik-form ef-form" onSubmit={send} noValidate>
+      <fieldset className="ef-pk">
+        <legend className="sr-only">Package</legend>
+        <div className="ef-pk-row">
+          {tiers.map((t) => (
+            <label key={t.id} className={`ef-pk-opt${pick === t.id ? " is-on" : ""}`}>
+              <input className="sr-only" type="radio" name="package" value={t.id} checked={pick === t.id} onChange={() => setPick(t.id)} disabled={sending} />
+              <span className="ev-label">{t.name}{" · "}{t.slots}</span>
+              <span className="ef-pk-sel" aria-hidden="true">{pick === t.id ? "Selected" : "Select"}</span>
+              <b>${t.price.toLocaleString("en-US")}</b>
+              <ul>{t.perks.map((perk) => <li key={perk}>{perk}</li>)}</ul>
             </label>
           ))}
         </div>
+        <label className={`ef-pk-unsure${pick === "undecided" ? " is-on" : ""}`}>
+          <input type="radio" name="package" value="undecided" checked={pick === "undecided"} onChange={() => setPick("undecided")} disabled={sending} />
+          Not sure yet
+        </label>
       </fieldset>
 
-      <div className="fw-sponsor-pair">
+      <div className="ef-fields">
+      <div className="ef-pair">
         <div className="ik-field">
           <label className="ik-label" htmlFor="sp-name">
             Name <span className="ik-req">Required</span>
@@ -91,7 +87,7 @@ export default function SponsorForm({ tiers, initial }) {
         </div>
       </div>
 
-      <div className="fw-sponsor-pair">
+      <div className="ef-pair">
         <div className="ik-field">
           <label className="ik-label" htmlFor="sp-company">
             Company <span className="ik-req">Required</span>
@@ -120,7 +116,7 @@ export default function SponsorForm({ tiers, initial }) {
         <button type="submit" className="btn btn-solid" disabled={sending}>
           {sending ? "Sending…" : "Send sponsor inquiry"}
         </button>
-        <p className="ik-status">We reply by email and confirm placements in writing.</p>
+      </div>
       </div>
     </form>
   );

@@ -288,7 +288,7 @@ export default async function Page() {
             </div>
             <p className="partner-note">
               Workuity is our venue sponsor. Partner with us to support practical AI education and builder programs.{" "}
-              <a href="/programs/zero-to-launch/hackathon/sponsor">See what&apos;s fundable</a>
+              <a href="/hackathons/founder-weekend/sponsor">See what&apos;s fundable</a>
             </p>
           </div>
         </section>

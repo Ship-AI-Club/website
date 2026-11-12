@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import { useToastActionState } from "../../../../components/toast-provider";
 import { createFounderTeamAction, joinFounderTeamAction } from "./actions";
@@ -52,5 +53,28 @@ export function JoinTeamForm() {
         <Submit label="Join the team" busy="Joining…" ghost />
       </div>
     </form>
+  );
+}
+
+/* The invite code with a Copy button. The code stays selectable when
+   the clipboard is blocked. */
+export function InviteCode({ code }) {
+  const [copied, setCopied] = useState(false);
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1400);
+    } catch {
+      /* clipboard blocked */
+    }
+  }
+  return (
+    <p className="ef-code">
+      {code}
+      <button type="button" onClick={copy} aria-label="Copy the invite code">
+        <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
+      </button>
+    </p>
   );
 }

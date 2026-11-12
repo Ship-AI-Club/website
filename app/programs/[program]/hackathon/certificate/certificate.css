@@ -1,0 +1,342 @@
+/* The certificate page: the landscape plate. The certificate is the
+   page: set landscape like the paper kind so all of it shows at once,
+   with each fact on it once. Under it, one button for the person
+   checking the credential, then the holder's tools in a quiet row.
+   Print keeps only the plate, on a landscape sheet. */
+
+.cx-page {
+  max-width: calc(1040px + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: 40px var(--gutter) 0;
+}
+
+.cx-crumb {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.cx-preview {
+  margin-bottom: 20px;
+  padding: 8px 14px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ---------- the plate ---------- */
+
+.cx-plate {
+  position: relative;
+  padding: 44px 56px 36px;
+  background: var(--surface);
+  border: 1px solid var(--ink);
+  box-shadow: var(--sap-shadow-window);
+  text-align: center;
+}
+
+/* the double rule: an inner keyline inset from the border is the oldest
+   "this is a certificate, not a card" signal there is */
+.cx-keyline {
+  position: absolute;
+  inset: 10px;
+  border: 1px solid var(--hairline);
+  pointer-events: none;
+}
+
+.cx-seal {
+  display: block;
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 14px;
+}
+
+.cx-kind,
+.cx-id {
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+}
+
+.cx-kind {
+  color: var(--accent);
+}
+
+.cx-plate h1 {
+  margin: 12px 0 14px;
+  font-size: clamp(38px, 5vw, 60px);
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+.cx-body {
+  max-width: 58ch;
+  margin: 0 auto;
+  color: var(--dim);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.cx-body strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.cx-members {
+  margin-top: 14px;
+  font-size: 15.5px;
+}
+
+.cx-award {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 9px 16px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.cx-award.is-win {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.cx-award.is-plain {
+  border: 1px solid var(--ink);
+}
+
+/* signature, credential ID and date on one row */
+.cx-sign {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: end;
+  gap: 28px;
+  margin-top: 32px;
+  padding-top: 22px;
+  border-top: 1px solid var(--hairline);
+  text-align: left;
+}
+
+.cx-sign > div:nth-child(2) {
+  text-align: center;
+}
+
+.cx-sign > div:nth-child(3) {
+  text-align: right;
+}
+
+.cx-signature {
+  display: block;
+  width: min(13rem, 100%);
+  aspect-ratio: 907 / 210;
+  background-color: var(--ink);
+  -webkit-mask: url("/brand/santos-signature.png") left center / contain no-repeat;
+  mask: url("/brand/santos-signature.png") left center / contain no-repeat;
+}
+
+.cx-date {
+  font-family: var(--sap-font-display);
+  font-size: 22px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.cx-sign p {
+  margin-top: 8px;
+  color: var(--dim);
+  font-size: 13.5px;
+}
+
+.cx-sign p strong {
+  display: block;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* on screen the reader is already at this address; on paper it is the
+   one line that makes the certificate checkable */
+.cx-verify {
+  display: none;
+}
+
+/* ---------- under the plate ---------- */
+
+.cx-under {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px 28px;
+  margin-top: 28px;
+}
+
+.cx-record {
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  color: var(--dim);
+  overflow-wrap: anywhere;
+}
+
+.cx-record b {
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.cx-yours {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 22px;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+  font-size: 15px;
+}
+
+.cx-yours > span {
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  color: var(--dim);
+}
+
+.cx-tool {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  cursor: pointer;
+}
+
+.cx-tool:hover {
+  color: var(--accent);
+}
+
+.cx-yours p {
+  flex-basis: 100%;
+  color: var(--dim);
+  font-size: 14px;
+}
+
+@media (max-width: 860px) {
+  .cx-plate {
+    padding: 32px 22px 26px;
+  }
+
+  .cx-body {
+    font-size: 16px;
+  }
+
+  .cx-sign {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .cx-sign > div:nth-child(2),
+  .cx-sign > div:nth-child(3) {
+    text-align: left;
+  }
+
+  .cx-under .btn {
+    width: 100%;
+  }
+}
+
+/* ---------- print: the plate, nothing else, on a landscape sheet ---------- */
+
+@media print {
+  @page {
+    size: landscape;
+    margin: 0.6in;
+  }
+
+  .nav,
+  .footer,
+  .cx-crumb,
+  .cx-preview,
+  .cx-under,
+  .cx-yours,
+  .ev-end {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .cx-page {
+    max-width: none;
+    padding: 0;
+  }
+
+  .cx-plate {
+    padding: 36px 48px 28px;
+    background: #fff;
+    border-color: #000;
+    box-shadow: none;
+    page-break-inside: avoid;
+  }
+
+  /* a printed sheet can measure narrower than the phone breakpoint:
+     keep the signature row as one row so the plate stays one page */
+  .cx-sign {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 28px;
+    margin-top: 24px;
+  }
+
+  .cx-sign > div:nth-child(2) {
+    text-align: center;
+  }
+
+  .cx-sign > div:nth-child(3) {
+    text-align: right;
+  }
+
+  .cx-keyline,
+  .cx-sign {
+    border-color: #bbb;
+  }
+
+  .cx-plate h1,
+  .cx-body strong,
+  .cx-sign p strong,
+  .cx-date,
+  .cx-id {
+    color: #000;
+  }
+
+  .cx-body,
+  .cx-members,
+  .cx-sign p {
+    color: #333;
+  }
+
+  .cx-kind {
+    color: #444;
+  }
+
+  .cx-signature {
+    background-color: #000;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .cx-award,
+  .cx-award.is-win {
+    background: none;
+    border: 1px solid #666;
+    color: #000;
+  }
+
+  .cx-verify {
+    display: block;
+    margin-top: 18px;
+    color: #444;
+    font-family: var(--sap-font-mono);
+    font-size: 11px;
+  }
+}

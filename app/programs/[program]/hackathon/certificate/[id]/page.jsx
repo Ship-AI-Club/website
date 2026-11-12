@@ -1,9 +1,11 @@
-import MobileNav from "../../../../../../components/mobile-nav";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, BadgeCheck, Trophy } from "lucide-react";
 import { JsonLd } from "../../../../../../components/article";
+import SiteFooter from "../../../../../../components/site-footer";
+import SiteHeader from "../../../../../../components/site-header";
+import { Seal } from "../../../../../../components/seal";
 import { DISCORD, EVENT } from "../../../../../../lib/hackathon";
 import { PROGRAMS, programBySlug } from "../../../../../../lib/programs";
+import { publicTeamPath, publicTeams } from "../../../../../../lib/public-teams";
 import {
   EDITION,
   ISSUER,
@@ -18,9 +20,12 @@ import {
 } from "../../../../../../lib/results";
 import { certificateById } from "../../../../../../lib/store";
 import CertActions from "./cert-actions";
-import "../../awards.css";
-import { Lockup, Seal } from "../../../../../../components/seal";
+import "../../../../../../components/event-page.css";
+import "../certificate.css";
 import { ogImage } from "../../../../../../lib/og";
+
+const RESULTS = "/programs/zero-to-launch/hackathon/results";
+const same = (a, b) => Boolean(a && b) && a.trim().toLowerCase() === b.trim().toLowerCase();
 
 /* Certificates are issued from /admin after the awards, so this page
    is rendered on demand rather than built ahead: the credential has to
@@ -80,6 +85,17 @@ export default async function Page({ params }) {
   if (!e) return notFound();
 
   const won = isWinner(e);
+  /* The members line is dropped where it only repeats the team name. */
+  const members = (e.members ?? []).filter(Boolean);
+  if (members.length === 1 && same(members[0], e.team)) members.length = 0;
+
+  /* The one action for someone checking the credential: the project's
+     own page on this site, where the recorded pitch is. A certificate
+     with no team page behind it falls back to the project's website. */
+  const team = (await publicTeams()).find((t) => same(t.name, e.team) || same(t.project, e.project));
+  const proof = team
+    ? { href: `${publicTeamPath(team)}${team.pitch_video_url ? "#team-pitch" : ""}`, label: team.pitch_video_url ? `See ${e.project} and its pitch` : `See ${e.project}` }
+    : e.url ? { href: e.url, label: "See the project", external: true } : null;
   const placement = placementOf(e);
   const credentialSummary = won
     ? `${e.team} launched ${e.project} publicly at ${EDITION.event} and took ${placement.replace(/^Winner — /, "")}.`
@@ -118,135 +134,77 @@ export default async function Page({ params }) {
         }}
       />
 
-      <header className="nav">
-        <Lockup />
-        <nav>
-          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
-          <a href="/programs/zero-to-launch/hackathon/results">Results</a>
-        </nav>
-        <div className="nav-ctas">
-          <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
-            Discord
-          </a>
-          <a className="btn btn-solid" href="/dashboard">
-            Register
-          </a>
-        </div>
-      <MobileNav /></header>
+      <SiteHeader current="/programs" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>} />
 
-      <main className="cert-page">
+      <main id="top" className="cx-page">
         {e.preview && (
-          <p className="cert-preview">
+          <p className="cx-preview">
             Development preview — placeholder entrant, never built into the deployed site.
           </p>
         )}
 
-        <div className="cert-plate">
-          <span className="cert-keyline" aria-hidden="true" />
+        <p className="ev-crumb cx-crumb"><a href={RESULTS}>← All {EDITION.name} results</a></p>
 
-          <Seal className="cert-seal" size={42} />
+        <article className="cx-plate">
+          <span className="cx-keyline" aria-hidden="true" />
+          <Seal className="cx-seal" size={44} />
 
-          <p className="cert-kind">
-            {won ? "Certificate of achievement" : "Certificate of launch"}
-          </p>
+          <p className="cx-kind">{won ? "Certificate of achievement" : "Certificate of launch"}</p>
 
           <h1>{e.team}</h1>
 
-          {/* the members line used to sit between the team name and the
-              verb, which blurred the subject on a multi-person team —
-              the certificate convention carries the sentence instead */}
-          <p className="cert-body">
+          <p className="cx-body">
             This certifies that <strong>{e.team}</strong> shipped{" "}
             {e.project !== e.team && <><strong>{e.project}</strong>{" "}</>}publicly at <strong>{EDITION.event}</strong>, held{" "}
-            {EDITION.held} at {EDITION.venue}, {EDITION.city} — a two-day hackathon judged on
-            what shipped rather than what was demoed.
+            {EDITION.held} at {EDITION.venue}, {EDITION.city}.
           </p>
 
-          {e.members?.length > 0 && <p className="cert-members">{e.members.join(" · ")}</p>}
+          {members.length > 0 && <p className="cx-members">{members.join(" · ")}</p>}
 
-          <p className={won ? "cert-award cert-award-win" : "cert-award cert-award-plain"}>
-            {won ? (
-              <Trophy size={15} strokeWidth={1.75} aria-hidden="true" />
-            ) : (
-              <BadgeCheck size={15} strokeWidth={1.75} aria-hidden="true" />
-            )}
-            {placement}
-          </p>
+          <p className={won ? "cx-award is-win" : "cx-award is-plain"}>{placement}</p>
 
-          <dl className="cert-meta">
+          <div className="cx-sign">
             <div>
-              <dt>Issued</dt>
-              <dd>
-                <time dateTime={EDITION.issuedISO}>{EDITION.issued}</time>
-              </dd>
+              <span className="cx-signature" role="img" aria-label="Signature of Santos Hernandez" />
+              <p><strong>Santos Hernandez</strong>Founder, {ISSUER}</p>
             </div>
             <div>
-              <dt>Category entered</dt>
-              <dd>{e.entered || "—"}</dd>
+              <span className="cx-id">{e.id}</span>
+              <p><strong>Credential ID</strong>{e.entered || "—"}</p>
             </div>
             <div>
-              <dt>Credential ID</dt>
-              <dd>{e.id}</dd>
-            </div>
-          </dl>
-
-          <div className="cert-sign">
-            <div className="cert-sign-col">
-              <span className="cert-signature" role="img" aria-label="Signature of Santos Hernandez" />
-              <p className="cert-sign-name">
-                <strong>Santos Hernandez</strong>
-                <span>Founder, {ISSUER}</span>
-              </p>
-            </div>
-            <div className="cert-sign-col cert-sign-date">
-              <time dateTime={EDITION.issuedISO}>{EDITION.issued}</time>
-              <p className="cert-sign-name">
-                <strong>Date issued</strong>
-                <span>{EDITION.city}</span>
-              </p>
+              <time className="cx-date" dateTime={EDITION.issuedISO}>{EDITION.issued}</time>
+              <p><strong>Date issued</strong></p>
             </div>
           </div>
 
-          <p className="cert-verify">
-            Verify at shipai.club/programs/zero-to-launch/hackathon/certificate/{e.id}.
+          <p className="cx-verify">
+            Verify at shipai.club/programs/zero-to-launch/hackathon/certificate/{e.id}
           </p>
-        </div>
+        </article>
 
-        <div className="cert-actions">
-          <a className="btn btn-solid" href={linkedinAddUrl(e)} target="_blank" rel="noreferrer">
-            Add to LinkedIn
-            <ArrowUpRight size={15} strokeWidth={1.75} aria-hidden="true" />
-          </a>
-          {e.url && (
-            <a className="btn btn-ghost" href={e.url} target="_blank" rel="noreferrer">
-              See the project
-              <ArrowUpRight size={15} strokeWidth={1.75} aria-hidden="true" />
+        <div className="cx-under">
+          <p className="cx-record">
+            <b>Issued by {ISSUER}.</b> This page is the record: shipai.club/…/certificate/{e.id}
+          </p>
+          {proof && (
+            <a className="btn btn-solid" href={proof.href} {...(proof.external ? { target: "_blank", rel: "noreferrer" } : {})}>
+              {proof.label}
             </a>
           )}
-          <CertActions fields={certFields(e)} />
         </div>
-        <p className="cert-note">
-          Add to LinkedIn opens the certification form with every field filled in. If
-          LinkedIn ever opens it empty, copy the details first and paste them in.
-        </p>
 
-        <p className="cert-back">
-          <a className="rs-cert" href="/programs/zero-to-launch/hackathon/results">
-            <ArrowLeft size={14} strokeWidth={1.75} aria-hidden="true" />
-            All {EDITION.name} results
-          </a>
-        </p>
+        <div className="cx-yours">
+          <span>Is this yours?</span>
+          <a className="cx-tool" href={linkedinAddUrl(e)} target="_blank" rel="noreferrer">Add to LinkedIn</a>
+          <CertActions fields={certFields(e)} />
+          <p>If LinkedIn opens its form empty, copy the details first and paste them in.</p>
+        </div>
+
+        <div className="ev-end" />
       </main>
 
-      <footer className="footer">
-        <Lockup compact />
-        <nav>
-          <a href="/">Home</a>
-          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
-          <a href="/programs/zero-to-launch/hackathon/results">Results</a>
-        </nav>
-        <p className="fine">© 2026 Ship AI</p>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

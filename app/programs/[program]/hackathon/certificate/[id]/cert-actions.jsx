@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy, Printer } from "lucide-react";
 
-/* LinkedIn no longer prefills its add-certification form from a link,
-   so the useful thing we can do is put the five fields it asks for one
-   paste away. Copy, then paste into the form field by field — still
-   beats retyping a credential URL from a screenshot.
+/* The holder's tools, as quiet links under the certificate.
 
-   Print uses the stylesheet in awards.css, which strips everything but
-   the plate — that's the save-as-PDF path people attach to
+   LinkedIn no longer prefills its add-certification form from a link
+   every time, so the useful thing we can do is put the five fields it
+   asks for one paste away.
+
+   Print uses the stylesheet in certificate.css, which strips everything
+   but the plate: that's the save-as-PDF path people attach to
    applications. */
 export default function CertActions({ fields }) {
   const [copied, setCopied] = useState(false);
@@ -21,24 +21,17 @@ export default function CertActions({ fields }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      /* clipboard blocked (insecure context, denied permission) — the
-         same values are printed on the plate above, so there's nothing
-         to recover from and nothing worth an error dialog */
+      /* clipboard blocked (insecure context, denied permission): the
+         same values are printed on the plate above */
     }
   }
 
   return (
     <>
-      <button type="button" className="btn btn-ghost" onClick={copyFields}>
-        {copied ? (
-          <Check size={15} strokeWidth={1.75} aria-hidden="true" />
-        ) : (
-          <Copy size={15} strokeWidth={1.75} aria-hidden="true" />
-        )}
-        {copied ? "Copied" : "Copy credential details"}
+      <button type="button" className="cx-tool" onClick={copyFields}>
+        <span aria-live="polite">{copied ? "Copied" : "Copy credential details"}</span>
       </button>
-      <button type="button" className="btn btn-ghost" onClick={() => window.print()}>
-        <Printer size={15} strokeWidth={1.75} aria-hidden="true" />
+      <button type="button" className="cx-tool" onClick={() => window.print()}>
         Print or save as PDF
       </button>
     </>

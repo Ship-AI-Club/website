@@ -92,9 +92,9 @@ export default async function Page({ params }) {
   /* The one action for someone checking the credential: the project's
      own page on this site, where the recorded pitch is. A certificate
      with no team page behind it falls back to the project's website. */
-  const team = (await publicTeams()).find((t) => same(t.name, e.team) || same(t.project, e.project));
+  const team = (await publicTeams()).find((t) => same(t.name, e.team) || same(t.registered_name, e.team) || same(t.project, e.project));
   const proof = team
-    ? { href: `${publicTeamPath(team)}${team.pitch_video_url ? "#team-pitch" : ""}`, label: team.pitch_video_url ? `See ${e.project} and its pitch` : `See ${e.project}` }
+    ? { href: `${publicTeamPath(team)}${team.pitch_video_url ? "#team-pitch" : ""}`, label: team.pitch_video_url ? `See ${team.project || e.project} and its pitch` : `See ${team.project || e.project}` }
     : e.url ? { href: e.url, label: "See the project", external: true } : null;
   const placement = placementOf(e);
   const credentialSummary = won

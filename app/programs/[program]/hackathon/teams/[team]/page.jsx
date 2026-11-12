@@ -66,7 +66,7 @@ export default async function Page({ params }) {
   const project = projectOf(team);
 
   const certificate = certificateRows.map(fromCertificate)
-    .find((entry) => same(entry.team, team.name) || same(entry.project, team.project));
+    .find((entry) => same(entry.team, team.name) || same(entry.team, team.registered_name) || same(entry.project, team.project));
   const podiumPlace = certificate?.award || SHIPPED.podium.find((entry) => entry.team === team.slug)?.place;
   const prize = HACKATHON_PRIZES.find((entry) => entry.name === podiumPlace);
   const placed = !team.submitted ? "Building" : podiumPlace ? [podiumPlace, prize && `$${prize.cash}`].filter(Boolean).join(" · ") : "Launched";

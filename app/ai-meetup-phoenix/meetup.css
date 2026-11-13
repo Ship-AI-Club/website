@@ -1,0 +1,116 @@
+/* The meetup page: the two rooms. Section, heading, list and FAQ styles
+   come from components/event-page.css. */
+
+.mt-rooms {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 56px var(--gutter) 0;
+}
+
+.mt-room {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--ink);
+}
+
+.mt-art {
+  position: relative;
+  height: 150px;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--sap-art);
+}
+
+.mt-art .scene {
+  position: absolute;
+  inset: 0;
+}
+
+.mt-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 26px 28px 28px;
+}
+
+.mt-body h2 {
+  margin: 8px 0 16px;
+  font-family: var(--sap-font-display);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: var(--sap-track-display);
+}
+
+.mt-lines {
+  margin: 0 0 24px;
+  padding: 0;
+  border-top: 1px solid var(--hairline);
+  list-style: none;
+}
+
+.mt-lines li {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 15.5px;
+}
+
+.mt-lines .mt-one {
+  grid-template-columns: 1fr;
+}
+
+.mt-next {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: auto;
+}
+
+.mt-next b {
+  display: block;
+  margin: 6px 0;
+  font-family: var(--sap-font-display);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: var(--sap-track-display);
+}
+
+.mt-next a:not(.btn) {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ev-teams.mt-dates {
+  margin-top: 0;
+}
+
+@media (max-width: 860px) {
+  .mt-rooms {
+    grid-template-columns: 1fr;
+    padding-top: 40px;
+  }
+
+  /* on a phone the card with the nearer date comes first */
+  .mt-lead {
+    order: -1;
+  }
+
+  .mt-body {
+    padding: 22px 20px 24px;
+  }
+
+  .mt-next .btn {
+    width: 100%;
+  }
+}

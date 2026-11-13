@@ -2,7 +2,7 @@ import MobileNav from "./mobile-nav";
 import { Lockup } from "./seal";
 
 export const DEFAULT_LINKS = [
-  { href: "/#events", label: "Events" },
+  { href: "/ai-meetup-phoenix", label: "Events" },
   { href: "/workshops", label: "Workshops" },
   { href: "/programs", label: "Programs" },
   { href: "/about", label: "About" },

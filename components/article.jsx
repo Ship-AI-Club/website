@@ -45,7 +45,7 @@ export function Article({ kicker, title, updated, children }) {
         <nav>
           <a href="/programs">Programs</a>
           <a href="/about">About</a>
-          <a href="/#events">Events</a>
+          <a href="/ai-meetup-phoenix">Events</a>
         </nav>
         <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
           Join the Discord

@@ -1122,6 +1122,9 @@ h3 .icon {
 }
 
 .band .btn-ghost {
+  /* filled with the band's own colour, so the star field behind the
+     band does not show through the label */
+  background: var(--sap-band-bg);
   color: var(--sap-band-text);
   box-shadow: inset 0 0 0 1px var(--sap-band-text-muted);
 }

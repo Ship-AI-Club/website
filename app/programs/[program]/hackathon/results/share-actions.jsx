@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Check, Link2 } from "lucide-react";
 
-export default function ShareActions({ url, text }) {
+export default function ShareActions({ url, text, quiet = false }) {
   const [copied, setCopied] = useState(false);
   const linkedin = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
   const x = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
@@ -14,6 +14,18 @@ export default function ShareActions({ url, text }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {}
+  }
+
+  /* quiet: one line of three links, for the foot of the results board */
+  if (quiet) {
+    return (
+      <span className="rsl-share">
+        <span>Share</span>
+        <a href={linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href={x} target="_blank" rel="noreferrer">X</a>
+        <button type="button" onClick={copy}>{copied ? "Copied" : "Copy link"}</button>
+      </span>
+    );
   }
 
   return (

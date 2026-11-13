@@ -1,0 +1,84 @@
+/* The published results page: the results board. The board and the
+   section come from components/event-page.css; this file holds the rows
+   for everyone else and the quiet share links. The page's unpublished
+   state still uses ../awards.css. */
+
+.rsl-rows {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 40px;
+  border-top: 1px solid var(--ink);
+  list-style: none;
+}
+
+.rsl-rows li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.rsl-name {
+  font-family: var(--sap-font-display);
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: var(--sap-track-display);
+  color: var(--ink);
+}
+
+.rsl-people {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  line-height: 1.5;
+  color: var(--dim);
+}
+
+.rsl-links,
+.rsl-share {
+  display: flex;
+  gap: 14px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+  white-space: nowrap;
+}
+
+.rsl-links a,
+.rsl-share a,
+.rsl-share button {
+  padding: 0;
+  font: inherit;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.rsl-share span {
+  color: var(--dim);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rsl-name:hover,
+  .rsl-links a:hover,
+  .rsl-share a:hover,
+  .rsl-share button:hover {
+    color: var(--accent);
+  }
+}
+
+@media (max-width: 860px) {
+  .rsl-rows {
+    grid-template-columns: 1fr;
+  }
+
+  .rsl-rows li {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

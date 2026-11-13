@@ -1,0 +1,55 @@
+/* The About page: the articles. The values are ruled rows from
+   components/event-page.css; this file holds only the host's panel. */
+
+.ab-values {
+  padding-top: 72px;
+}
+
+.ab-host {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+}
+
+.ab-host .host-body p {
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.ab-host .host-body .host-role {
+  color: var(--dim);
+  font-size: var(--sap-fs-label);
+}
+
+.ab-host .host-links {
+  gap: 18px;
+  font-family: var(--sap-font-mono);
+  font-size: var(--sap-fs-label);
+}
+
+.ab-host .host-links a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 860px) {
+  .ab-values {
+    padding-top: 48px;
+  }
+
+  .ab-host {
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px 20px;
+  }
+}
+
+.ab-host h3 {
+  margin-bottom: 4px;
+  font-family: var(--sap-font-display);
+  font-size: 30px;
+  font-weight: 400;
+}

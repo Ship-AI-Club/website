@@ -1,10 +1,15 @@
-import MobileNav from "../../../../../components/mobile-nav";
 import { notFound } from "next/navigation";
-import { ArrowRight, ArrowUpRight, BadgeCheck, CalendarClock, Trophy, Users } from "lucide-react";
+import { BadgeCheck, CalendarClock, Trophy, Users } from "lucide-react";
 import Scene from "../../../../../components/scene";
+import SiteFooter from "../../../../../components/site-footer";
+import SiteHeader from "../../../../../components/site-header";
+import { EventBoard, EventHero, EventSection } from "../../../../../components/event-page";
 import ShareActions from "./share-actions";
 import { JsonLd } from "../../../../../components/article";
+import { FOUNDER_WEEKEND as FW } from "../../../../../lib/founder-weekend";
 import { DISCORD, EVENT, HACKATHON_PRIZES, MEETUP } from "../../../../../lib/hackathon";
+import { publicTeamPath, publicTeams } from "../../../../../lib/public-teams";
+import { SHIPPED, eventState } from "../../../../../lib/shipped";
 import { PROGRAMS, programBySlug } from "../../../../../lib/programs";
 import {
   CATEGORIES,
@@ -21,9 +26,14 @@ import {
 import { publishedCertificates } from "../../../../../lib/store";
 import { getSetting } from "../../../../../lib/settings";
 import "../awards.css";
-import { Lockup } from "../../../../../components/seal";
+import "./results.css";
 
-/* Results are published by flipping a switch in /admin on the Sunday,
+/* The published page is the results board: the podium on one board, as
+   on the hackathon page, then everyone else as ruled rows. A project's
+   name opens its team page, where the pitch, the site and the
+   certificate already sit; site and certificate stay as small links.
+
+   Results are published by flipping a switch in /admin on the Sunday,
    not by a deploy — see lib/settings.js. Until then this page renders
    the pending state, which is what it has said since July.
 
@@ -66,57 +76,29 @@ const WILL_LIST = [
 
 
 const RESULTS_URL = `${SITE}/programs/zero-to-launch/hackathon/results`;
-const PLACE_NUMBER = { "First place": "1", "Second place": "2", "Third place": "3" };
+const HACKATHON = "/programs/zero-to-launch/hackathon";
+const same = (a, b) => Boolean(a && b) && a.trim().toLowerCase() === b.trim().toLowerCase();
 
+/* Team and people, said once where a team and its one member share a name. */
 function byline(e) {
-  const people = (e.members ?? []).join(", ");
-  if (e.project && e.project !== e.team) return people ? `${e.team} · ${people}` : e.team;
-  return people;
+  const people = (e.members ?? []).filter(Boolean);
+  const solo = people.length === 1 && same(people[0], e.team);
+  const names = solo ? "" : people.join(", ");
+  if (e.project && !same(e.project, e.team)) return names ? `${e.team} · ${names}` : e.team;
+  return names;
 }
 
 function prizeLine(name) {
   const prize = HACKATHON_PRIZES.find((p) => p.name === name);
   if (!prize) return "";
-  return [`$${prize.cash} cash`, prize.extra].filter(Boolean).join(" · ");
+  const extra = prize.extra ? prize.extra.split(" · ")[0] : "";
+  return [`$${prize.cash} cash`, extra && extra[0].toLowerCase() + extra.slice(1)].filter(Boolean).join(" · ");
 }
 
-function WinnerCard({ category, entrant, lead }) {
-  const number = PLACE_NUMBER[category.name];
-  const people = byline(entrant);
-  const prize = prizeLine(category.name);
-  return (
-    <article className={lead ? "rs-win rs-win-lead" : "rs-win"}>
-      {number && (
-        <span className="rs-win-num" aria-hidden="true">
-          {number}
-        </span>
-      )}
-      <p className="rs-win-place">
-        {category.voted ? (
-          <Users size={15} strokeWidth={1.75} aria-hidden="true" />
-        ) : (
-          <Trophy size={15} strokeWidth={1.75} aria-hidden="true" />
-        )}
-        {category.name}
-        {category.voted && <span className="hk-cat-tag">Room-voted</span>}
-      </p>
-      <h3 className="rs-win-name">{entrant.project || entrant.team}</h3>
-      {people && <p className="rs-win-people">{people}</p>}
-      {entrant.blurb && <p className="rs-win-blurb">{entrant.blurb}</p>}
-      {prize && <p className="rs-win-prize">{prize}</p>}
-      <div className="rs-win-actions">
-        <a className="btn btn-solid" href={certPath(entrant)}>
-          View certificate
-        </a>
-        {entrant.url && (
-          <a className="btn btn-ghost" href={entrant.url} target="_blank" rel="noreferrer">
-            See the project
-            <ArrowUpRight size={15} strokeWidth={1.75} aria-hidden="true" />
-          </a>
-        )}
-      </div>
-    </article>
-  );
+/* The one-line description the hackathon page and the homepage use. */
+function shortLine(e) {
+  const known = SHIPPED.podium.find((entry) => same(entry.project, e.project) || same(entry.project, e.team));
+  return known?.line || e.blurb;
 }
 
 export function generateStaticParams() {
@@ -146,6 +128,18 @@ export default async function Page({ params }) {
   const won = published ? winners(entrants) : [];
   const rest = won.length ? entrants.filter((e) => !isWinner(e)) : entrants;
 
+  /* Where a project's name leads: its team page, else its own site,
+     else its certificate. */
+  const teams = published ? await publicTeams() : [];
+  const home = (e) => {
+    const team = teams.find((t) => same(t.name, e.team) || same(t.registered_name, e.team) || same(t.project, e.project));
+    if (team) return { href: publicTeamPath(team), team: true };
+    if (e.url) return { href: e.url, external: true };
+    return { href: certPath(e) };
+  };
+  const podium = [...won.filter((w) => !w.category.voted), ...won.filter((w) => w.category.voted)];
+  const fwAhead = eventState(FW.startISO, FW.endISO) !== "after";
+
   return (
     <>
       <JsonLd
@@ -159,123 +153,86 @@ export default async function Page({ params }) {
         }}
       />
 
-      <header className="nav">
-        <Lockup />
-        <nav>
-          <a href="/programs">Programs</a>
-          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
-          <a href="/programs/zero-to-launch/hackathon#benefits">Benefits</a>
-          <a href="/programs/zero-to-launch/hackathon#prizes">Prizes</a>
-        </nav>
-        <div className="nav-ctas">
-          <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">
-            Discord
-          </a>
-          <a className="btn btn-solid" href="/dashboard">
-            Register
-          </a>
-        </div>
-      <MobileNav /></header>
+      <SiteHeader current="/programs" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>} />
 
       {published ? (
-        <main>
-          <section className="band rs-hero" aria-labelledby="rs-hero-title">
-            <Scene scene="launch" band className="band-bg" />
-            <div className="rs-hero-inner">
-              <p className="kicker">{EDITION.name}</p>
-              <h1 id="rs-hero-title" className="reveal">
-                Meet the <span className="key">winners.</span>
-              </h1>
-              <p className="rs-hero-lede reveal" style={{ "--d": "120ms" }}>
-                {entrants.length} teams launched at {EDITION.venue} in {EDITION.city}, {EDITION.held}.
-                {won.length > 0 && " These are the ones the judges placed first, second and third."}
-              </p>
-              <div className="reveal" style={{ "--d": "240ms" }}>
-                <ShareActions
-                  url={RESULTS_URL}
-                  text={`The winners of the ${EDITION.name} are in.`}
-                />
+        <main id="top">
+          <EventHero
+            crumb={{ href: HACKATHON, label: EDITION.event }}
+            title="Meet the"
+            keyPhrase="winners."
+            lede={`${entrants.length} teams launched at ${EDITION.venue} in ${EDITION.city}, ${EDITION.held}.${won.length > 0 ? " These are the ones the judges placed first, second and third." : ""}`}
+          />
+
+          <EventBoard
+            scene="launch"
+            alt="Dithered night scene: a finished boat sliding down the ways into the water."
+            label="Results"
+            bar={[`Results · held ${EVENT.datesShort}`, `${entrants.length} teams launched`]}
+            foot={<><span>{EDITION.venue}, Phoenix</span><ShareActions quiet url={RESULTS_URL} text={`The winners of the ${EDITION.name} are in.`} /></>}
+          >
+            {podium.length > 0 && (
+              <ol className="ev-podium">
+                {podium.map(({ category, entrant }) => {
+                  const to = home(entrant);
+                  return (
+                    <li key={category.name}>
+                      <a href={to.href} target={to.external ? "_blank" : undefined} rel={to.external ? "noreferrer" : undefined}>
+                        <span className="ev-label">{[category.name, prizeLine(category.name)].filter(Boolean).join(" · ")}</span>
+                        <b>{entrant.project || entrant.team}</b>
+                        <span className="ev-line">{shortLine(entrant)}</span>
+                        <span className="ev-go">{to.team ? "Open the team page" : to.external ? "See the project" : "View certificate"} <i aria-hidden="true">→</i></span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ol>
+            )}
+          </EventBoard>
+
+          {rest.length > 0 && (
+            <EventSection
+              id="all"
+              title={won.length ? "Everyone else who" : "Every team that"}
+              keyPhrase="shipped"
+              lede="Placing is one measure. Every team below put a live project in front of people, and each has a certificate that stays up."
+            >
+              <ul className="rsl-rows">
+                {rest.map((e) => {
+                  const to = home(e);
+                  return (
+                    <li key={e.id}>
+                      <div>
+                        <a className="rsl-name" href={to.href} target={to.external ? "_blank" : undefined} rel={to.external ? "noreferrer" : undefined}>{e.project || e.team}</a>
+                        {byline(e) && <span className="rsl-people">{byline(e)}</span>}
+                      </div>
+                      <span className="rsl-links">
+                        {e.url && <a href={e.url} target="_blank" rel="noreferrer" aria-label={`Open the site for ${e.project || e.team}`}>Site</a>}
+                        <a href={certPath(e)} aria-label={`View the certificate for ${e.project || e.team}`}>Certificate</a>
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </EventSection>
+          )}
+
+          <div className="ev-end" />
+
+          <section className="band" aria-labelledby="rs-final-title">
+            <Scene scene="stars" mode="ascii" band className="band-bg" />
+            <div className="final">
+              <h2 id="rs-final-title">Just <span className="key">ship</span> it.</h2>
+              <div className="cta-row">
+                <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>
+                {fwAhead && <a className="btn btn-ghost" href={FW.path}>{FW.name}, {FW.datesShort.replace(/, \d{4}$/, "")}</a>}
               </div>
             </div>
+            <div className="final-stage">
+              <Scene scene="harbor" band alt="Dithered harbor at dusk: many small boats at their moorings with their lights on. Every team is in." />
+              <p>Harbor at dusk · Phoenix, Arizona</p>
+            </div>
           </section>
-
-          <div className="rs-page rs-page-wide">
-            {won.length > 0 && (
-              <section aria-labelledby="rs-winners-title">
-                <h2 id="rs-winners-title" className="rs-section-title">
-                  The <span className="key">podium</span>
-                </h2>
-                <div className="rs-podium-grid">
-                  {won
-                    .filter((w) => !w.category.voted)
-                    .map((w, index) => (
-                      <WinnerCard key={w.category.name} {...w} lead={index === 0} />
-                    ))}
-                  {won
-                    .filter((w) => w.category.voted)
-                    .map((w) => (
-                      <WinnerCard key={w.category.name} {...w} lead={false} />
-                    ))}
-                </div>
-              </section>
-            )}
-
-            {rest.length > 0 && (
-              <section aria-labelledby="rs-all-title">
-                <h2 id="rs-all-title" className="rs-section-title">
-                  {won.length ? (
-                    <>
-                      Everyone else who <span className="key">shipped</span>
-                    </>
-                  ) : (
-                    <>
-                      Every team that <span className="key">shipped</span>
-                    </>
-                  )}
-                </h2>
-                <p className="rs-lede">
-                  Placing is one measure. Every team below put a live project in front of people,
-                  and each has a certificate that stays up.
-                </p>
-                <ul className="rs-grid">
-                  {rest.map((e) => (
-                    <li key={e.id} className="rs-card">
-                      <p className="rs-card-place">{placementOf(e)}</p>
-                      <h3>{e.project || e.team}</h3>
-                      {byline(e) && <p className="rs-card-people">{byline(e)}</p>}
-                      <div className="rs-card-links">
-                        {e.url && (
-                          <a href={e.url} target="_blank" rel="noreferrer">
-                            Project
-                            <ArrowUpRight size={13} strokeWidth={1.75} aria-hidden="true" />
-                          </a>
-                        )}
-                        <a href={certPath(e)} aria-label={`View the certificate for ${e.project || e.team}`}>
-                          <BadgeCheck size={13} strokeWidth={1.75} aria-hidden="true" />
-                          Certificate
-                        </a>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            <section className="rs-close" aria-label="Keep going">
-              <p className="rs-close-line">
-                Just <span className="key">ship</span> it.
-              </p>
-              <div className="rs-close-ctas">
-                <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">
-                  Join the Discord
-                </a>
-                <a className="btn btn-ghost" href="/programs/zero-to-launch/hackathon">
-                  Back to the hackathon
-                  <ArrowRight size={15} strokeWidth={1.75} aria-hidden="true" />
-                </a>
-              </div>
-            </section>
-          </div>
         </main>
       ) : (
         <main className="rs-page">
@@ -339,16 +296,7 @@ export default async function Page({ params }) {
         </main>
       )}
 
-      <footer className="footer">
-        <Lockup compact />
-        <nav>
-          <a href="/">Home</a>
-          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
-          <a href="/programs">Programs</a>
-          <a href="/programs/zero-to-launch">Sessions</a>
-        </nav>
-        <p className="fine">© 2026 Ship AI</p>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

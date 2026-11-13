@@ -1,9 +1,11 @@
 import { redirect } from "next/navigation";
 
 import "../account.css";
-import { AccountHeader, AccountFooter } from "../../components/account-chrome";
+import SiteFooter from "../../components/site-footer";
+import SiteHeader from "../../components/site-header";
 import { currentUser } from "../../lib/auth";
 import { hasDb } from "../../lib/db";
+import { DISCORD } from "../../lib/hackathon";
 import { safeNext, afterSignIn } from "../../lib/nav";
 import LoginForm from "./login-form";
 
@@ -26,7 +28,7 @@ export default async function Page({ searchParams }) {
 
   return (
     <>
-      <AccountHeader user={null} />
+      <SiteHeader cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>} />
 
       <main className="ac-page">
         <p className="ac-kicker">Ship AI account</p>
@@ -61,12 +63,11 @@ export default async function Page({ searchParams }) {
         <hr className="ac-divider" style={{ margin: "2.5rem 0 1.5rem" }} />
 
         <p className="ac-fine">
-          New here? Entering your email makes the account — nothing else to sign up for. We
-          email you about the program and nothing else.
+          New here? Entering your email makes the account.
         </p>
       </main>
 
-      <AccountFooter />
+      <SiteFooter />
     </>
   );
 }

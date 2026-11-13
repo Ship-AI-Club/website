@@ -1156,6 +1156,12 @@ h3 .icon {
   justify-content: center;
 }
 
+/* a closing band with no line under its headline: the buttons still
+   need the room that line would have given them */
+.final h2 + .cta-row {
+  margin-top: 36px;
+}
+
 .final-checks {
   list-style: none;
   display: flex;

@@ -34,3 +34,80 @@
 .talk-prompts .wm-prompt-actions [role="status"] { font-size: 14px; color: var(--dim); }
 .talk-prompts .wm-slide-prompt pre { margin: 0; padding: 20px 22px; background: var(--surface); border: 1px solid var(--hairline); font: 14px/1.65 var(--sap-font-mono); color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; }
 .talks-list .row-side { display: flex; gap: 8px; }
+
+.talk-page { padding-bottom: 0; }
+.talk-hero { padding-bottom: 0; }
+.talk-hero .cta-row { justify-content: center; }
+.talk-board { margin-top: 56px; text-align: left; }
+.talk-section { padding-block: clamp(64px, 9vw, 112px); }
+.talk-section + .talk-section { padding-top: clamp(64px, 9vw, 112px); }
+
+.talk-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.talk-steps li { border-top: 3px solid var(--accent); background: var(--surface); padding: 24px 24px 28px; display: grid; gap: 10px; align-content: start; }
+.talk-steps span { font-family: var(--sap-font-mono); font-size: 13px; color: var(--accent); }
+.talk-steps h3 { font-family: var(--sap-font-display); font-weight: 400; font-size: 30px; line-height: 1.05; letter-spacing: -.02em; margin: 0; }
+.talk-steps p { margin: 0; color: var(--dim); font-size: 15px; line-height: 1.5; }
+
+.talk-deck .kit-deck-frame { aspect-ratio: 16 / 10; }
+
+.talk-example-body { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; padding: 32px; }
+.talk-example-main h3 { font-family: var(--sap-font-display); font-weight: 400; font-size: 34px; letter-spacing: -.02em; margin: 0 0 10px; }
+.talk-example-pitch { font-size: 18px; line-height: 1.5; color: var(--ink); margin: 0 0 20px; max-width: 34em; }
+.talk-example-job { margin: 0 0 20px; padding: 14px 16px; border-left: 3px solid var(--accent); background: rgba(var(--accent-rgb), .08); font-size: 16px; }
+.talk-example-job span, .talk-example-done > span { display: block; font-family: var(--sap-font-mono); font-size: 12px; letter-spacing: .04em; color: var(--accent); margin-bottom: 6px; }
+.talk-example-stack { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.talk-example-stack li { font-family: var(--sap-font-mono); font-size: 13px; padding: 5px 10px; border: 1px solid var(--hairline); color: var(--dim); }
+.talk-example-done ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.talk-example-done li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; font-size: 15px; line-height: 1.45; color: var(--ink); }
+.talk-example-done li::before { content: ""; width: 16px; height: 16px; margin-top: 3px; border: 1.5px solid var(--accent); }
+.talk-example-copy { border-top: 1px solid var(--hairline); padding: 0 32px; }
+.talk-example-copy .wm-slide-prompt { padding: 18px 0; border: 0; }
+
+.talk-prompts { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline); display: block; }
+.talk-prompts > li { display: grid; grid-template-columns: 48px minmax(0, 1fr); align-items: start; border-bottom: 1px solid var(--hairline); }
+.talk-prompt-n { font-family: var(--sap-font-mono); font-size: 13px; color: var(--accent); padding-top: 22px; }
+.talk-prompts .wm-slide-prompt { border-bottom: 0; padding: 18px 0; }
+.talk-prompts .wm-slide-prompt summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.talk-prompts .wm-slide-prompt summary::-webkit-details-marker { display: none; }
+.talk-prompts .wm-slide-prompt summary::after { content: "+"; font-family: var(--sap-font-mono); font-size: 20px; color: var(--accent); transition: transform .2s var(--sap-ease, ease); }
+.talk-prompts .wm-slide-prompt[open] summary::after { transform: rotate(45deg); }
+.talk-example-copy .wm-slide-prompt summary { list-style: none; display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-weight: 600; font-size: 16px; color: var(--ink); }
+.talk-example-copy .wm-slide-prompt summary::-webkit-details-marker { display: none; }
+.talk-example-copy .wm-slide-prompt summary::after { content: "+"; font-family: var(--sap-font-mono); font-size: 20px; color: var(--accent); }
+.talk-example-copy .wm-slide-prompt[open] summary::after { content: "×"; }
+.talk-example-copy .wm-prompt-actions { display: flex; align-items: center; gap: 14px; margin: 16px 0 12px; }
+.talk-example-copy .wm-prompt-actions button { font: var(--sap-font-button); padding: 10px 16px; background: var(--accent); color: var(--bg); border: 0; cursor: pointer; }
+.talk-example-copy .wm-prompt-actions [role="status"] { font-size: 14px; color: var(--dim); }
+.talk-example-copy .wm-slide-prompt pre { margin: 0; padding: 20px 22px; background: var(--sunken); border: 1px solid var(--hairline); font: 13px/1.65 var(--sap-font-mono); color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; max-height: 420px; overflow: auto; }
+
+.talk-tools { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.talk-tools li { background: var(--surface); border: 1px solid var(--hairline); padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.talk-tools h3 { font-family: var(--sap-font-display); font-weight: 400; font-size: 24px; margin: 0; letter-spacing: -.015em; }
+.talk-tools h3 a { color: inherit; text-decoration: none; }
+.talk-tools h3 a span { color: var(--accent); font-size: .7em; }
+.talk-tools p { margin: 0; color: var(--dim); font-size: 15px; line-height: 1.5; flex: 1; }
+.talk-tools code { font-family: var(--sap-font-mono); font-size: 12.5px; padding: 8px 10px; background: var(--sunken); color: var(--ink); overflow-wrap: anywhere; }
+
+@media (max-width: 900px) {
+  .talk-board { margin-top: 36px; }
+  .talk-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .talk-tools { grid-template-columns: 1fr; }
+  .talk-example-body { grid-template-columns: 1fr; gap: 24px; padding: 22px; }
+  .talk-example-copy { padding: 0 22px; }
+}
+@media (max-width: 560px) {
+  .talk-steps { grid-template-columns: 1fr; }
+  .talk-prompts > li { grid-template-columns: 36px minmax(0, 1fr); }
+}
+
+.talk-section .section-head { margin-bottom: 48px; }
+.talk-deck-link { position: relative; display: block; }
+.talk-deck-link iframe { pointer-events: none; }
+.talk-deck-link::after { content: "Open the deck  →"; position: absolute; right: 16px; bottom: 16px; font: var(--sap-font-button); padding: 10px 16px; background: var(--accent); color: var(--bg); opacity: 0; transform: translateY(4px); transition: opacity .2s var(--sap-ease, ease), transform .2s var(--sap-ease, ease); }
+@media (hover: hover) and (pointer: fine) { .talk-deck-link:hover::after { opacity: 1; transform: none; } }
+.talk-deck-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .talk-deck-link::after { transition: none; } }
+@media (min-width: 1101px) { .talk-tools { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 901px) and (max-width: 1100px) { .talk-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.talk-prompts .wm-prompt-actions { margin: 14px 0 12px; }
+.talk-prompts .wm-slide-prompt pre { max-height: 360px; overflow: auto; }

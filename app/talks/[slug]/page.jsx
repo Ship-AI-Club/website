@@ -5,7 +5,7 @@ import Scene from "../../../components/scene";
 import DepartureBoard from "../../../components/departure-board";
 import WorkshopPrompt from "../../../components/workshop-prompt.jsx";
 import { JsonLd } from "../../../components/article";
-import { TALKS, talkBySlug, talkPrompts, talkEnded } from "../../../lib/talks";
+import { TALKS, talkBySlug, talkPrompts, talkEnded, talkScheduled, talkWhen } from "../../../lib/talks";
 import { DISCORD } from "../../../lib/hackathon";
 import { ogImage } from "../../../lib/og";
 import "../talks.css";
@@ -26,9 +26,9 @@ export async function generateMetadata({ params }) {
   const url = `${SITE}/talks/${talk.slug}`;
   return {
     title: `${talk.eventTitle} - Ship AI`,
-    description: `${talk.summary} ${talk.copy} ${talk.dateLabel}, ${talk.venue}, Phoenix. Free.`.slice(0, 300),
+    description: `${talk.summary} ${talk.copy} ${talkWhen(talk)}, ${talk.venue}, Phoenix. Free.`.slice(0, 300),
     alternates: { canonical: url },
-    openGraph: { title: talk.eventTitle, description: talk.summary, url, siteName: "Ship AI", images: [ogImage({ kicker: "Talks", title: talk.eventTitle, key: talk.key, tagline: talk.summary, meta: `${talk.dateLabel} · Free` })] },
+    openGraph: { title: talk.eventTitle, description: talk.summary, url, siteName: "Ship AI", images: [ogImage({ kicker: "Talks", title: talk.eventTitle, key: talk.key, tagline: talk.summary, meta: `${talkScheduled(talk) ? talk.dateLabel : "Coming soon"} · Free` })] },
   };
 }
 
@@ -58,38 +58,39 @@ export default async function Page({ params }) {
   const talk = talkBySlug(slug);
   if (!talk) notFound();
   const [lead, ...rest] = talk.eventTitle.split(talk.key);
+  const scheduled = talkScheduled(talk);
   const ended = talkEnded(talk);
-  const rsvp = ended ? [] : talk.rsvp.length ? talk.rsvp : [{ label: "RSVP on Luma", href: LUMA }];
+  const rsvp = ended || !scheduled ? [] : talk.rsvp?.length ? talk.rsvp : [{ label: "RSVP on Luma", href: LUMA }];
   const prompts = talkPrompts(talk);
   const deckHref = `/talks/${talk.slug}/deck`;
-  const days = daysUntil(talk.startISO);
-  const start = new Date(talk.startISO);
-  const dateBig = start.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Phoenix" });
-  const weekday = start.toLocaleDateString("en-US", { weekday: "short", timeZone: "America/Phoenix" });
+  const days = scheduled ? daysUntil(talk.startISO) : 0;
+  const start = scheduled ? new Date(talk.startISO) : null;
+  const dateBig = start ? start.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Phoenix" }) : "TBA";
+  const weekday = start ? start.toLocaleDateString("en-US", { weekday: "short", timeZone: "America/Phoenix" }) : "";
 
   return <>
-    <JsonLd data={eventSchema(talk)} />
+    {scheduled && <JsonLd data={eventSchema(talk)} />}
     <SiteHeader current="/talks" />
     <main className="talk-page">
       <section className="hero talk-hero" aria-labelledby="talk-title">
-        <p className="eyebrow">Ship AI · Talks · {ended ? "Past talk" : "Free"}</p>
+        <p className="eyebrow">Ship AI · Talks{talk.series ? ` · Part ${talk.series}` : ""} · {ended ? "Past talk" : scheduled ? "Free" : "Coming soon"}</p>
         <h1 className="hero-h1" id="talk-title">{lead}<span className="key">{talk.key}</span>{rest.join(talk.key)}</h1>
         <p className="hero-lede">{talk.summary}</p>
         <div className="cta-row home-pair">
           {rsvp.length > 0
             ? rsvp.map((r, i) => <a key={r.href} className={`btn ${i === 0 ? "btn-solid" : "btn-ghost"}`} href={r.href} target="_blank" rel="noreferrer">{r.label}</a>)
-            : <a className="btn btn-solid" href={deckHref}>Open the deck</a>}
+            : <><a className="btn btn-solid" href={scheduled ? deckHref : DISCORD} target={scheduled ? undefined : "_blank"} rel={scheduled ? undefined : "noreferrer"}>{scheduled ? "Open the deck" : "Get the date in Discord"}</a>{!scheduled && <a className="btn btn-ghost" href={deckHref}>Preview the deck</a>}</>}
         </div>
         <div className="talk-board">
           <DepartureBoard
             scene="launch"
-            label={ended ? "This talk has ended" : "The night"}
-            status={ended ? "Slides and prompts below" : "Free · In person"}
-            date={{ big: dateBig, small: `${weekday} · ${talk.timeLabel}` }}
+            label={ended ? "This talk has ended" : scheduled ? "The night" : "Coming soon"}
+            status={ended ? "Slides and prompts below" : scheduled ? "Free · In person" : "Date to be announced"}
+            date={{ big: dateBig, small: scheduled ? `${weekday} · ${talk.timeLabel}` : "Wednesday nights · 5:30 PM" }}
             title={`${talk.venue}, Phoenix`}
             meta={`${talk.address.replace(/, Phoenix AZ \d+$/, "")} · ${talk.parking}`}
-            figure={ended ? null : { big: String(days), small: days === 1 ? "day to go" : "days to go" }}
-            action={ended ? { href: deckHref, label: "Open the deck" } : { href: rsvp[0].href, label: "Save your seat" }}
+            figure={ended || !scheduled ? null : { big: String(days), small: days === 1 ? "day to go" : "days to go" }}
+            action={ended ? { href: deckHref, label: "Open the deck" } : scheduled ? { href: rsvp[0].href, label: "Save your seat" } : { href: DISCORD, label: "Get notified" }}
           />
         </div>
       </section>
@@ -97,10 +98,10 @@ export default async function Page({ params }) {
       <section className="section talk-section" aria-labelledby="night-title">
         <div className="section-head">
           <h2 id="night-title">How the night <span className="key">runs.</span></h2>
-          <p className="section-lede">Twenty minutes of AI news, one live build, then five-minute demos from the room.</p>
+          <p className="section-lede">{talk.stepsLede ?? "Twenty minutes of AI news, one live build, then five-minute demos from the room."}</p>
         </div>
         <ol className="talk-steps">
-          {talk.steps.map((st, i) => <li key={st.title}><span>{String(i + 1).padStart(2, "0")}</span><h3>{st.title}</h3><p>{st.body}</p></li>)}
+          {(talk.steps || []).map((st, i) => <li key={st.title}><span>{String(i + 1).padStart(2, "0")}</span><h3>{st.title}</h3><p>{st.body}</p></li>)}
         </ol>
       </section>
 
@@ -117,25 +118,25 @@ export default async function Page({ params }) {
 
       {talk.example && <section className="section talk-section" aria-labelledby="example-title">
         <div className="section-head">
-          <h2 id="example-title">Tonight&apos;s <span className="key">example.</span></h2>
-          <p className="section-lede">The app we build on the night, from a one-page spec. Start from it, or write your own with the interview prompt.</p>
+          <h2 id="example-title">{talk.example.heading?.[0] ?? "Tonight's"} <span className="key">{talk.example.heading?.[1] ?? "example."}</span></h2>
+          <p className="section-lede">{talk.example.lede ?? "The app we build on the night, from a one-page spec. Start from it, or write your own with the interview prompt."}</p>
         </div>
         <div className="window talk-example">
-          <div className="window-bar"><b>SPEC.md</b><span>{talk.example.name}</span></div>
+          <div className="window-bar"><b>{talk.example.file ?? "SPEC.md"}</b><span>{talk.example.name}</span></div>
           <div className="talk-example-body">
             <div className="talk-example-main">
               <h3>{talk.example.name}</h3>
               <p className="talk-example-pitch">{talk.example.pitch}</p>
-              <p className="talk-example-job"><span>The one job</span>{talk.example.job}</p>
+              <p className="talk-example-job"><span>{talk.example.jobLabel ?? "The one job"}</span>{talk.example.job}</p>
               <ul className="talk-example-stack">{talk.example.stack.map((t) => <li key={t}>{t}</li>)}</ul>
             </div>
             <div className="talk-example-done">
-              <span>Done when</span>
+              <span>{talk.example.doneLabel ?? "Done when"}</span>
               <ul>{talk.example.done.map((d) => <li key={d}>{d}</li>)}</ul>
             </div>
           </div>
           <div className="talk-example-copy">
-            <WorkshopPrompt prompt={talk.example.spec} label="The full spec" destination="a SPEC.md file" />
+            {talk.example.spec && <WorkshopPrompt prompt={talk.example.spec} label={talk.example.specLabel ?? "The full spec"} destination={talk.example.specDestination ?? "a SPEC.md file"} />}
           </div>
         </div>
       </section>}
@@ -156,7 +157,7 @@ export default async function Page({ params }) {
       {talk.tools?.length > 0 && <section className="section talk-section" aria-labelledby="tools-title">
         <div className="section-head">
           <h2 id="tools-title">The <span className="key">toolkit.</span></h2>
-          <p className="section-lede">Everything we use on the night, one job each. All of them have free tiers that cover a project like this.</p>
+          <p className="section-lede">{talk.toolsLede ?? "Everything we use on the night, one job each."}</p>
         </div>
         <ul className="talk-tools">
           {talk.tools.map((tool) => <li key={tool.name}>
@@ -169,8 +170,8 @@ export default async function Page({ params }) {
 
       <section className="band" aria-labelledby="talk-final-title">
         <div className="final">
-          <h2 id="talk-final-title">Bring an idea. <span className="key">Leave with a live app.</span></h2>
-          <p className="lede">{ended ? "This one has happened. The slides and prompts stay up, and the next talk is posted in the Discord." : `${talk.dateLabel} · ${talk.timeLabel} · ${talk.venue}. Free, and open to anyone building with AI.`}</p>
+          <h2 id="talk-final-title">{talk.closing?.[0] ?? "Bring an idea."} <span className="key">{talk.closing?.[1] ?? "Leave with a live app."}</span></h2>
+          <p className="lede">{ended ? "This one has happened. The slides and prompts stay up, and the next talk is posted in the Discord." : scheduled ? `${talk.dateLabel} · ${talk.timeLabel} · ${talk.venue}. Free, and open to anyone building with AI.` : "Date to be announced. Dates go out in the Discord first."}</p>
           <div className="cta-row home-pair">
             {rsvp[0] && <a className="btn btn-solid" href={rsvp[0].href} target="_blank" rel="noreferrer">{rsvp[0].label}</a>}
             <a className="btn btn-ghost" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>

@@ -54,14 +54,6 @@ const nextConfig = {
         destination: "/hackathons/founder-weekend/:path*",
         permanent: true,
       },
-      // /socratic-night was an indexed SEO page for a format we retired in
-      // favour of workshops and builder presentations. Permanent redirect so
-      // existing inbound links and accumulated ranking land somewhere real.
-      {
-        source: "/socratic-night",
-        destination: "/programs/zero-to-launch",
-        permanent: true,
-      },
       // Ship AI operates in Phoenix only now — Tempe was dropped as an
       // operating city, so its indexed meetup page redirects to Phoenix's.
       {

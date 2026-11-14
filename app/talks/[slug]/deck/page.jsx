@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
     title: `${title} - Ship AI`,
     description: `Slides and copyable Claude Code prompts. ${talk.copy}`.slice(0, 300),
     alternates: { canonical: url },
-    openGraph: { title, description: talk.copy.slice(0, 200), url, siteName: "Ship AI", images: [ogImage({ kicker: "Talks · Slides", title: talk.eventTitle, key: talk.key, meta: `${talk.dateLabel} · Free` })] },
+    openGraph: { title, description: talk.copy.slice(0, 200), url, siteName: "Ship AI", images: [ogImage({ kicker: "Talks · Slides", title: talk.eventTitle, key: talk.key, meta: `${talk.startISO ? talk.dateLabel : "Coming soon"} · Free` })] },
   };
 }
 

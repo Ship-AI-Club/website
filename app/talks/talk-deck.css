@@ -526,3 +526,32 @@
 @media (min-width: 901px) {
   .wm-talk .wd-phone-stage { padding-right: 15cqw; }
 }
+
+.wm-talk .wd-logos { display: grid; gap: 1.4cqw; }
+.wm-talk .wd-logos-row { display: grid; grid-template-columns: 13cqw minmax(0, 1fr); gap: 2cqw; align-items: center; padding-top: 1.2cqw; border-top: 1px solid var(--hairline); }
+.wm-talk .wd-logos-row:first-child { border-top: 0; padding-top: 0; }
+.wm-talk .wd-logos-label { font: 1.15cqw var(--sap-font-mono); color: var(--accent); letter-spacing: .04em; }
+.wm-talk .wd-logos ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1cqw; }
+.wm-talk .wd-logos li { display: flex; align-items: center; gap: .8cqw; padding: .8cqw 1.3cqw .8cqw .9cqw; background: var(--surface, #FBF9F3); border: 1px solid var(--hairline); }
+.wm-talk .wd-logos li svg, .wm-talk .wd-logo-mono { width: 2cqw; height: 2cqw; color: var(--ink); flex: none; }
+.wm-talk .wd-logo-mono { display: grid; place-items: center; background: var(--ink); color: var(--bg); font: 600 1.15cqw var(--sap-font-body); }
+.wm-talk .wd-logos li b { font-size: 1.5cqw; font-weight: 600; color: var(--ink); }
+.wm-talk .wm-lesson:has(.wd-logos) .wm-lesson-content { flex: 1; align-items: center; }
+@media (max-width: 900px) {
+  .wm-talk .wd-logos-row { grid-template-columns: 1fr; gap: 8px; padding-top: 12px; }
+  .wm-talk .wd-logos-label { font-size: 12px; }
+  .wm-talk .wd-logos ul { gap: 8px; }
+  .wm-talk .wd-logos li { gap: 8px; padding: 7px 11px 7px 8px; }
+  .wm-talk .wd-logos li svg, .wm-talk .wd-logo-mono { width: 18px; height: 18px; }
+  .wm-talk .wd-logo-mono { font-size: 11px; }
+  .wm-talk .wd-logos li b { font-size: 14px; }
+}
+@media (min-width: 901px) {
+  .wm-talk .wd-logos { gap: 1.8cqw; }
+  .wm-talk .wd-logos-row { padding-top: 1.6cqw; }
+  .wm-talk .wd-logos ul { gap: 1.2cqw; }
+  .wm-talk .wd-logos li { gap: 1cqw; padding: 1.1cqw 1.8cqw 1.1cqw 1.2cqw; }
+  .wm-talk .wd-logos li svg, .wm-talk .wd-logo-mono { width: 2.6cqw; height: 2.6cqw; }
+  .wm-talk .wd-logo-mono { font-size: 1.4cqw; }
+  .wm-talk .wd-logos li b { font-size: 1.85cqw; }
+}

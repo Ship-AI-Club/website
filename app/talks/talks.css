@@ -111,3 +111,94 @@
 @media (min-width: 901px) and (max-width: 1100px) { .talk-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .talk-prompts .wm-prompt-actions { margin: 14px 0 12px; }
 .talk-prompts .wm-slide-prompt pre { max-height: 360px; overflow: auto; }
+
+.tk-hero .talk-board { margin-top: 64px; }
+.tk-series { padding-block: clamp(72px, 9vw, 128px) clamp(56px, 8vw, 104px); border-top: 0; }
+.tk-legs { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--hairline); }
+.tk-leg { display: grid; grid-template-columns: minmax(200px, 260px) minmax(0, 1fr); gap: 48px; padding: 48px 0; border-bottom: 1px solid var(--hairline); }
+.tk-leg-head { align-self: start; position: sticky; top: 96px; }
+.tk-leg-n { display: block; font-family: var(--sap-font-mono); font-size: 13px; color: var(--accent); margin-bottom: 14px; }
+.tk-leg-head h3 { font-family: var(--sap-font-display); font-weight: 400; font-size: clamp(36px, 4vw, 52px); line-height: 1; letter-spacing: -.025em; margin: 0 0 12px; }
+.tk-leg-head p { margin: 0; color: var(--dim); font-size: 16px; line-height: 1.5; max-width: 22ch; }
+
+.tk-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.tk-card { position: relative; padding: 26px 26px 22px; gap: 0; min-height: 232px; transition: transform .25s var(--sap-ease, ease), border-color .25s var(--sap-ease, ease); }
+.tk-card.is-next { border-color: var(--accent); border-top: 3px solid var(--accent); }
+.tk-card-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0 0 22px; font-family: var(--sap-font-mono); font-size: 13px; color: var(--dim); }
+.tk-pill { font-family: var(--sap-font-mono); font-size: 12px; padding: 4px 9px; border: 1px solid var(--hairline); color: var(--dim); white-space: nowrap; }
+.tk-pill-live { border-color: var(--accent); background: var(--accent); color: var(--bg); }
+.tk-card-title { font-family: var(--sap-font-display); font-weight: 400; font-size: clamp(26px, 2.4vw, 32px); line-height: 1.08; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.tk-card-link { color: inherit; text-decoration: none; }
+.tk-card-link::after { content: ""; position: absolute; inset: 0; }
+.tk-card-link:focus-visible { outline: 0; }
+.tk-card-link:focus-visible::after { outline: 3px solid var(--accent); outline-offset: -3px; }
+.tk-card-sum { margin: 0 0 24px; color: var(--dim); font-size: 15.5px; line-height: 1.5; flex: 1; text-wrap: pretty; }
+.tk-card-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0; padding-top: 16px; border-top: 1px solid var(--hairline); }
+.tk-file { font-family: var(--sap-font-mono); font-size: 12.5px; padding: 4px 8px; background: var(--sunken); color: var(--ink); }
+.tk-slides { position: relative; z-index: 1; font-family: var(--sap-font-mono); font-size: 13px; color: var(--accent); text-decoration: none; padding: 6px 0; }
+.tk-slides span { display: inline-block; transition: transform .2s var(--sap-ease, ease); }
+@media (hover: hover) and (pointer: fine) {
+  .tk-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .tk-slides:hover span { transform: translateX(4px); }
+}
+@media (prefers-reduced-motion: reduce) { .tk-card, .tk-slides span { transition: none; } .tk-card:hover { transform: none; } }
+
+.tk-take { padding-block: clamp(56px, 8vw, 104px) clamp(80px, 11vw, 160px); }
+.tk-take .section-head { margin-bottom: 48px; }
+.tk-take-list { list-style: none; margin: 0 auto; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; max-width: 1040px; }
+.tk-take-list li { border-top: 3px solid var(--accent); background: var(--surface); padding: 24px 24px 28px; display: grid; gap: 10px; align-content: start; }
+.tk-take-list span { font-family: var(--sap-font-mono); font-size: 13px; color: var(--accent); }
+.tk-take-list h3 { font-family: var(--sap-font-display); font-weight: 400; font-size: 28px; line-height: 1.05; letter-spacing: -.02em; margin: 0; }
+.tk-take-list p { margin: 0; color: var(--dim); font-size: 15px; line-height: 1.5; }
+
+@media (max-width: 1000px) {
+  .tk-leg { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+  .tk-leg-head { position: static; }
+  .tk-leg-head p { max-width: none; }
+}
+@media (max-width: 640px) {
+  .tk-cards, .tk-take-list { grid-template-columns: 1fr; }
+  .tk-card { min-height: 0; padding: 22px 20px 18px; }
+  .tk-hero .talk-board { margin-top: 40px; }
+}
+
+.sn-cats { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.sn-cats li { padding: 26px 26px 28px; gap: 10px; }
+.sn-cats span { font-family: var(--sap-font-mono); font-size: 13px; color: var(--accent); }
+.sn-cats h3 { font-family: var(--sap-font-display); font-weight: 400; font-size: clamp(24px, 2.2vw, 30px); line-height: 1.1; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+.sn-cats p { margin: 0; color: var(--dim); font-size: 15.5px; line-height: 1.5; }
+.sn-propose { text-align: center; margin: 40px 0 0; color: var(--dim); font-size: 16px; }
+.sn-propose a { color: var(--ink); }
+.sn-faq { max-width: 820px; margin: 0 auto; border-top: 1px solid var(--hairline); }
+.sn-faq details { border-bottom: 1px solid var(--hairline); padding: 20px 0; }
+.sn-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 16px; font-weight: 600; font-size: 18px; color: var(--ink); }
+.sn-faq summary::-webkit-details-marker { display: none; }
+.sn-faq summary::after { content: "+"; font-family: var(--sap-font-mono); font-size: 20px; color: var(--accent); transition: transform .2s var(--sap-ease, ease); }
+.sn-faq details[open] summary::after { transform: rotate(45deg); }
+.sn-faq p { margin: 12px 0 0; color: var(--dim); font-size: 16px; line-height: 1.6; max-width: 62ch; }
+@media (prefers-reduced-motion: reduce) { .sn-faq summary::after { transition: none; } }
+
+.tk-recurring { padding-block: clamp(56px, 8vw, 104px); }
+.tk-rec { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 0; text-decoration: none; color: inherit; max-width: 1040px; margin: 0 auto; }
+.tk-rec-body { padding: 36px; display: grid; gap: 14px; align-content: start; }
+.tk-rec-body > span { font-family: var(--sap-font-mono); font-size: 13px; color: var(--accent); }
+.tk-rec-body h3 { font-family: var(--sap-font-display); font-weight: 400; font-size: clamp(32px, 3.4vw, 44px); line-height: 1.02; letter-spacing: -.025em; margin: 0; }
+.tk-rec-body p { margin: 0; color: var(--dim); font-size: 16px; line-height: 1.55; }
+.tk-rec-cats { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.tk-rec-cats li { font-family: var(--sap-font-mono); font-size: 12.5px; padding: 5px 10px; border: 1px solid var(--hairline); color: var(--ink); }
+.tk-rec-go { font-family: var(--sap-font-mono); font-size: 13px; color: var(--accent); margin-top: 6px; }
+.tk-rec-go b { display: inline-block; font-weight: 400; transition: transform .2s var(--sap-ease, ease); }
+.tk-rec-art { position: relative; min-height: 260px; border-left: 1px solid var(--hairline); overflow: hidden; }
+.tk-rec-art .scene { position: absolute; inset: 0; width: 100%; height: 100%; }
+@media (hover: hover) and (pointer: fine) { .tk-rec:hover { border-color: var(--accent); transform: translateY(-4px); } .tk-rec:hover .tk-rec-go b { transform: translateX(4px); } }
+.tk-rec { transition: transform .25s var(--sap-ease, ease), border-color .25s var(--sap-ease, ease); }
+@media (prefers-reduced-motion: reduce) { .tk-rec, .tk-rec-go b { transition: none; } .tk-rec:hover { transform: none; } }
+@media (max-width: 900px) {
+  .sn-cats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tk-rec { grid-template-columns: 1fr; }
+  .tk-rec-art { border-left: 0; border-top: 1px solid var(--hairline); min-height: 180px; order: -1; }
+  .tk-rec-body { padding: 26px 22px; }
+}
+@media (max-width: 560px) { .sn-cats { grid-template-columns: 1fr; } }
+
+.tk-rec:focus-visible { outline: 0; box-shadow: inset 0 0 0 2px var(--accent); }

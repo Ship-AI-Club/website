@@ -17,6 +17,7 @@ export default function sitemap() {
     { url: `${BASE}/about`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/programs`, lastModified, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/talks`, lastModified, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE}/socratic-night`, lastModified, changeFrequency: "monthly", priority: 0.7 },
     ...TALKS.flatMap((t) => [
       { url: `${BASE}/talks/${t.slug}`, lastModified, changeFrequency: "weekly", priority: 0.8 },
       { url: `${BASE}/talks/${t.slug}/deck`, lastModified, changeFrequency: "monthly", priority: 0.6 },

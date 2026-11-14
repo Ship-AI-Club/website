@@ -267,6 +267,7 @@ const qrTargets = {
   repo: TEMPLATE_REPO,
   sponsors: `${SITE}/programs/zero-to-launch/hackathon/sponsor`,
   hackathon: `${SITE}/programs/zero-to-launch/hackathon`,
+  "founder-weekend": `${SITE}/hackathons/founder-weekend`,
   "growth-loops": `${SITE}/programs/growth-loops`,
   ...Object.fromEntries(TALKS.map((t) => [`talk-${t.slug}`, `${SITE}/talks/${t.slug}`])),
   ...Object.fromEntries(

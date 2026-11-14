@@ -100,3 +100,33 @@
 .wm-talk .wm-tone-bonus .wm-prompt-inline .wm-prompt-actions [role="status"],
 .wm-talk .wm-tone-bonus .wm-prompt-inline .wm-full-prompt-open { color: #3E5A50; }
 .wm-talk .wm-tone-bonus .wm-prompt-inline .wm-prompt-actions button { background: #0D241E; color: var(--sap-bone); border-color: #0D241E; }
+
+.wm-talk .wd-partner { display: grid; gap: 2.6cqw; }
+.wm-talk .wd-partner-lockup { display: flex; align-items: center; justify-content: center; gap: 3cqw; padding: 2.6cqw; background: var(--sunken); border-top: 3px solid var(--accent); }
+.wm-talk .wd-partner-ship { display: flex; align-items: center; gap: 1.2cqw; }
+.wm-talk .wd-partner-ship svg { width: 5.4cqw; height: 5.4cqw; }
+.wm-talk .wd-partner-ship strong { font-family: var(--sap-font-display); font-weight: 400; font-size: 4cqw; letter-spacing: -.03em; color: var(--ink); }
+.wm-talk .wd-partner-x { font-size: 3cqw; color: var(--accent); font-weight: 300; }
+.wm-talk .wd-partner-workuity { display: flex; align-items: center; gap: 1.4cqw; }
+.wm-talk .wd-partner-workuity img { height: 3.4cqw; width: auto; display: block; }
+.wm-talk .wd-partner-workuity i { width: 1px; height: 4cqw; background: var(--ink); opacity: .35; }
+.wm-talk .wd-partner-workuity strong { font-family: var(--sap-font-body); font-weight: 700; font-size: 3.2cqw; letter-spacing: -.01em; text-transform: uppercase; color: var(--ink); line-height: 1; }
+.wm-talk .wd-partner-items { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2cqw; }
+.wm-talk .wd-partner-items > div { border-top: 1px solid var(--hairline); padding-top: 1cqw; }
+.wm-talk .wd-partner-items span { font: 1.1cqw var(--sap-font-mono); color: var(--accent); }
+.wm-talk .wd-partner-items h4 { font-size: 1.9cqw; margin: .5cqw 0 .3cqw; }
+.wm-talk .wd-partner-items h4 a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: .25em; }
+.wm-talk .wd-partner-items p { font-size: 1.3cqw; }
+@media (max-width: 900px) {
+  .wm-talk .wd-partner-lockup { flex-wrap: wrap; gap: 14px; padding: 20px; }
+  .wm-talk .wd-partner-ship svg { width: 44px; height: 44px; }
+  .wm-talk .wd-partner-ship strong { font-size: 30px; }
+  .wm-talk .wd-partner-x { font-size: 24px; }
+  .wm-talk .wd-partner-workuity img { height: 26px; }
+  .wm-talk .wd-partner-workuity i { height: 30px; }
+  .wm-talk .wd-partner-workuity strong { font-size: 24px; }
+  .wm-talk .wd-partner-items { grid-template-columns: 1fr; gap: 12px; }
+  .wm-talk .wd-partner-items h4 { font-size: 19px; }
+  .wm-talk .wd-partner-items span { font-size: 12px; }
+  .wm-talk .wd-partner-items p { font-size: 15px; }
+}

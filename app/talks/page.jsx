@@ -27,7 +27,12 @@ const LEGS = [
   { name: "Start", line: "Form it, test the idea, build it.", parts: [1, 2, 3] },
   { name: "Grow", line: "Add to it and put it in front of people.", parts: [4, 5, 6, 7] },
   { name: "Harden", line: "Make it durable, safe and watched.", parts: [8, 9, 10] },
-  { name: "Run", line: "Operate it every day, with help.", parts: [11, 12] },
+  { name: "Run", line: "Your business operating system: the console and the team that run it.", parts: [11, 12] },
+];
+
+const STANDALONE_GROUPS = [
+  { name: "Operate", line: "Run the business with AI. No code needed.", slugs: ["ai-assistant", "ai-team", "workflow-automation", "business-os"] },
+  { name: "Build", line: "Ship software your team or customers use.", slugs: ["internal-tool", "agent-product"] },
 ];
 
 const pad = (n) => String(n).padStart(2, "0");
@@ -51,7 +56,7 @@ function TalkCard({ talk, next, h = "h3" }) {
   const ended = talkEnded(talk);
   return <li className={`card tk-card${next ? " is-next" : ""}`}>
     <p className="tk-card-top">
-      <span>{talk.series ? `Part ${pad(talk.series)}` : "Talk"}</span>
+      <span>{talk.series ? `Part ${pad(talk.series)}` : "Any night"}</span>
       <span className={next ? "tk-pill tk-pill-live" : "tk-pill"}>{ended ? "Slides up" : shortDate(talk)}</span>
     </p>
     <H className="tk-card-title"><a className="tk-card-link" href={`/talks/${talk.slug}`}><Title talk={talk} /></a></H>
@@ -65,6 +70,7 @@ function TalkCard({ talk, next, h = "h3" }) {
 
 export default function Page() {
   const series = TALKS.filter((t) => t.series);
+  const standalone = TALKS.filter((t) => t.standalone && !talkEnded(t));
   const upcoming = TALKS.filter((t) => talkScheduled(t) && !talkEnded(t)).sort((a, b) => a.startISO.localeCompare(b.startISO));
   const next = upcoming[0];
   const past = TALKS.filter((t) => talkEnded(t) && !t.series).reverse();
@@ -101,8 +107,8 @@ export default function Page() {
 
       <section className="section tk-series" id="series" aria-labelledby="series-title">
         <div className="section-head">
-          <h2 id="series-title">All twelve, <span className="key">in order.</span></h2>
-          <p className="section-lede">Every night uses the same example app, What's for Dinner, and stands on its own. Start with the one you need, and leave with a file to paste into your own project.</p>
+          <h2 id="series-title">Claude Code <span className="key">Build Nights.</span></h2>
+          <p className="section-lede">Twelve nights, in order. Every night uses the same example app, What's for Dinner, and stands on its own. Start with the one you need, and leave with a file to paste into your own project.</p>
         </div>
         <ol className="tk-legs">
           {LEGS.map((leg) => {
@@ -118,6 +124,29 @@ export default function Page() {
           })}
         </ol>
       </section>
+
+      {standalone.length > 0 && <section className="section tk-standalone" aria-labelledby="standalone-title">
+        <div className="section-head">
+          <h2 id="standalone-title">One night, <span className="key">your business.</span></h2>
+          <p className="section-lede">Single-night talks built around your own work, not our example app. Pick the problem you have, bring the business, and leave with the file that fixes it.</p>
+        </div>
+        <ol className="tk-legs">
+          {STANDALONE_GROUPS.map((g) => {
+            const talks = g.slugs.map((slug) => standalone.find((t) => t.slug === slug)).filter(Boolean);
+            const rest = g === STANDALONE_GROUPS[STANDALONE_GROUPS.length - 1] ? standalone.filter((t) => !STANDALONE_GROUPS.some((x) => x.slugs.includes(t.slug))) : [];
+            const all = [...talks, ...rest];
+            if (!all.length) return null;
+            return <li key={g.name} className="tk-leg">
+              <div className="tk-leg-head">
+                <span className="tk-leg-n">{all.length} talks</span>
+                <h3>{g.name}</h3>
+                <p>{g.line}</p>
+              </div>
+              <ol className="tk-cards">{all.map((t) => <TalkCard key={t.slug} talk={t} next={next?.slug === t.slug} h="h4" />)}</ol>
+            </li>;
+          })}
+        </ol>
+      </section>}
 
       <section className="section tk-recurring" aria-labelledby="rec-title">
         <div className="section-head">

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { WorkshopDeck } from "../../../../components/workshop-materials.jsx";
-import { TALKS, talkBySlug } from "../../../../lib/talks";
+import { TALKS, talkBySlug, talkFullTitle } from "../../../../lib/talks";
 import { ogImage } from "../../../../lib/og";
 import "../../talk-deck.css";
 
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const talk = talkBySlug(slug);
   if (!talk) return {};
-  const title = `${talk.eventTitle} - Slides`;
+  const title = `${talkFullTitle(talk)} - Slides`;
   const url = `${SITE}/talks/${talk.slug}/deck`;
   return {
     title: `${title} - Ship AI`,

@@ -5,7 +5,7 @@ import Scene from "../../../components/scene";
 import DepartureBoard from "../../../components/departure-board";
 import WorkshopPrompt from "../../../components/workshop-prompt.jsx";
 import { JsonLd } from "../../../components/article";
-import { TALKS, talkBySlug, talkPrompts, talkEnded, talkScheduled, talkWhen } from "../../../lib/talks";
+import { TALKS, SERIES_NAME, talkBySlug, talkPrompts, talkEnded, talkScheduled, talkWhen, talkFullTitle } from "../../../lib/talks";
 import { DISCORD } from "../../../lib/hackathon";
 import { ogImage } from "../../../lib/og";
 import "../talks.css";
@@ -25,10 +25,10 @@ export async function generateMetadata({ params }) {
   if (!talk) return {};
   const url = `${SITE}/talks/${talk.slug}`;
   return {
-    title: `${talk.eventTitle} - Ship AI`,
+    title: `${talkFullTitle(talk)} - Ship AI`,
     description: `${talk.summary} ${talk.copy} ${talkWhen(talk)}, ${talk.venue}, Phoenix. Free.`.slice(0, 300),
     alternates: { canonical: url },
-    openGraph: { title: talk.eventTitle, description: talk.summary, url, siteName: "Ship AI", images: [ogImage({ kicker: "Talks", title: talk.eventTitle, key: talk.key, tagline: talk.summary, meta: `${talkScheduled(talk) ? talk.dateLabel : "Coming soon"} · Free` })] },
+    openGraph: { title: talkFullTitle(talk), description: talk.summary, url, siteName: "Ship AI", images: [ogImage({ kicker: talk.series ? SERIES_NAME : "Talks", title: talk.eventTitle, key: talk.key, tagline: talk.summary, meta: `${talkScheduled(talk) ? talk.dateLabel : "Coming soon"} · Free` })] },
   };
 }
 
@@ -36,7 +36,7 @@ function eventSchema(talk) {
   return {
     "@context": "https://schema.org",
     "@type": "Event",
-    name: talk.eventTitle,
+    name: talkFullTitle(talk),
     description: talk.copy,
     startDate: talk.startISO,
     endDate: talk.endISO,
@@ -73,7 +73,7 @@ export default async function Page({ params }) {
     <SiteHeader current="/talks" />
     <main className="talk-page">
       <section className="hero talk-hero" aria-labelledby="talk-title">
-        <p className="eyebrow">Ship AI · Talks{talk.series ? ` · Part ${talk.series}` : ""} · {ended ? "Past talk" : scheduled ? "Free" : "Coming soon"}</p>
+        <p className="eyebrow">{talk.series ? `${SERIES_NAME} · Part ${talk.series}` : "Ship AI · Talks"} · {ended ? "Past talk" : scheduled ? "Free" : "Coming soon"}</p>
         <h1 className="hero-h1" id="talk-title">{lead}<span className="key">{talk.key}</span>{rest.join(talk.key)}</h1>
         <p className="hero-lede">{talk.summary}</p>
         <div className="cta-row home-pair">

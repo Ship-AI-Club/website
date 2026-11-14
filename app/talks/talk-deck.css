@@ -231,3 +231,298 @@
 @media (min-width: 901px) {
   .wm-talk .wm-lesson header { gap: 1cqw; }
 }
+
+.wm-talk .wm-lesson header:has(h3:empty) { display: none; }
+.wm-talk .mk-takeaway:empty { display: none; }
+
+.wm-talk .wm-lesson:has(.wd-stage) .wm-lesson-content { flex: 1; min-height: 0; align-items: stretch; }
+.wm-talk .wd-stage { position: relative; height: 100%; min-height: 30cqw; overflow: hidden; background: var(--sunken); display: flex; align-items: flex-end; }
+.wm-talk .wd-stage-art { position: absolute; inset: 0; }
+.wm-talk .wd-stage-art .scene { color: var(--sap-art, var(--accent)); opacity: .9; }
+.wm-talk .wd-stage-copy { position: relative; padding: 3.2cqw 3.6cqw; max-width: 60cqw; background: linear-gradient(to top, var(--sunken) 55%, transparent); }
+.wm-talk .wd-stage-copy .ms-kicker { font: 1.15cqw var(--sap-font-mono); color: var(--accent); letter-spacing: .08em; }
+.wm-talk .wd-stage-copy h4 { font-family: var(--sap-font-display); font-weight: 400; font-size: 6.2cqw; line-height: 1.02; letter-spacing: -.035em; margin: 1cqw 0 0; color: var(--ink); }
+.wm-talk .wd-stage-copy p { font-size: 1.9cqw; margin-top: 1.4cqw; color: var(--dim); }
+.wm-talk .wd-stage.is-dark { background: var(--sap-band-bg); }
+.wm-talk .wd-stage.is-dark .wd-stage-copy { background: linear-gradient(to top, var(--sap-band-bg) 55%, transparent); }
+.wm-talk .wd-stage.is-dark .wd-stage-art .scene { color: var(--sap-band-art); }
+.wm-talk .wd-stage.is-dark h4 { color: var(--sap-band-text); }
+.wm-talk .dk-slide:has(.wd-stage) .wm-lesson { gap: 0; }
+
+.wm-talk .wd-demo { max-width: 64cqw; margin: 0 auto; width: 100%; background: var(--surface, #FBF9F3); border: 1px solid var(--hairline); }
+.wm-talk .wd-demo-bar { display: flex; align-items: center; gap: 1.2cqw; padding: .8cqw 1.2cqw; border-bottom: 1px solid var(--hairline); font: 1.05cqw var(--sap-font-mono); color: var(--faint); }
+.wm-talk .wd-demo-bar i { display: flex; gap: .4cqw; }
+.wm-talk .wd-demo-bar i b { width: .6cqw; height: .6cqw; border-radius: 50%; background: var(--hairline); display: block; }
+.wm-talk .wd-demo-body { padding: 1.8cqw 2.2cqw; display: grid; gap: 1cqw; }
+.wm-talk .wd-demo-body p { display: grid; grid-template-columns: 6cqw minmax(0, 1fr); gap: 1cqw; font: 1.6cqw/1.4 var(--sap-font-mono); color: var(--ink); margin: 0; }
+.wm-talk .wd-demo-body p b { font-weight: 400; color: var(--faint); }
+.wm-talk .wd-demo-body p.is-claude b { color: var(--accent); }
+.wm-talk .wd-demo-body p.is-you span { color: var(--dim); }
+.wm-talk .wd-demo-body p.is-out { grid-template-columns: minmax(0, 1fr); padding-left: 7cqw; color: var(--accent); }
+.wm-talk .wm-tone-bonus .wd-demo { background: var(--sap-band-bg-raised); border-color: var(--sap-band-rule); }
+.wm-talk .wm-tone-bonus .wd-demo-body p { color: var(--sap-band-text); }
+
+@media (min-width: 901px) {
+  .wm-talk .wm-lesson:has(.wd-demo) .wm-lesson-content { flex: 1; align-items: center; }
+  .wm-talk .wm-prompt-inline pre { display: none; }
+  .wm-talk .wm-prompt-inline .wm-prompt-actions { border-bottom: 0; }
+  .wm-talk .wm-prompt-inline .wm-full-prompt-open { margin: -.4cqw 1.2cqw .9cqw; display: inline-block; }
+}
+@media (max-width: 900px) {
+  .wm-talk .wd-stage { min-height: 320px; }
+  .wm-talk .wd-stage-copy { max-width: none; padding: 24px; }
+  .wm-talk .wd-stage-copy .ms-kicker { font-size: 11px; }
+  .wm-talk .wd-stage-copy h4 { font-size: 40px; }
+  .wm-talk .wd-stage-copy p { font-size: 17px; }
+  .wm-talk .wd-demo { max-width: none; }
+  .wm-talk .wd-demo-bar { font-size: 11px; padding: 8px 12px; gap: 10px; }
+  .wm-talk .wd-demo-bar i b { width: 7px; height: 7px; }
+  .wm-talk .wd-demo-body { padding: 14px 16px; gap: 10px; }
+  .wm-talk .wd-demo-body p { grid-template-columns: 56px minmax(0, 1fr); gap: 8px; font-size: 13px; }
+  .wm-talk .wd-demo-body p.is-out { padding-left: 64px; }
+}
+@media (min-width: 901px) {
+  .wm-talk .wd-stage-copy { width: 72cqw; max-width: 72cqw; }
+}
+.wm-talk .wd-stage-copy { background: var(--sunken); width: auto; max-width: 60cqw; padding: 2.4cqw 3cqw; margin: 0 0 0 0; }
+.wm-talk .wd-stage.is-dark .wd-stage-copy { background: var(--sap-band-bg); }
+
+.wm-talk .wd-brief-facts:empty, .wm-talk .wd-diagram p:empty { display: none; }
+@media (min-width: 901px) {
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wm-lesson-content { flex: 1; align-items: center; }
+  .wm-talk .wd-flow:not(:has(p:not(:empty))) { gap: 2cqw; }
+  .wm-talk .wd-flow:not(:has(p:not(:empty))) > div { padding: 2.4cqw 2.2cqw 2.8cqw; }
+  .wm-talk .wd-flow:not(:has(p:not(:empty))) .wd-flow-number { font-size: 1.4cqw; margin-bottom: 2.4cqw; }
+  .wm-talk .wd-flow:not(:has(p:not(:empty))) h4 { font-family: var(--sap-font-display); font-weight: 400; font-size: 4.2cqw; letter-spacing: -.03em; margin: 0; }
+  .wm-talk .wd-flow:not(:has(p:not(:empty))) b { top: 2.4cqw; right: 2cqw; font-size: 2cqw; }
+  .wm-talk .wm-lesson:has(.wd-flow:not(:has(p:not(:empty)))) .wm-lesson-content { flex: 1; align-items: center; }
+  .wm-talk .wm-lesson:has(.wd-copy):not(:has(.wm-prompt-inline)) .wm-lesson-content { flex: 1; align-items: center; }
+  .wm-talk .wm-lesson:not(:has(.wm-prompt-inline)) .wd-copy .wd-before, .wm-talk .wm-lesson:not(:has(.wm-prompt-inline)) .wd-copy .wd-after { padding: 3cqw 3cqw; min-height: 16cqw; display: flex; flex-direction: column; justify-content: center; }
+  .wm-talk .wm-lesson:not(:has(.wm-prompt-inline)) .wd-before h4 { font-size: 3.6cqw; }
+  .wm-talk .wm-lesson:not(:has(.wm-prompt-inline)) .wd-after h4 { font-size: 3.6cqw; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-before, .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-after { padding: 2.6cqw 2.6cqw; min-height: 12cqw; display: flex; flex-direction: column; justify-content: center; }
+}
+
+.wm-talk .wd-stage-qr { position: absolute; right: 3cqw; bottom: 3cqw; display: grid; gap: .8cqw; justify-items: center; padding: 1.2cqw 1.2cqw .9cqw; background: #fff; text-decoration: none; }
+.wm-talk .wd-stage-qr .dk-qr { width: 13cqw; height: 13cqw; }
+.wm-talk .wd-stage-qr svg { display: block; width: 100%; height: 100%; }
+.wm-talk .wd-stage-qr span { font: 1.05cqw var(--sap-font-mono); color: #0D241E; }
+@media (max-width: 900px) {
+  .wm-talk .wd-stage-qr { position: static; justify-self: start; margin: 0 24px 24px; padding: 10px; gap: 8px; }
+  .wm-talk .wd-stage:has(.wd-stage-qr) { flex-direction: column; align-items: flex-start; justify-content: flex-end; }
+  .wm-talk .wd-stage-qr .dk-qr { width: 140px; height: 140px; }
+  .wm-talk .wd-stage-qr span { font-size: 12px; }
+}
+
+.wm-talk .wd-stage { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 3cqw; align-items: stretch; background: none; overflow: visible; min-height: 0; height: 100%; }
+.wm-talk .wd-stage-copy { position: static; background: none; width: auto; max-width: none; padding: 0; display: flex; flex-direction: column; justify-content: center; gap: 1.2cqw; }
+.wm-talk .wd-stage.is-dark .wd-stage-copy { background: none; }
+.wm-talk .wd-stage-copy h4 { font-size: 5.4cqw; margin: 0; }
+.wm-talk .wd-stage-copy p { margin: 0; font-size: 1.8cqw; }
+.wm-talk .wd-stage-logo { display: flex; align-items: center; gap: 1cqw; margin-bottom: 1.6cqw; }
+.wm-talk .wd-stage-logo svg { width: 4cqw; height: 4cqw; color: var(--ink); }
+.wm-talk .wd-stage-logo strong { font-family: var(--sap-font-display); font-weight: 400; font-size: 2.6cqw; letter-spacing: -.02em; color: var(--ink); }
+.wm-talk .wd-stage-art { position: relative; inset: auto; min-height: 26cqw; background: var(--sunken); overflow: hidden; color: var(--sap-art, var(--accent)); }
+.wm-talk .wd-stage-art .scene { position: absolute; inset: 0; opacity: 1; color: var(--sap-art, var(--accent)); }
+.wm-talk .wd-stage.is-dark .wd-stage-art { background: var(--sap-band-bg-raised); }
+.wm-talk .wd-stage.is-dark .wd-stage-art .scene { color: var(--sap-band-art); }
+.wm-talk .wd-stage-qr { position: static; justify-self: start; align-self: flex-start; margin-top: 1cqw; padding: 1cqw 1cqw .8cqw; border: 1px solid var(--hairline); }
+.wm-talk .wd-stage-qr .dk-qr { width: 11cqw; height: 11cqw; }
+.wm-talk .dk-slide:has(.wd-stage.is-dark) .dk-frame { background: var(--sap-band-bg); }
+@media (max-width: 900px) {
+  .wm-talk .wd-stage { grid-template-columns: 1fr; gap: 20px; }
+  .wm-talk .wd-stage-art { min-height: 200px; order: -1; }
+  .wm-talk .wd-stage-copy h4 { font-size: 36px; }
+  .wm-talk .wd-stage-logo svg { width: 32px; height: 32px; }
+  .wm-talk .wd-stage-logo strong { font-size: 22px; }
+  .wm-talk .wd-stage-qr { margin: 8px 0 0; }
+}
+.wm-talk .wd-stage-art.is-night { background: var(--sap-band-bg); }
+.wm-talk .wd-stage-art.is-night .scene { color: var(--sap-band-art); }
+
+.wm-talk .wd-stage { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) 15cqw; gap: 0; }
+.wm-talk .wd-stage-copy { justify-content: center; align-items: flex-start; padding: 0 0 2cqw; }
+.wm-talk .wd-stage-art, .wm-talk .wd-stage.is-dark .wd-stage-art, .wm-talk .wd-stage-art.is-night { min-height: 0; height: 15cqw; background: none; margin: 0 -1px; }
+.wm-talk .wd-stage.is-dark .wd-stage-art .scene { color: var(--sap-band-art); opacity: .55; }
+.wm-talk .wd-stage:not(.is-dark) .wd-stage-art .scene { opacity: .35; }
+.wm-talk .wd-stage.is-dark .wd-stage-copy .ms-kicker { color: var(--sap-band-text-muted); }
+.wm-talk .wd-stage.is-dark .wd-stage-copy h4 { color: var(--sap-band-text); }
+.wm-talk .wd-stage.is-dark .wd-stage-copy em { color: var(--sap-band-text); }
+.wm-talk .wd-stage.is-dark .wd-stage-copy p { color: var(--sap-band-text-muted); }
+.wm-talk .wd-stage.is-dark .wd-stage-logo svg, .wm-talk .wd-stage.is-dark .wd-stage-logo strong { color: var(--sap-band-text); }
+.wm-talk .dk-slide:has(.wd-stage.is-dark) .dk-frame { background: var(--sap-band-bg); border-color: var(--sap-band-bg); }
+.wm-talk .dk-slide:has(.wd-stage.is-dark) .dk-chrome { color: var(--sap-band-text-muted); border-color: var(--sap-band-rule); }
+.wm-talk .wd-stage-copy:has(.wd-stage-qr) { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "k q" "h q"; align-content: center; column-gap: 4cqw; width: 100%; }
+.wm-talk .wd-stage-copy:has(.wd-stage-qr) .ms-kicker { grid-area: k; }
+.wm-talk .wd-stage-copy:has(.wd-stage-qr) h4 { grid-area: h; }
+.wm-talk .wd-stage-copy:has(.wd-stage-qr) .wd-stage-qr { grid-area: q; align-self: center; margin: 0; border: 0; }
+@media (max-width: 900px) {
+  .wm-talk .wd-stage { grid-template-rows: auto 120px; }
+  .wm-talk .wd-stage-art, .wm-talk .wd-stage.is-dark .wd-stage-art { height: 120px; order: 0; }
+  .wm-talk .wd-stage-copy:has(.wd-stage-qr) { grid-template-columns: 1fr; grid-template-areas: "k" "h" "q"; row-gap: 12px; }
+}
+
+.wm-talk .wd-phone-slide { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 5cqw; align-items: center; justify-content: center; }
+.wm-talk .wd-phone { width: 19cqw; padding: .9cqw; background: var(--sap-band-bg); border-radius: 2.6cqw; }
+.wm-talk .wd-phone-screen { background: var(--surface, #FBF9F3); border-radius: 1.9cqw; padding: 1.6cqw 1.3cqw 1.4cqw; display: grid; gap: .8cqw; min-height: 30cqw; align-content: start; }
+.wm-talk .wd-phone-app { font: 1cqw var(--sap-font-mono); color: var(--faint); margin: 0; }
+.wm-talk .wd-phone-q { font-family: var(--sap-font-display); font-size: 1.9cqw; line-height: 1.1; color: var(--ink); margin: 0; }
+.wm-talk .wd-phone-chips { display: flex; flex-wrap: wrap; gap: .4cqw; }
+.wm-talk .wd-phone-chips span { font-size: 1cqw; padding: .25cqw .6cqw; border: 1px solid var(--hairline); color: var(--ink); }
+.wm-talk .wd-phone-btn { display: block; text-align: center; font-size: 1.05cqw; font-weight: 600; padding: .6cqw; background: var(--accent); color: var(--bg); }
+.wm-talk .wd-phone-card { display: grid; gap: .15cqw; padding: .6cqw .7cqw; background: var(--sunken); border-left: 2px solid var(--accent); }
+.wm-talk .wd-phone-card strong { font-size: 1.1cqw; color: var(--ink); font-weight: 600; }
+.wm-talk .wd-phone-card span { font: .9cqw var(--sap-font-mono); color: var(--faint); }
+.wm-talk .wd-phone-copy { display: grid; gap: 2cqw; max-width: 40cqw; }
+.wm-talk .wd-phone-copy h4 { font-family: var(--sap-font-display); font-weight: 400; font-size: 3.6cqw; line-height: 1.08; letter-spacing: -.025em; color: var(--ink); margin: 0; }
+.wm-talk .wd-phone-tags { display: flex; flex-wrap: wrap; gap: .8cqw; }
+.wm-talk .wd-phone-tags span { font: 1.2cqw var(--sap-font-mono); padding: .5cqw .9cqw; border: 1px solid var(--accent); color: var(--accent); }
+
+.wm-talk .wd-doc { max-width: 60cqw; width: 100%; margin: 0 auto; background: var(--surface, #FBF9F3); border: 1px solid var(--hairline); }
+.wm-talk .wd-doc-body { padding: 1.4cqw 2.2cqw 1.6cqw; display: grid; gap: .9cqw; }
+.wm-talk .wd-doc-body > div { display: grid; grid-template-columns: 11cqw minmax(0, 1fr); gap: 1.6cqw; padding: .5cqw 0; border-top: 1px solid var(--hairline); }
+.wm-talk .wd-doc-body > div:first-child { border-top: 0; }
+.wm-talk .wd-doc-body > div > span { font: 1.1cqw var(--sap-font-mono); color: var(--faint); padding-top: .2cqw; }
+.wm-talk .wd-doc-body p { margin: 0; font-size: 1.45cqw; line-height: 1.4; color: var(--ink); }
+.wm-talk .wd-doc-body p.is-check::before { content: "☐ "; color: var(--accent); }
+.wm-talk .wd-doc-body > div.is-lit { background: rgba(var(--accent-rgb), .07); border-left: 3px solid var(--accent); padding-left: 1cqw; margin-left: -1.3cqw; }
+.wm-talk .wd-doc-body > div.is-lit > span { color: var(--accent); }
+.wm-talk .wm-lesson:has(.wd-doc) .wm-lesson-content, .wm-talk .wm-lesson:has(.wd-phone) .wm-lesson-content { flex: 1; align-items: center; }
+@media (max-width: 900px) {
+  .wm-talk .wd-phone-slide { grid-template-columns: 1fr; gap: 20px; justify-items: center; }
+  .wm-talk .wd-phone { width: 220px; padding: 10px; border-radius: 28px; }
+  .wm-talk .wd-phone-screen { border-radius: 20px; padding: 16px 14px; gap: 8px; min-height: 0; }
+  .wm-talk .wd-phone-app { font-size: 11px; } .wm-talk .wd-phone-q { font-size: 20px; }
+  .wm-talk .wd-phone-chips span { font-size: 11px; padding: 3px 7px; } .wm-talk .wd-phone-btn { font-size: 12px; padding: 7px; }
+  .wm-talk .wd-phone-card strong { font-size: 12px; } .wm-talk .wd-phone-card span { font-size: 10px; }
+  .wm-talk .wd-phone-copy { max-width: none; gap: 14px; } .wm-talk .wd-phone-copy h4 { font-size: 26px; }
+  .wm-talk .wd-phone-tags span { font-size: 12px; padding: 5px 9px; }
+  .wm-talk .wd-doc { max-width: none; }
+  .wm-talk .wd-doc-body { padding: 14px 16px; gap: 8px; }
+  .wm-talk .wd-doc-body > div { grid-template-columns: 1fr; gap: 4px; }
+  .wm-talk .wd-doc-body > div > span { font-size: 11px; } .wm-talk .wd-doc-body p { font-size: 14px; }
+  .wm-talk .wd-doc-body > div.is-lit { margin-left: 0; }
+}
+
+@media (min-width: 901px) {
+  .wm-talk .wm-lesson:has(.wd-demo) .wm-prompt-inline { width: 64cqw; max-width: 100%; margin: 0 auto; }
+  .wm-talk .wm-lesson:has(.wd-copy) .wm-prompt-inline { width: 100%; }
+  .wm-talk .wm-prompt-inline { display: flex; align-items: center; flex-wrap: wrap; gap: 1.2cqw; padding: 1cqw 1.4cqw; }
+  .wm-talk .wm-prompt-inline .wm-prompt-actions { display: contents; }
+  .wm-talk .wm-prompt-inline .wm-prompt-actions strong { order: 1; margin-right: auto; font-size: 1.35cqw; color: var(--sap-band-text); }
+  .wm-talk .wm-prompt-inline .wm-full-prompt-open { order: 2; margin: 0; font-size: 1.15cqw; }
+  .wm-talk .wm-prompt-inline .wm-prompt-actions button { order: 3; font-size: 1.2cqw; padding: .8cqw 1.4cqw; }
+  .wm-talk .wm-prompt-inline .wm-prompt-actions [role="status"] { order: 4; flex-basis: 100%; text-align: right; }
+  .wm-talk .wm-prompt-inline .wm-prompt-actions [role="status"]:empty { display: none; }
+  .wm-talk .wm-lesson:has(.wd-demo) .mk-takeaway { width: 64cqw; max-width: 100%; margin-left: auto; margin-right: auto; }
+
+  .wm-talk .wd-demo-body p { font-size: 1.75cqw; }
+  .wm-talk .wd-demo-body p { grid-template-columns: 6.6cqw minmax(0, 1fr); }
+  .wm-talk .wd-demo-body p.is-out { padding-left: 7.6cqw; }
+  .wm-talk .wd-demo-bar { font-size: 1.15cqw; }
+
+  .wm-talk .wd-diagram .ms-kicker, .wm-talk .wd-before .ms-kicker, .wm-talk .wd-after .ms-kicker, .wm-talk .wd-whatsapp-copy .ms-kicker { font-size: 1.15cqw; letter-spacing: .06em; }
+
+  .wm-talk .wd-flow b { display: none; }
+
+  .wm-talk .wm-lesson:has(.wd-partner) .wm-lesson-content { flex: 1; align-items: center; }
+  .wm-talk .wd-partner { gap: 3cqw; justify-items: center; }
+  .wm-talk .wd-partner-lockup { padding: 4cqw 5cqw; gap: 3.6cqw; width: 100%; }
+  .wm-talk .wd-partner-ship svg { width: 7cqw; height: 7cqw; }
+  .wm-talk .wd-partner-ship strong { font-size: 5.2cqw; }
+  .wm-talk .wd-partner-x { font-size: 3.6cqw; }
+  .wm-talk .wd-partner-workuity img { height: 4.4cqw; }
+  .wm-talk .wd-partner-workuity i { height: 5.2cqw; }
+  .wm-talk .wd-partner-workuity strong { font-size: 4.2cqw; }
+  .wm-talk .wd-partner-line { font-size: 1.9cqw; color: var(--dim); text-align: center; max-width: 54cqw; margin: 0; line-height: 1.4; }
+}
+@media (max-width: 900px) {
+  .wm-talk .wd-partner-line { font-size: 16px; color: var(--dim); margin: 0; }
+  .wm-talk .wm-prompt-inline .wm-full-prompt-open { margin: 0 14px 12px; }
+}
+@media (min-width: 901px) {
+  .wm-talk .wd-partner-ship strong, .wm-talk .wd-partner-workuity strong { white-space: nowrap; }
+  .wm-talk .wd-partner-lockup { padding: 3.6cqw 4cqw; gap: 3cqw; }
+  .wm-talk .wd-partner-ship svg { width: 6cqw; height: 6cqw; }
+  .wm-talk .wd-partner-ship strong { font-size: 4.4cqw; }
+  .wm-talk .wd-partner-x { font-size: 3cqw; }
+  .wm-talk .wd-partner-workuity img { height: 3.8cqw; }
+  .wm-talk .wd-partner-workuity i { height: 4.6cqw; }
+  .wm-talk .wd-partner-workuity strong { font-size: 3.5cqw; }
+}
+@media (max-width: 900px) {
+  .wm-talk .wd-stage-copy p { font-size: 17px; }
+  .wm-talk .wd-stage-copy .ms-kicker { font-size: 11px; }
+  .wm-talk .wd-stage-copy { gap: 10px; padding-bottom: 16px; }
+}
+
+.wm-talk .wd-phone-slide { --app-bg: #FFF8EE; --app-ink: #2A1A12; --app-dim: #7A6556; --app-line: #EADFCF; --app-accent: #D2492A; --app-accent-ink: #FFF8EE; --app-tint: #FBE9DD; grid-template-columns: auto minmax(0, 1fr); gap: 6cqw; }
+.wm-talk .wd-phone-stage { position: relative; padding-right: 9cqw; }
+.wm-talk .wd-phone { width: 20cqw; padding: .7cqw; background: #1B1411; border-radius: 3cqw; box-shadow: var(--sap-shadow-window, 0 1.2cqw 3cqw rgba(13,36,30,.18)); }
+.wm-talk .wd-phone-screen { background: var(--app-bg); border-radius: 2.4cqw; padding: 1cqw 1.3cqw 1.4cqw; gap: .75cqw; min-height: 0; display: grid; align-content: start; font-family: var(--sap-font-body); }
+.wm-talk .wd-phone-status { display: flex; align-items: center; justify-content: space-between; font-size: .85cqw; font-weight: 600; color: var(--app-ink); padding: 0 .3cqw; }
+.wm-talk .wd-phone-status i { width: 5cqw; height: 1.2cqw; background: #1B1411; border-radius: 1cqw; }
+.wm-talk .wd-phone-sig { display: flex; align-items: flex-end; gap: .15cqw; height: .8cqw; }
+.wm-talk .wd-phone-sig b { width: .22cqw; background: var(--app-ink); display: block; }
+.wm-talk .wd-phone-sig b:nth-child(1) { height: 40%; } .wm-talk .wd-phone-sig b:nth-child(2) { height: 70%; } .wm-talk .wd-phone-sig b:nth-child(3) { height: 100%; }
+.wm-talk .wd-phone-sig em { width: 1.3cqw; height: .65cqw; border: 1.5px solid var(--app-ink); border-radius: .2cqw; margin-left: .3cqw; }
+.wm-talk .wd-phone-top { display: flex; align-items: center; gap: .6cqw; padding-top: .4cqw; }
+.wm-talk .wd-phone-mark { width: 1.7cqw; height: 1.7cqw; padding: .3cqw; border-radius: .5cqw; background: var(--app-accent); color: var(--app-accent-ink); display: grid; }
+.wm-talk .wd-phone-name { font-size: .95cqw; font-weight: 600; color: var(--app-ink); flex: 1; }
+.wm-talk .wd-phone-avatar { width: 1.7cqw; height: 1.7cqw; border-radius: 50%; background: var(--app-tint); color: var(--app-accent); font-size: .85cqw; font-weight: 600; display: grid; place-items: center; }
+.wm-talk .wd-phone-q { font-family: var(--sap-font-display); font-weight: 400; font-size: 1.95cqw; line-height: 1.08; letter-spacing: -.02em; color: var(--app-ink); margin: .3cqw 0 0; }
+.wm-talk .wd-phone-input { display: flex; align-items: center; gap: .5cqw; padding: .55cqw .6cqw; background: #fff; border: 1px solid var(--app-line); border-radius: .9cqw; }
+.wm-talk .wd-phone-input .wd-phone-chips { flex: 1; display: flex; flex-wrap: wrap; gap: .35cqw; }
+.wm-talk .wd-phone-input .wd-phone-chips span { font-size: .85cqw; padding: .25cqw .55cqw; border: 0; border-radius: 99px; background: var(--app-tint); color: var(--app-ink); display: inline-flex; gap: .3cqw; align-items: center; }
+.wm-talk .wd-phone-input .wd-phone-chips b { font-weight: 400; color: var(--app-dim); }
+.wm-talk .wd-phone-cam { width: 1.9cqw; height: 1.9cqw; padding: .35cqw; border-radius: 50%; background: var(--app-ink); color: var(--app-bg); display: grid; flex: none; }
+.wm-talk .wd-phone-btn { display: block; text-align: center; font-size: 1cqw; font-weight: 600; padding: .75cqw; background: var(--app-accent); color: var(--app-accent-ink); border-radius: .9cqw; }
+.wm-talk .wd-phone-sub { font-size: .8cqw; color: var(--app-dim); margin: .2cqw 0 0; }
+.wm-talk .wd-phone-card { display: grid; grid-template-columns: 2.4cqw minmax(0, 1fr) auto; align-items: center; gap: .7cqw; padding: .6cqw .7cqw; background: #fff; border: 1px solid var(--app-line); border-left: 1px solid var(--app-line); border-radius: .9cqw; }
+.wm-talk .wd-phone-card.is-active { border-color: var(--app-accent); box-shadow: 0 0 0 1px var(--app-accent); }
+.wm-talk .wd-phone-thumb { width: 2.4cqw; height: 2.4cqw; padding: .5cqw; border-radius: .7cqw; background: var(--app-tint); color: var(--app-accent); display: grid; }
+.wm-talk .wd-phone-card strong { display: block; font-size: .95cqw; font-weight: 600; color: var(--app-ink); line-height: 1.2; }
+.wm-talk .wd-phone-card div span { display: block; font: .78cqw var(--sap-font-body); color: var(--app-dim); margin-top: .1cqw; }
+.wm-talk .wd-phone-card em { font-style: normal; font-size: .72cqw; font-weight: 600; color: #2F7A4F; background: #E6F2EA; padding: .2cqw .45cqw; border-radius: 99px; white-space: nowrap; }
+.wm-talk .wd-phone-float { position: absolute; right: 0; top: 46%; width: 17cqw; background: #fff; border: 1px solid var(--app-line); border-radius: 1.2cqw; padding: 1.3cqw 1.4cqw; box-shadow: 0 1.2cqw 3cqw rgba(42,26,18,.16); font-family: var(--sap-font-body); }
+.wm-talk .wd-phone-float-k { display: block; font: .78cqw var(--sap-font-mono); letter-spacing: .06em; color: var(--app-accent); }
+.wm-talk .wd-phone-float strong { display: block; font-family: var(--sap-font-display); font-weight: 400; font-size: 1.7cqw; color: var(--app-ink); margin: .4cqw 0 .8cqw; letter-spacing: -.015em; }
+.wm-talk .wd-phone-float ol { margin: 0; padding: 0; list-style: none; counter-reset: step; display: grid; gap: .5cqw; }
+.wm-talk .wd-phone-float li { counter-increment: step; display: grid; grid-template-columns: 1.5cqw minmax(0, 1fr); gap: .5cqw; align-items: baseline; font-size: .95cqw; color: var(--app-ink); line-height: 1.3; }
+.wm-talk .wd-phone-float li::before { content: counter(step); width: 1.5cqw; height: 1.5cqw; border-radius: 50%; background: var(--app-tint); color: var(--app-accent); font-size: .75cqw; font-weight: 600; display: grid; place-items: center; }
+.wm-talk .wd-phone-copy { max-width: 36cqw; }
+@media (max-width: 900px) {
+  .wm-talk .wd-phone-slide { grid-template-columns: 1fr; gap: 24px; }
+  .wm-talk .wd-phone-stage { padding-right: 0; display: grid; justify-items: center; gap: 16px; }
+  .wm-talk .wd-phone { width: 240px; padding: 8px; border-radius: 34px; }
+  .wm-talk .wd-phone-screen { border-radius: 27px; padding: 12px 14px 16px; gap: 9px; }
+  .wm-talk .wd-phone-status { font-size: 10px; } .wm-talk .wd-phone-status i { width: 56px; height: 14px; border-radius: 10px; }
+  .wm-talk .wd-phone-sig { height: 9px; gap: 2px; } .wm-talk .wd-phone-sig b { width: 3px; } .wm-talk .wd-phone-sig em { width: 15px; height: 8px; margin-left: 4px; }
+  .wm-talk .wd-phone-top { gap: 7px; } .wm-talk .wd-phone-mark, .wm-talk .wd-phone-avatar { width: 20px; height: 20px; } .wm-talk .wd-phone-mark { padding: 4px; border-radius: 6px; }
+  .wm-talk .wd-phone-name { font-size: 11px; } .wm-talk .wd-phone-avatar { font-size: 10px; }
+  .wm-talk .wd-phone-q { font-size: 22px; }
+  .wm-talk .wd-phone-input { padding: 7px; border-radius: 10px; } .wm-talk .wd-phone-input .wd-phone-chips span { font-size: 10px; padding: 3px 7px; }
+  .wm-talk .wd-phone-cam { width: 22px; height: 22px; padding: 4px; }
+  .wm-talk .wd-phone-btn { font-size: 12px; padding: 9px; border-radius: 10px; } .wm-talk .wd-phone-sub { font-size: 10px; }
+  .wm-talk .wd-phone-card { grid-template-columns: 28px minmax(0, 1fr) auto; gap: 8px; padding: 7px 8px; border-radius: 10px; }
+  .wm-talk .wd-phone-thumb { width: 28px; height: 28px; padding: 6px; border-radius: 8px; }
+  .wm-talk .wd-phone-card strong { font-size: 11px; } .wm-talk .wd-phone-card div span { font-size: 9px; } .wm-talk .wd-phone-card em { font-size: 9px; padding: 2px 6px; }
+  .wm-talk .wd-phone-float { position: static; width: 240px; border-radius: 14px; padding: 14px 16px; }
+  .wm-talk .wd-phone-float-k { font-size: 10px; } .wm-talk .wd-phone-float strong { font-size: 18px; margin: 4px 0 10px; }
+  .wm-talk .wd-phone-float ol { gap: 6px; } .wm-talk .wd-phone-float li { grid-template-columns: 18px minmax(0, 1fr); gap: 6px; font-size: 12px; }
+  .wm-talk .wd-phone-float li::before { width: 18px; height: 18px; font-size: 9px; }
+  .wm-talk .wd-phone-copy { max-width: none; }
+}
+@media (min-width: 901px) {
+  .wm-talk .wd-diagram .wd-phone-sub { font-size: .8cqw; line-height: 1.3; color: var(--app-dim); font-family: var(--sap-font-body); }
+  .wm-talk .wd-diagram .wd-phone-q { font-size: 1.95cqw; line-height: 1.08; color: var(--app-ink); }
+  .wm-talk .wd-phone-stage { padding-right: 13cqw; }
+  .wm-talk .wd-phone-float { width: 16cqw; top: 50%; right: 0; }
+}
+@media (max-width: 900px) {
+  .wm-talk .wd-diagram .wd-phone-sub { font-size: 10px; color: var(--app-dim); }
+  .wm-talk .wd-diagram .wd-phone-q { font-size: 22px; color: var(--app-ink); }
+}
+@media (min-width: 901px) {
+  .wm-talk .wd-phone-stage { padding-right: 15cqw; }
+}

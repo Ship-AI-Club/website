@@ -87,6 +87,16 @@ export default async function Page({ params }) {
         </div>
       </section>}
 
+      {talk.example && <section className="section" aria-labelledby="example-title">
+        <div className="section-head">
+          <h2 id="example-title">The <span className="key">example.</span></h2>
+          <p className="section-lede">{talk.example.name}: the spec we build from on the night. Start from it, or write your own with the interview prompt.</p>
+        </div>
+        <div className="talk-prompts">
+          <WorkshopPrompt prompt={talk.example.spec} label={`SPEC.md · ${talk.example.name}`} destination="a SPEC.md file" defaultOpen />
+        </div>
+      </section>}
+
       {talk.tools?.length > 0 && <section className="section" aria-labelledby="tools-title">
         <div className="section-head">
           <h2 id="tools-title">The <span className="key">toolkit.</span></h2>

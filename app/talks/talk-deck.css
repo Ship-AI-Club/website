@@ -166,3 +166,21 @@
   .wm-talk .wd-about-orgs p { font-size: 15px; }
   .wm-talk .wd-about-orgs a { font-size: 13px; }
 }
+
+@media (min-width: 901px) {
+  .wm-talk .wm-lesson header .mk-lead { font-size: 1.8cqw; }
+  .wm-talk .mk-takeaway { font-size: 1.35cqw; }
+  .wm-talk .wd-diagram p { font-size: 1.55cqw; line-height: 1.4; }
+  .wm-talk .wd-flow p { font-size: 1.6cqw; }
+  .wm-talk .wd-branch-list p { font-size: 1.5cqw; }
+  .wm-talk .wd-hub p, .wm-talk .wd-terminal p { font-size: 1.45cqw; }
+  .wm-talk .wd-brief-facts p { font-size: 1.4cqw; }
+  .wm-talk .wd-before p { font-size: 1.55cqw; }
+  .wm-talk .wd-partner-items p { font-size: 1.55cqw; }
+  .wm-talk .wd-about-proofs span { font-size: 1.4cqw; }
+  .wm-talk .wd-about-orgs p { font-size: 1.45cqw; }
+  .wm-talk .wd-about-person span { font-size: 1.2cqw; }
+  .wm-talk .wd-whatsapp-copy p { font-size: 1.55cqw; }
+  .wm-talk .wd-opening-copy p { font-size: 1.65cqw; }
+  .wm-talk .wm-prompt-inline pre { font-size: 1.4cqw; }
+}

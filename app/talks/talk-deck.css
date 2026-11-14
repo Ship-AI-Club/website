@@ -184,3 +184,50 @@
   .wm-talk .wd-opening-copy p { font-size: 1.65cqw; }
   .wm-talk .wm-prompt-inline pre { font-size: 1.4cqw; }
 }
+
+.wm-talk .wm-lesson header .mk-lead { max-width: none; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-hub { padding: 1.3cqw 1.8cqw; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-hub > strong { font-size: 2.8cqw; margin: .5cqw 0; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-hub p { font-size: 1.3cqw; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-terminal { padding: 1.2cqw 1.6cqw; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-terminal strong { font-size: 2.6cqw; margin: .5cqw 0; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-branch-list > div { padding: .45cqw 0 .45cqw 1.8cqw; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-branch-list > div:before { top: 1.3cqw; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-branch-list h4 { font-size: 1.55cqw; margin-bottom: .15cqw; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-branch-list p { font-size: 1.4cqw; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-flow > div { padding: 1cqw 1.4cqw 1.2cqw; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-flow-number { margin-bottom: .5cqw; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-before, .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-after { padding: 1.4cqw 1.8cqw; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-before h4 { font-size: 2.6cqw; margin: .6cqw 0; }
+.wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-after h4 { font-size: 2.4cqw; }
+
+@media (min-width: 901px) {
+  .wm-talk .wm-lesson { gap: 2.4cqw; }
+  .wm-talk .wm-lesson-content { gap: 3cqw; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wm-lesson-content { align-items: start; flex: 0 0 auto; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-hub,
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-setup > :first-child { display: none; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-branches,
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-setup { display: block; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-branch-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3cqw; border-left: 0; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-branch-list > div { display: block; padding: 1.2cqw 0 0; border-bottom: 0; border-top: 1px solid var(--hairline); }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-branch-list > div:before { display: none; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-branch-list > div > span { display: block; font-size: 1.1cqw; margin-bottom: .6cqw; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-branch-list h4 { font-size: 1.9cqw; margin-bottom: .4cqw; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-branch-list p { font-size: 1.5cqw; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-flow { gap: 3cqw; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-flow > div { background: none; border-top: 1px solid var(--hairline); padding: 1.2cqw 0 0; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-flow > div:first-child { border-top: 3px solid var(--accent); }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-flow b { display: none; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-flow-number { font-size: 1.1cqw; margin-bottom: .6cqw; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-flow h4 { font-size: 1.9cqw; margin-bottom: .4cqw; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-flow p { font-size: 1.5cqw; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-copy { grid-template-columns: 1fr 1fr; gap: 2.4cqw; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-before, .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-after { padding: 1.6cqw 2cqw; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .wd-brief-facts { display: none; }
+  .wm-talk .wm-prompt-inline pre { padding-top: 1.3cqw; padding-bottom: 1.3cqw; }
+  .wm-talk .wm-lesson:has(.wm-prompt-inline) .mk-takeaway { margin-top: auto; }
+}
+@media (min-width: 901px) {
+  .wm-talk .wm-lesson header { gap: 1cqw; }
+}

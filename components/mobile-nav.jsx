@@ -4,14 +4,16 @@ import { useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 
+const DISCORD = "https://discord.gg/kZSJMNveYM";
+
 const links = [
-  { href: "/ai-meetup-phoenix", label: "Events", detail: "See What's Next" },
+  { href: "/talks", label: "Talks", detail: "One Night, One Live Build" },
   { href: "/workshops", label: "Workshops", detail: "Build Something Useful" },
   { href: "/programs", label: "Programs", detail: "Learn Together. Ship Together." },
   { href: "/about", label: "About", detail: "Meet Ship AI" },
 ];
 
-export default function MobileNav({ children, extraLinks = [] }) {
+export default function MobileNav({ account }) {
   const [open, setOpen] = useState(false);
   const id = useId();
   const root = useRef(null);
@@ -50,8 +52,7 @@ export default function MobileNav({ children, extraLinks = [] }) {
         {links.map(link => <a key={link.href} href={link.href} aria-current={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "page" : undefined}>
           <span><strong>{link.label}</strong><small>{link.detail}</small></span><ArrowUpRight size={18} aria-hidden="true" />
         </a>)}
-        {extraLinks.filter(link => !links.some(item => item.href === link.href)).map(link => <a key={link.href} href={link.href}><strong>{link.label}</strong><ArrowUpRight size={18} aria-hidden="true" /></a>)}
-        <div className="mobile-nav-account"><a href="/dashboard" className="btn btn-solid">Account <ArrowUpRight size={16} aria-hidden="true" /></a>{children}</div>
+        <div className="mobile-nav-account">{account ?? <a href="/dashboard" className="btn btn-ghost">Account</a>}<a href={DISCORD} className="btn btn-solid" target="_blank" rel="noreferrer">Discord <ArrowUpRight size={16} aria-hidden="true" /></a></div>
       </nav>
     </div>}
   </div>;

@@ -1,3 +1,4 @@
+import SiteHeader from "./site-header";
 import MobileNav from "./mobile-nav";
 import { Lockup } from "./seal";
 const DISCORD = "https://discord.gg/kZSJMNveYM";
@@ -40,17 +41,7 @@ export function articleSchema({ title, description, path, modified }) {
 export function Article({ kicker, title, updated, children }) {
   return (
     <>
-      <header className="nav">
-        <Lockup />
-        <nav>
-          <a href="/programs">Programs</a>
-          <a href="/about">About</a>
-          <a href="/ai-meetup-phoenix">Events</a>
-        </nav>
-        <a className="btn btn-solid nav-cta" href={DISCORD} target="_blank" rel="noreferrer">
-          Join the Discord
-        </a>
-      <MobileNav /></header>
+      <SiteHeader />
       <main className="article">
         <p className="kicker">{kicker}</p>
         <h1>{title}</h1>

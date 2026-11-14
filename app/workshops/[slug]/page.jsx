@@ -53,7 +53,7 @@ export default async function Workshop({ params }) {
 
   return <>
     <JsonLd data={workshopCourseSchema(workshop)} />
-    <SiteHeader current="/workshops" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={18} height={18} fill="currentColor" aria-hidden="true" focusable="false"><path d={siDiscord.path} /></svg>Join the Discord</a>} />
+    <SiteHeader current="/workshops" />
     <main className="ws-page">
       <SheetHero heading={workshop.heading} promise={workshop.promise} description={workshop.description} />
       <SheetBoard slug={workshop.slug} name={workshop.name} price={workshop.price} capacity={workshop.capacity} format={format} coverUrl={media.coverUrl} />

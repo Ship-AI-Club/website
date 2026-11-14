@@ -36,7 +36,7 @@ export default async function Page() {
 
   return (
     <>
-      <SiteHeader cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>} />
+      <SiteHeader />
 
       <main id="top">
         <EventHero

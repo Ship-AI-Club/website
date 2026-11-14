@@ -23,6 +23,7 @@ import { zip } from "./zip.mjs";
 import { TEMPLATE_REPO, DISCORD } from "../lib/hackathon.js";
 import { GUIDES_BY_PROGRAM, setupFor } from "../lib/guides.js";
 import { PROGRAMS } from "../lib/programs.js";
+import { TALKS } from "../lib/talks.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const skillsSrc = join(root, "content/skills");
@@ -267,6 +268,7 @@ const qrTargets = {
   sponsors: `${SITE}/programs/zero-to-launch/hackathon/sponsor`,
   hackathon: `${SITE}/programs/zero-to-launch/hackathon`,
   "growth-loops": `${SITE}/programs/growth-loops`,
+  ...Object.fromEntries(TALKS.map((t) => [`talk-${t.slug}`, `${SITE}/talks/${t.slug}`])),
   ...Object.fromEntries(
     PROGRAMS.flatMap((p) =>
       p.sessions.map((w) => [

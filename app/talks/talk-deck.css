@@ -1,0 +1,102 @@
+.wm-talk .wm-lesson { gap: 1.6cqw; }
+.wm-talk .wm-lesson header { gap: .6cqw; }
+.wm-talk .wm-lesson header .mk-label { font: 1.2cqw var(--sap-font-mono); color: var(--accent); letter-spacing: .02em; }
+.wm-talk .wm-lesson h3 { font-family: var(--sap-font-display); font-weight: 400; font-size: 4.4cqw; line-height: 1.04; letter-spacing: -.035em; }
+.wm-talk .wm-lesson header .mk-lead { font-size: 1.6cqw; color: var(--dim); max-width: 60cqw; }
+.wm-talk .mk-takeaway { font: 1.2cqw var(--sap-font-mono); color: var(--faint); border-top: 1px solid var(--hairline); padding-top: .9cqw; }
+
+.wm-talk .wd-diagram h4 { letter-spacing: -.025em; }
+.wm-talk .wd-diagram em { font-family: var(--sap-font-display); font-style: italic; font-weight: 400; }
+
+.wm-talk .wd-flow { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 1.6cqw; }
+.wm-talk .wd-flow > div { border-top: 3px solid var(--accent); padding: 1.4cqw 1.6cqw 1.6cqw; background: rgba(var(--accent-rgb), .05); }
+.wm-talk .wd-flow-number { font-size: 1.3cqw; margin-bottom: 1cqw; }
+.wm-talk .wd-flow h4 { font-size: 2.2cqw; margin-bottom: .6cqw; }
+.wm-talk .wd-flow p { font-size: 1.4cqw; }
+.wm-talk .wd-flow b { top: 1.2cqw; right: 1.4cqw; font-size: 1.6cqw; }
+
+.wm-talk .wd-copy { grid-template-columns: 1fr 1.3fr; gap: 1.6cqw; }
+.wm-talk .wd-before, .wm-talk .wd-after { padding: 2.2cqw 2.4cqw; }
+.wm-talk .wd-before h4 { font-family: var(--sap-font-display); font-weight: 400; font-size: 3.2cqw; color: var(--dim); }
+.wm-talk .wd-after { border-color: var(--accent); }
+.wm-talk .wd-after h4 { font-family: var(--sap-font-display); font-weight: 400; font-size: 3cqw; }
+.wm-talk .wd-brief-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4cqw; border-top: 1px solid var(--hairline); padding-top: 1.2cqw; }
+.wm-talk .wd-brief-facts strong { display: block; font-size: 1.45cqw; }
+.wm-talk .wd-brief-facts p { display: block; font-size: 1.2cqw; margin-top: .3cqw; }
+
+.wm-talk .wd-branches, .wm-talk .wd-setup { grid-template-columns: 1fr 1.5fr; gap: 2.4cqw; align-items: stretch; }
+.wm-talk .wd-hub { display: flex; flex-direction: column; justify-content: space-between; padding: 2cqw 2.2cqw; }
+.wm-talk .wd-hub > strong { font-family: var(--sap-font-display); font-weight: 400; font-size: 3.6cqw; margin: 1cqw 0; }
+.wm-talk .wd-hub p { font-size: 1.25cqw; }
+.wm-talk .wd-branch-list { display: flex; flex-direction: column; justify-content: center; }
+.wm-talk .wd-branch-list h4 { font-family: var(--sap-font-mono); font-weight: 400; font-size: 1.7cqw; }
+.wm-talk .wd-branch-list p { font-size: 1.3cqw; }
+.wm-talk .wd-terminal strong { font-family: var(--sap-font-display); font-weight: 400; font-size: 3.2cqw; line-height: 1.08; display: block; margin: 1cqw 0; }
+
+.wm-talk .wd-opening-copy h4 { font-family: var(--sap-font-display); font-weight: 400; font-size: 4.6cqw; line-height: 1.04; }
+.wm-talk .wd-opening-copy p { font-size: 1.5cqw; max-width: 32cqw; }
+.wm-talk .wd-whatsapp { max-width: 74cqw; }
+.wm-talk .wd-whatsapp-copy h4 { font-family: var(--sap-font-display); font-weight: 400; font-size: 3.8cqw; }
+.wm-talk .wd-whatsapp-qr .dk-qr { width: 100%; height: 100%; }
+.wm-talk .wd-whatsapp-qr svg { display: block; width: 100%; height: 100%; }
+
+.wm-talk .wm-prompt-inline { border: 0; padding: 0; background: var(--sap-band-bg); color: var(--sap-band-text); }
+.wm-talk .wm-prompt-inline .wm-prompt-actions { margin: 0; padding: .8cqw 1.2cqw; border-bottom: 1px solid var(--sap-band-rule); }
+.wm-talk .wm-prompt-inline .wm-prompt-actions strong { font: 1.1cqw var(--sap-font-mono); color: var(--sap-band-text-muted); }
+.wm-talk .wm-prompt-inline .wm-prompt-actions [role="status"] { color: var(--sap-band-text-muted); font-size: 1.05cqw; }
+.wm-talk .wm-prompt-inline .wm-prompt-actions button { background: var(--sap-band-text); color: var(--sap-band-bg); border-color: var(--sap-band-text); }
+.wm-talk .wm-prompt-inline pre { background: none; color: var(--sap-band-text); padding: 1cqw 1.2cqw 1cqw 3cqw; position: relative; font-size: 1.3cqw; }
+.wm-talk .wm-prompt-inline pre::before { content: "❯"; position: absolute; left: 1.2cqw; top: 1cqw; color: var(--sap-band-art); }
+.wm-talk .wm-prompt-inline .wm-full-prompt-open { margin: 0 1.2cqw .9cqw; color: var(--sap-band-text-muted); background: none; border: 0; padding: 0; text-decoration: underline; font-size: 1.05cqw; cursor: pointer; }
+
+@media (max-width: 900px) {
+  .wm-talk .wm-lesson h3 { font-size: 32px; }
+  .wm-talk .wm-lesson header .mk-label { font-size: 13px; }
+  .wm-talk .wm-lesson header .mk-lead { font-size: 17px; max-width: none; }
+  .wm-talk .mk-takeaway { font-size: 13px; padding-top: 10px; }
+  .wm-talk .wd-flow { grid-template-columns: 1fr; gap: 12px; }
+  .wm-talk .wd-flow > div { padding: 14px 16px; }
+  .wm-talk .wd-flow-number { font-size: 13px; margin-bottom: 8px; }
+  .wm-talk .wd-flow h4 { font-size: 20px; }
+  .wm-talk .wd-flow p { font-size: 15px; }
+  .wm-talk .wd-flow b { display: none; }
+  .wm-talk .wd-copy, .wm-talk .wd-branches, .wm-talk .wd-setup { grid-template-columns: 1fr; gap: 16px; }
+  .wm-talk .wd-before h4, .wm-talk .wd-after h4 { font-size: 26px; }
+  .wm-talk .wd-brief-facts { grid-template-columns: 1fr; gap: 10px; }
+  .wm-talk .wd-brief-facts strong { font-size: 16px; }
+  .wm-talk .wd-brief-facts p { font-size: 14px; }
+  .wm-talk .wd-hub > strong { font-size: 30px; }
+  .wm-talk .wd-hub p, .wm-talk .wd-branch-list p { font-size: 15px; }
+  .wm-talk .wd-branch-list h4 { font-size: 17px; }
+  .wm-talk .wd-terminal strong { font-size: 28px; }
+  .wm-talk .wd-opening-copy h4 { font-size: 34px; }
+  .wm-talk .wd-opening-copy p { font-size: 16px; max-width: none; }
+  .wm-talk .wd-whatsapp-copy h4 { font-size: 30px; }
+  .wm-talk .wm-prompt-inline .wm-prompt-actions { padding: 10px 14px; }
+  .wm-talk .wm-prompt-inline .wm-prompt-actions strong { font-size: 13px; }
+  .wm-talk .wm-prompt-inline pre { font-size: 14px; padding: 12px 14px 12px 32px; }
+  .wm-talk .wm-prompt-inline pre::before { left: 14px; top: 12px; }
+  .wm-talk .wm-prompt-inline .wm-full-prompt-open { margin: 0 14px 12px; font-size: 14px; }
+}
+
+.wm-talk .wd-hub, .wm-talk .wd-terminal { background: var(--sunken); color: var(--ink); border-top: 3px solid var(--accent); }
+.wm-talk .wd-hub > span, .wm-talk .wd-terminal > span { color: var(--accent); }
+.wm-talk .wd-hub p, .wm-talk .wd-terminal p { color: var(--dim); }
+.wm-talk .wd-hub b { color: var(--accent); }
+.wm-talk .wm-lesson-content { gap: 2.2cqw; }
+
+.wm-talk .dk-slide:has(.wm-tone-bonus) .dk-frame { background: var(--sap-band-bg); color: var(--sap-band-text); border-color: var(--sap-band-bg); }
+.wm-talk .dk-slide:has(.wm-tone-bonus) .dk-chrome { color: var(--sap-band-text-muted); border-color: var(--sap-band-rule); }
+.wm-talk .wm-tone-bonus { --ink: var(--sap-band-text); --dim: var(--sap-band-text-muted); --faint: var(--sap-band-text-muted); --hairline: var(--sap-band-rule); --sunken: var(--sap-band-bg-raised); --accent: var(--sap-band-art); color: var(--sap-band-text); }
+.wm-talk .wm-tone-bonus h3, .wm-talk .wm-tone-bonus .wd-diagram, .wm-talk .wm-tone-bonus .wd-diagram h4 { color: var(--sap-band-text); }
+.wm-talk .wm-tone-bonus header .mk-label { color: var(--sap-band-art); text-transform: uppercase; letter-spacing: .12em; }
+.wm-talk .wm-tone-bonus .wd-flow > div { background: var(--sap-band-bg-raised); border-top-color: var(--sap-band-art); }
+.wm-talk .wm-tone-bonus .ms-brand-poster { background: var(--sap-band-bg-raised); color: var(--sap-band-text); outline: 1px solid var(--sap-band-rule); }
+.wm-talk .wm-tone-bonus .wm-prompt-inline { background: var(--sap-bone); color: var(--sap-ink, #0D241E); }
+.wm-talk .wm-tone-bonus .wm-prompt-inline pre { color: #0D241E; }
+.wm-talk .wm-tone-bonus .wm-prompt-inline pre::before { color: #1C5544; }
+.wm-talk .wm-tone-bonus .wm-prompt-inline .wm-prompt-actions { border-color: rgba(13, 36, 30, .16); }
+.wm-talk .wm-tone-bonus .wm-prompt-inline .wm-prompt-actions strong,
+.wm-talk .wm-tone-bonus .wm-prompt-inline .wm-prompt-actions [role="status"],
+.wm-talk .wm-tone-bonus .wm-prompt-inline .wm-full-prompt-open { color: #3E5A50; }
+.wm-talk .wm-tone-bonus .wm-prompt-inline .wm-prompt-actions button { background: #0D241E; color: var(--sap-bone); border-color: #0D241E; }

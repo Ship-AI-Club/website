@@ -1,3 +1,4 @@
+import SiteHeader from "../components/site-header";
 import MobileNav from "../components/mobile-nav";
 import { Lockup } from "../components/seal";
 /* Every /programs/zero-to-launch/hackathon/certificate/<id> that was never issued lands here,
@@ -15,14 +16,7 @@ export const metadata = {
 export default function NotFound() {
   return (
     <>
-      <header className="nav">
-        <Lockup />
-        <nav>
-          <a href="/programs">Programs</a>
-          <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
-          <a href="/programs/zero-to-launch/hackathon/results">Results</a>
-        </nav>
-      <MobileNav /></header>
+      <SiteHeader />
 
       <main className="hk-submit-page">
         <p className="kicker">404</p>

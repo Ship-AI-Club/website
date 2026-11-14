@@ -6,6 +6,7 @@ import { AI_ORGANIZATION_EVENT } from "../lib/ai-organization-event";
 import { UPCOMING_WORKSHOPS } from "../lib/workshops";
 import registry from "../lib/skills.generated.json";
 import { FOUNDER_WEEKEND } from "../lib/founder-weekend";
+import { TALKS } from "../lib/talks";
 
 const BASE = "https://www.shipai.club";
 
@@ -15,6 +16,11 @@ export default function sitemap() {
     { url: `${BASE}/`, lastModified, changeFrequency: "daily", priority: 1 },
     { url: `${BASE}/about`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/programs`, lastModified, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE}/talks`, lastModified, changeFrequency: "weekly", priority: 0.8 },
+    ...TALKS.flatMap((t) => [
+      { url: `${BASE}/talks/${t.slug}`, lastModified, changeFrequency: "weekly", priority: 0.8 },
+      { url: `${BASE}/talks/${t.slug}/deck`, lastModified, changeFrequency: "monthly", priority: 0.6 },
+    ]),
     { url: FOUNDER_WEEKEND.url, lastModified, changeFrequency: "daily", priority: 1 },
     { url: `${FOUNDER_WEEKEND.url}/register`, lastModified, changeFrequency: "weekly", priority: 0.8 },
     { url: `${FOUNDER_WEEKEND.url}/sponsor`, lastModified, changeFrequency: "monthly", priority: 0.6 },

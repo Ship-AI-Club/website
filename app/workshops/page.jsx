@@ -42,7 +42,7 @@ export default function Workshops() {
 
   return <>
     <JsonLd data={workshopCatalogueSchema([...(ended ? [] : [{slug:"vibe-coding-gtm",name:VIBE_GTM.name}]), ORG, ...UPCOMING_WORKSHOPS])} />
-    <SiteHeader current="/workshops" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={18} height={18} fill="currentColor" aria-hidden="true" focusable="false"><path d={siDiscord.path} /></svg>Join the Discord</a>} />
+    <SiteHeader current="/workshops" />
     <main className="wc-catalogue">
       <section className="hero" aria-labelledby="workshops-title">
         <h1 className="hero-h1" id="workshops-title">Build the next part <span className="key">of your business.</span></h1>

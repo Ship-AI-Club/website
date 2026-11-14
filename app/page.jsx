@@ -102,7 +102,7 @@ export default async function Page() {
     <>
       <JsonLd data={ORG_SCHEMA} />
       {events.length > 0 && <JsonLd data={eventsSchema(events)} />}
-      <SiteHeader current="/" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={18} height={18} fill="currentColor" aria-hidden="true" focusable="false"><path d={siDiscord.path} /></svg>Join the Discord</a>} />
+      <SiteHeader current="/" />
 
       <main id="top">
         <section className="hero home-hero" aria-labelledby="hero-title">

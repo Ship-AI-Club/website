@@ -64,7 +64,7 @@ export default function Page() {
   return (
     <>
       <JsonLd data={LIST_SCHEMA} />
-      <SiteHeader current="/programs" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" width={18} height={18} fill="currentColor" aria-hidden="true" focusable="false"><path d={siDiscord.path} /></svg>Join the Discord</a>} />
+      <SiteHeader current="/programs" />
 
       <main>
         <section className="hero" aria-labelledby="programs-title">

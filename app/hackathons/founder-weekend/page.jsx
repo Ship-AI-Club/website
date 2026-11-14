@@ -140,11 +140,7 @@ export default async function Page() {
     <>
       <JsonLd data={EVENT_SCHEMA} />
       <JsonLd data={faqSchema(FW_FAQS)} />
-      <SiteHeader
-        cta={over
-          ? <a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>
-          : <a className="btn btn-solid btn-sm nav-cta" {...RSVP_LINK}>{RSVP_LABEL}</a>}
-      />
+      <SiteHeader />
 
       <main id="top">
         <EventHero

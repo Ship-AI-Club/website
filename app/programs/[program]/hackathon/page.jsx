@@ -104,7 +104,7 @@ export default async function Page({ params }) {
   return (
     <>
       <JsonLd data={EVENT_SCHEMA} />
-      <SiteHeader current="/programs" cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>} />
+      <SiteHeader current="/programs" />
 
       <main id="top">
         <EventHero

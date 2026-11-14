@@ -67,10 +67,7 @@ const values = [
 export default function Page() {
   return (
     <>
-      <SiteHeader
-        current="/about"
-        cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>}
-      />
+      <SiteHeader current="/about" />
 
       <main id="top">
         <EventHero

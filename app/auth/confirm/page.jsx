@@ -21,7 +21,7 @@ export default async function Page({ searchParams }) {
 
   return (
     <>
-      <SiteHeader cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>} />
+      <SiteHeader />
       <main className="ac-page">
         <p className="ac-kicker">Ship AI account</p>
         <h1>Confirm your sign-in</h1>

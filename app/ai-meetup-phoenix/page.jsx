@@ -165,10 +165,7 @@ export default async function Page() {
       <JsonLd data={articleSchema({ title: TITLE, description: DESCRIPTION, path: PATH, modified: "2026-11-12" })} />
       <JsonLd data={faqSchema(FAQS)} />
       {dates.length > 0 && <JsonLd data={eventsSchema(dates)} />}
-      <SiteHeader
-        current={PATH}
-        cta={<a className="btn btn-solid btn-sm nav-cta" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>}
-      />
+      <SiteHeader current={PATH} />
 
       <main id="top">
         <EventHero

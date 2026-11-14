@@ -1,4 +1,4 @@
-import MobileNav from "./mobile-nav";
+import SiteHeader from "./site-header";
 import { signOutAction } from "../app/login/actions";
 import { DISCORD } from "../lib/hackathon";
 import { Lockup } from "./seal";
@@ -12,32 +12,8 @@ import { Lockup } from "./seal";
    server action without shipping any JavaScript for it.
 ------------------------------------------------------------------ */
 
-export function AccountHeader({ user, links = [] }) {
-  return (
-    <header className="nav">
-      <Lockup />
-      <nav>
-        <a href="/programs">Programs</a>
-        <a href="/programs/zero-to-launch/hackathon">Hackathon</a>
-        {links.map((l) => (
-          <a key={l.href} href={l.href}>
-            {l.label}
-          </a>
-        ))}
-      </nav>
-      {user ? (
-        <form action={signOutAction}>
-          <button type="submit" className="btn btn-ghost nav-cta">
-            Sign out
-          </button>
-        </form>
-      ) : (
-        <a className="btn btn-solid nav-cta" href="/login">
-          Sign in
-        </a>
-      )}
-    <MobileNav extraLinks={links}>{user && <form action={signOutAction}><button type="submit" className="btn btn-ghost">Sign Out</button></form>}</MobileNav></header>
-  );
+export function AccountHeader({ user }) {
+  return <SiteHeader account={user ? <form action={signOutAction}><button type="submit" className="btn btn-ghost">Sign out</button></form> : <a className="btn btn-ghost" href="/login">Sign in</a>} />;
 }
 
 export function AccountFooter() {

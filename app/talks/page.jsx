@@ -5,11 +5,11 @@ import DepartureBoard from "../../components/departure-board";
 import { TalkCard, TalkGroups, STANDALONE_GROUPS } from "../../components/talk-cards";
 import { TALKS, SERIES_NAME, talkEnded, talkScheduled } from "../../lib/talks";
 import { DISCORD } from "../../lib/hackathon";
-import { ogImage } from "../../lib/og";
 import { SOCRATIC } from "../../lib/socratic";
 import "./talks.css";
 
 const FOUNDER_WEEKEND = "/hackathons/founder-weekend#series";
+const OG = { url: "/og-talks.jpg", width: 1200, height: 630, alt: "Ship AI Talks: one night, one topic. Free talks in Phoenix on Wednesday nights at Workuity Biltmore." };
 
 export const metadata = {
   title: "Talks - Ship AI",
@@ -20,8 +20,9 @@ export const metadata = {
     description: "One night, one topic. Free talks in Phoenix, with everything published free.",
     url: "https://www.shipai.club/talks",
     siteName: "Ship AI",
-    images: [ogImage({ kicker: "Talks", title: "One night, one topic.", key: "one topic.", tagline: "Free talks in Phoenix. The prompts, the deck and the file, published free." })],
+    images: [OG],
   },
+  twitter: { card: "summary_large_image", title: "Talks - Ship AI", description: "One night, one topic. Free talks in Phoenix, with everything published free.", images: [OG.url] },
 };
 
 export const revalidate = 3600;

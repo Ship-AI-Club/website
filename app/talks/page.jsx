@@ -2,78 +2,39 @@ import SiteHeader from "../../components/site-header";
 import SiteFooter from "../../components/site-footer";
 import Scene from "../../components/scene";
 import DepartureBoard from "../../components/departure-board";
-import { TALKS, talkEnded, talkScheduled } from "../../lib/talks";
+import { TalkCard, TalkGroups, STANDALONE_GROUPS } from "../../components/talk-cards";
+import { TALKS, SERIES_NAME, talkEnded, talkScheduled } from "../../lib/talks";
 import { DISCORD } from "../../lib/hackathon";
 import { ogImage } from "../../lib/og";
 import { SOCRATIC } from "../../lib/socratic";
 import "./talks.css";
 
+const FOUNDER_WEEKEND = "/hackathons/founder-weekend#series";
+
 export const metadata = {
   title: "Talks - Ship AI",
-  description: "Twelve free Ship AI talks in Phoenix. One founder app, built on screen from forming the company to running it, with the prompts, the tools and the deck published free.",
+  description: "Free one-night Ship AI talks in Phoenix, plus a monthly Socratic Night. Pick the problem you have, watch it get solved on screen, and take the prompts, the deck and the file home.",
   alternates: { canonical: "https://www.shipai.club/talks" },
   openGraph: {
     title: "Talks - Ship AI",
-    description: "Twelve nights, one founder app. Everything published free.",
+    description: "One night, one topic. Free talks in Phoenix, with everything published free.",
     url: "https://www.shipai.club/talks",
     siteName: "Ship AI",
-    images: [ogImage({ kicker: "Talks", title: "Twelve nights, one founder app.", key: "one founder app.", tagline: "The prompts, the tools and the deck, published free." })],
+    images: [ogImage({ kicker: "Talks", title: "One night, one topic.", key: "one topic.", tagline: "Free talks in Phoenix. The prompts, the deck and the file, published free." })],
   },
 };
 
 export const revalidate = 3600;
 
-const LEGS = [
-  { name: "Start", line: "Form it, test the idea, build it.", parts: [1, 2, 3] },
-  { name: "Grow", line: "Add to it and put it in front of people.", parts: [4, 5, 6, 7] },
-  { name: "Harden", line: "Make it durable, safe and watched.", parts: [8, 9, 10] },
-  { name: "Run", line: "Your business operating system: the console and the team that run it.", parts: [11, 12] },
-];
-
-const STANDALONE_GROUPS = [
-  { name: "Operate", line: "Run the business with AI. No code needed.", slugs: ["ai-assistant", "ai-team", "workflow-automation", "business-os"] },
-  { name: "Build", line: "Ship software your team or customers use.", slugs: ["internal-tool", "agent-product"] },
-];
-
-const pad = (n) => String(n).padStart(2, "0");
-
 function daysUntil(iso) {
   return Math.max(0, Math.ceil((new Date(iso).getTime() - Date.now()) / 86400000));
 }
 
-function shortDate(talk) {
-  if (!talkScheduled(talk)) return "Date TBA";
-  return new Date(talk.startISO).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "America/Phoenix" });
-}
-
-function Title({ talk }) {
-  const [lead, ...rest] = talk.eventTitle.split(talk.key);
-  return <>{lead}<span className="key">{talk.key}</span>{rest.join(talk.key)}</>;
-}
-
-function TalkCard({ talk, next, h = "h3" }) {
-  const H = h;
-  const ended = talkEnded(talk);
-  return <li className={`card tk-card${next ? " is-next" : ""}`}>
-    <p className="tk-card-top">
-      <span>{talk.series ? `Part ${pad(talk.series)}` : "Any night"}</span>
-      <span className={next ? "tk-pill tk-pill-live" : "tk-pill"}>{ended ? "Slides up" : shortDate(talk)}</span>
-    </p>
-    <H className="tk-card-title"><a className="tk-card-link" href={`/talks/${talk.slug}`}><Title talk={talk} /></a></H>
-    <p className="tk-card-sum">{talk.summary}</p>
-    <p className="tk-card-foot">
-      {talk.example?.file ? <span className="tk-file">{talk.example.file}</span> : <span />}
-      <a className="tk-slides" href={`/talks/${talk.slug}/deck`}>Slides <span aria-hidden="true">→</span></a>
-    </p>
-  </li>;
-}
-
 export default function Page() {
-  const series = TALKS.filter((t) => t.series);
-  const standalone = TALKS.filter((t) => t.standalone && !talkEnded(t));
   const upcoming = TALKS.filter((t) => talkScheduled(t) && !talkEnded(t)).sort((a, b) => a.startISO.localeCompare(b.startISO));
   const next = upcoming[0];
-  const past = TALKS.filter((t) => talkEnded(t) && !t.series).reverse();
+  const standalone = TALKS.filter((t) => t.standalone && !talkEnded(t));
+  const past = TALKS.filter((t) => t.standalone && talkEnded(t)).reverse();
   const nextRsvp = next?.rsvp?.[0];
   const start = next ? new Date(next.startISO) : null;
   const days = next ? daysUntil(next.startISO) : 0;
@@ -83,18 +44,18 @@ export default function Page() {
     <main className="talks-page">
       <section className="hero tk-hero" aria-labelledby="talks-title">
         <p className="eyebrow">Ship AI · Talks</p>
-        <h1 className="hero-h1" id="talks-title">Twelve nights, <span className="key">one founder app.</span></h1>
-        <p className="hero-lede">Twelve talks that each stand on their own, from forming the company to running it with a team of AI bots. Every night builds the same example app on screen. Come to the one you need, or all twelve.</p>
+        <h1 className="hero-h1" id="talks-title">One night, <span className="key">one topic.</span></h1>
+        <p className="hero-lede">Free talks in Phoenix. Pick the problem you have, watch it get solved on screen, and take the prompts, the deck and the file home.</p>
         <div className="cta-row home-pair">
           {nextRsvp
             ? <a className="btn btn-solid" href={nextRsvp.href} target="_blank" rel="noreferrer">Save your seat</a>
             : <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Get the dates</a>}
-          <a className="btn btn-ghost" href="#series">See all twelve</a>
+          <a className="btn btn-ghost" href={upcoming.length ? "#upcoming" : "#standalone"}>See what's coming up</a>
         </div>
         {next && <div className="talk-board">
           <DepartureBoard
             scene="launch"
-            label={next.series ? `Next up · Part ${next.series}` : "Next up"}
+            label={next.series ? `Next up · ${SERIES_NAME}` : "Next up"}
             status="Free · In person"
             date={{ big: start.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Phoenix" }), small: `${start.toLocaleDateString("en-US", { weekday: "short", timeZone: "America/Phoenix" })} · ${next.timeLabel}` }}
             title={next.eventTitle}
@@ -105,53 +66,43 @@ export default function Page() {
         </div>}
       </section>
 
-      <section className="section tk-series" id="series" aria-labelledby="series-title">
+      {upcoming.length > 0 && <section className="section tk-upcoming" id="upcoming" aria-labelledby="upcoming-title">
         <div className="section-head">
-          <h2 id="series-title">Claude Code <span className="key">Build Nights.</span></h2>
-          <p className="section-lede">Twelve nights, in order. Every night uses the same example app, What's for Dinner, and stands on its own. Start with the one you need, and leave with a file to paste into your own project.</p>
+          <h2 id="upcoming-title">Coming <span className="key">up.</span></h2>
+          <p className="section-lede">Every talk with a date, in order. More dates go out in the Discord first.</p>
         </div>
-        <ol className="tk-legs">
-          {LEGS.map((leg) => {
-            const talks = leg.parts.map((n) => series.find((t) => t.series === n)).filter(Boolean);
-            return <li key={leg.name} className="tk-leg">
-              <div className="tk-leg-head">
-                <span className="tk-leg-n">Parts {leg.parts[0]}-{leg.parts[leg.parts.length - 1]}</span>
-                <h3>{leg.name}</h3>
-                <p>{leg.line}</p>
+        <ol className="tk-cal">
+          {upcoming.map((t) => {
+            const d = new Date(t.startISO);
+            const rsvp = t.rsvp?.[0];
+            return <li key={t.slug} className="tk-cal-row">
+              <p className="tk-cal-date"><b>{d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Phoenix" })}</b><span>{d.toLocaleDateString("en-US", { weekday: "short", timeZone: "America/Phoenix" })} · {t.timeLabel}</span></p>
+              <div className="tk-cal-main">
+                <span className="tk-cal-kind">{t.series ? `${SERIES_NAME} · Part ${t.series}` : "Standalone talk"}</span>
+                <h3><a href={`/talks/${t.slug}`}>{t.eventTitle}</a></h3>
+                <p>{t.summary} · {t.venue}</p>
               </div>
-              <ol className="tk-cards">{talks.map((t) => <TalkCard key={t.slug} talk={t} next={next?.slug === t.slug} h="h4" />)}</ol>
-            </li>;
-          })}
-        </ol>
-      </section>
-
-      {standalone.length > 0 && <section className="section tk-standalone" aria-labelledby="standalone-title">
-        <div className="section-head">
-          <h2 id="standalone-title">One night, <span className="key">your business.</span></h2>
-          <p className="section-lede">Single-night talks built around your own work, not our example app. Pick the problem you have, bring the business, and leave with the file that fixes it.</p>
-        </div>
-        <ol className="tk-legs">
-          {STANDALONE_GROUPS.map((g) => {
-            const talks = g.slugs.map((slug) => standalone.find((t) => t.slug === slug)).filter(Boolean);
-            const rest = g === STANDALONE_GROUPS[STANDALONE_GROUPS.length - 1] ? standalone.filter((t) => !STANDALONE_GROUPS.some((x) => x.slugs.includes(t.slug))) : [];
-            const all = [...talks, ...rest];
-            if (!all.length) return null;
-            return <li key={g.name} className="tk-leg">
-              <div className="tk-leg-head">
-                <span className="tk-leg-n">{all.length} talks</span>
-                <h3>{g.name}</h3>
-                <p>{g.line}</p>
+              <div className="tk-cal-act">
+                {rsvp && <a className="btn btn-solid btn-sm" href={rsvp.href} target="_blank" rel="noreferrer">RSVP</a>}
+                <a className="btn btn-ghost btn-sm" href={`/talks/${t.slug}`}>Details</a>
               </div>
-              <ol className="tk-cards">{all.map((t) => <TalkCard key={t.slug} talk={t} next={next?.slug === t.slug} h="h4" />)}</ol>
             </li>;
           })}
         </ol>
       </section>}
 
+      {standalone.length > 0 && <section className="section tk-standalone" id="standalone" aria-labelledby="standalone-title">
+        <div className="section-head">
+          <h2 id="standalone-title">One night, <span className="key">your business.</span></h2>
+          <p className="section-lede">Talks built around your own work. Pick the problem you have, bring the business, and leave with the file that fixes it.</p>
+        </div>
+        <TalkGroups groups={STANDALONE_GROUPS} talks={standalone} nextSlug={next?.slug} label={(g, items) => `${items.length} talks`} />
+      </section>}
+
       <section className="section tk-recurring" aria-labelledby="rec-title">
         <div className="section-head">
           <h2 id="rec-title">Every <span className="key">month.</span></h2>
-          <p className="section-lede">Between the talks, one night where the room sets the agenda.</p>
+          <p className="section-lede">One night where the room sets the agenda.</p>
         </div>
         <a className="card tk-rec" href="/socratic-night" aria-labelledby="rec-card-title">
           <div className="tk-rec-body">
@@ -165,6 +116,16 @@ export default function Page() {
         </a>
       </section>
 
+      <section className="section tk-founders" aria-labelledby="founders-title">
+        <div className="tk-founders-row">
+          <div>
+            <h2 id="founders-title">Building a <span className="key">company?</span></h2>
+            <p>{SERIES_NAME} is twelve nights on one founder app, from forming the company to running it. The full series lives with Founder Weekend, the hackathon it leads into.</p>
+          </div>
+          <a className="btn btn-ghost" href={FOUNDER_WEEKEND}>See the twelve nights</a>
+        </div>
+      </section>
+
       <section className="section tk-take" aria-labelledby="take-title">
         <div className="section-head">
           <h2 id="take-title">Every night, <span className="key">take it home.</span></h2>
@@ -172,18 +133,18 @@ export default function Page() {
         <ul className="tk-take-list">
           <li><span>01</span><h3>The deck</h3><p>Every slide, free to share.</p></li>
           <li><span>02</span><h3>The prompts</h3><p>Copy them into Claude Code, step by step.</p></li>
-          <li><span>03</span><h3>The file</h3><p>The night's plan, ready for your repo.</p></li>
+          <li><span>03</span><h3>The file</h3><p>The night's plan, ready for your own work.</p></li>
         </ul>
       </section>
 
       {past.length > 0 && <section className="section" aria-labelledby="past-title">
         <div className="section-head"><h2 id="past-title">Past talks.</h2><p className="section-lede">The slides and prompts stay up.</p></div>
-        <ol className="tk-cards">{past.map((talk) => <TalkCard key={talk.slug} talk={talk} />)}</ol>
+        <ol className="tk-cards tk-cards-3">{past.map((talk) => <TalkCard key={talk.slug} talk={talk} />)}</ol>
       </section>}
 
       <section className="band" aria-labelledby="talks-final-title">
         <div className="final">
-          <h2 id="talks-final-title">Come to one. <span className="key">Or all twelve.</span></h2>
+          <h2 id="talks-final-title">Pick a night. <span className="key">Bring your work.</span></h2>
           <p className="lede">Free, Wednesday nights at Workuity Biltmore in Phoenix. Dates go out in the Discord first.</p>
           <div className="cta-row home-pair">
             <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>

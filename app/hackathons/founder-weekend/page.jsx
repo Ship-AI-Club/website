@@ -25,6 +25,8 @@ import {
 } from "../../../lib/founder-weekend";
 import { founderWeekendStats, founderWeekendTeams } from "../../../lib/founder-weekend-stats";
 import { DISCORD } from "../../../lib/hackathon";
+import { TalkGroups, SERIES_LEGS } from "../../../components/talk-cards";
+import { TALKS, SERIES_NAME, talkEnded, talkScheduled } from "../../../lib/talks";
 import { SHIPPED, SHIPPED_RESULTS, daysUntil, eventState } from "../../../lib/shipped";
 import "../../home.css";
 
@@ -212,6 +214,14 @@ export default async function Page() {
           }))} />
           <p className="ev-note">Arizona time. Submissions close at {FW.deadline}.</p>
         </EventSection>
+
+        <section className="section ev-section fw-series" id="series" aria-labelledby="series-title">
+          <div className="section-head">
+            <h2 id="series-title">Twelve nights <span className="key">to get ready.</span></h2>
+            <p className="section-lede">{SERIES_NAME}: one founder app, built on screen from forming the company to running it. Every night stands on its own, so start with the one you need and bring a company to the weekend.</p>
+          </div>
+          <TalkGroups groups={SERIES_LEGS} talks={TALKS.filter((t) => t.series)} nextSlug={TALKS.filter((t) => t.series && talkScheduled(t) && !talkEnded(t)).sort((a, b) => a.startISO.localeCompare(b.startISO))[0]?.slug} label={(g) => `Parts ${g.parts[0]}-${g.parts[g.parts.length - 1]}`} />
+        </section>
 
         {/* The roster once there are teams. Until then, proof from the
             last hackathon stands where three zeros used to. */}

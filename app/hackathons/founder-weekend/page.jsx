@@ -25,8 +25,8 @@ import {
 } from "../../../lib/founder-weekend";
 import { founderWeekendStats, founderWeekendTeams } from "../../../lib/founder-weekend-stats";
 import { DISCORD } from "../../../lib/hackathon";
-import { TalkGroups, SERIES_LEGS } from "../../../components/talk-cards";
-import { TALKS, SERIES_NAME, talkEnded, talkScheduled } from "../../../lib/talks";
+import { TalkGroups, SERIES_LEGS, LUNCH_GROUPS } from "../../../components/talk-cards";
+import { TALKS, SERIES_NAME, LUNCH_NAME, talkEnded, talkScheduled } from "../../../lib/talks";
 import { SHIPPED, SHIPPED_RESULTS, daysUntil, eventState } from "../../../lib/shipped";
 import "../../home.css";
 
@@ -35,6 +35,7 @@ const RSVP = FW.rsvpUrl || REGISTER;
 const RSVP_LINK = FW.rsvpUrl ? { href: RSVP, target: "_blank", rel: "noopener noreferrer" } : { href: RSVP };
 const RSVP_LABEL = FW.rsvpUrl ? "RSVP on Luma" : "Register your team";
 const ROLE_REQUEST = "/login?next=/dashboard/requests";
+const nextOf = (pick) => TALKS.filter((t) => pick(t) && talkScheduled(t) && !talkEnded(t)).sort((a, b) => a.startISO.localeCompare(b.startISO))[0]?.slug;
 const PRIZE = FW.prizePool ? `$${FW.prizePool.toLocaleString("en-US")} in prizes` : "cash prizes";
 
 const MISSING = [
@@ -217,10 +218,18 @@ export default async function Page() {
 
         <section className="section ev-section fw-series" id="series" aria-labelledby="series-title">
           <div className="section-head">
-            <h2 id="series-title">Twelve nights <span className="key">to get ready.</span></h2>
-            <p className="section-lede">{SERIES_NAME}: one founder app, built on screen from forming the company to running it. Every night stands on its own, so start with the one you need and bring a company to the weekend.</p>
+            <h2 id="series-title">Five nights <span className="key">in the room.</span></h2>
+            <p className="section-lede">{SERIES_NAME}: the critical path from an idea to a pitch with real users behind it. Tuesdays, 5 to 7 PM at {FW.venue}, one founder app built on screen. Each night ends with the file the next one starts from.</p>
           </div>
-          <TalkGroups groups={SERIES_LEGS} talks={TALKS.filter((t) => t.series)} nextSlug={TALKS.filter((t) => t.series && talkScheduled(t) && !talkEnded(t)).sort((a, b) => a.startISO.localeCompare(b.startISO))[0]?.slug} label={(g) => `Parts ${g.parts[0]}-${g.parts[g.parts.length - 1]}`} />
+          <TalkGroups groups={SERIES_LEGS} talks={TALKS.filter((t) => t.series)} nextSlug={nextOf((t) => t.series)} label={(g) => g.parts.length > 1 ? `Parts ${g.parts[0]}-${g.parts[g.parts.length - 1]}` : `Part ${g.parts[0]}`} />
+        </section>
+
+        <section className="section ev-section fw-series" id="lunch" aria-labelledby="lunch-title">
+          <div className="section-head">
+            <h2 id="lunch-title">Everything else, <span className="key">over lunch.</span></h2>
+            <p className="section-lede">{LUNCH_NAME}s: Thursdays at noon. One hour each on what comes around the critical path, from forming the company to running it. Every deck and prompt is on its talk page, so skip what you don&apos;t need yet.</p>
+          </div>
+          <TalkGroups groups={LUNCH_GROUPS} talks={TALKS.filter((t) => t.lunch)} nextSlug={nextOf((t) => t.lunch)} label={(g, items) => items.length === 1 ? "1 session" : `${items.length} sessions`} />
         </section>
 
         {/* The roster once there are teams. Until then, proof from the

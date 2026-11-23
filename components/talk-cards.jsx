@@ -2,10 +2,16 @@ import { talkEnded, talkScheduled } from "../lib/talks";
 import "../app/talks/talks.css";
 
 export const SERIES_LEGS = [
-  { name: "Start", line: "Form it, test the idea, price it, build it.", parts: [1, 2, 3] },
-  { name: "Grow", line: "Add to it and put it in front of people.", parts: [4, 5, 6, 7] },
-  { name: "Harden", line: "Make it durable, safe and watched.", parts: [8, 9, 10] },
-  { name: "Run", line: "Your business operating system: the console and the team that run it.", parts: [11, 12] },
+  { name: "Validate and build", line: "Find a customer who will pay, then build the one thing they need.", parts: [1, 2] },
+  { name: "Get it in market", line: "A page people can find, then your first users from one channel.", parts: [3, 4] },
+  { name: "Pitch it", line: "Five minutes, scored on the weekend's six criteria.", parts: [5] },
+];
+
+export const LUNCH_GROUPS = [
+  { name: "Set up", line: "Form the company and give it its tools.", slugs: ["company-stack"] },
+  { name: "Grow it", line: "Ship what users ask for, keep them coming back, and automate the weekly work.", slugs: ["ship-a-feature", "growth-engineering", "ai-workflows"] },
+  { name: "Harden it", line: "Lock every door and know the moment it breaks.", slugs: ["security", "production-monitoring"] },
+  { name: "Run it", line: "An admin console, and a team of AI bots with narrow keys.", slugs: ["admin-console"] },
 ];
 
 export const STANDALONE_GROUPS = [
@@ -30,7 +36,7 @@ export function TalkCard({ talk, next, h = "h3" }) {
   const ended = talkEnded(talk);
   return <li className={`card tk-card${next ? " is-next" : ""}`}>
     <p className="tk-card-top">
-      <span>{talk.series ? `Part ${pad(talk.series)}` : "Any night"}</span>
+      <span>{talk.series ? `Part ${pad(talk.series)}` : talk.lunch ? "Lunch & Learn" : "Any night"}</span>
       <span className={next ? "tk-pill tk-pill-live" : "tk-pill"}>{ended ? "Slides up" : shortDate(talk)}</span>
     </p>
     <H className="tk-card-title"><a className="tk-card-link" href={`/talks/${talk.slug}`}><Title talk={talk} /></a></H>

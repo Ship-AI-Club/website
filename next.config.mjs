@@ -50,6 +50,16 @@ const nextConfig = {
         permanent: false,
       })),
       {
+        source: "/talks/ai-ops-team/:path*",
+        destination: "/talks/admin-console/:path*",
+        permanent: true,
+      },
+      {
+        source: "/talks/ai-ops-team",
+        destination: "/talks/admin-console",
+        permanent: true,
+      },
+      {
         source: "/founder-weekend/:path*",
         destination: "/hackathons/founder-weekend/:path*",
         permanent: true,

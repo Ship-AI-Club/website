@@ -3,17 +3,17 @@ import SiteFooter from "../../components/site-footer";
 import Scene from "../../components/scene";
 import DepartureBoard from "../../components/departure-board";
 import { TalkCard, TalkGroups, STANDALONE_GROUPS } from "../../components/talk-cards";
-import { TALKS, SERIES_NAME, talkEnded, talkScheduled } from "../../lib/talks";
+import { TALKS, SERIES_NAME, LUNCH_NAME, talkEnded, talkKind, talkScheduled } from "../../lib/talks";
 import { DISCORD } from "../../lib/hackathon";
 import { SOCRATIC } from "../../lib/socratic";
 import "./talks.css";
 
 const FOUNDER_WEEKEND = "/hackathons/founder-weekend#series";
-const OG = { url: "/og-talks.jpg", width: 1200, height: 630, alt: "Ship AI Talks: one night, one topic. Free talks in Phoenix on Wednesday nights at Workuity Biltmore." };
+const OG = { url: "/og-talks.jpg", width: 1200, height: 630, alt: "Ship AI Talks: one night, one topic. Free talks in Phoenix at Workuity Biltmore, Tuesday nights and Thursday lunches." };
 
 export const metadata = {
   title: "Talks - Ship AI",
-  description: "Free one-night Ship AI talks in Phoenix, plus a monthly Socratic Night. Pick the problem you have, watch it get solved on screen, and take the prompts, the deck and the file home.",
+  description: "Free Ship AI talks in Phoenix: Claude Code Build Nights on Tuesdays, Lunch & Learns on Thursdays at noon, and a monthly Socratic Night. Pick the problem you have, watch it get solved on screen, and take the prompts, the deck and the file home.",
   alternates: { canonical: "https://www.shipai.club/talks" },
   openGraph: {
     title: "Talks - Ship AI",
@@ -56,13 +56,13 @@ export default function Page() {
         {next && <div className="talk-board">
           <DepartureBoard
             scene="launch"
-            label={next.series ? `Next up · ${SERIES_NAME}` : "Next up"}
+            label={next.series ? `Next up · ${SERIES_NAME}` : next.lunch ? `Next up · ${LUNCH_NAME}` : "Next up"}
             status="Free · In person"
             date={{ big: start.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Phoenix" }), small: `${start.toLocaleDateString("en-US", { weekday: "short", timeZone: "America/Phoenix" })} · ${next.timeLabel}` }}
             title={next.eventTitle}
             meta={`${next.venue}, Phoenix · ${next.summary}`}
-            figure={days === 0 ? { big: "Tonight", small: "doors at 5:30" } : { big: String(days), small: days === 1 ? "day to go" : "days to go" }}
-            action={{ href: `/talks/${next.slug}`, label: "See the night" }}
+            figure={days === 0 ? { big: next.lunch ? "Today" : "Tonight", small: `starts ${next.timeLabel.split(" - ")[0]} PM` } : { big: String(days), small: days === 1 ? "day to go" : "days to go" }}
+            action={{ href: `/talks/${next.slug}`, label: next.lunch ? "See the session" : "See the night" }}
           />
         </div>}
       </section>
@@ -70,7 +70,7 @@ export default function Page() {
       {upcoming.length > 0 && <section className="section tk-upcoming" id="upcoming" aria-labelledby="upcoming-title">
         <div className="section-head">
           <h2 id="upcoming-title">Coming <span className="key">up.</span></h2>
-          <p className="section-lede">Every talk with a date, in order. More dates go out in the Discord first.</p>
+          <p className="section-lede">Every talk with a date, in order: Build Nights on Tuesdays at 5 PM, Lunch & Learns on Thursdays at noon. More dates go out in the Discord first.</p>
         </div>
         <ol className="tk-cal">
           {upcoming.map((t) => {
@@ -79,7 +79,7 @@ export default function Page() {
             return <li key={t.slug} className="tk-cal-row">
               <p className="tk-cal-date"><b>{d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Phoenix" })}</b><span>{d.toLocaleDateString("en-US", { weekday: "short", timeZone: "America/Phoenix" })} · {t.timeLabel}</span></p>
               <div className="tk-cal-main">
-                <span className="tk-cal-kind">{t.series ? `${SERIES_NAME} · Part ${t.series}` : "Standalone talk"}</span>
+                <span className="tk-cal-kind">{talkKind(t)}</span>
                 <h3><a href={`/talks/${t.slug}`}>{t.eventTitle}</a></h3>
                 <p>{t.summary} · {t.venue}</p>
               </div>
@@ -121,9 +121,9 @@ export default function Page() {
         <div className="tk-founders-row">
           <div>
             <h2 id="founders-title">Building a <span className="key">company?</span></h2>
-            <p>{SERIES_NAME} is twelve nights on one founder app, from forming the company to running it. The full series lives with Founder Weekend, the hackathon it leads into.</p>
+            <p>{SERIES_NAME} is five Tuesday nights on the critical path, from finding a customer to pitching with real users, plus Thursday {LUNCH_NAME}s for everything around it. It all leads into Founder Weekend.</p>
           </div>
-          <a className="btn btn-ghost" href={FOUNDER_WEEKEND}>See the twelve nights</a>
+          <a className="btn btn-ghost" href={FOUNDER_WEEKEND}>See the five nights</a>
         </div>
       </section>
 
@@ -146,7 +146,7 @@ export default function Page() {
       <section className="band" aria-labelledby="talks-final-title">
         <div className="final">
           <h2 id="talks-final-title">Pick a night. <span className="key">Bring your work.</span></h2>
-          <p className="lede">Free, Wednesday nights at Workuity Biltmore in Phoenix. Dates go out in the Discord first.</p>
+          <p className="lede">Free at Workuity Biltmore in Phoenix: Tuesday nights at 5, Thursday lunches at noon. Dates go out in the Discord first.</p>
           <div className="cta-row home-pair">
             <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>
             {nextRsvp && <a className="btn btn-ghost" href={nextRsvp.href} target="_blank" rel="noreferrer">Save your seat</a>}

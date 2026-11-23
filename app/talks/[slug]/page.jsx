@@ -5,7 +5,7 @@ import Scene from "../../../components/scene";
 import DepartureBoard from "../../../components/departure-board";
 import WorkshopPrompt from "../../../components/workshop-prompt.jsx";
 import { JsonLd } from "../../../components/article";
-import { TALKS, SERIES_NAME, talkBySlug, talkPrompts, talkEnded, talkScheduled, talkWhen, talkFullTitle } from "../../../lib/talks";
+import { TALKS, SERIES_NAME, LUNCH_NAME, talkBySlug, talkPrompts, talkEnded, talkKind, talkScheduled, talkWhen, talkFullTitle } from "../../../lib/talks";
 import { DISCORD } from "../../../lib/hackathon";
 import { ogImage } from "../../../lib/og";
 import "../talks.css";
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }) {
     title: `${talkFullTitle(talk)} - Ship AI`,
     description: `${talk.summary} ${talk.copy} ${talkWhen(talk)}, ${talk.venue}, Phoenix. Free.`.slice(0, 300),
     alternates: { canonical: url },
-    openGraph: { title: talkFullTitle(talk), description: talk.summary, url, siteName: "Ship AI", images: [ogImage({ kicker: talk.series ? SERIES_NAME : "Talks", title: talk.eventTitle, key: talk.key, tagline: talk.summary, meta: `${talkScheduled(talk) ? talk.dateLabel : "Coming soon"} · Free` })] },
+    openGraph: { title: talkFullTitle(talk), description: talk.summary, url, siteName: "Ship AI", images: [ogImage({ kicker: talk.series ? SERIES_NAME : talk.lunch ? LUNCH_NAME : "Talks", title: talk.eventTitle, key: talk.key, tagline: talk.summary, meta: `${talkScheduled(talk) ? talk.dateLabel : "Coming soon"} · Free` })] },
   };
 }
 
@@ -73,7 +73,7 @@ export default async function Page({ params }) {
     <SiteHeader current="/talks" />
     <main className="talk-page">
       <section className="hero talk-hero" aria-labelledby="talk-title">
-        <p className="eyebrow">{talk.series ? `${SERIES_NAME} · Part ${talk.series}` : "Ship AI · Talks"} · {ended ? "Past talk" : scheduled ? "Free" : "Coming soon"}</p>
+        <p className="eyebrow">{talk.series || talk.lunch ? talkKind(talk) : "Ship AI · Talks"} · {ended ? "Past talk" : scheduled ? "Free" : "Coming soon"}</p>
         <h1 className="hero-h1" id="talk-title">{lead}<span className="key">{talk.key}</span>{rest.join(talk.key)}</h1>
         <p className="hero-lede">{talk.summary}</p>
         <div className="cta-row home-pair">
@@ -84,20 +84,20 @@ export default async function Page({ params }) {
         <div className="talk-board">
           <DepartureBoard
             scene="launch"
-            label={ended ? "This talk has ended" : scheduled ? "The night" : "Coming soon"}
+            label={ended ? "This talk has ended" : scheduled ? (talk.lunch ? "The session" : "The night") : "Coming soon"}
             status={ended ? "Slides and prompts below" : scheduled ? "Free · In person" : "Date to be announced"}
-            date={{ big: dateBig, small: scheduled ? `${weekday} · ${talk.timeLabel}` : "Wednesday nights · 5:30 PM" }}
+            date={{ big: dateBig, small: scheduled ? `${weekday} · ${talk.timeLabel}` : "Tuesdays 5 PM · Thursdays noon" }}
             title={`${talk.venue}, Phoenix`}
             meta={`${talk.address.replace(/, Phoenix AZ \d+$/, "")} · ${talk.parking}`}
             figure={ended || !scheduled ? null : { big: String(days), small: days === 1 ? "day to go" : "days to go" }}
-            action={ended ? { href: deckHref, label: "Open the deck" } : scheduled ? { href: rsvp[0].href, label: "Save your seat" } : { href: DISCORD, label: "Get notified" }}
+            action={ended ? { href: deckHref, label: "Open the deck" } : scheduled && rsvp[0] ? { href: rsvp[0].href, label: "Save your seat" } : { href: DISCORD, label: "Get notified" }}
           />
         </div>
       </section>
 
       <section className="section talk-section" aria-labelledby="night-title">
         <div className="section-head">
-          <h2 id="night-title">How the night <span className="key">runs.</span></h2>
+          <h2 id="night-title">How the {talk.lunch ? "hour" : "night"} <span className="key">runs.</span></h2>
           <p className="section-lede">{talk.stepsLede ?? "Twenty minutes of AI news, one live build, then five-minute demos from the room."}</p>
         </div>
         <ol className="talk-steps">
@@ -108,7 +108,7 @@ export default async function Page({ params }) {
       <section className="section talk-section" aria-labelledby="deck-title">
         <div className="section-head">
           <h2 id="deck-title">The <span className="key">deck.</span></h2>
-          <p className="section-lede">Every slide from the night, free to share. Open it full size to step through.</p>
+          <p className="section-lede">Every slide from the {talk.lunch ? "session" : "night"}, free to share. Open it full size to step through.</p>
         </div>
         <div className="kit-deck talk-deck">
           <div className="kit-deck-head"><span>{talk.eventTitle} · slides</span><a href={deckHref}>Open full size →</a></div>
@@ -157,7 +157,7 @@ export default async function Page({ params }) {
       {talk.tools?.length > 0 && <section className="section talk-section" aria-labelledby="tools-title">
         <div className="section-head">
           <h2 id="tools-title">The <span className="key">toolkit.</span></h2>
-          <p className="section-lede">{talk.toolsLede ?? "Everything we use on the night, one job each."}</p>
+          <p className="section-lede">{talk.toolsLede ?? (talk.lunch ? "Everything we use in the session, one job each." : "Everything we use on the night, one job each.")}</p>
         </div>
         <ul className="talk-tools">
           {talk.tools.map((tool) => <li key={tool.name}>

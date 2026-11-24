@@ -6,14 +6,16 @@ import { TalkCard, TalkGroups, STANDALONE_GROUPS } from "../../components/talk-c
 import { TALKS, SERIES_NAME, LUNCH_NAME, talkEnded, talkKind, talkScheduled } from "../../lib/talks";
 import { DISCORD } from "../../lib/hackathon";
 import { SOCRATIC } from "../../lib/socratic";
+import { AI_EXCHANGE } from "../../lib/ai-exchange";
+import { FOUNDER_WEEKEND } from "../../lib/founder-weekend";
 import "./talks.css";
 
-const FOUNDER_WEEKEND = "/hackathons/founder-weekend#series";
-const OG = { url: "/og-talks.jpg", width: 1200, height: 630, alt: "Ship AI Talks: one night, one topic. Free talks in Phoenix at Workuity Biltmore, Tuesday nights and Thursday lunches." };
+const FW_SERIES = "/hackathons/founder-weekend#series";
+const OG = { url: "/og-talks.jpg", width: 1200, height: 630, alt: "Ship AI Talks: one night, one topic. Free talks in Phoenix at Workuity Biltmore, Tuesday and Wednesday nights and Thursday lunches." };
 
 export const metadata = {
   title: "Talks - Ship AI",
-  description: "Free Ship AI talks in Phoenix: Claude Code Build Nights on Tuesdays, Lunch & Learns on Thursdays at noon, and a monthly Socratic Night. Pick the problem you have, watch it get solved on screen, and take the prompts, the deck and the file home.",
+  description: "Free Ship AI talks in Phoenix: Claude Code Build Nights on Tuesdays, AI Exchange Tech Talks for developers on Wednesdays, Lunch & Learns on Thursdays at noon, and the Founder Weekend hackathon, Feb 6-7. Pick the problem you have, watch it get solved on screen, and take the prompts, the deck and the file home.",
   alternates: { canonical: "https://www.shipai.club/talks" },
   openGraph: {
     title: "Talks - Ship AI",
@@ -39,6 +41,13 @@ export default function Page() {
   const nextRsvp = next?.rsvp?.[0];
   const start = next ? new Date(next.startISO) : null;
   const days = next ? daysUntil(next.startISO) : 0;
+  const now = Date.now();
+  const exchange = AI_EXCHANGE.talks.filter((t) => new Date(t.endISO).getTime() > now);
+  const calendar = [
+    ...upcoming.map((t) => ({ key: t.slug, startISO: t.startISO, timeLabel: t.timeLabel, kind: talkKind(t), title: t.eventTitle, href: `/talks/${t.slug}`, summary: `${t.summary} · ${t.venue}`, rsvp: t.rsvp?.[0]?.href })),
+    ...exchange.map((t) => ({ key: t.slug, startISO: t.startISO, timeLabel: AI_EXCHANGE.timeLabel, kind: "AI Exchange Tech Talk", title: t.title, href: t.luma, external: true, summary: `${t.summary} · ${AI_EXCHANGE.venue}`, rsvp: t.luma })),
+    ...(new Date(FOUNDER_WEEKEND.endISO).getTime() > now ? [{ key: FOUNDER_WEEKEND.id, startISO: FOUNDER_WEEKEND.startISO, timeLabel: "Feb 6–7", kind: "Hackathon", title: FOUNDER_WEEKEND.name, href: FOUNDER_WEEKEND.path, summary: `${FOUNDER_WEEKEND.tagline} Free, teams of 1–4 · ${FOUNDER_WEEKEND.venue}`, rsvp: FOUNDER_WEEKEND.rsvpUrl }] : []),
+  ].sort((a, b) => a.startISO.localeCompare(b.startISO));
 
   return <>
     <SiteHeader current="/talks" />
@@ -51,7 +60,7 @@ export default function Page() {
           {nextRsvp
             ? <a className="btn btn-solid" href={nextRsvp.href} target="_blank" rel="noreferrer">Save your seat</a>
             : <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Get the dates</a>}
-          <a className="btn btn-ghost" href={upcoming.length ? "#upcoming" : "#standalone"}>See what's coming up</a>
+          <a className="btn btn-ghost" href={calendar.length ? "#upcoming" : "#standalone"}>See what's coming up</a>
         </div>
         {next && <div className="talk-board">
           <DepartureBoard
@@ -67,25 +76,25 @@ export default function Page() {
         </div>}
       </section>
 
-      {upcoming.length > 0 && <section className="section tk-upcoming" id="upcoming" aria-labelledby="upcoming-title">
+      {calendar.length > 0 && <section className="section tk-upcoming" id="upcoming" aria-labelledby="upcoming-title">
         <div className="section-head">
           <h2 id="upcoming-title">Coming <span className="key">up.</span></h2>
-          <p className="section-lede">Every talk with a date, in order: Build Nights on Tuesdays at 5 PM, Lunch & Learns on Thursdays at noon. More dates go out in the Discord first.</p>
+          <p className="section-lede">Every date, in order: Build Nights on Tuesdays at 5 PM, AI Exchange Tech Talks on Wednesdays at 5 PM, Lunch & Learns on Thursdays at noon, then Founder Weekend. More dates go out in the Discord first.</p>
         </div>
         <ol className="tk-cal">
-          {upcoming.map((t) => {
+          {calendar.map((t) => {
             const d = new Date(t.startISO);
-            const rsvp = t.rsvp?.[0];
-            return <li key={t.slug} className="tk-cal-row">
+            const ext = t.external ? { target: "_blank", rel: "noreferrer" } : {};
+            return <li key={t.key} className="tk-cal-row">
               <p className="tk-cal-date"><b>{d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Phoenix" })}</b><span>{d.toLocaleDateString("en-US", { weekday: "short", timeZone: "America/Phoenix" })} · {t.timeLabel}</span></p>
               <div className="tk-cal-main">
-                <span className="tk-cal-kind">{talkKind(t)}</span>
-                <h3><a href={`/talks/${t.slug}`}>{t.eventTitle}</a></h3>
-                <p>{t.summary} · {t.venue}</p>
+                <span className="tk-cal-kind">{t.kind}</span>
+                <h3><a href={t.href} {...ext}>{t.title}</a></h3>
+                <p>{t.summary}</p>
               </div>
               <div className="tk-cal-act">
-                {rsvp && <a className="btn btn-solid btn-sm" href={rsvp.href} target="_blank" rel="noreferrer">RSVP</a>}
-                <a className="btn btn-ghost btn-sm" href={`/talks/${t.slug}`}>Details</a>
+                {t.rsvp && <a className="btn btn-solid btn-sm" href={t.rsvp} target="_blank" rel="noreferrer">RSVP</a>}
+                {!t.external && <a className="btn btn-ghost btn-sm" href={t.href}>Details</a>}
               </div>
             </li>;
           })}
@@ -98,6 +107,24 @@ export default function Page() {
           <p className="section-lede">Talks built around your own work. Pick the problem you have, bring the business, and leave with the file that fixes it.</p>
         </div>
         <TalkGroups groups={STANDALONE_GROUPS} talks={standalone} nextSlug={next?.slug} label={(g, items) => `${items.length} talks`} />
+      </section>}
+
+      {exchange.length > 0 && <section className="section tk-exchange" id="ai-exchange" aria-labelledby="exchange-title">
+        <div className="section-head">
+          <h2 id="exchange-title">Wednesdays, <span className="key">for developers.</span></h2>
+          <p className="section-lede">{AI_EXCHANGE.copy} In partnership with the <a href={AI_EXCHANGE.partner.url} target="_blank" rel="noreferrer">{AI_EXCHANGE.partner.name}</a>.</p>
+        </div>
+        <ol className="tk-cards tk-cards-3">
+          {exchange.map((t) => {
+            const d = new Date(t.startISO);
+            return <li key={t.slug} className="card tk-card">
+              <p className="tk-card-top"><span>{d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "America/Phoenix" })} · 5 PM</span><span className="tk-pill">Tech Talk</span></p>
+              <h3 className="tk-card-title"><a className="tk-card-link" href={t.luma} target="_blank" rel="noreferrer">{t.title}</a></h3>
+              <p className="tk-card-sum">{t.summary}</p>
+              <p className="tk-card-foot"><span className="tk-file">Workuity Biltmore</span><span className="tk-slides">RSVP <span aria-hidden="true">→</span></span></p>
+            </li>;
+          })}
+        </ol>
       </section>}
 
       <section className="section tk-recurring" aria-labelledby="rec-title">
@@ -117,14 +144,22 @@ export default function Page() {
         </a>
       </section>
 
-      <section className="section tk-founders" aria-labelledby="founders-title">
-        <div className="tk-founders-row">
-          <div>
-            <h2 id="founders-title">Building a <span className="key">company?</span></h2>
-            <p>{SERIES_NAME} is five Tuesday nights on the critical path, from finding a customer to pitching with real users, plus Thursday {LUNCH_NAME}s for everything around it. It all leads into Founder Weekend.</p>
-          </div>
-          <a className="btn btn-ghost" href={FOUNDER_WEEKEND}>See the five nights</a>
+      <section className="section tk-recurring tk-hackathon" id="hackathon" aria-labelledby="hack-title">
+        <div className="section-head">
+          <h2 id="hack-title">Then ship it <span className="key">in a weekend.</span></h2>
+          <p className="section-lede">Every track leads into Founder Weekend, the free Arizona AI hackathon.</p>
         </div>
+        <a className="card tk-rec" href={FOUNDER_WEEKEND.path} aria-labelledby="hack-card-title">
+          <div className="tk-rec-body">
+            <span>{FOUNDER_WEEKEND.datesShort} · {FOUNDER_WEEKEND.venue}, Phoenix</span>
+            <h3 id="hack-card-title">Founder <span className="key">Weekend</span></h3>
+            <p>{FOUNDER_WEEKEND.tagline} Teams of 1–4 build for two days, then pitch for five minutes to judges, employers and investors. The five Tuesday Build Nights are the runway.</p>
+            <ul className="tk-rec-cats"><li>Free</li><li>{FOUNDER_WEEKEND.teams}</li><li>No coding required</li><li>With {FOUNDER_WEEKEND.partner.name}</li></ul>
+            <p className="tk-rec-go">See the hackathon <b aria-hidden="true">→</b></p>
+          </div>
+          <div className="tk-rec-art" aria-hidden="true"><Scene scene="launch" /></div>
+        </a>
+        <p className="tk-hack-more"><a href={FW_SERIES}>See the five Tuesday nights</a> · <a href={FOUNDER_WEEKEND.rsvpUrl} target="_blank" rel="noreferrer">RSVP on Luma</a></p>
       </section>
 
       <section className="section tk-take" aria-labelledby="take-title">
@@ -146,7 +181,7 @@ export default function Page() {
       <section className="band" aria-labelledby="talks-final-title">
         <div className="final">
           <h2 id="talks-final-title">Pick a night. <span className="key">Bring your work.</span></h2>
-          <p className="lede">Free at Workuity Biltmore in Phoenix: Tuesday nights at 5, Thursday lunches at noon. Dates go out in the Discord first.</p>
+          <p className="lede">Free at Workuity Biltmore in Phoenix: Tuesday and Wednesday nights at 5, Thursday lunches at noon, and Founder Weekend on Feb 6–7. Dates go out in the Discord first.</p>
           <div className="cta-row home-pair">
             <a className="btn btn-solid" href={DISCORD} target="_blank" rel="noreferrer">Join the Discord</a>
             {nextRsvp && <a className="btn btn-ghost" href={nextRsvp.href} target="_blank" rel="noreferrer">Save your seat</a>}

@@ -234,3 +234,8 @@
   .tk-cal-row { grid-template-columns: 1fr; gap: 14px; }
   .tk-cal-date { grid-auto-flow: column; justify-content: start; align-items: baseline; gap: 12px; }
 }
+
+.tk-exchange { padding-block: clamp(56px, 8vw, 104px); }
+.tk-exchange .section-lede a { color: var(--accent); }
+.tk-hack-more { max-width: 1040px; margin: 20px auto 0; font-family: var(--sap-font-mono); font-size: 13px; color: var(--dim); }
+.tk-hack-more a { color: var(--accent); text-decoration: none; }

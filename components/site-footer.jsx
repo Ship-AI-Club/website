@@ -1,5 +1,6 @@
 import { Lockup } from "./seal";
 import ModeToggle from "./mode-toggle";
+import { STUDIO_WORKSHOPS } from "../lib/studio-workshops";
 
 const DISCORD = "https://discord.gg/kZSJMNveYM";
 const MEETUP = "https://www.meetup.com/shipai/";
@@ -11,10 +12,10 @@ const COLUMNS = [
   {
     label: "Learn",
     links: [
-      { href: "/workshops", label: "Workshops" },
+      { href: STUDIO_WORKSHOPS, label: "Workshops" },
       { href: "/programs", label: "Programs" },
       { href: "/talks", label: "Talks" },
-      { href: "/programs/zero-to-launch/hackathon", label: "Hackathon" },
+      { href: "/hackathons", label: "Hackathons" },
       { href: "/about", label: "About" },
     ],
   },

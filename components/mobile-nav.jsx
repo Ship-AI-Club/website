@@ -3,13 +3,15 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
+import { STUDIO_WORKSHOPS } from "../lib/studio-workshops";
 
 const DISCORD = "https://discord.gg/kZSJMNveYM";
 
 const links = [
   { href: "/talks", label: "Talks", detail: "One Night, One Live Build" },
-  { href: "/workshops", label: "Workshops", detail: "Build Something Useful" },
+  { href: STUDIO_WORKSHOPS, label: "Workshops", detail: "Build Something Useful" },
   { href: "/programs", label: "Programs", detail: "Learn Together. Ship Together." },
+  { href: "/hackathons", label: "Hackathons", detail: "Ship It by Sunday" },
   { href: "/about", label: "About", detail: "Meet Ship AI" },
 ];
 

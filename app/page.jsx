@@ -8,6 +8,7 @@ import { PROGRAMS } from "../lib/programs";
 import { FOUNDER_WEEKEND as FW } from "../lib/founder-weekend";
 import { VIBE_GTM, workshopPrice } from "../lib/vibe-gtm-workshop";
 import { UPCOMING_WORKSHOPS } from "../lib/workshops";
+import { STUDIO_WORKSHOPS, studioWorkshop } from "../lib/studio-workshops";
 import { WORKSHOP_PRESENTATION } from "../lib/workshop-presentation";
 import WorkshopCard from "../components/workshop-card";
 import WorkshopNotify from "../components/workshop-notify";
@@ -116,7 +117,7 @@ export default async function Page() {
           </p>
           <div className="cta-row home-pair">
             <a className="btn btn-solid" href={primary.href} target={primary.external ? "_blank" : undefined} rel={primary.external ? "noreferrer" : undefined}>{primary.label}</a>
-            <a className="btn btn-ghost" href="/workshops">Explore workshops</a>
+            <a className="btn btn-ghost" href={STUDIO_WORKSHOPS}>Explore workshops</a>
           </div>
           <p className="home-facts">Free events&nbsp;· Free programs&nbsp;· Paid workshops from ${lowestPrice.toLocaleString("en-US")}&nbsp;· In person, in Phoenix</p>
 
@@ -182,7 +183,7 @@ export default async function Page() {
             </li>
             <li className="home-way">
               <span className="tag">Paid&nbsp;· from ${lowestPrice.toLocaleString("en-US")}</span>
-              <h3><a href="/workshops">Workshops</a></h3>
+              <h3><a href={STUDIO_WORKSHOPS}>Workshops</a></h3>
               <p>Small rooms with expert guidance on your own project. This is where a build becomes a finished product, ready to take to market.</p>
               <p className="home-way-now"><b>{UPCOMING_WORKSHOPS.length} workshops, {Math.min(...seats)} to {Math.max(...seats)} seats each</b><span>Not sure which one? Take the assessment</span></p>
               <span className="home-way-go">Find your workshop<span className="home-arrow" aria-hidden="true">→</span></span>
@@ -225,7 +226,7 @@ export default async function Page() {
           <div className="cards cards-three home-cards">
             {!vibeEnded && (
             <WorkshopCard
-                href={VIBE_GTM.path}
+                href={studioWorkshop("vibe-coding-gtm")}
                 category="Design and go-to-market"
                 name={VIBE_GTM.name}
                 summary="Help customers understand what you sell and how to contact you."
@@ -242,7 +243,7 @@ export default async function Page() {
               return (
                 <WorkshopCard
                   key={workshop.slug}
-                  href={`/workshops/${workshop.slug}`}
+                  href={studioWorkshop(workshop.slug)}
                   category={card?.category}
                   name={workshop.name}
                   summary={workshop.promise}
@@ -258,8 +259,8 @@ export default async function Page() {
             })}
           </div>
           <div className="cta-row home-center">
-            <a className="btn btn-ghost" href="/workshops">Explore all workshops</a>
-            <a className="link" href="/workshops/assessment">Not sure which one? Take the assessment</a>
+            <a className="btn btn-ghost" href={STUDIO_WORKSHOPS}>Explore all workshops</a>
+            <a className="link" href={`${STUDIO_WORKSHOPS}/assessment`}>Not sure which one? Take the assessment</a>
           </div>
         </section>
 

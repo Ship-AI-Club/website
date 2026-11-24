@@ -44,7 +44,17 @@ const nextConfig = {
 
   async redirects() {
     return [
-      ...["/az-ai-hackathon", "/ai-hackathon", "/phoenix-hackathon", "/hackathons"].map((source) => ({
+      {
+        source: "/workshops",
+        destination: "https://www.shipaistudio.com/education/workshops",
+        permanent: true,
+      },
+      {
+        source: "/workshops/:slug((?!materials$|recommendation$)[^/]+)",
+        destination: "https://www.shipaistudio.com/education/workshops/:slug",
+        permanent: true,
+      },
+      ...["/az-ai-hackathon", "/ai-hackathon", "/phoenix-hackathon"].map((source) => ({
         source,
         destination: "/hackathons/founder-weekend",
         permanent: false,

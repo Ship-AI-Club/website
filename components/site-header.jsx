@@ -2,11 +2,13 @@ import { siDiscord } from "simple-icons";
 import MobileNav from "./mobile-nav";
 import { Lockup } from "./seal";
 import { DISCORD } from "../lib/hackathon";
+import { STUDIO_WORKSHOPS } from "../lib/studio-workshops";
 
 export const NAV_LINKS = [
   { href: "/talks", label: "Talks" },
-  { href: "/workshops", label: "Workshops" },
+  { href: STUDIO_WORKSHOPS, label: "Workshops" },
   { href: "/programs", label: "Programs" },
+  { href: "/hackathons", label: "Hackathons" },
   { href: "/about", label: "About" },
 ];
 

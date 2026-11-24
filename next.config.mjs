@@ -60,6 +60,16 @@ const nextConfig = {
         permanent: false,
       })),
       {
+        source: "/talks/pitch-night/:path*",
+        destination: "/talks/growth-engineering/:path*",
+        permanent: false,
+      },
+      {
+        source: "/talks/pitch-night",
+        destination: "/talks/growth-engineering",
+        permanent: false,
+      },
+      {
         source: "/talks/ai-ops-team/:path*",
         destination: "/talks/admin-console/:path*",
         permanent: true,

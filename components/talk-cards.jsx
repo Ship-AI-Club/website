@@ -4,12 +4,12 @@ import "../app/talks/talks.css";
 export const SERIES_LEGS = [
   { name: "Validate and build", line: "Find a customer who will pay, then build the one thing they need.", parts: [1, 2] },
   { name: "Get it in market", line: "A page people can find, then your first users from one channel.", parts: [3, 4] },
-  { name: "Pitch it", line: "Five minutes, scored on the weekend's six criteria.", parts: [5] },
+  { name: "Grow it", line: "Acquisition, activation, engagement and retention, one leak fixed at a time.", parts: [5] },
 ];
 
 export const LUNCH_GROUPS = [
   { name: "Set up", line: "Form the company and give it its tools.", slugs: ["company-stack"] },
-  { name: "Grow it", line: "Ship what users ask for, keep them coming back, and automate the weekly work.", slugs: ["ship-a-feature", "growth-engineering", "ai-workflows"] },
+  { name: "Keep shipping", line: "Ship what users ask for, and automate the weekly work.", slugs: ["ship-a-feature", "ai-workflows"] },
   { name: "Harden it", line: "Lock every door and know the moment it breaks.", slugs: ["security", "production-monitoring"] },
   { name: "Run it", line: "An admin console, and a team of AI bots with narrow keys.", slugs: ["admin-console"] },
 ];

@@ -15,7 +15,7 @@ const OG = { url: "/og-talks.jpg", width: 1200, height: 630, alt: "Ship AI Talks
 
 export const metadata = {
   title: "Talks - Ship AI",
-  description: "Free Ship AI talks in Phoenix: Claude Code Build Nights on Tuesdays, AI Exchange Tech Talks for developers on Wednesdays, Lunch & Learns on Thursdays at noon, and the Founder Weekend hackathon, Feb 6-7. Pick the problem you have, watch it get solved on screen, and take the prompts, the deck and the file home.",
+  description: "Free Ship AI talks in Phoenix: Founders Nights on Tuesdays, AI Exchange Tech Talks for developers on Wednesdays, Lunch & Learns on Thursdays at noon, and the Founder Weekend hackathon, Feb 6-7. Pick the problem you have, watch it get solved on screen, and take the prompts, the deck and the file home.",
   alternates: { canonical: "https://www.shipai.club/talks" },
   openGraph: {
     title: "Talks - Ship AI",
@@ -79,7 +79,7 @@ export default function Page() {
       {calendar.length > 0 && <section className="section tk-upcoming" id="upcoming" aria-labelledby="upcoming-title">
         <div className="section-head">
           <h2 id="upcoming-title">Coming <span className="key">up.</span></h2>
-          <p className="section-lede">Every date, in order: Build Nights on Tuesdays at 5 PM, AI Exchange Tech Talks on Wednesdays at 5 PM, Lunch & Learns on Thursdays at noon, then Founder Weekend. More dates go out in the Discord first.</p>
+          <p className="section-lede">Every date, in order: Founders Nights on Tuesdays at 5 PM, AI Exchange Tech Talks on Wednesdays at 5 PM, Lunch & Learns on Thursdays at noon, then Founder Weekend. More dates go out in the Discord first.</p>
         </div>
         <ol className="tk-cal">
           {calendar.map((t) => {
@@ -153,7 +153,7 @@ export default function Page() {
           <div className="tk-rec-body">
             <span>{FOUNDER_WEEKEND.datesShort} · {FOUNDER_WEEKEND.venue}, Phoenix</span>
             <h3 id="hack-card-title">Founder <span className="key">Weekend</span></h3>
-            <p>{FOUNDER_WEEKEND.tagline} Teams of 1–4 build for two days, then pitch for five minutes to judges, employers and investors. The five Tuesday Build Nights are the runway.</p>
+            <p>{FOUNDER_WEEKEND.tagline} Teams of 1–4 build for two days, then pitch for five minutes to judges, employers and investors. The five Tuesday Founders Nights are the runway.</p>
             <ul className="tk-rec-cats"><li>Free</li><li>{FOUNDER_WEEKEND.teams}</li><li>No coding required</li><li>With {FOUNDER_WEEKEND.partner.name}</li></ul>
             <p className="tk-rec-go">See the hackathon <b aria-hidden="true">→</b></p>
           </div>
